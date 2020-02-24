@@ -85,13 +85,11 @@
             <q-tab name="3" label="EN ÇOK SATAN ÜRÜNLER" />
             <q-tab name="4" label="GÜNÜN FIRSATI" />
           </q-tabs>
-            
           <!-- <div class="container">
   <svg viewBox="0 0 500 420" preserveAspectRatio="xMinYMin meet">
     <path d="M-10,10 C70,70 300,-50 500,40  L500,00 L0,0 Z" style="stroke: none; fill:#ff4081;"></path>
   </svg>
-</div> -->
-
+</div> ibo-->
         </q-page-sticky>
         
     </q-page-container>
