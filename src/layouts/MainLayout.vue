@@ -63,33 +63,49 @@
             v-model="main_tab"
             :reveal-offset="10000"
             indicator-color="transparent"
-            
             dense
             reveal
             class="col-12 bg-pink-12 text-white maintabs"
                     >
-                    <!-- </div> -->
-                    <div @mouseenter="drophover1= true" @mouseout="drophover1 = false">
-            <q-tab name="1" class="1"    label="LOHUSA & HAMİLE ÜRÜNLERİ" >
+                    
+            <q-tab  name="a"  @mouseover= "menuOver = true" @mouseout= "menuOver = false"     label="LOHUSA & HAMİLE ÜRÜNLERİ" >
+              
               
             </q-tab>
-            <div class="row col-12 justify-center"  v-if="drophover1" >
-              <div  class="col-md-8 " style=display:none;background-color:#ff4081;>
-                <p v-for="n in 5" :key="n">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
-          </div>
-            </div>
-            </div>
-            <q-tab name="2" label="GÜNLÜK KULLANIM" />
-            <q-tab name="3" label="EN ÇOK SATAN ÜRÜNLER" />
-            <q-tab name="4" label="GÜNÜN FIRSATI" />
-          </q-tabs>
+            
+            <q-tab name="b" @mouseover= "menuOver1 = true" @mouseout= "menuOver1 = false" label="GÜNLÜK KULLANIM" />
+            <q-tab name="c" @mouseover= "menuOver2 = true" @mouseout= "menuOver2 = false" label="EN ÇOK SATAN ÜRÜNLER" />
+            
+         </q-tabs>
           <!-- <div class="container">
   <svg viewBox="0 0 500 420" preserveAspectRatio="xMinYMin meet">
     <path d="M-10,10 C70,70 300,-50 500,40  L500,00 L0,0 Z" style="stroke: none; fill:#ff4081;"></path>
   </svg>
 </div> ibo-->
+<q-tab-panels
+          v-if="menu"
+          v-model="main_tab"
+          animated
+          transition-prev="fade"
+          transition-next="fade"
+          class="col-8   text-center"
+          @mouseover= "listOver = true" @mouseout= "listOver = false"
+        >
+          <q-tab-panel name="a">
+            <div class="text-h6">Mails</div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </q-tab-panel>
+
+          <q-tab-panel name="b">
+            <div class="text-h6">Alarms</div>
+            Ad molestiae non facere animi nobis, similique nemo velit reiciendis corporis impedit nam in.
+          </q-tab-panel>
+
+          <q-tab-panel name="c">
+            <div class="text-h6">Movies</div>
+            Nostrum necessitatibus expedita dolores? Voluptatem repudiandae magni ea.
+          </q-tab-panel>
+        </q-tab-panels>
         </q-page-sticky>
         
     </q-page-container>
@@ -99,7 +115,8 @@
 
 <script>
 // import EssentialLink from 'components/EssentialLink'
-import { debounce } from 'quasar'
+import {debounce} from 'quasar'
+
 export default {
   name: 'MainLayout',
 
@@ -109,40 +126,80 @@ export default {
 
   data () {
     return {
-      // maintabs:{
-      //   tabs_indicator_color:'white',
-      // },
-      drophover1:false,
-      listhover1:false,
-      menuhover1:false,
+      menu: false,
+      menuOver: false,
+      listOver: false,
+      menuOver1: false,
+      menuOver2: false,
+      
       slide: 1,
       search: null,
       main_tab:"",
       
-        drophover1: false,
-      drophoverlist1:false,
-      
     }
   },
-  computed: {
-  // styleObject: function() {
-  //   return {
-  //     '--indicator-color': this.maintabs.tabs_indicator_color,
-      
-  //   }
-  // }
-},
-  method:{
-    
-    
-    hesap(){
-      console.log("ibo");
-      
-    },
-    
-  
 
-}
+  methods:{
+    debounceFunc: debounce(function () {
+        
+        this.checkMenu()
+      }, 1) ,
+    debounceFunc1: debounce(function () {
+        
+        this.checkMenu1()
+      }, 1) ,
+    debounceFunc2: debounce(function () {
+        
+        this.checkMenu2()
+      }, 1) ,
+      
+    checkMenu () {
+      if (this.menuOver || this.listOver) {
+        this.menu = true
+      }
+      else {
+        this.menu = false
+      }
+    },
+    checkMenu1 () {
+      if (this.menuOver1 ) {
+        this.menu = true
+      }
+      else {
+        this.menu = false
+      }
+    },
+    checkMenu2 () {
+      if (this.menuOver2 ) {
+        this.menu = true
+      }
+      else {
+        this.menu = false
+      }
+    },
+    // ibo(){
+    //   console.log("object");
+    // }
+},
+watch: {
+    menuOver (val) {
+      this.main_tab="a"
+      this.debounceFunc()
+    },
+    listOver (val) {
+      this.debounceFunc()
+    },
+    menuOver1 (val) {
+      
+      this.main_tab="b"
+      this.debounceFunc1()
+    },
+    menuOver2 (val) {
+      this.main_tab="c"
+      this.debounceFunc2()
+    },
+   
+  },
 }
 </script>
 <style lang="styl" scope>
