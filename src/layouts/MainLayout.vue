@@ -12,7 +12,7 @@
           /></div>
         <div class="col-md-4 col-sm-12 col-xs-12 two self-center justify-center" >
 
-          <q-input rounded outlined dense v-model="search" placeholder="Kategori yada Ürün Ara" >
+          <q-input rounded outlined dense v-model="search" class="main_search" placeholder="Kategori yada Ürün Ara" >
               <template v-slot:append>
           <q-icon name="search" />
         </template>
@@ -33,7 +33,7 @@
       </q-toolbar>
       <div class="container">
   <svg viewBox="0 5 500 40" preserveAspectRatio="xMinYMin meet">
-    <path d="M-0,20 C190,70 280,-25 500,35  L500,00 L0,0 Z" style="stroke: none; fill:white;"></path>
+    <path d="M-0,15 C190,70 220,-25 500,35  L500,00 L0,0 Z" style="stroke: none; fill:white;"></path>
   </svg>
 </div>
 
@@ -88,12 +88,30 @@
           animated
           transition-prev="fade"
           transition-next="fade"
-          class="col-8   text-center"
+          class="col-8 shadow-10	"
           @mouseover= "listOver = true" @mouseout= "listOver = false"
         >
-          <q-tab-panel name="a">
-            <div class="text-h6">Mails</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        
+          <q-tab-panel name="a" >
+            
+            <div class="row col-md-3 q-ma-lg  text-subtitle2 " >
+              <a class="menu_link" href="/">Lohusa Gecelik</a>
+              <div> &nbsp; > </div>
+               
+            </div>
+            <div class="row col-md-3 q-ma-lg text-subtitle2 ">
+              <a class="menu_link" href="/">Lohusa Gecelik</a>
+              <div> &nbsp; > </div>
+            </div>
+            <div class="row col-md-3 q-ma-lg text-subtitle2 ">
+              <a class="menu_link" href="/">Lohusa Gecelik</a>
+              <div> &nbsp; > </div>
+            </div>
+            <div class="row col-md-3 q-ma-lg text-subtitle2 ">
+              <a class="menu_link" href="/">Lohusa Gecelik</a>
+              <div> &nbsp; > </div>
+            </div>
+            <q-separator vertical />
           </q-tab-panel>
 
           <q-tab-panel name="b">
@@ -131,7 +149,7 @@ export default {
       listOver: false,
       menuOver1: false,
       menuOver2: false,
-      
+      splitterModel: 20,
       slide: 1,
       search: null,
       main_tab:"",
@@ -202,11 +220,12 @@ watch: {
   },
 }
 </script>
-<style lang="styl" scope>
+<style lang="stylus" scope>
 /* @import '../../node_modules/@quasar/extras/mdi-v4/mdi-v4.css'; */
 
-
-
+  .q-layout__section--marginal{
+    background-color: #ff4081;
+    }
   .title-icons {
     cursor:pointer;
     
@@ -294,6 +313,9 @@ watch: {
     .two   { grid-row: 2 / 3; grid-column: 1 / 3;margin-top:15px; }
     .three { grid-row: 1 / 2; grid-column: 2 / 3; }
 }
+.cartbadge{
+  background-color:#ff4081;
+  }
 .q-badge--floating{
   top: -10px !important;
   right: -15px !important;
@@ -325,4 +347,32 @@ svg {
   opacity:1 !important;
   /* height: 2px !important; */
 }
+a.menu_link:link{
+   color:#1d1d1d;
+   text-decoration: none;
+  }
+a.menu_link:visited{
+   color:#1d1d1d;
+   text-decoration: none;
+  }
+a.menu_link:hover{
+   color:#1d1d1d;
+   text-decoration: underline;
+  }
+a.menu_link:active{
+   color:#1d1d1d;
+   text-decoration: underline;
+  }
+a.menu_link+div {
+  display:none;
+}
+a.menu_link:hover + div{
+  display:block ;
+}
+.main_search .q-field__control{
+  color :#ff4081;
+}
+/* a.menu_link:first-child:hover{
+  display:block;
+} */
 </style>

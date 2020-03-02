@@ -1,0 +1,43 @@
+type Query{
+    varyantQuery(stokid:String!):[varyant]
+    altvaryantQuery(varyantid: String!):[varyantalt]
+    altvaryantsecimgQuery(stokid:String!):[Varyantalt]
+    varyantname(stokid:String!):[Varyant]
+}
+type vars{
+  
+  images:images
+  
+}
+
+type images{
+  filename:String
+  imageurl:String
+  publicid:String
+  path:String
+  id:ID
+}
+type varyant{
+  _id:ID
+  stokid:String
+  altvaryant:[varyantalt]
+  varyantname: String
+  createdAt: String
+}
+type varyantalt{
+  _id:ID
+  altvaryantname: String
+  color:String
+  varyantid:String
+  vars: [vars]
+  createdAt: String
+}
+type Mutation{
+  createVaryant(stokid: String, varyantname: String): varyant
+  deleteilkVaryant(id:String!): varyant
+  createaltVaryant(varyantid:String, altvaryantname: String): varyantalt
+  deletealtVaryant(id:String!): varyantalt
+  updatealtvaryantimageurl(id:String!,imageurl: String,filename:String,varyantid:String,publicid:String,path:String): Varyantalt
+  updatealtvaryantcolor(id:String!,color: String): Varyantalt
+  deletealtvaryantimage(id:String!,imageid:String,path:String): Varyantalt
+}

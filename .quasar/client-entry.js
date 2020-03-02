@@ -38,6 +38,8 @@ import createApp from './app.js'
 
 import qboot_Booti18n from 'boot/i18n'
 
+import qboot_Bootapollo from 'boot/apollo'
+
 import qboot_Bootaxios from 'boot/axios'
 
 
@@ -70,7 +72,7 @@ async function start () {
   }
 
   const urlPath = window.location.href.replace(window.location.origin, '')
-  const bootFiles = [qboot_Booti18n,qboot_Bootaxios]
+  const bootFiles = [qboot_Booti18n,qboot_Bootapollo,qboot_Bootaxios]
 
   for (let i = 0; routeUnchanged === true && i < bootFiles.length; i++) {
     if (typeof bootFiles[i] !== 'function') {

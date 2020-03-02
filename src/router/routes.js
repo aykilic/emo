@@ -6,6 +6,15 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/Index.vue') }
     ]
+  },
+  {
+    path: '/admin',
+    component: () => import('layouts/admin/AdminLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/admin/Index.vue') },
+      { path: '/kategori', component: () => import('pages/admin/kategori.vue') },
+      { path: '/stokekle', component: () => import('pages/admin/stokekle.vue') },
+    ]
   }
 ]
 

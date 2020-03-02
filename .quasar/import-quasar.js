@@ -17,7 +17,7 @@ import iconSet from 'quasar/icon-set/mdi-v4'
 
 import Vue from 'vue'
 
-import {Quasar} from 'quasar'
+import {Quasar,QDialog,ClosePopup,Loading,Dialog} from 'quasar'
 
 
-Vue.use(Quasar, { config: {},lang: lang,iconSet: iconSet })
+Vue.use(Quasar, { config: {"loading":{}},lang: lang,iconSet: iconSet,components: {QDialog},directives: {ClosePopup},plugins: {Loading,Dialog} })

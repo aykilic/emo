@@ -8,7 +8,8 @@ module.exports = function (ctx) {
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
     boot: [
       'i18n',
-      'axios'
+      'apollo',
+      'axios',
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -36,7 +37,8 @@ module.exports = function (ctx) {
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
       // iconSet: 'material-icons',
-        iconSet:'mdi-v4',
+      
+      iconSet:'mdi-v4',
       
       // Quasar icon set
       lang: 'tr', // Quasar language pack
@@ -50,11 +52,21 @@ module.exports = function (ctx) {
       //            (not treeshaking Quasar; biggest bundle size; convenient)
       all: 'auto',
 
-      components: [],
-      directives: [],
+      components: [
+        'QDialog'
+      ],
+      directives: [
+        'ClosePopup'
+      ],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Loading',
+        'Dialog'
+      ],
+      config: {
+        loading: { /* Loading defaults */ }
+      }
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
