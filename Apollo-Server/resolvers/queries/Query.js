@@ -14,6 +14,7 @@ module.exports = {
     // return cars.find(car => (car.id = args.id));
     return await context.Models.stokturu.find()
   },
+  
   birimList: async (parent, args, {Models})=> {
     // return await User.find({}).sort({'createdAt': 'asc'})
     // return cars.find(car => (car.id = args.id));
@@ -29,6 +30,12 @@ module.exports = {
     
     return await varyant.find({stokid:stokid,parentid:parentid})
   },
+  anakategoriQuery: async (parent, { parentid }, { Models }) => {
+    const stokturu = Models.stokturu
+    //  console.log(id,parentid);
+    
+    return await stokturu.find({parentid:null})
+  },
   altvaryantQuery: async (parent, { stokid}, { Models }) => {
     const varyant = Models.varyant
     //  console.log(id,parentid);
@@ -41,7 +48,11 @@ module.exports = {
     
     return await varyant.find({stokid:ObjectID(stokid)})
   },
-  
+  // StokChildren: async (parent, args, context) => {
+
+
+    // return await context.Models.stokturu.find()
+  // },
   // varyantsecimgQuery: async (parent, { stokid, varyantname }, { Models }) => {
   //   const varyant = Models.varyant
   //   const veri= await varyant.find({ stokid: stokid, varyantname:varyantname } )

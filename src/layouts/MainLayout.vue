@@ -59,29 +59,26 @@
         </div>
           <q-page-sticky expand position="top">
             <!-- <div> -->
+                
             <q-tabs
-            v-model="main_tab"
-            :reveal-offset="10000"
-            indicator-color="transparent"
-            dense
-            reveal
-            class="col-12 bg-pink-12 text-white maintabs"
-                    >
+              v-model="main_tab"
+              
+              indicator-color="transparent"
+              dense
+              reveal
+              class="col-12 bg-pink-12 text-white "
+            >
                     
-            <q-tab  name="a"  @mouseover= "menuOver = true" @mouseout= "menuOver = false"     label="LOHUSA & HAMİLE ÜRÜNLERİ" >
-              
-              
-            </q-tab>
-            
-            <q-tab name="b" @mouseover= "menuOver1 = true" @mouseout= "menuOver1 = false" label="GÜNLÜK KULLANIM" />
-            <q-tab name="c" @mouseover= "menuOver2 = true" @mouseout= "menuOver2 = false" label="EN ÇOK SATAN ÜRÜNLER" />
+              <q-tab  name="a"  @mouseover= "menuOver = true" @mouseout= "menuOver = false"     label="LOHUSA & HAMİLE ÜRÜNLERİ" />
+              <q-tab  name="b" @mouseover= "menuOver1 = true" @mouseout= "menuOver1 = false" label="GÜNLÜK KULLANIM" />
+              <q-tab  name="c" @mouseover= "menuOver2 = true" @mouseout= "menuOver2 = false" label="EN ÇOK SATAN ÜRÜNLER" />
             
          </q-tabs>
           <!-- <div class="container">
   <svg viewBox="0 0 500 420" preserveAspectRatio="xMinYMin meet">
     <path d="M-10,10 C70,70 300,-50 500,40  L500,00 L0,0 Z" style="stroke: none; fill:#ff4081;"></path>
   </svg>
-</div> ibo-->
+</div> ibo--> 
 <q-tab-panels
           v-if="menu"
           v-model="main_tab"
@@ -90,28 +87,103 @@
           transition-next="fade"
           class="col-8 shadow-10	"
           @mouseover= "listOver = true" @mouseout= "listOver = false"
+          
         >
-        
-          <q-tab-panel name="a" >
+          <q-tab-panel name="a" style="padding-left:0; ">
+           <!--  <ul class="ibo"  style="width:15%;float:left;height:300px;border-right: 5px solid rgb(240,240,240) ;margin-bottom:10px">
+              <li v-for="(anakategorilist,index) in anakategorilists" :key="index" @mouseover="selected(true)">
+                {{anakategorilist.stokturad}}
+                
+              </li>
+            </ul>
+
+
+            <div v-for="(anakategorilist,index) in anakategorilists" :key='index'>
+              <div label="{anakategorilist.stokturad}" v-show="isActive">
+                {{anakategorilist.id}}
+              </div>
+            </div> -->
+            <!-- <menu-tab >
+
+            </menu-tab> -->
+            <!-- <menu-tabs >
+              
+              <menu-tab  name="Services" :selected="true">
+                 <div class=" "> <h6>asdasdasd</h6></div>
+              </menu-tab>
+              
+            </menu-tabs> -->
+            <a-tabs style= "">
+              <a-tab title="Lohusa" class="row col-12">
+                <div  class="col-3 q-pl-md" >
+                  <ul class= "ullistchild" >
+                      <li class="listchild">Lohusa Gecelik</li>
+                      <li class="listchild">Lohusa Pijama</li>
+                      <li class="listchild">Lohusa Tac</li>
+                      <li class="listchild">Lohusa Sabahlık</li>
+                      <li class="listchild">Lohusa Korse</li>
+                    </ul>
+                </div>
+                <div class="col-3 q-pl-md">
+                  <ul class= "ullistchild " >
+                      <li class="listchild">Lohusa Aksesuar</li>
+                    </ul>
+                </div>
+                <div class=" col-6 ">
+                  
+                <q-intersection
+                once
+                transition="fade"
+                class=""
+                >
+                <div class="row  col-12 q-col-gutter-x-md">
+                <q-card flat class="col-6 ">
+                  <q-img
+                      
+                      src="../statics/emose_h200.jpg"
+                    >
+                  </q-img>
+                </q-card>
+                <q-card flat class="col-6 ">
+                  <q-img 
+                      src="../statics/emose1_h200.jpg"
+                    >
+                  </q-img>
+                </q-card>
+                </div>
+                </q-intersection>
+                
+                </div>
+              </a-tab>
+              <a-tab title="Gecelik">Hello From Tab 2</a-tab>
+              <a-tab title="Pijama">Hello From Tab 3</a-tab>
+              <a-tab title="Günlük">Hello From Tab 4</a-tab>
+              <!-- <div v-for="(anakategorilist,index) in treemmenu" :key='index' class=" "> -->
+                
+                <!-- <a-tab v-bind:title="anakategorilist.stokturad" class="">
+                  
+                  <div v-for="(anakategorichildlist,index) in anakategorilist.children" :key="index" class="row col-6" >
+                    <div class="">
+                    <ul class= "ullistchild " >
+                      <li class="listchild">{{anakategorichildlist.stokturad}}</li>
+                    </ul>  
+                    </div>
+                    
+                  </div>
+                  <q-img
+                      src="https://placeimg.com/500/300/nature"
+                      style="max-width: 200px; height: 100px;"
+                    >
+                  </q-img>
+                  
+                    
+                  </a-tab> -->
+
+                  
+              <!-- </div> -->
+              
+            </a-tabs>
             
-            <div class="row col-md-3 q-ma-lg  text-subtitle2 " >
-              <a class="menu_link" href="/">Lohusa Gecelik</a>
-              <div> &nbsp; > </div>
-               
-            </div>
-            <div class="row col-md-3 q-ma-lg text-subtitle2 ">
-              <a class="menu_link" href="/">Lohusa Gecelik</a>
-              <div> &nbsp; > </div>
-            </div>
-            <div class="row col-md-3 q-ma-lg text-subtitle2 ">
-              <a class="menu_link" href="/">Lohusa Gecelik</a>
-              <div> &nbsp; > </div>
-            </div>
-            <div class="row col-md-3 q-ma-lg text-subtitle2 ">
-              <a class="menu_link" href="/">Lohusa Gecelik</a>
-              <div> &nbsp; > </div>
-            </div>
-            <q-separator vertical />
           </q-tab-panel>
 
           <q-tab-panel name="b">
@@ -124,6 +196,7 @@
             Nostrum necessitatibus expedita dolores? Voluptatem repudiandae magni ea.
           </q-tab-panel>
         </q-tab-panels>
+
         </q-page-sticky>
         
     </q-page-container>
@@ -133,13 +206,24 @@
 
 <script>
 // import EssentialLink from 'components/EssentialLink'
+import Vue  from 'vue'
 import {debounce} from 'quasar'
+import {mapState} from 'vuex'
+import {mapGetters } from 'vuex'
 
+import menuTab from '../components/menu/tab.vue'
+import menuTabs from '../components/menu/tabs.vue'
+import aTab from '../components/menu/atab.vue'
+import aTabs from '../components/menu/atabs.vue'
 export default {
   name: 'MainLayout',
 
   components: {
-    // EssentialLink
+    aTab,
+    aTabs,
+    menuTab,
+    menuTabs,
+
   },
 
   data () {
@@ -153,11 +237,66 @@ export default {
       slide: 1,
       search: null,
       main_tab:"",
-      
+      // anakategorilists:[], 
+      innerTab: 'gecelik',
+      splitterModel: 10,
+      treemmenu:[]
+      //menu child
+
+      // selected: { default: false},
+      //  isActive: false
     }
   },
-
+//   watch: {
+    
+// },
+  // computed: {
+  //   ...mapState([
+  //     'stokListData.anakategori'
+  //   ])
+  // },
+ async created(){
+    //  await this.$store.dispatch('anakategori')
+    // this.anakategorilists=this.$store.state.stok.anakategorilist
+    
+  },
+ async mounted(){
+  //  this.anakategorilists=this.$store.state.stok.anakategorilist
+   
+  //  this.isActive = this.selected;
+     await this.$store.dispatch('anakategori')
+      //  console.log(this.anakategorilists);
+      //  this.anakategorilists=this.$store.state.stok.anakategorilist
+    //  console.log(this.anakategorilists);
+        // if(this.anakategorilists){
+          // this.parseTree(this.anakategorilists)
+        // }
+    //  this.debouncemenulist(this.anakategorilists)
+   
+    //  console.log(this.$store.state.stok.anakategorilist);
+      console.log(this.treemmenu);
+  }, 
+  computed: {
+    
+    // mix the getters into computed with object spread operator
+    ...mapGetters([
+      'anakategorilists',
+      
+    ]),
+    // anakategorilists(){
+    //   return this.$store.state.stok.anakategorilist
+    // }
+  
+    // anakategorilists: {
+    //   get () {
+    //     return this.$store.state.stok.anakategorilist
+    //   },
+      
+    
+    //  } 
+  },
   methods:{
+    
     debounceFunc: debounce(function () {
         
         this.checkMenu()
@@ -170,7 +309,9 @@ export default {
         
         this.checkMenu2()
       }, 1) ,
-      
+      // debouncemenulist: debounce(function(val){
+      //   this.parseTree(val)
+      // },1000),
     checkMenu () {
       if (this.menuOver || this.listOver) {
         this.menu = true
@@ -198,6 +339,37 @@ export default {
     // ibo(){
     //   console.log("object");
     // }
+     parseTree(selfQ, parentID=null){
+      //  console.log(selfQ);
+          let treemmenu = [];
+
+
+          selfQ.forEach((value, index) => {
+
+            if(value.parentid === parentID){
+              // console.log(value);
+              const children = this.parseTree(selfQ, value._id);
+
+              if (children.length > 0) {
+                // value.children = children;
+
+                Vue.set(value, 'children', children);
+
+              }
+
+              treemmenu.push(value);
+
+            }
+          });
+
+          this.treemmenu=treemmenu;
+
+            return this.treemmenu
+
+
+
+
+        },
 },
 watch: {
     menuOver (val) {
@@ -216,7 +388,10 @@ watch: {
       this.main_tab="c"
       this.debounceFunc2()
     },
-   
+    anakategorilists(val) {
+      this.parseTree(val)
+      
+    },
   },
 }
 </script>
@@ -375,4 +550,61 @@ a.menu_link:hover + div{
 /* a.menu_link:first-child:hover{
   display:block;
 } */
+// menu tab 
+// ul, li{ list-style: none; padding:0; margin:0; }
+      
+      .ullistchild{
+        margin-top:0px; 
+        margin-left:0px; 
+        padding-left:20px;
+        
+        } 
+    //  ul.ullistchild:hover{
+    //     font-weight: bold;
+        
+    //     } 
+    .listchild:hover{
+      font-weight: bold;
+      }
+      .listchild:first-child{
+        padding-top:0px;
+        }
+     .listchild{
+      list-style: none;
+      background :none !important;
+      padding-top:10px;
+      padding-left:0px;
+      
+      }
+     
+    
+      
+// li{border-right: 2px solid rgb(240,240,240) ;}
+// nav { position: relative;}
+// li{ width: 20%; height: 40px; padding-left:15px; padding-top:10px;}
+// li:hover { cursor:pointer; text-decoration: underline; background-color:rgb(240,240,240) ;}
+// li:hover section{ display: block; }
+// section{ display: block ; width: 80%; height:100%; position: absolute; right:1.5%; top:-9999px; text-align: center;   margin-left:-9999px}
+// li[data-role="thumb-1"], section[data-role="content-1"] { z-index:1; top:0.1%}
+
+
+// li[data-role="thumb-2"]:hover section[data-role="content-2"]{ top:0.01% }
+// li[data-role="thumb-3"]:hover section[data-role="content-3"]{ top:0.01% }
+// li[data-role="thumb-4"]:hover section[data-role="content-4"]{ top:0.01% }
+
+  // nav {  position: relative}
+  // li{ border-right: 5px solid rgb(240,240,240) ; width: 20%; height: 40px; padding-left:15px; padding-top:10px;}
+  // li:hover { cursor:pointer; background:rgb(240,240,240); text-decoration: underline; }
+  // li:hover section{ display: block;}  
+  // section{ display: none; width: 80%; height:100%; position: absolute; right:1%; top:-9999px; text-align: center; 
+
+  // // background: rgb(255,255,255); z-index: 10; margin-left:-9999px}
+  //  z-index: 1; margin-left:-9999px}
+  // li[data-role="thumb-1"], section[data-role="content-1"] { z-index=1; top:2% }
+  
+  // li[data-role="thumb-2"]:hover section[data-role="content-2"]{ top:2% }
+  // li[data-role="thumb-3"]:hover section[data-role="content-3"]{ top:2% }
+  // li[data-role="thumb-4"]:hover section[data-role="content-4"]{ top:2% }
+  // li{  width: 100%;   }
+  
 </style>

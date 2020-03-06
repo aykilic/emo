@@ -613,11 +613,11 @@
           
          }
       },
-      watch:{
-          vselected(){
+      // watch:{
+      //     vselected(){
 
-          }
-      },
+      //     }
+      // },
       updated() {
         // this.$refs.nodes.expandAll();
       },
@@ -661,6 +661,9 @@
         this.treemselected(dem)
         // console.log(this.simple);
         // Loading.hide()
+        this.$nextTick(function () {
+              this.$refs.nodes.expandAll();
+            })
       },
       methods:{
         // ******************************************
@@ -720,9 +723,7 @@
             
           
           // await console.log(this.varyanttreem);
-          this.$nextTick(function () {
-              this.$refs.nodes.expandAll();
-            })
+          
             // Loading.hide()
         },
         //TODO: varyant listeleri

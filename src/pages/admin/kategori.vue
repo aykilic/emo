@@ -448,7 +448,7 @@ import {Loading} from 'quasar'
         this.treem=treem;
         // console.log(this.treem);
         return this.treem
-      },
+    },  
 
       editItem (item) {
         this.selected=null

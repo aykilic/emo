@@ -62,8 +62,10 @@ type Query{
     user(id: ID!): User!
     users: [User!]!
     Query:[kategori]
+    anakategoriQuery(parentid:ID):[Stoktur]
     birimList:[birim]
     imgurlQuery(id:ID!):[Stoktur]
+    
     # altimgurlQuery(id:String!):[Varyantalt]
     
     
