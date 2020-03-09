@@ -4,9 +4,13 @@
       <li v-for='(tab, index) in tabs'
         :key='tab.title'
         @mouseover='selectTab(index)'
-        :class='{"tab__selected": (index == selectedIndex)}'>
+        :class='{"tab__selected": (index == selectedIndex)}'
+        @click="open(tab.title)"
+        >
         {{ tab.title }}
       </li>
+            
+    
     </ul>
     <slot></slot>
   </div>
@@ -20,13 +24,24 @@ export default {
       default: 'light'
     }
   },
+//   created() {
+//         this.$router.options.routes.forEach(route => {
+//             this.tabs.push({
+//                 name: route.name
+//                 , path: route.path
+//             })
+//         })
+//     },
   data () {
     return {
       selectedIndex: 0, // the index of the selected tab,
-      tabs: []         // all of the tabs
+    //   tabs: []         // all of the tabs
+      tabs: []
     }
   },
   created () {
+              
+        
     this.tabs = this.$children
   },
   mounted () {
@@ -40,6 +55,11 @@ export default {
       this.tabs.forEach((tab, index) => {
         tab.isActive = (index === i)
       })
+    },
+    open(a){
+        this.$router.push('/' + a)
+        this.$emit('menu',false);
+        // window.location = '/'+a;
     }
   }
 }
@@ -54,7 +74,7 @@ export default {
     margin-top:0px;
     padding: 0px;
     width:20%;
-    height:310px;
+    height:420px;
     border-right: 5px solid rgb(240,240,240);
     
   }

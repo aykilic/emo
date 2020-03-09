@@ -5,13 +5,11 @@
        
         <div class="row q-pt-lg col-md-8 col-sm-10 col-xs-12 grid ">
         <div class="col-md-4 col-sm-6   one">
-          <router-link to="/">
           <q-img
           src="statics/Emose_Logo.jpg"
+          
           style=" max-width: 140px"
-          />
-          </router-link>
-          </div>
+          /></div>
         <div class="col-md-4 col-sm-12 col-xs-12 two self-center justify-center" >
 
           <q-input rounded outlined dense v-model="search" class="main_search" placeholder="Kategori yada Ürün Ara" >
@@ -56,10 +54,8 @@
       
      
       
-      <!-- <transition name="fade"> -->
-
+      
         <router-view />
-      <!-- </transition> -->
         </div>
           <q-page-sticky expand position="top">
             <!-- <div> -->
@@ -89,11 +85,11 @@
           animated
           transition-prev="fade"
           transition-next="fade"
-          class="row col-md-8 col-sm-10 col-xs-12 shadow-10	"
+          class="col-8 shadow-10	"
           @mouseover= "listOver = true" @mouseout= "listOver = false"
           
         >
-          <q-tab-panel  name="a" style="padding-left:0; " >
+          <q-tab-panel name="a" style="padding-left:0; ">
            <!--  <ul class="ibo"  style="width:15%;float:left;height:300px;border-right: 5px solid rgb(240,240,240) ;margin-bottom:10px">
               <li v-for="(anakategorilist,index) in anakategorilists" :key="index" @mouseover="selected(true)">
                 {{anakategorilist.stokturad}}
@@ -117,12 +113,11 @@
               </menu-tab>
               
             </menu-tabs> -->
-            <a-tabs  style= "" @menu="menu=$event">
-              <a-tab title="Lohusa" class="row col-12"  >
-                
+            <a-tabs style= "">
+              <a-tab title="Lohusa" class="row col-12">
                 <div  class="col-3 q-pl-md" >
                   <ul class= "ullistchild" >
-                      <li class="listchild" >Lohusa Gecelik</li>
+                      <li class="listchild">Lohusa Gecelik</li>
                       <li class="listchild">Lohusa Pijama</li>
                       <li class="listchild">Lohusa Tac</li>
                       <li class="listchild">Lohusa Sabahlık</li>
@@ -141,26 +136,19 @@
                 transition="fade"
                 class=""
                 >
-                <div class="row items-start q-col-gutter-x-md">
-                <q-card flat class="my-card col-6 ">
-                  
+                <div class="row  col-12 q-col-gutter-x-md">
+                <q-card flat class="col-6 ">
                   <q-img
                       
                       src="../statics/emose_h200.jpg"
-                      style=" height: 400px;"
                     >
                   </q-img>
-                  
                 </q-card>
-                <q-card flat class="my-card col-6 ">
-                  
+                <q-card flat class="col-6 ">
                   <q-img 
-                      flat
                       src="../statics/emose1_h200.jpg"
-                      style=" height: 400px;"
                     >
                   </q-img>
-                  
                 </q-card>
                 </div>
                 </q-intersection>
@@ -222,7 +210,7 @@ import Vue  from 'vue'
 import {debounce} from 'quasar'
 import {mapState} from 'vuex'
 import {mapGetters } from 'vuex'
-import router from "../router"
+
 import menuTab from '../components/menu/tab.vue'
 import menuTabs from '../components/menu/tabs.vue'
 import aTab from '../components/menu/atab.vue'
@@ -245,13 +233,13 @@ export default {
       listOver: false,
       menuOver1: false,
       menuOver2: false,
-      // splitterModel: 20,
+      splitterModel: 20,
       slide: 1,
       search: null,
       main_tab:"",
       // anakategorilists:[], 
       innerTab: 'gecelik',
-      // splitterModel: 10,
+      splitterModel: 10,
       treemmenu:[]
       //menu child
 
@@ -510,8 +498,8 @@ watch: {
 svg {
   display: inline-block;
   position: absolute;
-  // top:0;
-  // left: 0;
+  top:0;
+  left: 0;
 }
 .container {
   display: inline-block;
