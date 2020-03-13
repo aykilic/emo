@@ -5,9 +5,9 @@
         :key='tab.title'
         @mouseover='selectTab(index)'
         :class='{"tab__selected": (index == selectedIndex)}'
-        @click="open(tab.title)"
+        @click="open(tab.title,tab.titleid)"
         >
-        {{ tab.title }}
+        {{ tab.title }} 
       </li>
             
     
@@ -15,9 +15,12 @@
     <slot></slot>
   </div>
 </template>
-
 <script>
+import Vue  from 'vue'
+import {mapState} from 'vuex'
+import {mapGetters } from 'vuex'
 export default {
+  
   props: {
     mode: {
       type: String,
@@ -56,8 +59,15 @@ export default {
         tab.isActive = (index === i)
       })
     },
-    open(a){
-        this.$router.push('/' + a)
+    open(a,b){
+      // console.log(b);
+        
+        // this.$router.push({ path: `/products/${b}` })
+        // this.$store.dispatch('stoklistid', b)
+        // const path = `/${a}`
+        // if (this.$route.path !== path) this.$router.push(path)
+        //  this.$router.push({ path:'/'+a })
+        this.$router.push({ name: 'stoklist', params: { parentname: a, parentid : b }})
         this.$emit('menu',false);
         // window.location = '/'+a;
     }

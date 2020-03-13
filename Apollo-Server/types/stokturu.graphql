@@ -9,6 +9,7 @@ type kategori{
   _id:ID
   stokturad: String
   parentid: String
+  vars:[vars]
   children(_id:ID): kategori
   
 }

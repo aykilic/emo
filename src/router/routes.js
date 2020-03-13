@@ -1,17 +1,6 @@
 
 const routes = [
   {
-    path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Index.vue') },
-      { path: '/Lohusa', component: () => import('pages/products.vue') },
-      { path: '/Gecelik', component: () => import('pages/products.vue') },
-      { path: '/Pijama', component: () => import('pages/products.vue') },
-      { path: '/Günlük', component: () => import('pages/products.vue') },
-    ]
-  },
-  {
     path: '/admin',
     component: () => import('layouts/admin/AdminLayout.vue'),
     children: [
@@ -19,7 +8,21 @@ const routes = [
       { path: '/kategori', component: () => import('pages/admin/kategori.vue') },
       { path: '/stokekle', component: () => import('pages/admin/stokekle.vue') },
     ]
-  }
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/Index.vue') },
+      { path: ':parentname', name:'stoklist', component: () => import('pages/products.vue'), props:true},
+      // { path: ':stoklist/:stokad', name:'sales', component: () => import('pages/sales.vue')},
+      { path: ':parentname/:stokad', name:'sales', component: () => import('pages/sales.vue'),props:true},
+      
+      // { path: '/:stokid?',name:'lohusa', component: () => import('pages/products.vue') },
+    
+    ]
+  },
+  
 ]
 
 // Always leave this as last one

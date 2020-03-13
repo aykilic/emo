@@ -8,7 +8,10 @@
 <script>
 export default {
   props: 
-    {title:{ required: true }},
+    {
+      title:{ required: true },
+      titleid:""
+    },
   
   data () {
     return {

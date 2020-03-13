@@ -476,12 +476,14 @@
                   <q-btn @click="imagedelete(props.row.images)"  icon="delete" color="grey-7" flat round></q-btn>
                   </q-card-section>
                   <q-separator ></q-separator>
+                  <q-card-section>
                   <q-img
                     :src="props.row.images.imageurl"
-                    :ratio="1"
+                    
                     spinner-color="primary"
                     spinner-size="82px"
                   ></q-img>
+                  </q-card-section>
                 </q-card>
               </div>
               

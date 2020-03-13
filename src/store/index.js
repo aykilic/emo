@@ -18,6 +18,7 @@ Vue.use(Vuex, axios)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
+      
       stok,
     },
 

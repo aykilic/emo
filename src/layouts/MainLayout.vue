@@ -41,24 +41,16 @@
 
     </q-header>
 
-  
-
-    
     <q-page-container class="row flex-center">
       
       
       <div class="q-pt-xl col-md-8 col-sm-10 col-xs-12">
       <!-- TODO: slider -->
       
-      
-      
-
-      
-     
-      
       <!-- <transition name="fade"> -->
-
-        <router-view />
+        <keep-alive>
+        <router-view></router-view>
+        </keep-alive>
       <!-- </transition> -->
         </div>
           <q-page-sticky expand position="top">
@@ -115,18 +107,18 @@
               <menu-tab  name="Services" :selected="true">
                  <div class=" "> <h6>asdasdasd</h6></div>
               </menu-tab>
-              
+                
             </menu-tabs> -->
             <a-tabs  style= "" @menu="menu=$event">
-              <a-tab title="Lohusa" class="row col-12"  >
+              <a-tab v-for="(anakategorilist,index) in treemmenu" :key='index' :title="(anakategorilist.stokturad)" :titleid="(anakategorilist._id)" class="row col-12"  >
                 
                 <div  class="col-3 q-pl-md" >
-                  <ul class= "ullistchild" >
-                      <li class="listchild" >Lohusa Gecelik</li>
-                      <li class="listchild">Lohusa Pijama</li>
-                      <li class="listchild">Lohusa Tac</li>
-                      <li class="listchild">Lohusa Sabahlık</li>
-                      <li class="listchild">Lohusa Korse</li>
+                  <ul class= "ullistchild"  v-for="(altkategorilist,iindex) in anakategorilist.children" :key='iindex' >
+                      <li  class="listchild" @click="link(altkategorilist.stokturad,altkategorilist._id)">
+                        <!-- {{altkategorilist.stokturad}} -->
+                        {{ altkategorilist.stokturad.split('-').reverse().join(' ') }}
+                        </li> 
+                      
                     </ul>
                 </div>
                 <div class="col-3 q-pl-md">
@@ -167,9 +159,10 @@
                 
                 </div>
               </a-tab>
-              <a-tab title="Gecelik">Hello From Tab 2</a-tab>
+              <!-- /////////********************////////////////////// */ -->
+              <!-- <a-tab title="Gecelik">Hello From Tab 2</a-tab>
               <a-tab title="Pijama">Hello From Tab 3</a-tab>
-              <a-tab title="Günlük">Hello From Tab 4</a-tab>
+              <a-tab title="Günlük">Hello From Tab 4</a-tab> -->
               <!-- <div v-for="(anakategorilist,index) in treemmenu" :key='index' class=" "> -->
                 
                 <!-- <a-tab v-bind:title="anakategorilist.stokturad" class="">
@@ -187,11 +180,7 @@
                       style="max-width: 200px; height: 100px;"
                     >
                   </q-img>
-                  
-                    
                   </a-tab> -->
-
-                  
               <!-- </div> -->
               
             </a-tabs>
@@ -267,8 +256,8 @@ export default {
   //     'stokListData.anakategori'
   //   ])
   // },
- async created(){
-    //  await this.$store.dispatch('anakategori')
+  async beforeCreate(){
+      await this.$store.dispatch('anakategori')
     // this.anakategorilists=this.$store.state.stok.anakategorilist
     
   },
@@ -276,7 +265,7 @@ export default {
   //  this.anakategorilists=this.$store.state.stok.anakategorilist
    
   //  this.isActive = this.selected;
-     await this.$store.dispatch('anakategori')
+    //  await this.$store.dispatch('anakategori')
       //  console.log(this.anakategorilists);
       //  this.anakategorilists=this.$store.state.stok.anakategorilist
     //  console.log(this.anakategorilists);
@@ -286,7 +275,7 @@ export default {
     //  this.debouncemenulist(this.anakategorilists)
    
     //  console.log(this.$store.state.stok.anakategorilist);
-      console.log(this.treemmenu);
+      // console.log(this.treemmenu);
   }, 
   computed: {
     
@@ -348,13 +337,17 @@ export default {
         this.menu = false
       }
     },
-    // ibo(){
-    //   console.log("object");
-    // }
+    link(a,b){
+      this.menu=false
+        this.$router.push({ name: 'stoklist', params: { parentname: a, parentid : b }})
+      //  this.$router.push({ path: '/', query:   a })
+      // this.$router.push({ path: `${a}` })
+      console.log(a,b);
+        
+    },
      parseTree(selfQ, parentID=null){
       //  console.log(selfQ);
           let treemmenu = [];
-
 
           selfQ.forEach((value, index) => {
 
@@ -367,6 +360,8 @@ export default {
 
                 Vue.set(value, 'children', children);
 
+              }else{
+                Vue.set(value,'children',[])
               }
 
               treemmenu.push(value);
@@ -375,7 +370,7 @@ export default {
           });
 
           this.treemmenu=treemmenu;
-
+          // console.log(this.treemmenu);
             return this.treemmenu
 
 

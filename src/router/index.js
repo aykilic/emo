@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+// var qs = require('qs');
 import routes from './routes'
-
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+};
 Vue.use(VueRouter)
 
 /*
@@ -16,9 +19,25 @@ Vue.use(VueRouter)
 
 export default function (/* { store, ssrContext } */) {
   const Router = new VueRouter({
+    // stringifyQuery  : query => {
+      
+    //   let result = qs.stringify(query, { format: 'RFC1738' })
+    //   console.log(result);
+    //   return result ? (' ' + result) : '-'
+    // },
+  //   parseQuery(query) {
+  //     console.log(query);
+  //     return qs.parse(query);
+  // },
+  // stringifyQuery(query) {
+    
+  //     var result = qs.stringify(query, { format: 'RFC1738' });
+  //     console.log(result);
+  //     return result ? ('' + result) : '';
+  // },
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes,
-
+    
     // Leave these as they are and change in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath

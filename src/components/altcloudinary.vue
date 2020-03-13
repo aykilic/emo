@@ -100,8 +100,8 @@ name: "altcloud",
                           this.filename=data.original_filename
                           this.publicid=data.public_id
                           this.path=url+'emose/varyant/58x58'
-                          console.log(response.data);
-                          console.log("public_id", this.results.public_id);
+                          // console.log(response.data);
+                          // console.log("public_id", this.results.public_id);
                           this.imageurl = data.url
                           this.cuploading = false
                           this.removeFile(this.files[0])

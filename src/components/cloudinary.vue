@@ -93,9 +93,9 @@ name: "cloud",
                           this.results=response.data;
                           this.filename=data.original_filename
                           this.publicid=data.public_id
-                          this.path=url + '/emose/'
-                          console.log(response.data);
-                          console.log("public_id", this.results.public_id);
+                          this.path=url + '/'
+                          // console.log(response.data);
+                          // console.log("public_id", this.results.public_id);
                           this.imageurl = data.url
                           this.cuploading = false
                           this.removeFile(this.files[0])
