@@ -419,7 +419,7 @@ import {Loading} from 'quasar'
          this.example1 = res.data.data.Query;
         // this.example2 = this.example1[0].parentid;
 
-        // console.log(this.example2);
+        //  console.log(this.example1);
         this.parseTree(this.example1)
 
 
@@ -428,7 +428,7 @@ import {Loading} from 'quasar'
 
       parseTree(selfQ, parentID=null) {
         let treem = [];
-       console.log(selfQ);
+      //  console.log(selfQ);
       
         selfQ.forEach((value, index) => {
 
@@ -460,7 +460,7 @@ import {Loading} from 'quasar'
       },
 
       createStoktur(){
-         console.log(this.ustkategoriid,this.selected);
+        //  console.log(this.ustkategoriid,this.selected);
         
         if(this.selected=="" ){
             this.ustkategoriid=null

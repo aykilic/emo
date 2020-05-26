@@ -7,6 +7,7 @@ export default {
       anakategorilist:[],
       anakategorizelist:[],
       activestoklistid:"",
+      varyantlist:[],
     },
     
       // setUserid(state, type) {
@@ -50,7 +51,12 @@ export default {
       //   vuexContext.commit('setUserid', type)
   
       // }, 
-      
+     async anafunction({dispatch,commit}) {
+      dispatch("varyantlist")
+        dispatch("anakategori")
+         
+
+      },
 
       async anakategori({commit}) {
         
@@ -62,18 +68,20 @@ export default {
               Query{
                 stokturad
                 parentid
+                fiyat1
+                indirim
                 _id
                 vars{
                   images{
                     path
                     publicid
-                }}
-                  
+                }
+              }
+                
                     }
             }`,
        }
-       ).then(async (response) => { 
-                     
+       ).then( (response) => { 
             let stokListData = response.data.data.Query
             
           commit('set_anakategorilist',stokListData);
@@ -83,10 +91,73 @@ export default {
             // commit('set_anakategorilist',stokListData)
            // commit('changeLoadingState', false)
          })
-       },
+        //  await axios.post(
+        //   'http://localhost:4000/graphql', {
+        //       query:`query childvaryantQuery{
+        //           childvaryantQuery{
+        //           _id
+        //           stokid
+        //           parentid
+        //           varyantname
+        //           color
+        //           vars{
+        //               images{
+        //                       publicid
+        //                       path
+        //                       filename
+        //                       imageurl
+        //                       id
+        //               }
+        //           }
+        //           }
+        //           }`,
+              
+        //   }).then( (response) => { 
+                     
+        //     let varyantlist = response.data.data.childvaryantQuery
+            
+        //    commit('set_varyantlist',varyantlist);
+        //   })
+        },
       stoklistid({commit}, type){
         commit('set_activestoklistid', type);
       //  console.log(type);
+      },
+      async varyantlist({commit}){
+        let varyantlist=await axios.post(
+          'http://localhost:4000/graphql', {
+              query:`query childvaryantQuery{
+                  childvaryantQuery{
+                  _id
+                  stokid
+                  parentid
+                  varyantname
+                  color
+                  vars{
+                      images{
+                              publicid
+                              path
+                              filename
+                              imageurl
+                              id
+                      }
+                  }
+                  }
+                  }`,
+              
+          }) 
+                     
+               
+            
+               commit('set_varyantlist',varyantlist.data.data.childvaryantQuery);
+          
+          
+
+            // commit('set_anakategorilist',stokListData)
+           // commit('changeLoadingState', false)
+         
+          
+       
       }
       //  async anakategorize({commit,state}) {
       //   // let ibo = []
@@ -148,6 +219,10 @@ export default {
       set_activestoklistid(state, type){
         state.activestoklistid = type
         //  console.log(state.activestoklistid);
+      },
+      set_varyantlist(state, type){
+        state.varyantlist = type
+        //  console.log(state.activestoklistid);
       }
     },
     getters:{ 
@@ -160,7 +235,10 @@ export default {
       },
       activestoklistids:(state,getters)=>{
         return state.activestoklistid
-      }
+      },
+      getvaryantlist:(state,getters)=>{
+        return state.varyantlist
+      },
   
       // gusermail(state) {
       //

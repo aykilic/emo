@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+var Decimal = require('mongoose-float').loadType(mongoose, 2);
 const imagesSchema = new Schema({
   
   filename: {
@@ -46,23 +46,24 @@ const stokturuSchema = new Schema({
     type: Schema.ObjectId,
      default: null,
   },
-
+  fiyat1:{
+    type: Decimal,
+    default:null
+  },
+  fiyat2:{
+    type: Decimal,
+    default:null
+    // type: Number
+  },
+  indirim:{
+    type: Number,
+    default:1
+    // type: Number
+  },
   vars:
     [
       { images: imagesSchema }
-    ]
-    
-  
-  
-  
-  
-  ,
-    
-        
-  
-  
-  
-  
+    ],
   isvariant: {
     type: String,
     default: 2,

@@ -1,8 +1,6 @@
 <template>
     <q-page class=" row q-pt-md items-start q-col-gutter-md">
     
-      
-                
         <div  v-for="(list,index) in lists" :key="index" v-if="list.vars" class="col-md-3 col-sm-4 col-xs-6 ">
            
          <q-intersection
@@ -14,7 +12,7 @@
                <!-- <q-img src="../statics/emose_h200.jpg" /> -->
                
                <q-img 
-                style="height:370px;" 
+                
                 :src="list.vars.images.path + list.vars.images.publicid" 
                 alt="Not Found" 
                 
@@ -197,7 +195,7 @@
 
                      }
                   })
-                  //  console.log(resultt);
+                  //   console.log("resultt",resultt);
                    this.lists=resultt
                },
                parseTree(selfQ, parentID){
@@ -234,8 +232,9 @@
 
                },
                select(a,b){
-
-                  this.$router.push({ name: 'sales', params: { stokid: a,stokad:b }})
+                  // stoklistid
+                   this.$store.dispatch('stoklistid',a)
+                  this.$router.push({ name: 'sales', params: { stokid: a, stokad:b }})
                   
                }
         }

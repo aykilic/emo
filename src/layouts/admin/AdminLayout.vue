@@ -130,6 +130,14 @@
                             <q-item-label>Stok Detay</q-item-label>
                           </q-item-section>
                         </q-item>
+                        <q-item to="/varyantekle" exact>
+                          <q-item-section avatar>
+                            <q-icon name="" />
+                          </q-item-section>
+                          <q-item-section>
+                            <q-item-label>Varyant Tanımlama</q-item-label>
+                          </q-item-section>
+                        </q-item>
                       </q-expansion-item>
         <q-item  to="/admin" exact>
           <q-item-section avatar>

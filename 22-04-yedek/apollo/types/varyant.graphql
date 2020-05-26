@@ -1,0 +1,68 @@
+
+type varyantkategori{
+  _id:ID
+  stokturid: ID
+  parentid: ID
+  color:String
+  miktar:Int
+  fiyat1:Float
+  fiyat2:Float
+  varyantname:String
+  children(_id:ID): varyantkategori
+  
+}
+type vars{
+  images:images
+}
+
+type images{
+  filename:String
+  imageurl:String
+  publicid:String
+  path:String
+  id:ID
+}
+type varyant{
+  _id:ID
+  varyantname: String
+  stokid:ID
+  parentid:ID
+  color:String
+  miktar:Int
+  fiyat1:Float
+  fiyat2:Float
+  vars:[vars]
+  createdAt: String
+}
+# type varyantalt{
+#   _id:ID
+#   varyantvalue: String
+#   color:String
+#   vars: [vars]
+#   varyantname: String
+#   varyantalt:[varyantalt]
+#   createdAt: String
+# }
+
+type Query{
+    
+    varyantschemaQuery(stokid: ID!):[varyantkategori]
+    varyantQuery(stokid:ID, parentid: ID):[varyantkategori]
+    altvaryantQuery(stokid: ID!):varyant
+    childvaryantQuery:[varyant]
+    varyantimgurlQuery(id: ID!):[varyant]
+    varyantsecimgQuery(stokid:ID!,varyantname:String):[varyant]
+    varyantname(stokid:ID!):[varyant]
+}
+type Mutation{
+  createVaryant(stokid: ID!,parentid:ID, varyantname: String): varyant
+  deleteVaryant(id:ID!): varyant
+  # updateVaryantval(stokid:ID!, varyantvalue:String,varyantaltvalue:String):[varyant]
+  # updateAltVaryantval(stokid:ID!,varyantaltid:ID!,altvaryantaltid:ID, varyantname: String, varyantaltname: String):[varyant]
+  # addaltVaryant(stokid:ID,altvaryantname:String, altvaryantvalue:String): varyant
+  # deletealtVaryant(id:String!): varyantalt
+  updatevaryantimageurl(id:ID!,imageurl: String,filename:String,publicid:String,path:String): varyant
+  updatevaryantcolor(id:ID!,color: String): varyant
+  updatevaryantcolors(id:[ID],color: [String],miktar:[Int],fiyat1:[Float],fiyat2:[Float],label:[String]): varyant
+  deletevaryantimage(id:ID!,imageid:ID,path:String): varyant
+}

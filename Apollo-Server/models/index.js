@@ -3,7 +3,8 @@ const stokturu = require('./stokturu');
 // const images = require('./stokturu');
 const birim = require('./birim');
 const varyant = require('./varyant');
-const varyantalt = require('./varyantalt');
+const varyantValue = require('./varyantValue');
+const varyant_skus = require('./varyant_skus');
 const photo = require('./photo');
 const { GraphQLUpload } = require('graphql-upload')
 // const file = require('./File');
@@ -35,7 +36,8 @@ module.exports = {
     ...stokturu,
     birim,
     varyant,
-    varyantalt,
+    varyantValue,
+    varyant_skus,
     photo,
     UploadType,
     // images

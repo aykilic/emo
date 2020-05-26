@@ -14,21 +14,50 @@ module.exports = {
     // return cars.find(car => (car.id = args.id));
     return await context.Models.stokturu.find()
   },
-  
+  StokturuQuery:async (parent, {id}, { Models }) => {
+    const stokturu = Models.stokturu
+    
+    return await stokturu.find({_id:id})
+  },
   birimList: async (parent, args, {Models})=> {
     // return await User.find({}).sort({'createdAt': 'asc'})
     // return cars.find(car => (car.id = args.id));
     return await Models.birim.find()
   },
-  varyantschemaQuery: async (parent, {stokid}, {Models})=> {
-     const varyant=Models.varyant
-    return await varyant.find({stokid:stokid})
-  },
-  varyantQuery: async (parent, {stokid, parentid }, { Models }) => {
+  // varyantschemaQuery: async (parent, {stokid}, {Models})=> {
+  //    const varyant=Models.varyant
+  //   return await varyant.find({stokid:stokid})
+  // },
+  varyantQuery: async (parent, args, { Models }) => {
     const varyant = Models.varyant
     //  console.log(id,parentid);
     
-    return await varyant.find({stokid:stokid,parentid:parentid})
+    return await varyant.find()
+  },
+  altvaryantQuery: async (parent, {varyant_id}, { Models }) => {
+    // console.log(varyant_id);
+    const varyant = Models.varyantValue
+    //  console.log(id,parentid);
+    
+    return await varyant.find({varyant_id:ObjectID(varyant_id)})
+  },
+  allvaryantQuery: async (parent, args, { Models }) => {
+    // console.log(varyant_id);
+     const varyant = Models.varyant
+    // //  console.log(id,parentid);
+    
+    // return await varyant.find({varyant_id:ObjectID(varyant_id)})
+    return await varyant.aggregate([
+      { $lookup:
+          {
+             from: "varyantValue",
+             localField: "_id",
+             foreignField: "varyant_id",
+             as: "varyant_options"
+          }
+      }
+  ])
+  // console.log(a);
   },
   anakategoriQuery: async (parent, { parentid }, { Models }) => {
     const stokturu = Models.stokturu
@@ -36,18 +65,24 @@ module.exports = {
     
     return await stokturu.find({parentid:null})
   },
-  altvaryantQuery: async (parent, { stokid}, { Models }) => {
-    const varyant = Models.varyant
-    //  console.log(id,parentid);
+  // altvaryantQuery: async (parent, { stokid}, { Models }) => {
+  //   const varyant = Models.varyant
+  //   //  console.log(id,parentid);
     
-    return await varyant.find({stokid:ObjectID(stokid)})
-  },
+  //   return await varyant.find({stokid:ObjectID(stokid)})
+  // },
   childvaryantQuery: async (parent, { stokid }, { Models }) => {
     const varyant = Models.varyant
     //  console.log(id,parentid);
     
     return await varyant.find({stokid:ObjectID(stokid)})
   },
+  // childvaryantQuery: async (parent, args, { Models }) => {
+  //   const varyant = Models.varyant
+  //   //  console.log(id,parentid);
+    
+  //   return await varyant.find()
+  // },
   // StokChildren: async (parent, args, context) => {
 
 
@@ -88,15 +123,15 @@ module.exports = {
   //   // console.log(veri);
     
   // },
-  varyantimgurlQuery: async (parent, {id}, {Models})=> {
-    const varyant=Models.varyant
-    //  console.log({id});
+  // varyantimgurlQuery: async (parent, {id}, {Models})=> {
+  //   const varyant=Models.varyant
+  //   //  console.log({id});
     
-  //  return await stokturu.find({_id:id})
-    return await varyant.find({ _id: ObjectID(id) },
+  // //  return await stokturu.find({_id:id})
+  //   return await varyant.find({ _id: ObjectID(id) },
     
-    )
-  },
+  //   )
+  // },
   imgurlQuery: async (parent, {id}, {Models})=> {
     const stokturu = Models.stokturu
     // console.log({id});
@@ -173,14 +208,21 @@ module.exports = {
   // return veri
   
   // },
-  varyantname: async (parent, { stokid }, { Models }) => { 
-    const stokturu = Models.stokturu
-    const varyant = Models.varyant
+  // varyantname: async (parent, { stokid }, { Models }) => { 
+  //   const stokturu = Models.stokturu
+  //   const varyant = Models.varyant
     
-    const veri = await varyant.find({ stokid: stokid, parentid:null } 
-    )
-    return veri
-  }
-
+  //   const veri = await varyant.find({ stokid: stokid, parentid:null } 
+  //   )
+  //   return veri
+  // }
+  hasvaryantsatirQuery: async (parent, {id}, {Models})=> {
+    const model = Models.varyant_skus
+    // console.log({id});
+    
+  //  return await stokturu.find({_id:id})
+    return await model.find({stokid:ObjectID(id)})
+  },
+  
 };
 

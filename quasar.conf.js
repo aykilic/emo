@@ -61,11 +61,13 @@ module.exports = function (ctx) {
 
       // Quasar plugins
       plugins: [
+        'Notify',
         'Loading',
         'Dialog'
       ],
       config: {
-        loading: { /* Loading defaults */ }
+        loading: { /* Loading defaults */ },
+        notify: { /* look at QUASARCONFOPTIONS from the API card (bottom of page) */ }
       }
     },
 

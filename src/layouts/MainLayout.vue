@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header :reveal-offset="10" reveal >
+    <q-header :reveal-offset="1" reveal >
       <q-toolbar class="text-amber-1 bg-white text-grey-9 text-weight-bold justify-center" >
        
         <div class="row q-pt-lg col-md-8 col-sm-10 col-xs-12 grid ">
@@ -26,18 +26,18 @@
           
           <div class="title-icons text-center  text-caption"  ><q-icon class="icon-person text-center"   style="font-size: 26px;;"/><q-item-label >Hesabım</q-item-label>  </div>
           <div class="q-ml-lg title-icons text-center   text-caption"><q-icon class="icon-heart text-center"    style="font-size: 26px;"/><q-item-label >Favorilerim</q-item-label></div>
-          <div class="q-ml-lg title-icons text-center  text-caption"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>2</q-badge></q-icon><q-item-label >Sepetim</q-item-label></div>
+          <div class="q-ml-lg title-icons text-center  text-caption"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>4</q-badge></q-icon><q-item-label >Sepetim</q-item-label></div>
         
           </div>
           
         </div>
       
-      </q-toolbar> 
-      <div class="container">
-  <svg viewBox="0 5 500 40" preserveAspectRatio="xMinYMin meet">
-    <path d="M-0,15 C190,70 220,-25 500,35  L500,00 L0,0 Z" style="stroke: none; fill:white;"></path>
-  </svg>
-</div>
+      </q-toolbar>
+      <div class="container " >
+        <svg viewBox="0 5 500 40" preserveAspectRatio="xMinYMin meet">
+          <path d="M-0,15 C190,70 220,-25 500,35  L500,00 L0,0 Z" style="stroke: none; fill:white;"></path>
+        </svg>
+      </div>
 
     </q-header>
 
@@ -53,7 +53,7 @@
         </keep-alive>
       <!-- </transition> -->
         </div>
-          <q-page-sticky expand position="top">
+          <q-page-sticky expand position="top" style="z-index:1">
             <!-- <div> -->
                 
             <q-tabs
@@ -86,29 +86,7 @@
           
         >
           <q-tab-panel  name="a" style="padding-left:0; " >
-           <!--  <ul class="ibo"  style="width:15%;float:left;height:300px;border-right: 5px solid rgb(240,240,240) ;margin-bottom:10px">
-              <li v-for="(anakategorilist,index) in anakategorilists" :key="index" @mouseover="selected(true)">
-                {{anakategorilist.stokturad}}
-                
-              </li>
-            </ul>
-
-
-            <div v-for="(anakategorilist,index) in anakategorilists" :key='index'>
-              <div label="{anakategorilist.stokturad}" v-show="isActive">
-                {{anakategorilist.id}}
-              </div>
-            </div> -->
-            <!-- <menu-tab >
-
-            </menu-tab> -->
-            <!-- <menu-tabs >
-              
-              <menu-tab  name="Services" :selected="true">
-                 <div class=" "> <h6>asdasdasd</h6></div>
-              </menu-tab>
-                
-            </menu-tabs> -->
+           
             <a-tabs  style= "" @menu="menu=$event">
               <a-tab v-for="(anakategorilist,index) in treemmenu" :key='index' :title="(anakategorilist.stokturad)" :titleid="(anakategorilist._id)" class="row col-12"  >
                 
@@ -117,6 +95,7 @@
                       <li  class="listchild" @click="link(altkategorilist.stokturad,altkategorilist._id)">
                         <!-- {{altkategorilist.stokturad}} -->
                         {{ altkategorilist.stokturad.split('-').reverse().join(' ') }}
+                        <!-- {{ altkategorilist.stokturad.split('-').join(' ') }} -->
                         </li> 
                       
                     </ul>
@@ -159,29 +138,8 @@
                 
                 </div>
               </a-tab>
-              <!-- /////////********************////////////////////// */ -->
-              <!-- <a-tab title="Gecelik">Hello From Tab 2</a-tab>
-              <a-tab title="Pijama">Hello From Tab 3</a-tab>
-              <a-tab title="Günlük">Hello From Tab 4</a-tab> -->
-              <!-- <div v-for="(anakategorilist,index) in treemmenu" :key='index' class=" "> -->
-                
-                <!-- <a-tab v-bind:title="anakategorilist.stokturad" class="">
-                  
-                  <div v-for="(anakategorichildlist,index) in anakategorilist.children" :key="index" class="row col-6" >
-                    <div class="">
-                    <ul class= "ullistchild " >
-                      <li class="listchild">{{anakategorichildlist.stokturad}}</li>
-                    </ul>  
-                    </div>
-                    
-                  </div>
-                  <q-img
-                      src="https://placeimg.com/500/300/nature"
-                      style="max-width: 200px; height: 100px;"
-                    >
-                  </q-img>
-                  </a-tab> -->
-              <!-- </div> -->
+              
+              
               
             </a-tabs>
             
@@ -257,11 +215,15 @@ export default {
   //   ])
   // },
   async beforeCreate(){
-      await this.$store.dispatch('anakategori')
+      // await this.$store.dispatch('anakategori')
+      // await this.$store.dispatch('varyantlist')
+      
+      
     // this.anakategorilists=this.$store.state.stok.anakategorilist
     
   },
  async mounted(){
+   this.$store.dispatch('anafunction')
   //  this.anakategorilists=this.$store.state.stok.anakategorilist
    
   //  this.isActive = this.selected;
@@ -292,7 +254,6 @@ export default {
     //   get () {
     //     return this.$store.state.stok.anakategorilist
     //   },
-      
     
     //  } 
   },
@@ -583,7 +544,7 @@ a.menu_link:hover + div{
       padding-left:0px;
       
       }
-     
+    
     
       
 // li{border-right: 2px solid rgb(240,240,240) ;}
