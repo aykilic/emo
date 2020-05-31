@@ -24,10 +24,11 @@
         
         <div class="row col-md-4 col-sm-12 col-xs-12 self-center justify-end three">
           
-          <div class="title-icons text-center  text-caption"  ><q-icon class="icon-person text-center"   style="font-size: 26px;;"/><q-item-label >Hesabım</q-item-label>  </div>
-          <div class="q-ml-lg title-icons text-center   text-caption"><q-icon class="icon-heart text-center"    style="font-size: 26px;"/><q-item-label >Favorilerim</q-item-label></div>
-          <div class="q-ml-lg title-icons text-center  text-caption"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>4</q-badge></q-icon><q-item-label >Sepetim</q-item-label></div>
-        
+          
+          <div class=" title-icons text-center   text-caption"><q-icon class="icon-heart text-center"    style="font-size: 26px;"/><q-item-label >Favorilerim</q-item-label></div>
+          <div class="q-ml-lg title-icons text-center  text-caption"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>{{get_basketlist.length}}</q-badge></q-icon><q-item-label >Sepetim</q-item-label></div>
+          <div v-if="this.get_uid =='' " class="q-ml-lg title-icons text-center  text-caption" @click="login()" ><q-icon class="icon-person text-center"   style="font-size: 26px;"/><q-item-label >login</q-item-label>  </div>
+          <div v-else class="q-ml-lg title-icons text-center  text-caption"  ><q-icon class="icon-person text-center"   style="font-size: 26px;"/><q-item-label >Hesabım</q-item-label>  </div>
           </div>
           
         </div>
@@ -43,13 +44,17 @@
 
     <q-page-container class="row flex-center">
       
+      <!-- <div  class="q-pt-xl col-md-8 col-sm-10 col-xs-12"> -->
+          
+      <!-- </div> -->
       
       <div class="q-pt-xl col-md-8 col-sm-10 col-xs-12">
       <!-- TODO: slider -->
       
       <!-- <transition name="fade"> -->
         <keep-alive>
-        <router-view></router-view>
+          <!-- <load v-if="$root.loading"></load> -->
+        <router-view ></router-view>
         </keep-alive>
       <!-- </transition> -->
         </div>
@@ -174,6 +179,10 @@ import menuTab from '../components/menu/tab.vue'
 import menuTabs from '../components/menu/tabs.vue'
 import aTab from '../components/menu/atab.vue'
 import aTabs from '../components/menu/atabs.vue'
+import load from '../pages/skeleton/deneme.vue'
+import axios from 'axios'
+import gql from 'graphql-tag'
+import { Cookies } from "quasar";
 export default {
   name: 'MainLayout',
 
@@ -182,6 +191,7 @@ export default {
     aTabs,
     menuTab,
     menuTabs,
+    load
 
   },
 
@@ -209,21 +219,63 @@ export default {
 //   watch: {
     
 // },
-  // computed: {
-  //   ...mapState([
-  //     'stokListData.anakategori'
-  //   ])
-  // },
+  
+    computed: {
+    
+    ...mapGetters([
+      'anakategorilists',
+      'get_guid',
+      'get_basketlist',
+      'get_uid'
+    ]),
+    
+  },
   async beforeCreate(){
-      // await this.$store.dispatch('anakategori')
-      // await this.$store.dispatch('varyantlist')
-      
+    // await this.$store.dispatch('anakategori')
+    // await this.$store.dispatch('varyantlist')
       
     // this.anakategorilists=this.$store.state.stok.anakategorilist
-    
   },
  async mounted(){
    this.$store.dispatch('anafunction')
+     console.log("uid",this.get_guid);
+                            // let guid =Cookies.get('guid');
+                              //  console.log(Cookies.get('guid'));
+                              //  console.log(this.get_guid);
+                               if(this.get_uid == ""){
+                                      if( (Cookies.get('guid') == null ) ){
+                                        if((this.get_guid == "") || (this.get_guid == null)){
+                                        // console.log("1");
+                                     await this.$apollo.mutate({
+                                          mutation: gql`
+                                            mutation createguid_mutation {
+                                              createguid_mutation
+                                                {
+                                                  _id
+                                              }
+                                            }
+                                          `,
+                                        })
+                                        .then(data => {
+                                          // Cookies.set('guid', data.data.createguid_mutation._id, { expires: 30, path: '' });
+                                          this.$store.dispatch('add_guid',data.data.createguid_mutation._id)
+                                        });
+                                      }else{
+                                    console.log("2");
+                                    this.$store.dispatch('add_guid')
+                                  }
+                                  }else{
+                                    console.log("3");
+                                    this.$store.dispatch('add_guid')
+                                  }
+                                  this.$store.dispatch('search_basketlist',this.get_guid)
+        }else{
+          // this.$store.dispatch('set_login',this.get_guid)
+          // Cookies.remove('guid');
+          // this.$store.dispatch('add_uid')
+        }
+        
+      //  await console.log("get_basketlist",this.get_basketlist);
   //  this.anakategorilists=this.$store.state.stok.anakategorilist
    
   //  this.isActive = this.selected;
@@ -239,13 +291,13 @@ export default {
     //  console.log(this.$store.state.stok.anakategorilist);
       // console.log(this.treemmenu);
   }, 
-  computed: {
+  // computed: {
     
-    // mix the getters into computed with object spread operator
-    ...mapGetters([
-      'anakategorilists',
+  //   // mix the getters into computed with object spread operator
+  //   ...mapGetters([
+  //     'anakategorilists',
       
-    ]),
+  //   ]),
     // anakategorilists(){
     //   return this.$store.state.stok.anakategorilist
     // }
@@ -256,21 +308,23 @@ export default {
     //   },
     
     //  } 
-  },
+  // },
   methods:{
-    
+    login(){
+      this.$router.push({ path: '/login' })
+    },
     debounceFunc: debounce(function () {
         
         this.checkMenu()
-      }, 1) ,
+      }, 250) ,
     debounceFunc1: debounce(function () {
         
         this.checkMenu1()
-      }, 1) ,
+      }, 250) ,
     debounceFunc2: debounce(function () {
         
         this.checkMenu2()
-      }, 1) ,
+      }, 250) ,
       // debouncemenulist: debounce(function(val){
       //   this.parseTree(val)
       // },1000),

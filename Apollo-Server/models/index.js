@@ -1,11 +1,13 @@
-const user = require('./User');
+const User = require('./User');
 const stokturu = require('./stokturu');
 // const images = require('./stokturu');
 const birim = require('./birim');
 const varyant = require('./varyant');
 const varyantValue = require('./varyantValue');
 const varyant_skus = require('./varyant_skus');
+const sepet = require('./sepet');
 const photo = require('./photo');
+const guest_user = require('./guest_user');
 const { GraphQLUpload } = require('graphql-upload')
 // const file = require('./File');
 const {
@@ -32,12 +34,14 @@ const {
   
 module.exports = {
     Upload: GraphQLUpload,
-    user,
+    User,
     ...stokturu,
     birim,
     varyant,
     varyantValue,
     varyant_skus,
+    sepet,
+    guest_user,
     photo,
     UploadType,
     // images

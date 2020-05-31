@@ -1,0 +1,24 @@
+type sepet{
+  _id:ID
+  guid:ID
+  stokid:ID
+  stokad:String
+  varyantid:ID
+  varyantoption1:String
+  varyantoption2:String
+  path:String
+  publicid:String
+  count:Int
+  id:String
+
+}
+type guest_user{
+  _id:ID
+}
+ type Mutation {
+     createsepet_mutation(guid:ID, stokid:ID, stokad:String, varyantid:ID, varyantoption1:String, varyantoption2:String, path:String, publicid:String, count:Int):sepet
+     createguid_mutation:guest_user
+ }
+type Query {
+    search_basketlist(guid:ID):[sepet]
+}

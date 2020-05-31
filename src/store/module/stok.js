@@ -10,47 +10,8 @@ export default {
       varyantlist:[],
     },
     
-      // setUserid(state, type) {
-      //   state.userDetay.userid = type;
-  
-  
-      // },
-      // loadData({
-      //   commit
-      // }) {
-      //    axios.post(
-      //     'http://localhost:4000/graphql', {
-      //       query:`query anakategoriQuery($parentid: ID ){
-      //         anakategoriQuery(parentid: $parentid){
-      //                _id
-      //                 stokturad
-      //                 parentid
-      //               }
-      //            }`,
-                 
-      //          variables:{
-                
-      //           parentid: null,
-                
-
-      //          },
-          
-          
-      // }).then((response) => {
-      //     // console.log(response.data, this)
-      //     commit('stokListData.anakategori', response.data)
-      //     // commit('changeLoadingState', false)
-      //   })
-      // }
-  
-      
-    
     actions: {
-      // acUserid(vuexContext, type) {
-  
-      //   vuexContext.commit('setUserid', type)
-  
-      // }, 
+      
      async anafunction({dispatch,commit}) {
       dispatch("varyantlist")
         dispatch("anakategori")
@@ -88,36 +49,9 @@ export default {
           commit('set_anakategorizelist');
           
 
-            // commit('set_anakategorilist',stokListData)
-           // commit('changeLoadingState', false)
-         })
-        //  await axios.post(
-        //   'http://localhost:4000/graphql', {
-        //       query:`query childvaryantQuery{
-        //           childvaryantQuery{
-        //           _id
-        //           stokid
-        //           parentid
-        //           varyantname
-        //           color
-        //           vars{
-        //               images{
-        //                       publicid
-        //                       path
-        //                       filename
-        //                       imageurl
-        //                       id
-        //               }
-        //           }
-        //           }
-        //           }`,
-              
-        //   }).then( (response) => { 
-                     
-        //     let varyantlist = response.data.data.childvaryantQuery
             
-        //    commit('set_varyantlist',varyantlist);
-        //   })
+         })
+       
         },
       stoklistid({commit}, type){
         commit('set_activestoklistid', type);
@@ -146,25 +80,9 @@ export default {
                   }`,
               
           }) 
-                     
-               
-            
                commit('set_varyantlist',varyantlist.data.data.childvaryantQuery);
           
-          
-
-            // commit('set_anakategorilist',stokListData)
-           // commit('changeLoadingState', false)
-         
-          
-       
       }
-      //  async anakategorize({commit,state}) {
-      //   // let ibo = []
-      //   // ibo = state.anakategorilist
-      //      console.log(state.anakategorilist);
-          
-      // },
       
     },
     mutations:{

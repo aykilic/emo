@@ -1,14 +1,21 @@
 
 <template >
-  <q-page class="row q-pt-md items-start q-col-gutter-md">
-    <q-card class="row col-12">
-    <div style="min-width: 350px;" class="row col-md-6 ">
+  <q-page  class="row q-pt-md items-start q-col-gutter-md">
+    
+    <load v-if="option_2=='' && option_1=='' "></load>
+    <q-card v-else class="row col-12">
+    <div  style="min-width: 350px;" class="row col-md-6 ">
       <div class="row col-12">
         <product-zoomer  :key="zoomerKey" :images="images"></product-zoomer>
       </div>
     </div>
     <q-separator vertical />
-    <div class=" col">
+    <q-item v-if="varyantname.length<1">
+          <div class="row col-12">
+            <div class="col" style="text-transform: unset">Bu Ürün Geçici Bir Süre Stoklarımızda Bulunmamaktadır...</div>
+          </div>
+        </q-item>
+    <div v-else class=" col">
       <div >
         <q-item >
           <!-- <q-item-section class="col-12" align="center"> -->
@@ -82,11 +89,7 @@
             
           </div>
         </q-item>
-        <q-item v-if="varyantname.length<1">
-          <div class="row col-12">
-            <div class="col" style="text-transform: unset">Bu Ürün Geçici Bir Süre Stoklarımızda Bulunmamaktadır...</div>
-          </div>
-        </q-item>
+        
         <q-item>
         <div class="row">
           <q-item-section class="col" >
@@ -110,8 +113,8 @@
                     <!-- <q-btn push size="lg" class="bg-pink-12 text-white text-h5" icon="shopping_cart"  no-caps>Sipariş Ver </q-btn> -->
                     
                     <!-- <q-btn  size="lg" class="col-4  q-ma-xs"   color="pink-12"  rounded no-caps><q-icon name="shopping_cart"  style="font-size: 24px;" />  Sepete Ekle </q-btn> -->
-                <q-btn class="col-2 items-center" size="md" outline round color="pink-12" icon="add_shopping_cart" style="font-size: 10px;"/>
-                <q-btn class="col q-ml-md q-mr-md " size="lg"   color="pink-12"   rounded no-caps>Sipariş Ver </q-btn>
+                <q-btn class="col-2 items-center" size="md" outline round color="pink-12" @click="sell(false)" icon="add_shopping_cart" style="font-size: 10px;"/>
+                <q-btn class="col q-ml-md q-mr-md " size="lg"   color="pink-12" @click="sell(true)"  rounded no-caps>Sipariş Ver </q-btn>
                 <q-btn class="col-2 items-center" size="md" outline round color="pink-12" icon="favorite" style="font-size: 14px;"/>
                 </div>
         
@@ -132,10 +135,17 @@ import { Loading } from "quasar";
 import _ from "lodash";
 import ProductZoomer from "../components/productzoom";
 import cloudinaryVue from '../components/cloudinary.vue';
+import load from '../pages/skeleton/deneme.vue'
+import { Cookies } from "quasar";
 
 export default {
-  components: { ProductZoomer },
+  components: { ProductZoomer,load },
   props: ["stokad"],
+  route: {
+            data: function (transition) {
+                this.hasvaryantsatirliste();
+            }
+        },
   data() {
     return {
       zoomerKey: 0,
@@ -143,9 +153,11 @@ export default {
       urundetay: "",
       varyantlists: [],
       varyanttree: [],
-      fiyat:0,
+      fiyat:"",
       indirim:1,
       indirimli_fiyat:"",
+      stok_path:"",
+      stok_publicid:"",
       images: {
         thumbs: [
           {
@@ -163,8 +175,11 @@ export default {
       selectid:"",
       option_1:[],
       option_2:[],
+      varyant_option1_name:"",
+      varyant_option2_name:"",
       id1:"",
       id2:"",
+      id:"",
       // -----------------------------------------
       miktar:1,
       //  parentname:this.$route.params.parentname
@@ -211,7 +226,9 @@ export default {
       "anakategorilists",
       "anakategorizelists",
       "activestoklistids",
-      "getvaryantlist"
+      "getvaryantlist",
+      "get_basketlist",
+      'get_guid',
     ])
   },
   mounted() {
@@ -241,8 +258,10 @@ export default {
           return item;
         }
       });
-       console.log(this.urundetay[0]._id);
+        // console.log(this.urundetay[0].vars[0].images);
+      
       //  ---------------------
+      if(this.urundetay[0].fiyat1 !='' && this.urundetay[0].fiyat1!=null){
         let fiyat= (this.urundetay[0].fiyat1).toFixed(2).replace('.', ',')
         this.fiyat= fiyat.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
       //  ---------------------
@@ -257,7 +276,7 @@ export default {
       // --------------------
         indirimli_fiyat=indirimli_fiyat.toFixed(2).replace('.', ',')
         this.indirimli_fiyat=indirimli_fiyat.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-
+    }
 
       //  console.log(this.indirimli_fiyat);
       // }
@@ -304,7 +323,8 @@ export default {
 
       // console.log("varyantlists",this.getvaryantlist);
       // console.log("varyantlist",varyantlist);
-
+      this.stok_path=this.urundetay[0].vars[0].images.path
+      this.stok_publicid=this.urundetay[0].vars[0].images.publicid
       this.zoomerKey++;
     },
     childtree(childarr, parentID = null) {
@@ -437,7 +457,7 @@ export default {
               
             //  this.option_2=_.sortBy(arra, ['desc']);
             this.option_2=_.orderBy(arra, 'varyant_option2.varyant_option2_name', 'desc')
-              //  console.log("option_2",this.option_2);
+                
       }
       // let arra=[]
       //   let option_1=[]
@@ -459,6 +479,9 @@ export default {
       //     }
       //    })
       //      this.option_1=arra
+      // if(this.id1!="" && this.id2!=""){
+      //   // this.option_2=this.
+      // }
       },
       selectvar2(a, i, ii, aa) {
       // console.log(a);
@@ -608,7 +631,7 @@ export default {
           let varyants = data.data.data.hasvaryantsatirQuery;
           varyants=_.sortBy(varyants, 'varyant_option1_name');
         //  arra= _(arra.varyant_option1.varyant_option1_name).sort()
-          //  console.log("arra",varyants);
+            // console.log("varyants",varyants);
           this.varyants=varyants
 
           // ---------- tanımlamalar
@@ -690,8 +713,232 @@ export default {
           }
           })
         });
-    }
+    },
+    sell(sell){
+     
+    let id1=this.id1
+    let id2=this.id2
+    let id
+    let is_sepet=false
+    //-----------------
+    if(id1 !="" && id2 !="" ){
+    this.varyants.filter(item=>{
+      // console.log(item);
+        if(id1===item.varyant_option1_id && id2===item.varyant_option2_id){
+          id=item._id
+          this.id=id
+          this.varyant_option1_name=item.varyant_option1_name
+          this.varyant_option2_name=item.varyant_option2_name
+          
+          // console.log(this.id);
+          
+          
+        }
+      })
+      this.get_basketlist.forEach(item=>{
+        if(item.varyantid == this.id){
+          is_sepet=true
+          return false
+        }
+        // console.log(is_sepet);
+      })
+        let guid=this.get_guid
+                            if(this.get_basketlist.length == 0){
+                                console.log("1");
+                                this.$apollo.mutate({
+                                      mutation: gql`
+                                        mutation createsepet_mutation(
+                                          $guid: ID,
+                                          $stokid: ID,
+                                          $stokad:String,
+                                          $varyantid:ID,
+                                          $varyantoption1:String,
+                                          $varyantoption2:String,
+                                          $path:String,
+                                          $publicid:String,
+                                          $count:Int) {
+                                          createsepet_mutation(
+                                            guid: $guid, 
+                                            stokid: $stokid,
+                                            stokad:$stokad,
+                                            varyantid:$varyantid,
+                                            varyantoption1:$varyantoption1,
+                                            varyantoption2:$varyantoption2,
+                                            path:$path, publicid:$publicid,
+                                            count:$count)
+                                            {
+                                              
+                                              _id
+                                            
+                                          }
+                                        }
+                                      `,
+                                      variables: {
+                                        guid:guid,
+                                        stokid: this.urundetay[0]._id,
+                                        stokad: this.stokad,
+                                        varyantid: this.id,
+                                        varyantoption1: this.varyant_option1_name,
+                                        varyantoption2: this.varyant_option2_name,
+                                        path: this.stok_path,
+                                        publicid: this.stok_publicid,
+                                        count: this.miktar
+                                      }
+                                    })
+                                    .then(data => {
+                                      // console.log(data);
+                                        // Cookies.set('basketid', data.data.createsepet_mutation._id, { expires: 30, path: '' });
+                                        // if((Cookies.get('basketid') != "") || (Cookies.get('basketid') != null) || (Cookies.get('basketid') != undefined)){
+                                            
+                                        // }
+                                      this.$store.dispatch('search_basketlist',this.get_guid)
+                                      if(sell){
+                                      this.$router.push({ path: '/shopping' })
+                                      }else{
+                                        const dialog = this.$q.dialog({
+                                                  title: "Başarı",
+                                                  message: "Ürün Sepetinize Eklendi..!"
+                                                })
+                                                .onOk(() => {
+                                                  // console.log('OK')
+                                                })
+                                                .onCancel(() => {
+                                                  // console.log('Cancel')
+                                                })
+                                                .onDismiss(() => {
+                                                  clearTimeout(timer);
+                                                  // console.log('I am triggered on both OK and Cancel')
+                                                });
+
+                                              const timer = setTimeout(() => {
+                                                dialog.hide();
+                                              }, 2000);
+                                      }
+                                    });
+
+
+                              }else{
+                                
+                                // console.log(item.varyantid);
+                                // console.log(this.id);
+                                        if(is_sepet){
+                                          console.log("2");
+                                                const dialog = this.$q.dialog({
+                                                  title: "Uyarı",
+                                                  message: "Seçilen ürün Sepetinizde...!"
+                                                })
+                                                .onOk(() => {
+                                                  // console.log('OK')
+                                                })
+                                                .onCancel(() => {
+                                                  // console.log('Cancel')
+                                                })
+                                                .onDismiss(() => {
+                                                  clearTimeout(timer);
+                                                  // console.log('I am triggered on both OK and Cancel')
+                                                });
+
+                                              const timer = setTimeout(() => {
+                                                dialog.hide();
+                                              }, 2000);
+                                          if(sell){
+                                          this.$router.push({ path: '/shopping' })
+                                          }
+                                        }
+                                        else{
+                                          console.log("3");
+                                          this.$apollo.mutate({
+                                              mutation: gql`
+                                                mutation createsepet_mutation(
+                                                  $guid: ID,
+                                                  $stokid: ID,
+                                                  $stokad:String,
+                                                  $varyantid:ID,
+                                                  $varyantoption1:String,
+                                                  $varyantoption2:String,
+                                                  $path:String,
+                                                  $publicid:String,
+                                                  $count:Int) {
+                                                  createsepet_mutation(
+                                                    guid: $guid, 
+                                                    stokid: $stokid,
+                                                    stokad:$stokad,
+                                                    varyantid:$varyantid,
+                                                    varyantoption1:$varyantoption1,
+                                                    varyantoption2:$varyantoption2,
+                                                    path:$path, publicid:$publicid,
+                                                    count:$count)
+                                                    {
+                                                      
+                                                      _id
+                                                    
+                                                  }
+                                                }
+                                              `,
+                                              variables: {
+                                                guid:guid,
+                                                stokid: this.urundetay[0]._id,
+                                                stokad: this.stokad,
+                                                varyantid: this.id,
+                                                varyantoption1: this.varyant_option1_name,
+                                                varyantoption2: this.varyant_option2_name,
+                                                path: this.stok_path,
+                                                publicid: this.stok_publicid,
+                                                count: this.miktar
+                                              }
+                                            })
+                                            .then(data => {
+                                              // console.log(data);
+                                                // Cookies.set('basketid', data.data.createsepet_mutation._id, { expires: 30, path: '' });
+                                                // if((Cookies.get('basketid') != "") || (Cookies.get('basketid') != null) || (Cookies.get('basketid') != undefined)){
+                                                    
+                                                // }
+                                              this.$store.dispatch('search_basketlist',this.get_guid)
+                                              if(sell){
+                                              this.$router.push({ path: '/shopping' })
+                                              }else{
+                                                const dialog = this.$q.dialog({
+                                                  title: "Başarı",
+                                                  message: "Ürün Sepetinize Eklendi..!"
+                                                })
+                                                .onOk(() => {
+                                                  // console.log('OK')
+                                                })
+                                                .onCancel(() => {
+                                                  // console.log('Cancel')
+                                                })
+                                                .onDismiss(() => {
+                                                  clearTimeout(timer);
+                                                  // console.log('I am triggered on both OK and Cancel')
+                                                });
+
+                                              const timer = setTimeout(() => {
+                                                dialog.hide();
+                                              }, 2000);
+                                              }
+                                            });
+
+
+
+                                        }
+                                      
+
+
+                              }
+      
+    //----------------
+    }else if(this.get_basketlist.length > 0){
+        
+      
+
+
+
+
+      }
+    
   }
+  },
+  
 };
 </script>
 

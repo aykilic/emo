@@ -1,5 +1,7 @@
 const ObjectID = require("mongodb").ObjectID;
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
 module.exports = {
   user: async (parent, args, context)=>{
     return await context.Models.User.findById(args._id);
@@ -223,6 +225,34 @@ module.exports = {
   //  return await stokturu.find({_id:id})
     return await model.find({stokid:ObjectID(id)})
   },
-  
+  search_basketlist:async(parent, {guid}, {Models})=> {
+    const model = Models.sepet
+    //  console.log({guid});
+    
+  //  return await stokturu.find({_id:id})
+    return await model.find({guid:ObjectID(guid)})
+  },
+  loginuser_Query:async (parent, {usermail, password}, {Models})=> {
+    const model = Models.User
+    let login=""
+    //  let ibo= await model.find({usermail:usermail})
+    return new Promise((resolve,object) =>{
+       model.findOne({ 'usermail': usermail})
+      .then((user=>{
+        if(!user){
+          return resolve({res:'Kayıtlı Mail Bulunamadı'})
+        }else{
+        bcrypt.compare(password, user.password).then(function(hash) {
+          if(hash){
+            return resolve(user)
+          }else{
+            return resolve({res:'kullanıcı adı yada mail yanlış'})
+          }
+      })
+    }
+      })
+      )
+    })
+  }
 };
 

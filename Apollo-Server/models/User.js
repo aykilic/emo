@@ -1,19 +1,26 @@
 const mongoose=require('mongoose');
 const Schema = mongoose.Schema;
 const kodla = require('bcrypt');
+var jwt = require('jsonwebtoken');
 
 const  userSchema = new Schema({
   username: {
     type: String,
-    required: true
+    
   },
   lastname: {
     type: String,
     // required: true
   },
+  usermail:{
+    type:String
+  },
   password: {
     type: String,
     // required: true
+  },
+  token:{
+    type: String
   },
   createdAt: {
     type: Date,
@@ -33,4 +40,4 @@ userSchema.pre('save',function(next){
     })
 
 });
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('luser', userSchema, 'luser');

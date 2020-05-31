@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 // var qs = require('qs');
 import routes from './routes'
+import basket from "../boot/basket.js"
 const originalPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
@@ -42,8 +43,17 @@ export default function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     mode: process.env.VUE_ROUTER_MODE,
-    base: process.env.VUE_ROUTER_BASE
+    base: process.env.VUE_ROUTER_BASE,
+    //   if (process.client) {
+  //     console.log("seesion-auth-1")
+  //   } else {
+  //     console.log("seesion-auth-2")
+  //   }
+    
   })
-
+  // Router.beforeEach((to, from, next) => {
+  //   console.log(to);
+  //   next()
+  // })
   return Router
 }

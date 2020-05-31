@@ -9,7 +9,8 @@ module.exports = function (ctx) {
     boot: [
       'i18n',
       'apollo',
-      'axios',
+      'axios'
+      
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -63,7 +64,8 @@ module.exports = function (ctx) {
       plugins: [
         'Notify',
         'Loading',
-        'Dialog'
+        'Dialog',
+        'Cookies'
       ],
       config: {
         loading: { /* Loading defaults */ },

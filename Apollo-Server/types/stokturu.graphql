@@ -18,9 +18,12 @@ type kategori{
 }
 
 type User{
+  _id:ID
   username:String
   lastname:String
-  id:String
+  usermail:String
+  password:String
+  res:String
 }
 type vars{
   
@@ -74,6 +77,7 @@ type Query{
     anakategoriQuery(parentid:ID):[Stoktur]
     birimList:[birim]
     imgurlQuery(id:ID!):[Stoktur]
+    loginuser_Query(usermail:String,password:String):User
     
     # altimgurlQuery(id:String!):[Varyantalt]
     
@@ -83,7 +87,7 @@ type Mutation {
   createBirim(birimad: String!): birim
   updateBirim(id:String!,birimad: String): birim
   deleteBirim(id:String!): birim
-  createUser(data: CreateUserInput!): User
+  # createUser(data: CreateUserInput!): User
   createStokturu(stokturad: String!, parentid: String): Stoktur
   deleteStokturu(id:String!): Stoktur
   updateStokturu(id:String!,stokturad: String, parentid: String,fiyat1:Float, fiyat2:Float): Stoktur
@@ -91,6 +95,7 @@ type Mutation {
   deleteimage(id:ID!,imageid:ID,path:String): Stoktur
   updateStok(id:String!,variant: StokInput): Stoktur
   updateStokalt(id:String!): Stoktur
+  createUser(username: String,lastname: String,usermail:String,password: String):User
 }
 input StokInput{
   name:String
@@ -100,5 +105,6 @@ input StokInput{
 input CreateUserInput{
   username: String
   lastname: String
+  usermail:String
   password: String
 }

@@ -187,8 +187,8 @@ module.exports = {
           // console.log(item)
         // return varyant.updateMany({"_id": item.id }, {"$set":   { "color": item.color, "miktar": item.miktar, "fiyat1": item.fiyat1, "fiyat2": item.fiyat2}  },{multi:true}); 
           return varyant.insertMany(item,function(error, docs) {
-             console.log("error",error)
-             console.log("docs",docs)
+            //  console.log("error",error)
+            //  console.log("docs",docs)
 
            }); 
            
