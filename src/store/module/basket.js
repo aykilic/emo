@@ -11,6 +11,7 @@ export default {
       uid:"",
       basketid:"",
       basketlist:[],
+      ubasketlist:[]
     },
     
       
@@ -23,34 +24,46 @@ export default {
             commit('basketid', type);
             
         },
-        add_guid({commit,state} ,type)
+        add_guid({commit,dispatch,state} ,type)
          {
-            //   console.log(type);
+            // console.log("add_guid",type);
            if(type != undefined) {
-            commit('set_guid', type);
+            commit('set_guid', type)
             Cookies.set('guid',type)
+            
         }else{
             if(state.guid != "" ){
                 Cookies.set('guid',state.guid)
+
             }else{
                 commit('set_guid', Cookies.get('guid'));
+
             }
         }
+        dispatch('search_basketlist', Cookies.get('guid'));
+
          },
-         add_uid({commit} ,type   )
+         delete_guid({commit} ,type   )
          {
-            commit('uid', Cookies.get('uid'));
+            commit('set_guid',"");
             
         },
+         add_uid({commit,dispatch} ,type   )
+         {
+            commit('set_uid', Cookies.get('uid'));
+            dispatch('search_ubasketlist', Cookies.get('uid'));
+        },
+        
         async search_basketlist({commit,state}, type){
-            // console.log("type1",type);
+            //  console.log("type1",type);
             await axios.post(
       
                 'http://localhost:4000/graphql', {
                   
-                 query: `query search_basketlist($guid:ID!){
+                 query: `query search_basketlist($guid:String){
                     search_basketlist(guid:$guid){
                         _id
+                        uid
                         guid
                         stokid
                         stokad
@@ -66,8 +79,38 @@ export default {
                     guid: type
                     }
             }).then( (response) => { 
-                //  console.log("response",response.data.data);
+                    // console.log("response",response.data.data);
              commit('set_search_basketlist', response.data.data.search_basketlist);
+               
+            })
+        },
+        async search_ubasketlist({commit,state}, type){
+            // console.log("type1",type);
+            await axios.post(
+      
+                'http://localhost:4000/graphql', {
+                  
+                 query: `query search_ubasketlist($uid:String){
+                    search_ubasketlist(uid:$uid){
+                        _id
+                        uid
+                        guid
+                        stokid
+                        stokad
+                        varyantid
+                        varyantoption1
+                        varyantoption2
+                        path
+                        publicid
+                        count
+                   }  
+                 }`,
+                   variables: {
+                    uid: type
+                    }
+            }).then( (response) => { 
+                //   console.log("response",response.data.data);
+             commit('set_search_ubasketlist', response.data.data.search_ubasketlist);
                
             })
         },
@@ -83,6 +126,11 @@ export default {
             state.guid = type;
             // console.log(Cookies.get('guid'));
           },
+        set_uid(state, type){
+            
+            state.uid = type
+            // console.log(Cookies.get('guid'));
+          },
 
         set_basketid(state, type){
             state.basketid = type
@@ -93,27 +141,37 @@ export default {
             state.basketlist=type
             // console.log("state.basketlist",state.basketlist);
         },
+        set_search_ubasketlist(state, type){
+            //  console.log("type2",type);
+            state.ubasketlist=type
+            // console.log("state.basketlist",state.basketlist);
+        },
         set_login(state, type){
             
           },
         set_logout(state, type){
-            state.uid = type
-            Cookies.set('uid',type);
+            state.uid = ""
+            Cookies.remove('uid');
           },
     },
     getters:{ 
         get_guid: (state, getters) => {
             return state.guid
           },
+        get_uid:(state, getters) => {
+            return state.uid
+        },
         basketid: (state, getters) => {
             return state.basketid
         },
         get_basketlist: (state, getters) => {
             return state.basketlist
         },
-        get_uid:(state, getters) => {
-            return state.uid
+        get_ubasketlist: (state, getters) => {
+            return state.ubasketlist
         },
+
+        
     }
   };
   

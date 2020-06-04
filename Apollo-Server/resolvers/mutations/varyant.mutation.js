@@ -156,7 +156,7 @@ module.exports = {
   //     },
   //     { upsert: true }
   //   )},
-  createVaryantsatir:async (root,parent, { Models }) => {
+  createVaryantsatir:async (root, parent, { Models }) => {
 
     //  console.log(Models);
     const varyant = Models.varyant_skus

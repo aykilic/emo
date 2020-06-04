@@ -7,8 +7,8 @@
           style=" max-width: 140px"
           />
           </router-link>
-          </div>
-          <router-view ></router-view>
+        </div>
+        <router-view ></router-view>
     </div>
 </template>
 

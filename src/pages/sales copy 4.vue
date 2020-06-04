@@ -739,14 +739,14 @@ export default {
         }
       })
       if(this.get_basketlist.length > 0) {
-                this.get_basketlist.forEach(item=>{
-                if(item.varyantid == this.id){
-                  is_sepet=true
-                  basketlist=this.get_basketlist
-                  return false
-                }
-                
-              })
+        this.get_basketlist.forEach(item=>{
+        if(item.varyantid == this.id){
+          is_sepet=true
+          basketlist=this.get_basketlist
+          return false
+        }
+        // console.log(is_sepet);
+      })
       }
       if(this.get_ubasketlist.length > 0) {
         this.get_basketlist.forEach(item=>{
@@ -758,40 +758,115 @@ export default {
         // console.log(is_sepet);
       })
       }
-      if(sell){
-                this.$router.push({ path: '/shopping' })
-              }
+      
         let guid=this.get_guid
         let uid = this.get_uid
-          console.log("uid",uid,"guid",guid);
-          console.log("uid",Cookies.get('uid'),"guid",Cookies.get('guid')); // uid=null
-          
-            
-          if (uid != "") {
-            console.log("uid boş değil")
-            if(this.get_ubasketlist.length > 0 && is_sepet) {
-                const dialog = this.$q.dialog({
-                          title: "Uyarı",
-                          message: "Ürün Sepetinizde bulunmaktadır..!"
-                        })
-                        .onOk(() => {
-                          // console.log('OK')
-                        })
-                        .onCancel(() => {
-                          // console.log('Cancel')
-                        })
-                        .onDismiss(() => {
-                          clearTimeout(timer);
-                          // console.log('I am triggered on both OK and Cancel')
-                        });
+                            if(basketlist){
+                                console.log("s,1");
+                                this.$apollo.mutate({
+                                      mutation: gql`
+                                        mutation createsepet_mutation(
+                                          $uid:String,
+                                          $guid: String,
+                                          $stokid: ID,
+                                          $stokad:String,
+                                          $varyantid:ID,
+                                          $varyantoption1:String,
+                                          $varyantoption2:String,
+                                          $path:String,
+                                          $publicid:String,
+                                          $count:Int) {
+                                          createsepet_mutation(
+                                            uid:$uid,
+                                            guid: $guid, 
+                                            stokid: $stokid,
+                                            stokad:$stokad,
+                                            varyantid:$varyantid,
+                                            varyantoption1:$varyantoption1,
+                                            varyantoption2:$varyantoption2,
+                                            path:$path, publicid:$publicid,
+                                            count:$count)
+                                            {
+                                              _id
+                                            }
+                                        }
+                                      `,
+                                      variables: {
+                                        uid:uid,
+                                        guid:guid,
+                                        stokid: this.urundetay[0]._id,
+                                        stokad: this.stokad,
+                                        varyantid: this.id,
+                                        varyantoption1: this.varyant_option1_name,
+                                        varyantoption2: this.varyant_option2_name,
+                                        path: this.stok_path,
+                                        publicid: this.stok_publicid,
+                                        count: this.miktar
+                                      }
+                                    })
+                                    .then(data => { 
+                                       console.log("buraaaa");
+                                        // Cookies.set('basketid', data.data.createsepet_mutation._id, { expires: 30, path: '' });
+                                        // if((Cookies.get('basketid') != "") || (Cookies.get('basketid') != null) || (Cookies.get('basketid') != undefined)){
+                                            
+                                        // }
+                                      this.$store.dispatch('search_basketlist',this.get_guid)
+                                      if(sell){
+                                      this.$router.push({ path: '/shopping' })
+                                      }else{
+                                        const dialog = this.$q.dialog({
+                                                  title: "Başarı",
+                                                  message: "Ürün Sepetinize Eklendi..!"
+                                                })
+                                                .onOk(() => {
+                                                  // console.log('OK')
+                                                })
+                                                .onCancel(() => {
+                                                  // console.log('Cancel')
+                                                })
+                                                .onDismiss(() => {
+                                                  clearTimeout(timer);
+                                                  // console.log('I am triggered on both OK and Cancel')
+                                                });
 
-                      const timer = setTimeout(() => {
-                        dialog.hide();
-                      }, 2000);
-                                      
-              }else{
-                console.log("listeye ürün ekleme","mutation")
-                                            this.$apollo.mutate({
+                                              const timer = setTimeout(() => {
+                                                dialog.hide();
+                                              }, 2000);
+                                      }
+                                    });
+
+
+                              }else{
+                                
+                                // console.log(item.varyantid);
+                                // console.log(this.id);
+                                        if(is_sepet){
+                                          console.log("2");
+                                                const dialog = this.$q.dialog({
+                                                  title: "Uyarı",
+                                                  message: "Seçilen ürün Sepetinizde...!"
+                                                })
+                                                .onOk(() => {
+                                                  // console.log('OK')
+                                                })
+                                                .onCancel(() => {
+                                                  // console.log('Cancel')
+                                                })
+                                                .onDismiss(() => {
+                                                  clearTimeout(timer);
+                                                  // console.log('I am triggered on both OK and Cancel')
+                                                });
+
+                                              const timer = setTimeout(() => {
+                                                dialog.hide();
+                                              }, 2000);
+                                          if(sell){
+                                          this.$router.push({ path: '/shopping' })
+                                          }
+                                        }
+                                        else{
+                                          console.log("3");
+                                          this.$apollo.mutate({
                                               mutation: gql`
                                                 mutation createsepet_mutation(
                                                   $uid: String,
@@ -836,100 +911,46 @@ export default {
                                               }
                                             })
                                             .then(data => {
-                                              console.log("sepete ürün eklendi");
-                                              this.$store.dispatch('search_ubasketlist',uid)
-                                              if(sell){
-                                                this.$router.push({ path: '/shopping' })
-                                              }
-                                            })
-
-              }
-
-          }else{
-            console.log("guid boş değil")
-              if(this.get_basketlist.length > 0 && is_sepet) {
-                const dialog = this.$q.dialog({
-                          title: "Uyarı",
-                          message: "Ürün Sepetinizde bulunmaktadır..!"
-                        })
-                        .onOk(() => {
-                          // console.log('OK')
-                        })
-                        .onCancel(() => {
-                          // console.log('Cancel')
-                        })
-                        .onDismiss(() => {
-                          clearTimeout(timer);
-                          // console.log('I am triggered on both OK and Cancel')
-                        });
-
-                      const timer = setTimeout(() => {
-                        dialog.hide();
-                      }, 2000);
-                                      
-              }else{
-                console.log("listeye ürün ekleme","mutation")
-                                            this.$apollo.mutate({
-                                              mutation: gql`
-                                                mutation createsepet_mutation(
-                                                  $uid: String,
-                                                  $guid: String,
-                                                  $stokid: ID,
-                                                  $stokad:String,
-                                                  $varyantid:ID,
-                                                  $varyantoption1:String,
-                                                  $varyantoption2:String,
-                                                  $path:String,
-                                                  $publicid:String,
-                                                  $count:Int) {
-                                                  createsepet_mutation(
-                                                    uid: $uid,
-                                                    guid: $guid, 
-                                                    stokid: $stokid,
-                                                    stokad:$stokad,
-                                                    varyantid:$varyantid,
-                                                    varyantoption1:$varyantoption1,
-                                                    varyantoption2:$varyantoption2,
-                                                    path:$path,
-                                                    publicid:$publicid,
-                                                    count:$count)
-                                                    {
-                                                      
-                                                      _id
+                                              // console.log(data);
+                                                // Cookies.set('basketid', data.data.createsepet_mutation._id, { expires: 30, path: '' });
+                                                // if((Cookies.get('basketid') != "") || (Cookies.get('basketid') != null) || (Cookies.get('basketid') != undefined)){
                                                     
-                                                  }
-                                                }
-                                              `,
-                                              variables: {
-                                                uid:uid,
-                                                guid:guid,
-                                                stokid: this.urundetay[0]._id,
-                                                stokad: this.stokad,
-                                                varyantid: this.id,
-                                                varyantoption1: this.varyant_option1_name,
-                                                varyantoption2: this.varyant_option2_name,
-                                                path: this.stok_path,
-                                                publicid: this.stok_publicid,
-                                                count: this.miktar
-                                              }
-                                            })
-                                            .then(data => {
-                                              console.log("sepete ürün eklendi");
-                                              this.$store.dispatch('search_basketlist',guid)
+                                                // }
+                                              this.$store.dispatch('search_basketlist',this.get_guid)
                                               if(sell){
-                                                this.$router.push({ path: '/shopping' })
-                                              }
-                                            })
+                                              this.$router.push({ path: '/shopping' })
+                                              }else{
+                                                const dialog = this.$q.dialog({
+                                                  title: "Başarı",
+                                                  message: "Ürün Sepetinize Eklendi..!"
+                                                })
+                                                .onOk(() => {
+                                                  // console.log('OK')
+                                                })
+                                                .onCancel(() => {
+                                                  // console.log('Cancel')
+                                                })
+                                                .onDismiss(() => {
+                                                  clearTimeout(timer);
+                                                  // console.log('I am triggered on both OK and Cancel')
+                                                });
 
-              }
-          }
-                            
-    } else{
-      console.log("Ürün Seçimini Tamamlamadınız.. yinede devam etmek istermisiniz");
-      if(sell){
-                this.$router.push({ path: '/shopping' })
-              }
-    }
+                                              const timer = setTimeout(() => {
+                                                dialog.hide();
+                                              }, 2000);
+                                              }
+                                            });
+
+
+
+                                        }
+                                      
+
+
+                              }
+      
+    //----------------
+    } 
     
   }
   },

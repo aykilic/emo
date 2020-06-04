@@ -30,9 +30,7 @@
                 <q-item-section
                   @click="logout()"
                 >Logout</q-item-section>
-
               </q-item>
-
             </q-list>
           </q-menu>
         </q-btn>

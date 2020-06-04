@@ -160,113 +160,53 @@ import { Cookies } from "quasar"
                         // uid ekle
                         Cookies.set('uid',response.data.data.loginuser_Query._id)
                         this.$store.dispatch('add_uid')
-                        //---------------
-                        
 
-                        this.$store.dispatch('search_ubasketlist',response.data.data.loginuser_Query._id)
-
-                        Cookies.remove('guid')
-                        this.$store.dispatch('delete_guid')
-                        // guesti sil
-                        // --------
                         // uid ekle
-                        Cookies.set('uid',response.data.data.loginuser_Query._id)
-                        this.$store.dispatch('add_uid')
-                        let array=[]
-                        if(this.get_ubasketlist.length > 0){
-                          console.log("uid sepetinde ürün varsa");
-                          this.get_ubasketlist.forEach(item=>{
-                                if(get_basketlist.length > 0){
-                                  console.log("guid sepetinde ürün varsa");
-                                  this.get_basketlist.forEach(value=>{
-                                    
-                                  if (value.varyantid == item.varyantid) {
-                                  }
-                                  else{
-                                    console.log("1");
-                                      let avalue ={
-                                          uid:response.data.data.loginuser_Query._id,
-                                          guid:"",
-                                          stokid:value.stokid,
-                                          stokad:value.stokad,
-                                          varyantid:value.varyantid,
-                                          varyantoption1:value.varyantoption1,
-                                          varyantoption2:value.varyantoption2,
-                                          path:value.path,
-                                          publicid:value.publicid,
-                                          count:value.count,
-                                      }
-                                      array.push(avalue)
-                                  }   
-                                })
-                            }
-                            else{
-                                console.log("guid sepetinde ürün yoksa");
-                                array=this.get_ubasketlist
-                                array.map(avalue=>({
-                                    uid:response.data.data.loginuser_Query._id,
-                                    guid:"",
-                                    stokid:avalue.stokid,
-                                    stokad:avalue.stokad,
-                                    varyantid:avalue.varyantid,
-                                    varyantoption1:avalue.varyantoption1,
-                                    varyantoption2:avalue.varyantoption2,
-                                    path:avalue.path,
-                                    publicid:avalue.publicid,
-                                    count:avalue.count,
-                                }))
-                                array.push(avalue)
-                            }
-                            })
+                        //  console.log("get_basketlist",this.get_basketlist);
+                        //  console.log("get_ubasketlist",this.get_ubasketlist);
+                        // console.log(this.get_basketlist);
 
-                          // mutation
-                          console.log("3",array);
+                        let array = []
+
+                        if(this.get_ubasketlist.length > 0){
+                            
+                            this.get_ubasketlist.forEach(item=>{
+                                if(get_basketlist.length > 0){
+                                this.get_basketlist.forEach(value=>{
+                                    
+                                 if (value.varyantid == item.varyantid) {
+                                 }else{
+                                    let avalue ={
+                                        uid:response.data.data.loginuser_Query._id,
+                                        guid:value.guid,
+                                        stokid:value.stokid,
+                                        stokad:value.stokad,
+                                        varyantid:value.varyantid,
+                                        varyantoption1:value.varyantoption1,
+                                        varyantoption2:value.varyantoption2,
+                                        path:value.path,
+                                        publicid:value.publicid,
+                                        count:value.count,
+                                    }
+                                        
+                                     
+                                     array.push(avalue)
+                                 }   
+                            })
+                            }
+                           
+                                    
+                            })
+                            // mutation
                             this.$apollo
                             .mutate({
                             mutation: gql`
                                 mutation mergesepet_mutation($sepetlist: [sepetlistInput]) {
                                 mergesepet_mutation(sepetlist: $sepetlist) 
-                                { 
-                                  _id
-                                  }
-                                }
-                            `,
-                            // loadingKey: 'loading',
-                            variables: {
-                                sepetlist: array
-                            }
-                            })
-                            .then(data => {
-                              console.log("3.1");
-                            })
-                        }else{
-                          console.log("uid sepeti boş ise",array);
-                          this.get_basketlist.forEach(value=>{
-                            let avalue ={
-                                          uid:response.data.data.loginuser_Query._id,
-                                          guid:"",
-                                          stokid:value.stokid,
-                                          stokad:value.stokad,
-                                          varyantid:value.varyantid,
-                                          varyantoption1:value.varyantoption1,
-                                          varyantoption2:value.varyantoption2,
-                                          path:value.path,
-                                          publicid:value.publicid,
-                                          count:value.count,
-                                      }
-                                      array.push(avalue)
-
-                        })
-
-                          // mutation
-                          console.log("5",array);
-                          this.$apollo
-                            .mutate({
-                            mutation: gql`
-                                mutation mergesepet_mutation($sepetlist: [sepetlistInput]) {
-                                mergesepet_mutation(sepetlist: $sepetlist) 
                                 {
+                                                      
                                                       _id
+                                                    
                                                   }
                                 }
                             `,
@@ -276,13 +216,82 @@ import { Cookies } from "quasar"
                             }
                             })
                             .then(data => {
-                              console.log("5.1");
+
+                            })
+                            console.log("1",array)
+                        }else{
+                            // ubasketlist yok
+                            // basketlist var
+                            // this.get_basketlist.forEach(value=>{
+                                // Object.assign(value, {
+
+                                //         uid:response.data.data.loginuser_Query._id
+
+                                //         });
+                                let array=[]
+                                array=this.get_basketlist
+                                array.map(avalue=>({
+                                    uid:response.data.data.loginuser_Query._id,
+                                    guid:avalue.guid,
+                                    stokid:avalue.stokid,
+                                    stokad:avalue.stokad,
+                                    varyantid:avalue.varyantid,
+                                    varyantoption1:avalue.varyantoption1,
+                                    varyantoption2:avalue.varyantoption2,
+                                    path:avalue.path,
+                                    publicid:avalue.publicid,
+                                    count:avalue.count,
+                                }))
+                                    //  array.push(lis)
+                            // })
+                            console.log("2",array)
+                            // mutation
+                        this.$apollo
+                            .mutate({
+                            mutation: gql`
+                                mutation mergesepet_mutation($sepetlist: [sepetlistInput]) {
+                                mergesepet_mutation(sepetlist: $sepetlist) 
+                                {
+                                                      
+                                                      _id
+                                                    
+                                                  }
+                                }
+                            `,
+                            // loadingKey: 'loading',
+                            variables: {
+                                sepetlist: array
+                            }
+                            })
+                            .then(data => {
+
                             })
                         }
                         
+                        
+                        // mutation
+                        // this.$apollo
+                        //     .mutate({
+                        //     mutation: gql`
+                        //         mutation mergesepet_mutation($satirlist: [varyantlistInput]) {
+                        //         mergesepet_mutation(satirlist: $satirlist) {
+                        //             _id
+                        //         }
+                        //         }
+                        //     `,
+                        //     // loadingKey: 'loading',
+                        //     variables: {
+                        //         satirlist: this.satirlist
+                        //     }
+                        //     })
+                        //     .then(data => {
 
+                        //     })
+                        // // mutation
+                         this.$router.go(-1)
 
-                    this.$router.go(-1)
+                    }else{
+                        console.log(response.data.data.loginuser_Query);
                     }
                 })
             //    ----- mail

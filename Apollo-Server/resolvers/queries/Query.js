@@ -232,6 +232,13 @@ module.exports = {
   //  return await stokturu.find({_id:id})
     return await model.find({guid:ObjectID(guid)})
   },
+  search_ubasketlist:async(parent, {uid}, {Models})=> {
+    const model = Models.sepet
+    //  console.log({guid});
+    
+  //  return await stokturu.find({_id:id})
+    return await model.find({uid:ObjectID(uid)})
+  },
   loginuser_Query:async (parent, {usermail, password}, {Models})=> {
     const model = Models.User
     let login=""
@@ -240,13 +247,14 @@ module.exports = {
        model.findOne({ 'usermail': usermail})
       .then((user=>{
         if(!user){
-          return resolve({res:'Kayıtlı Mail Bulunamadı'})
+          return resolve({_id:"",username:"",lastname:"",usermail:"",res:'Kayıtlı Mail Bulunamadı'})
         }else{
         bcrypt.compare(password, user.password).then(function(hash) {
           if(hash){
+            Object.assign(user, {res:true});
             return resolve(user)
           }else{
-            return resolve({res:'kullanıcı adı yada mail yanlış'})
+            return resolve({_id:"",username:"",lastname:"",usermail:"",res:'Şifre yanlış'})
           }
       })
     }

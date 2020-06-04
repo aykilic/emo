@@ -6,6 +6,7 @@ const { importSchema } = require('graphql-import');
 const {createWriteStream} = require('fs')
 const mongoose = require("mongoose");
 const path = require("path");
+const {sendmail}=require('./emailservice.js')
 
 var promisesAll = require('promises-all');
 

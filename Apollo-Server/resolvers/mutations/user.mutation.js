@@ -1,14 +1,17 @@
 var jwt = require('jsonwebtoken');
+const {sendmail}=require('../../emailservice.js')
 module.exports = {
   createUser: async (parent, {  username, lastname ,usermail, password },{ Models }) => {
-     console.log(usermail);
+     
     const model = Models.User
     // console.log(model);
-    // const user = await User.findOne({ username });
+     const user = await model.findOne({ 'usermail':usermail });
+     console.log(user);
     return new Promise((resolve,object) =>{
-    // if(user){
-    //   throw new Error('Kullanıcı adı kullanımda')
-    // }else{
+    if(user){
+      // throw new Error('Kullanıcı adı kullanımda')
+      resolve({res:'Kullanıcı adı kullanımda'})
+    }else{
       // var token = jwt.sign({ foo: 'bar' }, privateKey, { algorithm: 'RS256'});
      new model({
       username,
@@ -20,9 +23,10 @@ module.exports = {
       if(err) reject(err)
       else resolve(doc)
     });
-  // }
+  }
+  // console.log("hata");
 });
-}
+},
 
   // createUser: async (parent, {  username},{ User }) => {
   //   const user = await User.findOne({ username });
@@ -41,4 +45,7 @@ module.exports = {
   //     }
   //   });
   // },
+  sendmail:async (parent, {username}, { Models }) => {
+     sendmail()
+  }
 }

@@ -59,7 +59,8 @@ const routes = [
     path: '/shopping',
     component: () => import('layouts/LoginLayout.vue'),
     children: [
-      {path: '',  component: () => import('pages/shopping/sell.vue')},
+      {path: '',  component: () => import('pages/shopping/sellmiddleware.vue')},
+      {path: '/sell',  component: () => import('pages/shopping/sell.vue')},
     ]
   },
   {

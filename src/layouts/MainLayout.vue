@@ -25,10 +25,29 @@
         <div class="row col-md-4 col-sm-12 col-xs-12 self-center justify-end three">
           
           
-          <div class=" title-icons text-center   text-caption"><q-icon class="icon-heart text-center"    style="font-size: 26px;"/><q-item-label >Favorilerim</q-item-label></div>
-          <div class="q-ml-lg title-icons text-center  text-caption"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>{{get_basketlist.length}}</q-badge></q-icon><q-item-label >Sepetim</q-item-label></div>
-          <div v-if="this.get_uid =='' " class="q-ml-lg title-icons text-center  text-caption" @click="login()" ><q-icon class="icon-person text-center"   style="font-size: 26px;"/><q-item-label >login</q-item-label>  </div>
-          <div v-else class="q-ml-lg title-icons text-center  text-caption"  ><q-icon class="icon-person text-center"   style="font-size: 26px;"/><q-item-label >Hesabım</q-item-label>  </div>
+          <div class=" title-icons text-center  text-caption"><q-icon class="icon-heart text-center"    style="font-size: 26px;"/><q-item-label >Favorilerim</q-item-label ></div>
+          <div  class="q-ml-lg title-icons text-center  text-caption" @click="sepet()"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>{{sepet_count}}</q-badge></q-icon><q-item-label >Sepetim</q-item-label ></div>
+          <div v-if="this.get_uid =='' " class="q-ml-lg title-icons text-center  text-caption" @click="login()" ><q-icon class="icon-person text-center"   style="font-size: 26px;"/><q-item-label >login</q-item-label >  </div>
+          <div ref="hesap" v-else class="q-ml-lg title-icons text-center  text-caption"  @mouseover= "hesapOver = true" @mouseout= "hesapOver = false" >
+            <q-icon   class="icon-person text-center" style="font-size: 26px;"/>
+            <q-item-label >Hesabım</q-item-label >
+            <!-- :class="hesap ? 'icon-personn' : 'icon-person' " -->
+            <q-menu   @mouseover= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[15, 10]">
+            <!-- <q-menu v-if="hesap" @hesapOver= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[15, 15]"> -->
+              
+            <q-list v-if="hesap" style="min-width: 100px;">
+              <q-item clickable q-close-popup>
+                <q-item-section>Hesap Ayarları</q-item-section>
+              </q-item>
+              <q-separator />
+              <q-item clickable q-close-popup>
+                <q-item-section @click.prevent="logout()">Logout</q-item-section>
+              </q-item>
+            </q-list>
+            </q-menu>
+          <!-- </q-menu> -->
+            </div>
+            
           </div>
           
         </div>
@@ -63,14 +82,13 @@
                 
             <q-tabs
               v-model="main_tab"
-              
               indicator-color="transparent"
               dense
               reveal
               class="col-12 bg-pink-12 text-white "
             >
                     
-              <q-tab  name="a"  @mouseover= "menuOver = true" @mouseout= "menuOver = false"     label="LOHUSA & HAMİLE ÜRÜNLERİ" />
+              <q-tab  name="a"  @mouseover= "menuOver = true" @mouseout= "menuOver = false"  label="LOHUSA & HAMİLE ÜRÜNLERİ" />
               <q-tab  name="b" @mouseover= "menuOver1 = true" @mouseout= "menuOver1 = false" label="GÜNLÜK KULLANIM" />
               <q-tab  name="c" @mouseover= "menuOver2 = true" @mouseout= "menuOver2 = false" label="EN ÇOK SATAN ÜRÜNLER" />
             
@@ -91,7 +109,6 @@
           
         >
           <q-tab-panel  name="a" style="padding-left:0; " >
-           
             <a-tabs  style= "" @menu="menu=$event">
               <a-tab v-for="(anakategorilist,index) in treemmenu" :key='index' :title="(anakategorilist.stokturad)" :titleid="(anakategorilist._id)" class="row col-12"  >
                 
@@ -102,7 +119,6 @@
                         {{ altkategorilist.stokturad.split('-').reverse().join(' ') }}
                         <!-- {{ altkategorilist.stokturad.split('-').join(' ') }} -->
                         </li> 
-                      
                     </ul>
                 </div>
                 <div class="col-3 q-pl-md">
@@ -121,22 +137,18 @@
                 <q-card flat class="my-card col-6 ">
                   
                   <q-img
-                      
                       src="../statics/emose_h200.jpg"
                       style=" height: 400px;"
                     >
                   </q-img>
-                  
                 </q-card>
                 <q-card flat class="my-card col-6 ">
-                  
                   <q-img 
                       flat
                       src="../statics/emose1_h200.jpg"
                       style=" height: 400px;"
                     >
                   </q-img>
-                  
                 </q-card>
                 </div>
                 </q-intersection>
@@ -160,11 +172,8 @@
             Nostrum necessitatibus expedita dolores? Voluptatem repudiandae magni ea.
           </q-tab-panel>
         </q-tab-panels>
-
         </q-page-sticky>
-        
     </q-page-container>
-  
   </q-layout>
 </template>
 
@@ -198,10 +207,16 @@ export default {
   data () {
     return {
       menu: false,
+      
       menuOver: false,
       listOver: false,
       menuOver1: false,
       menuOver2: false,
+      // --------
+      hesap:false,
+      hesapOver:false,
+      hesaplistOver:false,
+      // --------
       // splitterModel: 20,
       slide: 1,
       search: null,
@@ -209,72 +224,96 @@ export default {
       // anakategorilists:[], 
       innerTab: 'gecelik',
       // splitterModel: 10,
-      treemmenu:[]
-      //menu child
+      treemmenu:[],
+      basketlist:[],
+      ubasketlist:[],
+      
+       sepet_count:"",
 
       // selected: { default: false},
       //  isActive: false
     }
   },
-//   watch: {
+  watch: {
+    menuOver (val) {
+      this.main_tab="a"
+      this.debounceFunc()
+    },
+    listOver (val) {
+      this.debounceFunc()
+    },
+    menuOver1 (val) {
+      
+      this.main_tab="b"
+      this.debounceFunc1()
+    },
+    menuOver2 (val) {
+      this.main_tab="c"
+      this.debounceFunc2()
+    },
     
-// },
+    hesapOver (val) {
+      
+      this.debounceFunc3()
+    },
+    hesaplistOver (val) {
+       this.debounceFunc3() 
+    },
+    anakategorilists(val) {
+      this.parseTree(val)
+    },
+    get_basketlist(val){
+      this.sepet_count=val.length
+      console.log("watch:get_basketlist",val);
+    },
+    get_ubasketlist(val){
+      this.sepet_count=val.length
+      console.log("watch:get_ubasketlist",val);
+    }
+  },
+  updated(){
+    
+  },
+  
   
     computed: {
-    
+    // get_basketlist(){
+    //   console.log("sdsdsdsdsdsd");
+    // },
     ...mapGetters([
       'anakategorilists',
       'get_guid',
       'get_basketlist',
+      'get_ubasketlist',
       'get_uid'
     ]),
-    
+    // sepet_count () {
+    //   if(Cookies.get("uid") != null || Cookies.get("uid") != "" || Cookies.get("uid") != undefined){
+    //     return this.get_ubasketlist.length
+    //   }else{
+    //      return this.get_basketlist.length
+    //   }
+    //  return Cookies.get("uid")
+      // if(Cookies.get("uid") != null){
+      //   return this.get_basketlist.length
+      // }else{
+        //  return this.get_ubasketlist.length
+      // }
+     
+    // }
   },
-  async beforeCreate(){
-    // await this.$store.dispatch('anakategori')
-    // await this.$store.dispatch('varyantlist')
-      
-    // this.anakategorilists=this.$store.state.stok.anakategorilist
-  },
+  
  async mounted(){
+   
    this.$store.dispatch('anafunction')
-     console.log("uid",this.get_guid);
+    //  console.log("uid",this.get_guid);
                             // let guid =Cookies.get('guid');
-                              //  console.log(Cookies.get('guid'));
-                              //  console.log(this.get_guid);
-                               if(this.get_uid == ""){
-                                      if( (Cookies.get('guid') == null ) ){
-                                        if((this.get_guid == "") || (this.get_guid == null)){
-                                        // console.log("1");
-                                     await this.$apollo.mutate({
-                                          mutation: gql`
-                                            mutation createguid_mutation {
-                                              createguid_mutation
-                                                {
-                                                  _id
-                                              }
-                                            }
-                                          `,
-                                        })
-                                        .then(data => {
-                                          // Cookies.set('guid', data.data.createguid_mutation._id, { expires: 30, path: '' });
-                                          this.$store.dispatch('add_guid',data.data.createguid_mutation._id)
-                                        });
-                                      }else{
-                                    console.log("2");
-                                    this.$store.dispatch('add_guid')
-                                  }
-                                  }else{
-                                    console.log("3");
-                                    this.$store.dispatch('add_guid')
-                                  }
-                                  this.$store.dispatch('search_basketlist',this.get_guid)
-        }else{
-          // this.$store.dispatch('set_login',this.get_guid)
-          // Cookies.remove('guid');
-          // this.$store.dispatch('add_uid')
-        }
-        
+                            //  console.log(Cookies.get('guid'));
+                                //  console.log("uid",this.get_uid);
+                                //  console.log("guid",this.get_guid);
+    this.userid_function()
+    // console.log(this.get_ubasketlist);
+    //  console.log(this.get_basketlist);
       //  await console.log("get_basketlist",this.get_basketlist);
   //  this.anakategorilists=this.$store.state.stok.anakategorilist
    
@@ -290,6 +329,7 @@ export default {
    
     //  console.log(this.$store.state.stok.anakategorilist);
       // console.log(this.treemmenu);
+      
   }, 
   // computed: {
     
@@ -310,8 +350,71 @@ export default {
     //  } 
   // },
   methods:{
+   async userid_function(){
+    //  console.log(Cookies.get('uid'));
+                                  if(Cookies.get('uid') == null ){
+                                      if( (Cookies.get('guid') == null )  ){
+                                        
+                                         console.log("guid cookie yoksa");
+                                     await this.$apollo.mutate({
+                                          mutation: gql`
+                                            mutation createguid_mutation {
+                                              createguid_mutation
+                                                {
+                                                  _id
+                                              }
+                                            }
+                                          `,
+                                        })
+                                        .then(data => {
+                                          // Cookies.set('guid', data.data.createguid_mutation._id, { expires: 30, path: '' });
+                                          this.$store.dispatch('add_guid',data.data.createguid_mutation._id)
+                                        });
+                                      
+                                    console.log("m1");
+                                    this.$store.dispatch('add_guid')
+                                  
+                                  // cookies guid yoksa
+                                  }else{
+                                  console.log("cookies guid varsa"); 
+                                    
+                                    this.$store.dispatch('add_guid')
+                                    // this.$store.dispatch('search_basketlist',Cookies.get('guid'))
+                                    this.$store.dispatch('search_basketlist',Cookies.get('guid'))
+                                  }
+        }else{
+           console.log("m,burda");
+          
+          this.$store.dispatch('add_uid',Cookies.get('uid'))
+          this.$store.dispatch('search_ubasketlist',Cookies.get('uid'))
+          // this.$router.go(-1)
+          // this.$store.dispatch('set_login',this.get_guid)
+          // Cookies.remove('guid')
+          // this.$store.dispatch('add_uid')
+        }
+      // console.log(Cookies.get('uid'));
+    //     if(Cookies.get('uid')){
+    //       // setTimeout(() => {
+    //     console.log("uid varrr");
+    //     // this.$refs.hesap.click()
+    // // }, 2000);
+    //       this.$store.dispatch('search_ubasketlist',Cookies.get('uid'))
+    //     }else{
+    //       this.$store.dispatch('search_basketlist',Cookies.get('guid'))
+    //     }
+        // his.$refs.navbarToggle.$el.click()
+        
+        console.log(this.get_ubasketlist);
+    },
     login(){
       this.$router.push({ path: '/login' })
+    },
+    logout(){
+      // console.log("object");
+      this.$store.dispatch('logout')
+      this.userid_function()
+      this.$router.push({ path: '/' })
+      
     },
     debounceFunc: debounce(function () {
         
@@ -328,9 +431,31 @@ export default {
       // debouncemenulist: debounce(function(val){
       //   this.parseTree(val)
       // },1000),
+    debounceFunc3: debounce(function () {
+
+      this.checkhesap()
+    }, 150),
+    checkhesap(){
+      
+      if (this.hesapOver || this.hesaplistOver ) {
+        // this.$refs.hesap.click()
+      this.hesap = true
+      // console.log("hesapOver",this.hesapOver);
+      // console.log("hesaplistOver",this.hesaplistOver);
+      // console.log("hesap",this.hesap);
+    }
+    else {
+      // this.$refs.hesap.click()
+      this.hesap = false
+    //   console.log("hesapOver",this.hesapOver);
+    //   console.log("hesaplistOver",this.hesaplistOver);
+    //   console.log("hesap",this.hesap);
+     }
+    },
     checkMenu () {
       if (this.menuOver || this.listOver) {
         this.menu = true
+
       }
       else {
         this.menu = false
@@ -362,6 +487,7 @@ export default {
     },
      parseTree(selfQ, parentID=null){
       //  console.log(selfQ);
+
           let treemmenu = [];
 
           selfQ.forEach((value, index) => {
@@ -392,29 +518,11 @@ export default {
 
 
         },
+        sepet(){
+          this.$router.push({ path: '/sell' })
+        }
 },
-watch: {
-    menuOver (val) {
-      this.main_tab="a"
-      this.debounceFunc()
-    },
-    listOver (val) {
-      this.debounceFunc()
-    },
-    menuOver1 (val) {
-      
-      this.main_tab="b"
-      this.debounceFunc1()
-    },
-    menuOver2 (val) {
-      this.main_tab="c"
-      this.debounceFunc2()
-    },
-    anakategorilists(val) {
-      this.parseTree(val)
-      
-    },
-  },
+
 }
 </script>
 <style lang="stylus" scope>
@@ -444,12 +552,21 @@ watch: {
     font-size: 26px;
     content:'\F004';
     animation: toColor 0.5s;
+    }
+    .icon-personn{
+    font-family: "Material Design Icons" ;
+    font-weight: normal;
+    font-style: normal;
+    color:#ff4081;
+    font-size: 26px;
+    content:'\F013';
+    // animation: toColor 0.5s;
+    
   }
   .title-icons  .icon-heart::before{
     font-family: "Material Design Icons" ;
     font-weight: normal;
     font-style: normal;
-    
     font-size: 26px;
     position:absolute;
     content:"\F2D5";

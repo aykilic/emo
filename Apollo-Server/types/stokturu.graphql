@@ -96,6 +96,7 @@ type Mutation {
   updateStok(id:String!,variant: StokInput): Stoktur
   updateStokalt(id:String!): Stoktur
   createUser(username: String,lastname: String,usermail:String,password: String):User
+  sendmail(username:String):User
 }
 input StokInput{
   name:String

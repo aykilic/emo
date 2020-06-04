@@ -5,8 +5,13 @@ const sepetSchema = new Schema({
     type: Schema.ObjectId,
     auto: true,
   },
+  uid:{
+    type: String,
+    
+  },
   guid:{
-    type: Schema.ObjectId,
+    type: String,
+    
   },
   stokid: {
     type: Schema.ObjectId,
