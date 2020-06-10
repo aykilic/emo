@@ -41,6 +41,7 @@
                         :max="5"
                         style="color:#ff4081"
                         icon="mdi-heart"
+                        readonly
                         />
                         <!-- style="color:#ff4081" -->
                         <!-- <q-space/> -->

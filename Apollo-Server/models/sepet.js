@@ -1,5 +1,6 @@
 const mongoose=require('mongoose');
 const Schema = mongoose.Schema;
+var Decimal = require('mongoose-float').loadType(mongoose, 2);
 const sepetSchema = new Schema({
   _id:{
     type: Schema.ObjectId,
@@ -32,6 +33,9 @@ const sepetSchema = new Schema({
   varyantoption2: {
     type: String,
     
+  },
+  fiyat: {
+    type: Decimal,
   },
   path: {
     type: String,

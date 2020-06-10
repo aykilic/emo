@@ -1,0 +1,326 @@
+ [
+    {
+      "ilid": "1",
+      "il": "ADANA"
+    },
+    {
+      "ilid": "2",
+      "il": "ADIYAMAN"
+    },
+    {
+      "ilid": "3",
+      "il": "AFYONKARAHİSAR"
+    },
+    {
+      "ilid": "4",
+      "il": "AĞRI"
+    },
+    {
+      "ilid": "5",
+      "il": "AKSARAY"
+    },
+    {
+      "ilid": "6",
+      "il": "AMASYA"
+    },
+    {
+      "ilid": "7",
+      "il": "ANKARA"
+    },
+    {
+      "ilid": "8",
+      "il": "ANTALYA"
+    },
+    {
+      "ilid": "9",
+      "il": "ARDAHAN"
+    },
+    {
+      "ilid": "10",
+      "il": "ARTVİN"
+    },
+    {
+      "ilid": "11",
+      "il": "AYDIN"
+    },
+    {
+      "ilid": "12",
+      "il": "BALIKESİR"
+    },
+    {
+      "ilid": "13",
+      "il": "BARTIN"
+    },
+    {
+      "ilid": "14",
+      "il": "BATMAN"
+    },
+    {
+      "ilid": "15",
+      "il": "BAYBURT"
+    },
+    {
+      "ilid": "16",
+      "il": "BİLECİK"
+    },
+    {
+      "ilid": "17",
+      "il": "BİNGÖL"
+    },
+    {
+      "ilid": "18",
+      "il": "BİTLİS"
+    },
+    {
+      "ilid": "19",
+      "il": "BOLU"
+    },
+    {
+      "ilid": "20",
+      "il": "BURDUR"
+    },
+    {
+      "ilid": "21",
+      "il": "BURSA"
+    },
+    {
+      "ilid": "22",
+      "il": "ÇANAKKALE"
+    },
+    {
+      "ilid": "23",
+      "il": "ÇANKIRI"
+    },
+    {
+      "ilid": "24",
+      "il": "ÇORUM"
+    },
+    {
+      "ilid": "25",
+      "il": "DENİZLİ"
+    },
+    {
+      "ilid": "26",
+      "il": "DİYARBAKIR"
+    },
+    {
+      "ilid": "27",
+      "il": "DÜZCE"
+    },
+    {
+      "ilid": "28",
+      "il": "EDİRNE"
+    },
+    {
+      "ilid": "29",
+      "il": "ELAZIĞ"
+    },
+    {
+      "ilid": "30",
+      "il": "ERZİNCAN"
+    },
+    {
+      "ilid": "31",
+      "il": "ERZURUM"
+    },
+    {
+      "ilid": "32",
+      "il": "ESKİŞEHİR"
+    },
+    {
+      "ilid": "33",
+      "il": "GAZİANTEP"
+    },
+    {
+      "ilid": "34",
+      "il": "GİRESUN"
+    },
+    {
+      "ilid": "35",
+      "il": "GÜMÜŞHANE"
+    },
+    {
+      "ilid": "36",
+      "il": "HAKKARİ"
+    },
+    {
+      "ilid": "37",
+      "il": "HATAY"
+    },
+    {
+      "ilid": "38",
+      "il": "IĞDIR"
+    },
+    {
+      "ilid": "39",
+      "il": "ISPARTA"
+    },
+    {
+      "ilid": "40",
+      "il": "İSTANBUL"
+    },
+    {
+      "ilid": "41",
+      "il": "İZMİR"
+    },
+    {
+      "ilid": "42",
+      "il": "KAHRAMANMARAŞ"
+    },
+    {
+      "ilid": "43",
+      "il": "KARABÜK"
+    },
+    {
+      "ilid": "44",
+      "il": "KARAMAN"
+    },
+    {
+      "ilid": "45",
+      "il": "KARS"
+    },
+    {
+      "ilid": "46",
+      "il": "KASTAMONU"
+    },
+    {
+      "ilid": "47",
+      "il": "KAYSERİ"
+    },
+    {
+      "ilid": "48",
+      "il": "KIRIKKALE"
+    },
+    {
+      "ilid": "49",
+      "il": "KIRKLARELİ"
+    },
+    {
+      "ilid": "50",
+      "il": "KIRŞEHİR"
+    },
+    {
+      "ilid": "51",
+      "il": "KİLİS"
+    },
+    {
+      "ilid": "52",
+      "il": "KOCAELİ"
+    },
+    {
+      "ilid": "53",
+      "il": "KONYA"
+    },
+    {
+      "ilid": "54",
+      "il": "KÜTAHYA"
+    },
+    {
+      "ilid": "55",
+      "il": "MALATYA"
+    },
+    {
+      "ilid": "56",
+      "il": "MANİSA"
+    },
+    {
+      "ilid": "57",
+      "il": "MARDİN"
+    },
+    {
+      "ilid": "58",
+      "il": "MERSİN"
+    },
+    {
+      "ilid": "59",
+      "il": "MUĞLA"
+    },
+    {
+      "ilid": "60",
+      "il": "MUŞ"
+    },
+    {
+      "ilid": "61",
+      "il": "NEVŞEHİR"
+    },
+    {
+      "ilid": "62",
+      "il": "NİĞDE"
+    },
+    {
+      "ilid": "63",
+      "il": "ORDU"
+    },
+    {
+      "ilid": "64",
+      "il": "OSMANİYE"
+    },
+    {
+      "ilid": "65",
+      "il": "RİZE"
+    },
+    {
+      "ilid": "66",
+      "il": "SAKARYA"
+    },
+    {
+      "ilid": "67",
+      "il": "SAMSUN"
+    },
+    {
+      "ilid": "68",
+      "il": "SİİRT"
+    },
+    {
+      "ilid": "69",
+      "il": "SİNOP"
+    },
+    {
+      "ilid": "70",
+      "il": "SİVAS"
+    },
+    {
+      "ilid": "71",
+      "il": "ŞANLIURFA"
+    },
+    {
+      "ilid": "72",
+      "il": "ŞIRNAK"
+    },
+    {
+      "ilid": "73",
+      "il": "TEKİRDAĞ"
+    },
+    {
+      "ilid": "74",
+      "il": "TOKAT"
+    },
+    {
+      "ilid": "75",
+      "il": "TRABZON"
+    },
+    {
+      "ilid": "76",
+      "il": "TUNCELİ"
+    },
+    {
+      "ilid": "77",
+      "il": "UŞAK"
+    },
+    {
+      "ilid": "78",
+      "il": "VAN"
+    },
+    {
+      "ilid": "79",
+      "il": "YALOVA"
+    },
+    {
+      "ilid": "80",
+      "il": "YOZGAT"
+    },
+    {
+      "ilid": "81",
+      "il": "ZONGULDAK"
+    }
+  ]

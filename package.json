@@ -11,7 +11,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.8.1",
+    "@quasar/extras": "^1.8.2",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link": "^1.2.13",
@@ -25,7 +25,7 @@
     "lodash": "^4.17.15",
     "node-fetch": "^2.6.0",
     "qs": "^6.9.1",
-    "quasar": "^1.11.2",
+    "quasar": "^1.12.3",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "vue-apollo": "^3.0.3",
@@ -33,7 +33,7 @@
     "vue-imask": "^6.0.3"
   },
   "devDependencies": {
-    "@quasar/app": "^1.8.6"
+    "@quasar/app": "^1.9.6"
   },
   "engines": {
     "node": ">= 10.18.1",

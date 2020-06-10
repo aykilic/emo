@@ -70,6 +70,7 @@ export default {
                         varyantid
                         varyantoption1
                         varyantoption2
+                        fiyat
                         path
                         publicid
                         count
@@ -100,6 +101,7 @@ export default {
                         varyantid
                         varyantoption1
                         varyantoption2
+                        fiyat
                         path
                         publicid
                         count

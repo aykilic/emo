@@ -7,6 +7,7 @@ type sepet{
   varyantid:ID
   varyantoption1:String
   varyantoption2:String
+  fiyat:Float
   path:String
   publicid:String
   count:Int
@@ -17,9 +18,10 @@ type guest_user{
   _id:ID
 }
  type Mutation {
-     createsepet_mutation(uid:String,guid:String, stokid:ID, stokad:String, varyantid:ID, varyantoption1:String, varyantoption2:String, path:String, publicid:String, count:Int):sepet
+     createsepet_mutation(uid:String,guid:String, stokid:ID, stokad:String, varyantid:ID, varyantoption1:String, varyantoption2:String, fiyat:Float, path:String, publicid:String, count:Int):sepet
      createguid_mutation:guest_user
      mergesepet_mutation(sepetlist:[sepetlistInput]):sepet
+     delete_basketproduct(id:ID):sepet
  }
 type Query {
     search_basketlist(guid:String):[sepet]
@@ -34,6 +36,7 @@ input sepetlistInput{
   varyantid:ID
   varyantoption1:String
   varyantoption2:String
+  fiyat:Float
   path:String
   publicid:String
   count:Int

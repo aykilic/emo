@@ -28,7 +28,7 @@
             <q-input class="col-md-10 col-12 q-mb-lg" v-model="signin.password" label="Şifre" outlined/>
             <q-btn class="col-md-4 col-6 q-mb-md " size="18px" color="positive " label="Giriş Yap " rounded/>
             <div class="col-12 text-subtitle2 q-mb-md">veya</div>
-            <q-btn class="col-md-8 col-11 text-pink-12" size="18px" color="white" @click="sell()" label="Üye olmadan devam et" rounded/>
+            <q-btn class="col-md-8 col-11 text-pink-12" size="18px" color="white" @click="sellm()" label="Üye olmadan devam et" rounded/>
             </div>
           </q-tab-panel>
 
@@ -108,7 +108,7 @@ export default {
 
     },
     methods: {
-      sell() {
+      sellm() {
         this.$router.push({ path: '/sell' })
       }
     },

@@ -19,5 +19,6 @@ const photoSchema = new Schema({
     default: Date.now
   }
 
+  
 });
 module.exports = mongoose.model('photo', photoSchema, 'photo');

@@ -65,7 +65,7 @@ module.exports = function (ctx) {
         'Notify',
         'Loading',
         'Dialog',
-        'Cookies'
+        'Cookies',
       ],
       config: {
         loading: { /* Loading defaults */ },

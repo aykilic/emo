@@ -156,6 +156,7 @@ export default {
       fiyat:"",
       indirim:1,
       indirimli_fiyat:"",
+      d_indirimli_fiyat:"",
       stok_path:"",
       stok_publicid:"",
       images: {
@@ -273,8 +274,10 @@ export default {
       // if(this.urundetay[0].indirim || (this.urundetay[0].indirim !="") || (this.urundetay[0].indirim !=null)|| (this.urundetay[0].indirim !=undefined)){
        let indirimli_fiyat = this.urundetay[0].fiyat1 - (this.urundetay[0].fiyat1 * (this.indirim/100) )//(1 + (this.indirim/100)).toFixed(2)
       // indirimli_fiyat=indirimli_fiyat.toFixed(2)
+
       // --------------------
       // console.log("locale",indirimli_fiyat.toLocaleString()); 
+      this.d_indirimli_fiyat=indirimli_fiyat
       // --------------------
         indirimli_fiyat=indirimli_fiyat.toFixed(2).replace('.', ',')
         this.indirimli_fiyat=indirimli_fiyat.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
@@ -770,24 +773,24 @@ export default {
           if (uid != "") {
             console.log("uid boş değil")
             if(this.get_ubasketlist.length > 0 && is_sepet) {
-                const dialog = this.$q.dialog({
-                          title: "Uyarı",
-                          message: "Ürün Sepetinizde bulunmaktadır..!"
-                        })
-                        .onOk(() => {
-                          // console.log('OK')
-                        })
-                        .onCancel(() => {
-                          // console.log('Cancel')
-                        })
-                        .onDismiss(() => {
-                          clearTimeout(timer);
-                          // console.log('I am triggered on both OK and Cancel')
-                        });
+                // const dialog = this.$q.dialog({
+                //           title: "Uyarı",
+                //           message: "Ürün Sepetinizde bulunmaktadır..!"
+                //         })
+                //         .onOk(() => {
+                //           // console.log('OK')
+                //         })
+                //         .onCancel(() => {
+                //           // console.log('Cancel')
+                //         })
+                //         .onDismiss(() => {
+                //           clearTimeout(timer);
+                //           // console.log('I am triggered on both OK and Cancel')
+                //         });
 
-                      const timer = setTimeout(() => {
-                        dialog.hide();
-                      }, 2000);
+                //       const timer = setTimeout(() => {
+                //         dialog.hide();
+                //       }, 2000);
                                       
               }else{
                 console.log("listeye ürün ekleme","mutation")
@@ -801,6 +804,7 @@ export default {
                                                   $varyantid:ID,
                                                   $varyantoption1:String,
                                                   $varyantoption2:String,
+                                                  $fiyat:Float
                                                   $path:String,
                                                   $publicid:String,
                                                   $count:Int) {
@@ -809,6 +813,7 @@ export default {
                                                     guid: $guid, 
                                                     stokid: $stokid,
                                                     stokad:$stokad,
+                                                    fiyat:$fiyat,
                                                     varyantid:$varyantid,
                                                     varyantoption1:$varyantoption1,
                                                     varyantoption2:$varyantoption2,
@@ -830,6 +835,7 @@ export default {
                                                 varyantid: this.id,
                                                 varyantoption1: this.varyant_option1_name,
                                                 varyantoption2: this.varyant_option2_name,
+                                                fiyat:this.d_indirimli_fiyat,
                                                 path: this.stok_path,
                                                 publicid: this.stok_publicid,
                                                 count: this.miktar
@@ -848,24 +854,24 @@ export default {
           }else{
             console.log("guid boş değil")
               if(this.get_basketlist.length > 0 && is_sepet) {
-                const dialog = this.$q.dialog({
-                          title: "Uyarı",
-                          message: "Ürün Sepetinizde bulunmaktadır..!"
-                        })
-                        .onOk(() => {
-                          // console.log('OK')
-                        })
-                        .onCancel(() => {
-                          // console.log('Cancel')
-                        })
-                        .onDismiss(() => {
-                          clearTimeout(timer);
-                          // console.log('I am triggered on both OK and Cancel')
-                        });
+                // const dialog = this.$q.dialog({
+                //           title: "Uyarı",
+                //           message: "Ürün Sepetinizde bulunmaktadır..!"
+                //         })
+                //         .onOk(() => {
+                //           // console.log('OK')
+                //         })
+                //         .onCancel(() => {
+                //           // console.log('Cancel')
+                //         })
+                //         .onDismiss(() => {
+                //           clearTimeout(timer);
+                //           // console.log('I am triggered on both OK and Cancel')
+                //         });
 
-                      const timer = setTimeout(() => {
-                        dialog.hide();
-                      }, 2000);
+                //       const timer = setTimeout(() => {
+                //         dialog.hide();
+                //       }, 2000);
                                       
               }else{
                 console.log("listeye ürün ekleme","mutation")
@@ -879,6 +885,7 @@ export default {
                                                   $varyantid:ID,
                                                   $varyantoption1:String,
                                                   $varyantoption2:String,
+                                                  $fiyat:Float,
                                                   $path:String,
                                                   $publicid:String,
                                                   $count:Int) {
@@ -890,6 +897,7 @@ export default {
                                                     varyantid:$varyantid,
                                                     varyantoption1:$varyantoption1,
                                                     varyantoption2:$varyantoption2,
+                                                    fiyat:$fiyat,
                                                     path:$path,
                                                     publicid:$publicid,
                                                     count:$count)
@@ -908,6 +916,7 @@ export default {
                                                 varyantid: this.id,
                                                 varyantoption1: this.varyant_option1_name,
                                                 varyantoption2: this.varyant_option2_name,
+                                                fiyat:this.d_indirimli_fiyat,
                                                 path: this.stok_path,
                                                 publicid: this.stok_publicid,
                                                 count: this.miktar

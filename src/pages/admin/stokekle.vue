@@ -83,7 +83,7 @@
                     outlined
                     v-model="stok.fiyat1"
                     suffix="TL"
-                    mask=" #.##"
+                    mask=" #"
                     fill-mask="0"
                     reverse-fill-mask
                     label="Fiyat 1"
