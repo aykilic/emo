@@ -30,7 +30,7 @@
           </q-tab-panel>
 
           <q-tab-panel class=" items-center " name="kayit">
-            <div class="text-h6 q-pb-md">Üye Kayıt</div>
+            <div class="text-h6 text-center q-pb-md">Üye Kayıt</div>
             <div class="row justify-center ">
             <q-input class="col-md-10 col-12 q-mb-lg" v-model="signup.username" label="Ad"  outlined/>
             <q-input class="col-md-10 col-12 q-mb-lg" v-model="signup.lastname" label="Soyad"  outlined/>
@@ -192,6 +192,7 @@ import { Cookies } from "quasar"
                                           varyantid:value.varyantid,
                                           varyantoption1:value.varyantoption1,
                                           varyantoption2:value.varyantoption2,
+                                          fiyat:value.fiyat,
                                           path:value.path,
                                           publicid:value.publicid,
                                           count:value.count,
@@ -211,6 +212,7 @@ import { Cookies } from "quasar"
                                     varyantid:avalue.varyantid,
                                     varyantoption1:avalue.varyantoption1,
                                     varyantoption2:avalue.varyantoption2,
+                                    fiyat:value.fiyat,
                                     path:avalue.path,
                                     publicid:avalue.publicid,
                                     count:avalue.count,
@@ -250,6 +252,7 @@ import { Cookies } from "quasar"
                                           varyantid:value.varyantid,
                                           varyantoption1:value.varyantoption1,
                                           varyantoption2:value.varyantoption2,
+                                          fiyat:value.fiyat,
                                           path:value.path,
                                           publicid:value.publicid,
                                           count:value.count,

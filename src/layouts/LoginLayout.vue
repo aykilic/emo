@@ -32,13 +32,18 @@ import { Cookies } from "quasar";
     ])
   },
  async mounted(){
-
+   
     //  console.log("get_guid",this.get_guid);
      if(this.get_guid == "" || this.get_guid == undefined || this.get_guid == null  ){
-        //  console.log("11");
-      this.$store.dispatch('add_guid',Cookies.get('guid'))
+          // console.log("11");
+        if(Cookies.get('uid')){
+          this.$store.dispatch('add_uid',Cookies.get('uid'))
+          }else{
+            this.$store.dispatch('add_guid',Cookies.get('guid'))
+          }
+        
       }else{
-        //   console.log("22");
+          //  console.log("22");
           
            this.$store.dispatch('add_guid',this.get_guid)
         //    console.log("get_guid",this.get_guid);

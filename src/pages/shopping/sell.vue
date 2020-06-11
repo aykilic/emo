@@ -1,6 +1,9 @@
 <template>
         <div class="row col-12  justify-center q-pt-xl" >
-            <div v-if="lists.length == 0">Sepetinizde Ürün Bulunmamaktadır...</div>
+            <div v-if="lists.length == 0"><q-img
+          src="statics/Emose_Logo.jpg"
+          style=" max-width: 140px"
+          /></div>
                 <q-stepper
                     v-else
                     class="col-12 "
@@ -13,14 +16,15 @@
                     animated
                     >
                     <q-step
-                        
                         class=" "
                             :name="1"
                             title=""
                             icon="mdi-cart"
                             :done=" step > 1 "
+                            style=""
                         >
-                        <div class="row  q-gutter-y-md">
+                        <div class="row  justify-center" >
+                        <div class="row q-gutter-y-md col-md-10" >
                         <div class="col-xs-12 col-md-8" style="border-style:solid;border-color:#cdcdcd;border-width: 1px;border-radius:5px;">
                             
                             <q-table
@@ -109,69 +113,83 @@
                         </q-card>
                         </div>
                         </div>
+                        </div>
                             
                     
                     </q-step>
-
+<!-- -------------------------------------------------------------------- -->
                     <q-step
                         :name="2"
                         title=""
                         icon="mdi-map-marker-alert"
                         :done="step > 2"
                         >
-                        <div class="row q-gutter-y-md">
+                        <div class="row  justify-center" >
+                        <div class="row q-gutter-y-md col-md-10" >
                             <div class="col-xs-12 col-md-8 " style="border-style:solid;border-color:#cdcdcd;border-width: 1px;border-radius:5px;">
                                 <div class="row">
                                     <q-item-label class="q-pa-md col-12  text-weight-medium" style="font-size:19px" >Sipariş Bilgileri</q-item-label>
                                     <q-separator/>
-                                <q-input class="q-pt-md q-pl-xs q-pr-xs col-6"  v-model="user.ad_soyad" ref="ad" :rules="[val => !!val || 'Boş Bırakmayınız']" outlined label="Ad-Soyad" hint="Ad-Soyad Giriniz" :dense=false />
-                                <q-input class="q-pt-md q-pl-xs q-pr-xs col-6"  v-model="user.cep" ref="cep" :rules="[val => val.length > 9 || 'Yanlış Numara']" mask="+90(###) ### - ####" unmasked-value outlined label="Cep Telefonu" hint="Cep No Giriniz" :dense=false />
-                                <q-input class="q-pt-md q-pl-xs q-pr-xs col-6"  v-model="user.tc_v_no" ref="tc" :rules="[val => !!val || 'Boş Bırakmayınız']" outlined label="TC Kimlik No-Vergi No" hint="Lütfen Adınızı Giriniz" :dense=false />
-                                <q-input class="q-pt-md q-pl-xs q-pr-xs col-6"  v-model="user.v_daire"  outlined label="Vergi Dairesi" hint="Varsa - Vergi Dairesi Giriniz" :dense=false />
-                                <q-input class="q-pt-md q-pl-xs q-pr-xs col-12" v-model="user.email" ref="email" outlined label="Mail" hint="Lütfen Adınızı Giriniz" :rules="[val => !!val || 'Email Alanı', isValidEmail]" :dense=false />
-                                <q-input
-                                    outlined
-                                    ref="adres"
-                                    :rules="[val => !!val || 'Boş Bırakmayınız']"
-                                    v-model="user.adres"
-                                    type="textarea"
-                                    label="Adres"
-                                    class="q-pt-md q-pl-xs q-pr-xs  col-12 hint"
-                                    hint="Açıklama Giriniz...!"
-                                />
-                                <q-select 
-                                class="hint col-6 q-pt-md q-pl-xs q-pr-xs q-mb-md"
-                                ref="il"
-                                :rules="[val => !!val || 'Boş Bırakmayınız']"
-                                outlined 
-                                label="il" 
-                                hint="il Seçiniz...!"
-                                v-model="user.il"
-                                :options="iloptions"
-                                option-value="ilid"
-                                option-label="il"
-                                @input=ilcesec()
-                                @filter="filteril"
-                                use-input
-                                auto-select
-                                fill-input
-                                hide-selected
-                                />
-                            <q-select 
-                                class="hint col-6 q-pt-md q-pl-xs q-pr-xs q-mb-md"
-                                outlined 
-                                ref="ilce"
-                                :rules="[val => !!val || 'Boş Bırakmayınız']"
-                                label="ilçe" 
-                                hint="ilçe Seçiniz...!"
-                                v-model="user.ilce"
-                                :options="ilceoptions"
-                                option-value="ilceid"
-                                option-label="ilce"
-                                />
+                                    <div v-if="get_guid">
+                                            <q-input class="q-pt-md q-pl-xs q-pr-xs col-6"  v-model="user.ad_soyad" ref="ad" :rules="[val => !!val || 'Boş Bırakmayınız']" outlined label="Ad-Soyad" hint="Ad-Soyad Giriniz" dense />
+                                            <q-input class="q-pt-md q-pl-xs q-pr-xs col-6"  v-model="user.cep" ref="cep" :rules="[val => val.length > 9 || 'Yanlış Numara']" mask="+90(###) ### - ####" unmasked-value outlined label="Cep Telefonu" hint="Cep No Giriniz" dense />
+                                            <q-input class="q-pt-xs q-pl-xs q-pr-xs col-6"  v-model="user.tc_v_no" ref="tc" :rules="[val => !!val || 'Boş Bırakmayınız']" outlined label="TC Kimlik No-Vergi No" hint="Lütfen Adınızı Giriniz" dense />
+                                            <q-input class="q-pt-xs q-pl-xs q-pr-xs col-6"  v-model="user.v_daire"  outlined label="Vergi Dairesi" hint="Varsa - Vergi Dairesi Giriniz" dense />
+                                            <q-input class="q-pt-xs q-pl-xs q-pr-xs col-12" v-model="user.email" ref="email" outlined label="Mail" hint="Lütfen Adınızı Giriniz" :rules="[val => !!val || 'Email Alanı', isValidEmail]" dense />
+                                            <q-input
+                                                outlined
+                                                ref="adres"
+                                                :rules="[val => !!val || 'Boş Bırakmayınız']"
+                                                v-model="user.adres"
+                                                type="textarea"
+                                                label="Adres"
+                                                class="q-pt-xs q-pl-xs q-pr-xs  col-12 hint"
+                                                hint="Açıklama Giriniz...!"
+                                                dense
+                                            />
+                                            <q-select 
+                                            class="hint col-6 q-pt-xs q-pl-xs q-pr-xs q-mb-md"
+                                            ref="il"
+                                            :rules="[val => !!val || 'Boş Bırakmayınız']"
+                                            outlined 
+                                            label="il" 
+                                            hint="il Seçiniz...!"
+                                            v-model="user.il"
+                                            :options="iloptions"
+                                            option-value="ilid"
+                                            option-label="il"
+                                            @input=ilcesec()
+                                            @filter="filteril"
+                                            use-input
+                                            auto-select
+                                            fill-input
+                                            hide-selected
+                                            dense
+                                            />
+                                            <q-select 
+                                            class="hint col-6 q-pt-xs q-pl-xs q-pr-xs q-mb-md"
+                                            outlined 
+                                            ref="ilce"
+                                            :rules="[val => !!val || 'Boş Bırakmayınız']"
+                                            label="ilçe" 
+                                            hint="ilçe Seçiniz...!"
+                                            v-model="user.ilce"
+                                            :options="ilceoptions"
+                                            option-value="ilceid"
+                                            option-label="ilce"
+                                            dense
+                                            />
 
                         
-                                
+                                    </div>
+                                    <div class="row col-12" v-else>
+                                        <div class="col-6 q-pa-md ">
+                                            <q-item class="new_detail text-grey justify-center">
+                                                <q-item-label class=" self-center">Yeni Adres Ekle <br><q-icon name="mdi-plus" /></q-item-label>
+                                                
+                                            </q-item>
+                                        </div>
+                                    </div>    
                                 </div>
                             </div>
                             <div class="col-12 col-md ozet" style="border-style:solid;border-color:#cdcdcd;border-width: 1px;border-radius:5px;display:block;min-width:150px;max-height:345px">
@@ -207,54 +225,26 @@
                             </q-card>
                             </div>
                         </div>
+                        </div>
                             <!-- An ad group contains one or more ads which target a shared set of keywords.
                             <q-btn @click="$refs.stepper.next()" color="bg-pink-11" :label="step === 3 ? 'Finish' : 'DEVAM'" />
                             <q-btn v-if="step > 1" flat color="primary" @click="$refs.stepper.previous()" label="Back" class="q-ml-sm" /> -->
                     </q-step>
-
+<!-- -------------------------------------------------------------------- -->
                     <q-step
                         :name="3"
                         title=""
                         icon="mdi-credit-card"
                         
                         >
-                        <div class="row q-gutter-y-md">
+                        
+                            <div class="row  justify-center" >
+                        <div class="row q-gutter-y-md col-md-10" >
                             <div class="col-xs-12 col-md-8" style="border-style:solid;border-color:#cdcdcd;border-width: 1px;border-radius:5px;">
                                 <div class="row">
                                     <q-item-label class="q-mb-md q-mt-md col-12  text-weight-medium" style="font-size:19px" >Ödeme Seçenekleri</q-item-label>
                                     <q-separator/>
-                                <!-- <q-list class="col-12">
-            
-                                    
-                                    <q-item style="height:60px" tag="label" v-ripple>
-                                        <q-item-section avatar>
-                                        <q-radio v-model="color" val="Kredi Kartıyla Hemen Ödeme Yap" color="primary" />
-                                        </q-item-section>
-                                        <q-item-section>
-                                        <q-item-label style="font-size:19px" >Kredi Kartıyla Hemen Ödeme </q-item-label>
-                                        </q-item-section>
-                                    </q-item>
-                                    
-                                    <q-item style="height:60px" tag="label" v-ripple>
-                                        <q-item-section avatar>
-                                        <q-radio v-model="color" val="Banka Havalesi İle Ödeme Yap " color="primary" />
-                                        </q-item-section>
-                                        <q-item-section  >
-                                        <q-item-label  style="font-size:19px" >Banka Havalesi İle Ödeme </q-item-label>
-                                        
-                                        </q-item-section>
-                                    </q-item>
-
-                                    <q-item style="height:60px" tag="label" v-ripple>
-                                        <q-item-section avatar top>
-                                        <q-radio v-model="color" val="Ürün Kapınıza Geldiğinde Nakit Öde    " color="primary" />
-                                        </q-item-section>
-                                        <q-item-section>
-                                        <q-item-label style="font-size:19px" >Ürün Kapınıza Geldiğinde Nakit Ödeme</q-item-label>
-                                        
-                                        </q-item-section>
-                                    </q-item>
-                                </q-list > -->
+                                
                                 <q-list class="col-12" bordered>
                                     <q-expansion-item
                                         group="somegroup"
@@ -265,76 +255,60 @@
                                     >
                                         <q-card>
                                             <q-separator />
-                                        <q-card-section>
-                                            <q-item style="height:60px" tag="label" v-ripple>
-                                        <q-item-section avatar>
-                                        <q-radio v-model="payment_select" val="Kredi Kartı Hemen" color="primary" />
-                                        </q-item-section>
-                                        <q-item-section >
-                                        <q-item-label style="font-size:19px" >Kredi Kartıyla Öde </q-item-label>
-                                        <q-item-label class="text-red" caption >Seçin,Tamamla Butonuna Basın</q-item-label>
-                                        </q-item-section>
-                                    </q-item>
-                                        </q-card-section>
+                                            <q-card-section>
+                                                <q-item style="height:60px" tag="label" v-ripple>
+                                                    <q-item-section avatar>
+                                                        <q-radio v-model="val" val="Kredi Kartı Hemen" @click.native="payment_radio(`${val}`)" color="primary" />
+                                                    </q-item-section>
+                                                    <q-item-section >
+                                                        <q-item-label style="font-size:19px" >Kredi Kartıyla Öde </q-item-label>
+                                                        <q-item-label class="text-red" caption >Seçin, Tamamla Butonuna Basın</q-item-label>
+                                                    </q-item-section>
+                                                </q-item>
+                                            </q-card-section>
                                         </q-card>
                                     </q-expansion-item>
 
                                     <q-separator />
 
-                                    <q-expansion-item group="somegroup" icon="mdi-bank-transfer-in" label="Banka Havalesi İle Ödeme Yap" header-class="">
-                                        <q-card>
-                                            <q-separator />
-                                        <q-card-section>
-                                            <q-item style="height:60px" tag="label" v-ripple>
-                                        <q-item-section avatar>
-                                        <q-radio v-model="payment_select" val="Havale" color="primary" />
-                                        </q-item-section>
-                                        <q-item-section>
-                                        <q-item-label style="font-size:19px" >Havale ile Öde</q-item-label>
-                                        <q-item-label class="text-red" caption >Lütfen İstenen Bilgileri Girin.</q-item-label>
-                                        
-                                        </q-item-section>
-                                    </q-item>
-                                        </q-card-section>
-                                        </q-card>
-                                    </q-expansion-item>
+                                            <q-expansion-item group="somegroup" icon="mdi-bank-transfer-in" label="Banka Havalesi İle Ödeme Yap" header-class="">
+                                                <q-card>
+                                                    <q-separator />
+                                                <q-card-section>
+                                                    <q-item style="height:60px" tag="label" v-ripple>
+                                                <q-item-section avatar>
+                                                <q-radio v-model="val" val="Havale" @click.native="payment_radio(`${val}`)" color="primary" />
+                                                </q-item-section>
+                                                <q-item-section>
+                                                <q-item-label style="font-size:19px" >Havale ile Öde</q-item-label>
+                                                <q-item-label class="text-red" caption >Lütfen İstenen Bilgileri Girin.</q-item-label>
+                                                
+                                                </q-item-section>
+                                            </q-item>
+                                                </q-card-section>
+                                                </q-card>
+                                                <!-- <div v-if="havale_div">
+                                                    <q-input class="col-6"  v-model="val" ref="ad" :rules="[val => !!val || 'Boş Bırakmayınız']" outlined label="Banka Adı" hint="Banka Adı" :dense=false />
+                                                </div> -->
+                                            </q-expansion-item>
+                                        <q-separator />
+                                            <q-expansion-item group="somegroup" icon="mdi-truck-check" label="Ürün Kapınıza Geldiğinde Nakit Öde" header-class="">
+                                                <q-card>
+                                                    <q-separator />
+                                                <q-card-section>
+                                                    <q-item style="height:60px" tag="label" v-ripple>
+                                                <q-item-section avatar>
+                                                <q-radio v-model="val" val="Kapıda Nakit" @click.native="payment_radio(`${val}`)" color="primary" />
+                                                </q-item-section>
+                                                <q-item-section>
+                                                <q-item-label style="font-size:19px" >Kapıda Nakit Öde</q-item-label>
+                                                <q-item-label class="text-red" caption > Tamamla Butonuna Basın.</q-item-label>
+                                                </q-item-section>
+                                            </q-item>
+                                                </q-card-section>
+                                                </q-card>
+                                            </q-expansion-item>
 
-                                    <q-separator />
-
-                                    <q-expansion-item group="somegroup" icon="mdi-truck-check" label="Ürün Kapınıza Geldiğinde Nakit Öde" header-class="">
-                                        <q-card>
-                                            <q-separator />
-                                        <q-card-section>
-                                            <q-item style="height:60px" tag="label" v-ripple>
-                                        <q-item-section avatar>
-                                        <q-radio v-model="payment_select" val="Kapıda Nakit" color="primary" />
-                                        </q-item-section>
-                                        <q-item-section>
-                                        <q-item-label style="font-size:19px" >Kapıda Nakit Öde</q-item-label>
-                                        <q-item-label class="text-red" caption > Tamamla Butonuna Basın.</q-item-label>
-                                        </q-item-section>
-                                    </q-item>
-                                        </q-card-section>
-                                        </q-card>
-                                    </q-expansion-item>
-
-                                    <!-- <q-separator />
-
-                                    <q-expansion-item
-                                        group="somegroup"
-                                        icon="bluetooth"
-                                        label="Fourth"
-                                        header-class="bg-teal text-white"
-                                        expand-icon-class="text-white"
-                                    >
-                                        <q-card class="bg-teal-2">
-                                        <q-card-section>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-                                            commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
-                                            eveniet doloribus ullam aliquid.
-                                        </q-card-section>
-                                        </q-card>
-                                    </q-expansion-item> -->
                                 </q-list>
                         
                                 
@@ -376,6 +350,7 @@
                             </q-card>
                             </div>
                             </div>
+                            </div>
                         
                     </q-step>
 
@@ -398,7 +373,9 @@ import { Loading } from "quasar";
     export default {
         data() {
             return {
-                payment_select:"",
+                val:"",
+                havale_div:false,
+                // bankad:"",
                 // ------
                 user_validate:Boolean,
                 user:{
@@ -467,7 +444,7 @@ import { Loading } from "quasar";
             },
             selected(){
                 this.hesaplama()
-                console.log("1");
+                // console.log("1");
             },
             
             // aratoplam(val){
@@ -491,7 +468,7 @@ import { Loading } from "quasar";
         },
         mounted () {
             this.fonk()
-             console.log(this.get_basketlist.length,this.get_ubasketlist.length);
+            //  console.log(this.get_basketlist.length,this.get_ubasketlist.length);
             // if (Cookies.get("uid")) {
             //     console.log("1");
             //     if(this.get_ubasketlist.length < 1){
@@ -532,12 +509,23 @@ import { Loading } from "quasar";
                     this.user_validate=true
                 }
                 if(this.user_validate && !this.$refs.email.hasError){
-                    console.log(this.user);
+                    // console.log(this.user);
                     this.$refs.stepper.next()
                 }
             },
             devam(){
-                console.log(this.selected);
+                // console.log(this.selected);
+            },
+            payment_radio(val){
+                
+                if(val==="Kredi Kartı Hemen"){
+                    console.log("1");
+                }else if(val==="Havale"){
+                    this.havale_div=true
+                    console.log("2");
+                }else if(val==="Kapıda Nakit"){
+                    console.log("3");
+                }
             },
             fonk(){
                 if (Cookies.get("uid")) {
@@ -545,12 +533,9 @@ import { Loading } from "quasar";
                 }else{
                     this.lists=this.get_basketlist
                 }
-                console.log(this.lists);
-                
-
+                // console.log(this.lists);
             },
             hesaplama(){
-
                 // eğer stok miktarı varsa yazılacak
                 let aratoplam=0
                 let kdv=0
@@ -591,7 +576,7 @@ import { Loading } from "quasar";
           loadingKey: 'loading',
           }
         ).then(data => {
-           console.log(data);
+        //    console.log(data);
           if(Cookies.get('uid') == null){
               this.$store.dispatch('search_basketlist',Cookies.get('guid'))
           }else{
@@ -631,7 +616,7 @@ import { Loading } from "quasar";
                   this.ilceoptions=ilcelist
             })
             this.user.ilce=""
-                     console.log(ilcelist);
+                    //  console.log(ilcelist);
                     
             
 
@@ -685,7 +670,9 @@ tr td .scale-down img {
     
 }
 }
-/* .q-stepper--horizontal .q-stepper__step-inner {
-  padding-left: 0 !important;
-} */
+.new_detail{
+    border: 2px solid rgba(0,0,0,0.11);
+    height:120px;
+    cursor:pointer;
+}
 </style>

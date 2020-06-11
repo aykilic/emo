@@ -371,14 +371,14 @@ export default {
                                           this.$store.dispatch('add_guid',data.data.createguid_mutation._id)
                                         });
                                       
-                                    console.log("m1");
-                                    this.$store.dispatch('add_guid')
+                                    // console.log("m1");
+                                    // this.$store.dispatch('add_guid')
                                   
                                   // cookies guid yoksa
                                   }else{
                                   console.log("cookies guid varsa"); 
                                     
-                                    this.$store.dispatch('add_guid')
+                                    this.$store.dispatch('add_guid',Cookies.get('guid'))
                                     // this.$store.dispatch('search_basketlist',Cookies.get('guid'))
                                     this.$store.dispatch('search_basketlist',Cookies.get('guid'))
                                   }

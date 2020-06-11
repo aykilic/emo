@@ -111,7 +111,7 @@ export default {
                     uid: type
                     }
             }).then( (response) => { 
-                //   console.log("response",response.data.data);
+                //    console.log("response",response.data.data);
              commit('set_search_ubasketlist', response.data.data.search_ubasketlist);
                
             })
