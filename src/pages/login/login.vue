@@ -150,7 +150,7 @@ import { Cookies } from "quasar"
                 })
                 .then(response => {
                     console.log(response.data.data.loginuser_Query);
-                    if(response.data.data.loginuser_Query.res){
+                    if(response.data.data.loginuser_Query.res=='true'){
                         this.$store.dispatch('search_ubasketlist',response.data.data.loginuser_Query._id)
                         // guesti sil
                         Cookies.remove('guid')
@@ -176,7 +176,7 @@ import { Cookies } from "quasar"
                         if(this.get_ubasketlist.length > 0){
                           console.log("uid sepetinde ürün varsa");
                           this.get_ubasketlist.forEach(item=>{
-                                if(get_basketlist.length > 0){
+                                if(this.get_basketlist.length > 0){
                                   console.log("guid sepetinde ürün varsa");
                                   this.get_basketlist.forEach(value=>{
                                     
@@ -203,8 +203,23 @@ import { Cookies } from "quasar"
                             }
                             else{
                                 console.log("guid sepetinde ürün yoksa");
+                                
                                 array=this.get_ubasketlist
-                                array.map(avalue=>({
+                                console.log(array);
+                                // array.map(avalue=>({
+                                //     uid:response.data.data.loginuser_Query._id,
+                                //     guid:"",
+                                //     stokid:avalue.stokid,
+                                //     stokad:avalue.stokad,
+                                //     varyantid:avalue.varyantid,
+                                //     varyantoption1:avalue.varyantoption1,
+                                //     varyantoption2:avalue.varyantoption2,
+                                //     fiyat:avalue.fiyat,
+                                //     path:avalue.path,
+                                //     publicid:avalue.publicid,
+                                //     count:avalue.count,
+                                // }))
+                               let avalue={
                                     uid:response.data.data.loginuser_Query._id,
                                     guid:"",
                                     stokid:avalue.stokid,
@@ -212,11 +227,12 @@ import { Cookies } from "quasar"
                                     varyantid:avalue.varyantid,
                                     varyantoption1:avalue.varyantoption1,
                                     varyantoption2:avalue.varyantoption2,
-                                    fiyat:value.fiyat,
+                                    fiyat:avalue.fiyat,
                                     path:avalue.path,
                                     publicid:avalue.publicid,
                                     count:avalue.count,
-                                }))
+
+                               }
                                 array.push(avalue)
                             }
                             })
@@ -269,8 +285,8 @@ import { Cookies } from "quasar"
                                 mutation mergesepet_mutation($sepetlist: [sepetlistInput]) {
                                 mergesepet_mutation(sepetlist: $sepetlist) 
                                 {
-                                                      _id
-                                                  }
+                                  _id
+                                }
                                 }
                             `,
                             // loadingKey: 'loading',
@@ -321,14 +337,9 @@ import { Cookies } from "quasar"
           }
         })
         .then(response => {
-                                          // Cookies.set('guid', data.data.createguid_mutation._id, { expires: 30, path: '' });
-                                          console.log(response.data);
-                                        });
-
-
-
-
-
+                            // Cookies.set('guid', data.data.createguid_mutation._id, { expires: 30, path: '' });
+                            console.log(response.data);
+                          });
                 // this.$router.go(-1)
                 }
             }

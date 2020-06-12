@@ -312,6 +312,7 @@ export default {
                                 //  console.log("uid",this.get_uid);
                                 //  console.log("guid",this.get_guid);
     this.userid_function()
+    // this.parseTree(this.anakategorilists)
     // console.log(this.get_ubasketlist);
     //  console.log(this.get_basketlist);
       //  await console.log("get_basketlist",this.get_basketlist);

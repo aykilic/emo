@@ -113,6 +113,7 @@ type Mutation {
   updateStokalt(id:String!): Stoktur
   createUser(username: String,lastname: String,usermail:String,password: String):User
   user_detail_mutation(userdetail:userdetailInput):User_detail
+  user_detail_edit_mutation(id:ID, userdetail:userdetailInput):User_detail
   # mergesepet_mutation(sepetlist:[sepetlistInput]):sepet
   sendmail(username:String):User
 }

@@ -752,7 +752,7 @@ export default {
               })
       }
       if(this.get_ubasketlist.length > 0) {
-        this.get_basketlist.forEach(item=>{
+        this.get_ubasketlist.forEach(item=>{
         if(item.varyantid == this.id){
           is_sepet=true
           basketlist=this.get_ubasketlist

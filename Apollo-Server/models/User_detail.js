@@ -39,6 +39,7 @@ const User_detailSchema = new Schema({
   p_kodu:{
       type:String
   },
+  
   il:{
       type:String
   },

@@ -87,6 +87,50 @@ module.exports = {
     })
 })
 },
+  user_detail_edit_mutation: async (parent,{userdetail},  { Models }) => {
+    // console.log(Models);
+    const model = Models.User_detail
+    console.log(userdetail);
+    return await model.findByIdAndUpdate({_id:userdetail.id},{
+      
+            baslik:userdetail.baslik,
+            ad_soyad:userdetail.ad_soyad,
+            email:userdetail.email,
+            cep:userdetail.cep,
+            tc_v_no:userdetail.tc_v_no,
+            v_daire:userdetail.v_daire,
+            adres:userdetail.adres,
+            p_kodu:userdetail.p_kodu,
+            il:userdetail.il,
+            ilid:userdetail.ilid,
+            ilce:userdetail.ilce,
+            ilceid:userdetail.ilceid,
+    },{new: true});
+//   return new Promise((resolve,object) =>{
+
+//      new model({  
+      
+//             
+//             baslik:userdetail.baslik,
+//             ad_soyad:userdetail.ad_soyad,
+//             email:userdetail.email,
+//             cep:userdetail.cep,
+//             tc_v_no:userdetail.tc_v_no,
+//             v_daire:userdetail.v_daire,
+//             adres:userdetail.adres,
+//             p_kodu:userdetail.p_kodu,
+//             il:userdetail.il,
+//             ilid:userdetail.ilid,
+//             ilce:userdetail.ilce,
+//             ilceid:userdetail.ilceid,
+            
+//         }).save((err,doc) =>{
+
+//         if(err) reject(err)
+//         else resolve(doc)
+//     })
+// })
+},
   sendmail:async (parent, {username}, { Models }) => {
      sendmail()
   }

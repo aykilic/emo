@@ -133,7 +133,9 @@ export default {
                         adres
                         p_kodu
                         il
+                        ilid
                         ilce
+                        ilceid
                    }  
                  }`,
                    variables: {

@@ -26,7 +26,7 @@ module.exports = {
   },
   updateStokturu: async (root, { id, stokturad, parentid, fiyat1,fiyat2}, { Models }) => {
     const stokturu = Models.stokturu
-      console.log(id,stokturad,parentid,fiyat1,fiyat2);
+      // console.log(id,stokturad,parentid,fiyat1,fiyat2);
      return await stokturu.findByIdAndUpdate({_id:id},{stokturad:stokturad, parentid:parentid, fiyat1:fiyat1, fiyat2:fiyat2},{new: true});
     // collection.update({_id:"123"}, {author:"Jessica", title:"Mongo facts"});
   },

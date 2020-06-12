@@ -251,7 +251,7 @@ module.exports = {
         }else{
         bcrypt.compare(password, user.password).then(function(hash) {
           if(hash){
-            Object.assign(user, {res:true});
+            Object.assign(user, {res:'true'});
             return resolve(user)
           }else{
             return resolve({_id:"",username:"",lastname:"",usermail:"",res:'Şifre yanlış'})
