@@ -45,7 +45,7 @@ const routes = [
     path: '/admin',
     component: () => import('layouts/admin/AdminLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/admin/Index.vue') },
+      { path: '', component: () => import('pages/admin/index.vue') },
       { path: '/kategori', component: () => import('pages/admin/kategori.vue') },
       { path: '/stokekle', component: () => import('pages/admin/stokekle.vue') },
       { path: '/varyantekle', component: () => import('pages/admin/varyantekle.vue') },
