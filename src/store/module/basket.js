@@ -11,13 +11,9 @@ export default {
       uid:"",
       basketid:"",
       basketlist:[],
-      ubasketlist:[]
+      ubasketlist:[],
+      userdetaillists:[]
     },
-    
-      
-  
-      
-    
     actions: {
          add_basketid({commit} ,type   )
          {
@@ -52,6 +48,8 @@ export default {
          {
             commit('set_uid', Cookies.get('uid'));
             dispatch('search_ubasketlist', Cookies.get('uid'));
+            dispatch('search_userdetaillists', Cookies.get('uid'));
+
         },
         
         async search_basketlist({commit,state}, type){
@@ -116,6 +114,37 @@ export default {
                
             })
         },
+        async search_userdetaillists({commit,state}, type){
+            // console.log("type1",type);
+            await axios.post(
+      
+                'http://localhost:4000/graphql', {
+                  
+                 query: `query Search_Userdetail_Query($uid:ID){
+                    Search_Userdetail_Query(uid:$uid){
+                        _id
+                        uid
+                        baslik
+                        ad_soyad
+                        cep
+                        tc_v_no
+                        v_daire
+                        email
+                        adres
+                        p_kodu
+                        il
+                        ilce
+                   }  
+                 }`,
+                   variables: {
+                    uid: type
+                    }
+            }).then( (response) => { 
+                //    console.log("response",response.data.data);
+             commit('set_search_userdetaillists', response.data.data.Search_Userdetail_Query);
+               
+            })
+        },
          logout({commit} ,type   )
          {
             commit('set_logout',type);
@@ -148,6 +177,11 @@ export default {
             state.ubasketlist=type
             // console.log("state.basketlist",state.basketlist);
         },
+        set_search_userdetaillists(state, type){
+            //  console.log("type2",type);
+            state.userdetaillists=type
+            // console.log("state.basketlist",state.basketlist);
+        },
         set_login(state, type){
             
           },
@@ -171,6 +205,9 @@ export default {
         },
         get_ubasketlist: (state, getters) => {
             return state.ubasketlist
+        },
+        get_userdetaillists: (state, getters) => {
+            return state.userdetaillists
         },
 
         

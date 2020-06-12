@@ -69,6 +69,23 @@ type Stoktur{
 #   Varyantalt:[Varyantalt]
 #   createdAt: String
 # }
+type User_detail{
+  _id:ID
+  uid:ID
+  baslik:String
+  ad_soyad:  String
+  email:String
+  cep:String
+  tc_v_no:String
+  v_daire:String
+  adres:String
+  p_kodu:String
+  il:String
+  ilid:String
+  ilce:String
+  ilceid:String
+  id:ID
+}
 type Query{
     user(id: ID!): User!
     users: [User!]!
@@ -78,10 +95,9 @@ type Query{
     birimList:[birim]
     imgurlQuery(id:ID!):[Stoktur]
     loginuser_Query(usermail:String,password:String):User
+    Search_Userdetail_Query(uid:ID):[User_detail]
     
     # altimgurlQuery(id:String!):[Varyantalt]
-    
-    
 }
 type Mutation {
   createBirim(birimad: String!): birim
@@ -96,6 +112,8 @@ type Mutation {
   updateStok(id:String!,variant: StokInput): Stoktur
   updateStokalt(id:String!): Stoktur
   createUser(username: String,lastname: String,usermail:String,password: String):User
+  user_detail_mutation(userdetail:userdetailInput):User_detail
+  # mergesepet_mutation(sepetlist:[sepetlistInput]):sepet
   sendmail(username:String):User
 }
 input StokInput{
@@ -108,4 +126,21 @@ input CreateUserInput{
   lastname: String
   usermail:String
   password: String
+}
+input userdetailInput{
+  _id:ID
+  uid:ID
+  baslik:String
+  ad_soyad:String
+  email:String
+  cep:String
+  tc_v_no:String
+  v_daire:String
+  adres:String
+  p_kodu:String
+  il:String
+  ilid:String
+  ilce:String
+  ilceid:String
+  id:ID
 }

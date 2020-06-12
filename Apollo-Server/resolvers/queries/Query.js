@@ -261,6 +261,13 @@ module.exports = {
       })
       )
     })
-  }
+  },
+  Search_Userdetail_Query:async(parent, {uid}, {Models})=> {
+    const model = Models.User_detail
+    //  console.log({guid});
+    
+  //  return await stokturu.find({_id:id})
+    return await model.find({uid:ObjectID(uid)})
+  },
 };
 

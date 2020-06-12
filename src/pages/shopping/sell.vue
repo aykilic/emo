@@ -129,7 +129,7 @@
                             <div class="col-xs-12 col-md-8 " style="border-style:solid;border-color:#cdcdcd;border-width: 1px;border-radius:5px;">
                                 <div class="row">
                                     <q-item-label class="q-pa-md col-12  text-weight-medium" style="font-size:19px" >Sipariş Bilgileri</q-item-label>
-                                    <q-separator/>
+                                    <q-separator class="q-mb-md"/>
                                     <div v-if="get_guid">
                                             <q-input class="q-pt-md q-pl-xs q-pr-xs col-6"  v-model="user.ad_soyad" ref="ad" :rules="[val => !!val || 'Boş Bırakmayınız']" outlined label="Ad-Soyad" hint="Ad-Soyad Giriniz" dense />
                                             <q-input class="q-pt-md q-pl-xs q-pr-xs col-6"  v-model="user.cep" ref="cep" :rules="[val => val.length > 9 || 'Yanlış Numara']" mask="+90(###) ### - ####" unmasked-value outlined label="Cep Telefonu" hint="Cep No Giriniz" dense />
@@ -182,14 +182,46 @@
 
                         
                                     </div>
-                                    <div class="row col-12" v-else>
-                                        <div class="col-6 q-pa-md ">
+                                    <!-- -------------- -->
+                                    <div class="row col-12 " v-else>
+                                        <div class=" col-md-4 col-xs-6 q-pa-xs" v-for="(get_userdetaillist , index) in get_userdetaillists" :key="index">
+                                            <q-card class="new_detail"
+                                            :class=" [{ new_detail_selected:get_userdetaillist.selected },'new_detail'] "
+                                            >
+                                                <q-card-section @click="user=get_userdetaillist;selectdetail(get_userdetaillists,index)" style="height:170px;"  >
+                                                    <!-- <div class="text-h6">Our Changing Planet</div> -->
+                                                    <div class="col-5 text-subtitle2 text-left">{{get_userdetaillist.baslik}} - {{get_userdetaillist.ad_soyad}}
+                                                    
+                                                    </div>
+                                                    
+                                                    
+                                                    <q-separator class="q-mb-xs"/>
+                                                    <div class="text-caption text-left">{{get_userdetaillist.adres}}</div>
+                                                    <!-- <div class="text-caption"> {{get_userdetaillist.email}}</div> -->
+                                                    <div class="text-caption text-left">{{get_userdetaillist.il.il}} - {{get_userdetaillist.ilce.ilce}}</div>
+                                                    <div class="text-caption text-left">Cep: {{get_userdetaillist.cep}}</div>
+                                                </q-card-section>
+                                                <q-card-actions align="right">
+                                                    <q-btn color="primary"  @click="user=get_userdetaillist;user_detail_dialog = !user_detail_dialog"  flat rounded >Düzenle</q-btn>
+                                                    <q-btn color="red" flat rounded>Sil</q-btn>
+                                                </q-card-actions>
+                                        </q-card>
+
+                                        </div>
+                                        <q-card class="col q-ma-xs " @click="user={};user_detail_dialog = !user_detail_dialog" >
+                                            <q-card-section class="new_detail" style="margin-right:4px;">
+                                                <div class="" style="margin-top:50px;" >Yeni Adres Ekle <br><q-icon name="mdi-plus" /></div>
+                                            </q-card-section>
+                                        </q-card>
+                                        <!-- <card class="col-md-4 col-xs-6 q-pa-md " @click="user_detail_dialog = !user_detail_dialog">
                                             <q-item class="new_detail text-grey justify-center">
                                                 <q-item-label class=" self-center">Yeni Adres Ekle <br><q-icon name="mdi-plus" /></q-item-label>
                                                 
                                             </q-item>
-                                        </div>
-                                    </div>    
+                                        </card> -->
+
+                                    </div>  
+                                   <!-- -------------- -->   
                                 </div>
                             </div>
                             <div class="col-12 col-md ozet" style="border-style:solid;border-color:#cdcdcd;border-width: 1px;border-radius:5px;display:block;min-width:150px;max-height:345px">
@@ -357,6 +389,81 @@
                 </q-stepper>
                 <!-- <q-item class=" col-12 justify-center"><q-item-label>{{ JSON.stringify(selected) }}</q-item-label> 
                     </q-item>-->
+                    <q-dialog
+                        v-model="user_detail_dialog"
+                        
+                    >
+                        <q-card  class="">
+                        <q-card-section class="row justify-center" >
+                            <div class="text-h6">Adres Bilgileri </div>
+                            <q-space />
+                            <q-btn icon="close" flat round dense @click="user_detail_dialog=false" />
+                        </q-card-section>
+
+                        <q-card-section class="row col-12">
+                            <q-input class="q-pt-md q-pl-xs q-pr-xs col-12"  v-model="user.baslik" ref="baslik" :rules="[val => !!val || 'Boş Bırakmayınız']" outlined label="Baslik" hint="Örnek Ev, İş vb." dense />
+                            <q-input class="q-pt-md q-pl-xs q-pr-xs col-md-6 col-xs-12"  v-model="user.ad_soyad" ref="ad" :rules="[val => !!val || 'Boş Bırakmayınız']" outlined label="Ad-Soyad" hint="Ad-Soyad Giriniz" dense />
+                            <q-input class="q-pt-md q-pl-xs q-pr-xs col-md-6 col-xs-12"  v-model="user.cep" ref="cep" :rules="[val => val.length > 9 || 'Yanlış Numara']" mask="+90(###) ### - ####" unmasked-value outlined label="Cep Telefonu" hint="Cep No Giriniz" dense />
+                            <q-input class="q-pt-xs q-pl-xs q-pr-xs col-md-6 col-xs-12"  v-model="user.tc_v_no" ref="tc" :rules="[val => !!val || 'Boş Bırakmayınız']" outlined label="TC Kimlik No-Vergi No" hint="Lütfen Adınızı Giriniz" dense />
+                            <q-input class="q-pt-xs q-pl-xs q-pr-xs col-md-6 col-xs-12"  v-model="user.v_daire"  outlined label="Vergi Dairesi" hint="Varsa - Vergi Dairesi Giriniz" dense />
+                            <q-input class="q-pt-xs q-pl-xs q-pr-xs col-12" v-model="user.email" ref="email" outlined label="Mail" hint="Lütfen Adınızı Giriniz" :rules="[val => !!val || 'Email Alanı', isValidEmail]" dense />
+                            <q-input
+                                outlined
+                                ref="adres"
+                                :rules="[val => !!val || 'Boş Bırakmayınız']"
+                                v-model="user.adres"
+                                type="textarea"
+                                label="Adres"
+                                class="q-pt-xs q-pl-xs q-pr-xs  col-12 hint"
+                                hint="Adres Giriniz...!"
+                                dense
+                            />
+                            <q-select 
+                                class="hint col-6 q-pt-xs q-pl-xs q-pr-xs q-mb-md"
+                                ref="il"
+                                :rules="[val => !!val || 'Boş Bırakmayınız']"
+                                outlined 
+                                label="il" 
+                                hint="il Seçiniz...!"
+                                
+                                v-model="user.il"
+                                :options="iloptions"
+                                option-value="ilid"
+                                option-label="il"
+                                @input=ilcesec()
+                                @filter="filteril"
+                                use-input
+                                auto-select
+                                fill-input
+                                hide-selected
+                                dense
+                            />
+                            <q-select 
+                                class="hint col-6 q-pt-xs q-pl-xs q-pr-xs q-mb-md"
+                                outlined 
+                                ref="ilce"
+                                :rules="[val => !!val || 'Boş Bırakmayınız']"
+                                label="ilçe" 
+                                hint="ilçe Seçiniz...!"
+                                v-model="user.ilce" 
+                                :options="ilceoptions"
+                                option-value="ilceid"
+                                option-label="ilce"
+                                dense
+                            />             
+                            
+                            
+                        </q-card-section>
+
+                        <q-card-section  class="text-right">
+                            
+                            <q-btn v-if="user._id != null " class="q-ma-sm"  color="primary" label="Güncelle"  v-close-popup ></q-btn>
+                            <q-btn v-else class="q-ma-sm"  color="primary" label="Kaydet" @click="user_det_kaydet()" ></q-btn>
+                            <q-btn class="q-mr-md"  color="negative" label="Sil"  v-close-popup ></q-btn>
+                        </q-card-section>
+                        </q-card>
+                    </q-dialog>
+                    
         </div>
         
 </template>
@@ -374,23 +481,42 @@ import { Loading } from "quasar";
         data() {
             return {
                 val:"",
+                user_detail_dialog:false,
                 havale_div:false,
                 // bankad:"",
                 // ------
                 user_validate:Boolean,
+            //     uid,
+            // baslik,
+            // ad_soyad,
+            // email,
+            // cep,
+            // tc_v_no,
+            // v_daire,
+            // adres,
+            // p_kodu,
+            // il,
+            // ilce,
                 user:{
+                    _id:"",
+                    uid:"",
+                    baslik:"",
                     ad_soyad:"",
                     cep:"",
                     tc_v_no:"",
                     v_daire:"",
                     email:"",
                     adres:"",
-                    il:"",
-                    ilce:"",
+                    p_kodu:"",
+                    il:{il:"",
+                        ilid:""},
+                    ilce:{ilce:"",
+                    ilceid:""}
+                    
                     
                 },
                 // ------
-                step:3,
+                step:2,
                 lists:[],
                 // ------
                 aratoplam:"0,00",
@@ -424,7 +550,7 @@ import { Loading } from "quasar";
           rowsPerPage: 20,
           // rowsNumber: 5,q
 
-        },
+        },  
         il:"",
         ilce:"",
         ilList:[],
@@ -460,6 +586,7 @@ import { Loading } from "quasar";
                 'get_uid',
                 'get_basketlist',
                 'get_ubasketlist',
+                'get_userdetaillists'
       
     ]),
         // get_guid(val){
@@ -486,9 +613,102 @@ import { Loading } from "quasar";
                 this.ilList=ildata
         },
         methods: {
+            selectdetail(a,i){
+                console.log(this.user);
+                a.forEach((value, index) => {
+        if (!value.selected || value.selected === false || value.selected === undefined) {
+          if (i == index) {
+            Vue.set(value, "selected", true);
+    // console.log("i",i,"index",index);
+            // document.getElementById(varyant).innerHTML = aa[class_varyant_option][class_varyant_option_name];
+            // document.getElementById(varyant).innerHTML = aa[class_varyant_option][class_varyant_option_name];
+            
+            } else {
+              
+          }
+        } else {
+            // console.log("ibo");
+            // console.log("id1",this.id1,"id2",this.id2);
+           value.selected = !value.selected;
+
+        //   i == index ? (document.getElementById(varyant).innerHTML = "") : (document.getElementById(varyant).innerHTML = aa[class_varyant_option][class_varyant_option_name]);
+        //   if (i==index) {
+        //      this.id1=""
+        //    }
+          // console.log("id1",this.id1,"id2",this.id2);
+          
+          // this.hasvaryantsatirliste();
+        }
+      });
+
+
+
+            },
+            user_det_kaydet(){
+                this.$refs.ad.validate()
+                 this.$refs.tc.validate()
+                 this.$refs.cep.validate()
+                 this.$refs.email.validate()
+                 this.$refs.adres.validate()
+                 this.$refs.il.validate()
+                 this.$refs.ilce.validate()
+                if(
+                //    this.user.baslik == "" ||
+                   this.user.ad_soyad == "" ||
+                   this.user.tc_v_no == "" ||
+                   this.user.email == "" ||
+                   this.user.adres == "" ||
+                   this.user.il == "" ||
+                   this.user.ilce == ""
+                ){
+                    this.user_validate=false
+                }else{
+                    this.user_validate=true
+                }
+                if(this.user_validate && !this.$refs.email.hasError){
+                    this.$apollo
+                            .mutate({
+                            mutation: gql`
+                                mutation user_detail_mutation($userdetail: userdetailInput) {
+                                user_detail_mutation(userdetail: $userdetail) 
+                                    {
+                                    _id
+                                    }
+                                }
+                            `,
+                             loadingKey: 'loading',
+                            variables: {
+                                userdetail: {
+                                    id:this.user.id,
+                                    uid:Cookies.get("uid"),
+                                    baslik:this.user.baslik,
+                                    ad_soyad:this.user.ad_soyad,
+                                    cep:this.user.cep,
+                                    tc_v_no:this.user.tc_v_no,
+                                    v_daire:this.user.v_daire,
+                                    email:this.user.email,
+                                    adres:this.user.adres,
+                                    p_kodu:this.user.p_kodu,
+                                    il:this.user.il.il,
+                                    ilid:this.user.il.ilid,
+                                    ilce:this.user.ilce.ilce,
+                                    ilceid:this.user.ilce.ilceid,
+                                }
+                            }
+                            })
+                            .then(data => {
+                              console.log("user detail sonuc");
+                              this.user_detail_dialog=false
+                            })
+                    
+                }else{
+
+                }
+                
+            },
             veriler(){
                 //  console.log(this.$refs.email.rules);
-                 
+                //  this.$refs.baslik.validate()
                  this.$refs.ad.validate()
                  this.$refs.tc.validate()
                  this.$refs.cep.validate()
@@ -497,6 +717,7 @@ import { Loading } from "quasar";
                  this.$refs.il.validate()
                  this.$refs.ilce.validate()
                 if(
+                //    this.user.baslik == "" ||
                    this.user.ad_soyad == "" ||
                    this.user.tc_v_no == "" ||
                    this.user.email == "" ||
@@ -530,6 +751,7 @@ import { Loading } from "quasar";
             fonk(){
                 if (Cookies.get("uid")) {
                     this.lists=this.get_ubasketlist
+                    this.user.uid=Cookies.get("uid")
                 }else{
                     this.lists=this.get_basketlist
                 }
@@ -615,7 +837,7 @@ import { Loading } from "quasar";
                     
                   this.ilceoptions=ilcelist
             })
-            this.user.ilce=""
+            // this.user.ilce=""
                     //  console.log(ilcelist);
                     
             
@@ -671,8 +893,44 @@ tr td .scale-down img {
 }
 }
 .new_detail{
-    border: 2px solid rgba(0,0,0,0.11);
-    height:120px;
+    /* border: 2px solid rgba(0,0,0,0.11); */
+    height:220px;
     cursor:pointer;
 }
+/* .new_detail:hover{
+    border: 2px solid rgba(0,0,0,0.11);
+    border-color:#f00;
+    content: "\F12C";
+    
+    text-align: center;
+} */
+.new_detail_selected {
+  border: solid 2px #3c8dbc;
+}
+
+.new_detail_selected::before,
+.new_detail_selected::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.new_detail_selected::after {
+  content: '\2713';
+  font-size: 13px;
+  line-height: 13px;
+  font-weight: bold;
+  color: white;
+}
+
+.new_detail_selected::before {
+  border-radius: 2px;
+  border-width: 15px;
+  border-left-color: #3c8dbc;
+  border-top-color: #3c8dbc;
+}
+/* #ff4081 */
 </style>

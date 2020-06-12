@@ -8,6 +8,8 @@ const varyant_skus = require('./varyant_skus');
 const sepet = require('./sepet');
 const photo = require('./photo');
 const guest_user = require('./guest_user');
+const User_detail = require('./User_detail');
+
 const { GraphQLUpload } = require('graphql-upload')
 // const file = require('./File');
 const {
@@ -42,6 +44,7 @@ module.exports = {
     varyant_skus,
     sepet,
     guest_user,
+    User_detail,
     photo,
     UploadType,
     // images

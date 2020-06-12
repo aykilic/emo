@@ -45,6 +45,48 @@ module.exports = {
   //     }
   //   });
   // },
+  // _id:ID
+  // uid:ID
+  // baslik:String
+  // ad_soyad:  String
+  // email:String
+  // cep:String
+  // tc_v_no:String
+  // v_daire:String
+  // adres:String
+  // p_kodu:String
+  // il:String
+  // ilce:String
+  // id:ID
+  user_detail_mutation: async (parent,{userdetail},  { Models }) => {
+    // console.log(Models);
+    const model = Models.User_detail
+    console.log(userdetail);
+  return new Promise((resolve,object) =>{
+
+     new model({  
+      
+            uid:userdetail.uid,
+            baslik:userdetail.baslik,
+            ad_soyad:userdetail.ad_soyad,
+            email:userdetail.email,
+            cep:userdetail.cep,
+            tc_v_no:userdetail.tc_v_no,
+            v_daire:userdetail.v_daire,
+            adres:userdetail.adres,
+            p_kodu:userdetail.p_kodu,
+            il:userdetail.il,
+            ilid:userdetail.ilid,
+            ilce:userdetail.ilce,
+            ilceid:userdetail.ilceid,
+            
+        }).save((err,doc) =>{
+
+        if(err) reject(err)
+        else resolve(doc)
+    })
+})
+},
   sendmail:async (parent, {username}, { Models }) => {
      sendmail()
   }

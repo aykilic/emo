@@ -25,6 +25,7 @@ import { Cookies } from "quasar";
       'anakategorilists',
       'get_guid',
       'get_basketlist',
+      'get_userdetaillists'
       
     ]),
     ...mapState([
@@ -38,6 +39,8 @@ import { Cookies } from "quasar";
           // console.log("11");
         if(Cookies.get('uid')){
           this.$store.dispatch('add_uid',Cookies.get('uid'))
+          // this.$store.dispatch('user',Cookies.get('uid'))
+
           }else{
             this.$store.dispatch('add_guid',Cookies.get('guid'))
           }
