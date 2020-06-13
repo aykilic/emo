@@ -16,7 +16,6 @@
                 :src="list.vars.images.path + list.vars.images.publicid" 
                 alt="Not Found" 
                 
-                
                 />
                
                <q-card-section>
