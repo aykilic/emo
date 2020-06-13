@@ -360,6 +360,7 @@ export default {
             },
             sellm(){
 
+
               this.$router.push({ path: '/sell' }  )
             }
     },
