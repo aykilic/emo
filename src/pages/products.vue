@@ -4,7 +4,6 @@
         <div  v-for="(list,index) in lists" :key="index" v-if="list.vars" class="col-md-3 col-sm-4 col-xs-6 ">
            
          <q-intersection
-                  
                   once
                   transition="fade"
                   >
