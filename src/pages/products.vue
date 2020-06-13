@@ -17,7 +17,6 @@
                 alt="Not Found" 
                 
                 />
-               
                <q-card-section>
                      <div class="row  text-center">
                      <div class="col   ">
