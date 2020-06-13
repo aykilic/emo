@@ -4,7 +4,7 @@
 22-04-yedek
 # Quasar core related directories
 /dist
-
+.gitignore
 # Cordova related directories and files
 /src-cordova/node_modules
 /src-cordova/platforms
