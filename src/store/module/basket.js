@@ -2,7 +2,7 @@ import Vue  from 'vue'
 import axios from 'axios'
 import gql from 'graphql-tag'
 import { Cookies } from "quasar";
-
+// require('dotenv').config();
 
 export default {
   
@@ -56,7 +56,7 @@ export default {
             //  console.log("type1",type);
             await axios.post(
       
-                'http://localhost:4000/graphql', {
+                'http://'+ process.env.API +':4000/graphql', {
                   
                  query: `query search_basketlist($guid:String){
                     search_basketlist(guid:$guid){
@@ -87,7 +87,7 @@ export default {
             // console.log("type1",type);
             await axios.post(
       
-                'http://localhost:4000/graphql', {
+                'http://'+ process.env.API +':4000/graphql', {
                   
                  query: `query search_ubasketlist($uid:String){
                     search_ubasketlist(uid:$uid){
@@ -118,7 +118,7 @@ export default {
             // console.log("type1",type);
             await axios.post(
       
-                'http://localhost:4000/graphql', {
+                'http://'+ process.env.API +':4000/graphql', {
                   
                  query: `query Search_Userdetail_Query($uid:ID){
                     Search_Userdetail_Query(uid:$uid){

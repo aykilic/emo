@@ -23,7 +23,7 @@ export default {
         
         await axios.post(
       
-           'http://localhost:4000/graphql', {
+          'http://'+ process.env.API +':4000/graphql', {
              
             query: `{
               Query{
@@ -59,7 +59,7 @@ export default {
       },
       async varyantlist({commit}){
         let varyantlist=await axios.post(
-          'http://localhost:4000/graphql', {
+          'http://'+ process.env.API +':4000/graphql', {
               query:`query childvaryantQuery{
                   childvaryantQuery{
                   _id
