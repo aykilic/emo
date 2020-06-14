@@ -603,8 +603,8 @@ export default {
         
       },
     async hasvaryantsatirliste() {
-      await axios
-        .post('http://'+ process.env.API +':4000/graphql', {
+      await axios.post(
+        'http://'+ process.env.API +':4000/graphql', {
           query: `query hasvaryantsatirQuery($id: ID! ){
                  hasvaryantsatirQuery(id: $id){
                       _id

@@ -628,7 +628,7 @@ export default {
     // console.log(this.varyantlist.length);
     // Loading.show()
 
-    const res = await axios.post("http://localhost:4000/graphql", {
+    const res = await axios.post('http://'+ process.env.API +':4000/graphql', {
       query: `{
                     Query {
                               stokturad
@@ -639,7 +639,7 @@ export default {
       loadingKey: "loading"
     });
 
-    const birim = await axios.post("http://localhost:4000/graphql", {
+    const birim = await axios.post('http://'+ process.env.API +':4000/graphql',{
       query: `{
                     birimList {
                               _id
@@ -915,7 +915,7 @@ export default {
     },
     async hasvaryantsatirliste() {
       await axios
-        .post("http://localhost:4000/graphql", {
+        .post('http://'+ process.env.API +':4000/graphql',{
           query: `query hasvaryantsatirQuery($id: ID! ){
                  hasvaryantsatirQuery(id: $id){
                       _id
@@ -957,7 +957,7 @@ export default {
       this.resimlistrefresh();
 
       await axios
-        .post("http://localhost:4000/graphql", {
+        .post('http://'+ process.env.API +':4000/graphql',{
           query: `query StokturuQuery($id: ID! ){
                  StokturuQuery(id: $id){
                       _id
@@ -1116,7 +1116,7 @@ export default {
     },
     async varyantlists() {
       await axios
-        .post("http://localhost:4000/graphql", {
+        .post('http://'+ process.env.API +':4000/graphql',{
           query: `query allvaryantQuery{
                  allvaryantQuery{
                       _id

@@ -405,7 +405,7 @@ import {Loading} from 'quasar'
         
       treedata:async function(){
         const res = await axios.post(
-          'http://localhost:4000/graphql', {
+          'http://'+ process.env.API +':4000/graphql', {
             query: `{
                     Query{
                       stokturad

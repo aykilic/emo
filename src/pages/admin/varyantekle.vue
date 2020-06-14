@@ -500,7 +500,7 @@ export default {
     },
     async varyantlist() {
       await axios
-        .post("http://localhost:4000/graphql", {
+        .post('http://'+ process.env.API +':4000/graphql',{
           query: `query varyantquery{
                       varyantQuery{
                                 _id
@@ -519,7 +519,7 @@ export default {
     async altvaryantlist() {
       if (this.selected.length > 0) {
         await axios
-          .post("http://localhost:4000/graphql", {
+          .post('http://'+ process.env.API +':4000/graphql',{
             query: `query altvaryantquery($varyant_id:ID!){
                       altvaryantQuery(varyant_id:$varyant_id){
                                 _id
