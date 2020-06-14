@@ -134,7 +134,7 @@ import { Cookies } from "quasar"
            async login(){
             
                         await axios
-                .post("http://localhost:4000/graphql", {
+                .post('http://'+ process.env.API +':4000/graphql', {
                   query: `query loginuser_Query($usermail: String,$password:String ){
                          loginuser_Query(usermail: $usermail,password: $password){
                              _id

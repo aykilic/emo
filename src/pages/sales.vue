@@ -604,7 +604,7 @@ export default {
       },
     async hasvaryantsatirliste() {
       await axios
-        .post("http://localhost:4000/graphql", {
+        .post('http://'+ process.env.API +':4000/graphql', {
           query: `query hasvaryantsatirQuery($id: ID! ){
                  hasvaryantsatirQuery(id: $id){
                       _id
