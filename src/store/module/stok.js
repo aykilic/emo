@@ -82,8 +82,6 @@ export default {
           }).then((data)=>{
             commit('set_varyantlist',data.data.data.childvaryantQuery);
           })
-               
-          
       }
       
     },
