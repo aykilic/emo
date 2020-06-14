@@ -40,7 +40,7 @@ module.exports = function (ctx) {
     framework: {
        iconSet: 'material-icons',
       
-      // iconSet:'mdi-v4',
+       iconSet:'mdi-v4',
       
       // Quasar icon set
       lang: 'en-us', // Quasar language pack
