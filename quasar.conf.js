@@ -2,6 +2,7 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
 module.exports = function (ctx) {
+  console.log(ctx)
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -84,6 +85,8 @@ module.exports = function (ctx) {
       showProgress: true,
       gzip: false,
       analyze: false,
+      publicPath:ctx.dev
+      ? '' :  'http://34.71.100.141/gecelik/',
       env: ctx.dev
     ? { // so on dev we'll have
       API: JSON.stringify('localhost')

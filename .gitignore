@@ -4,7 +4,7 @@
 # 22-04-yedek
 # Quasar core related directories
 #.gitignore
-quasar.conf.js
+#quasar.conf.js
 /src/boot/apollo.js
 /Apollo-server/node_modules
 /Apollo-server/package.json
