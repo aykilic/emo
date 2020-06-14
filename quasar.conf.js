@@ -31,7 +31,7 @@ module.exports = function (ctx) {
 
       'roboto-font', // optional, you are not bound to it
       'material-icons',
-      //'mdi-v4',
+      'mdi-v4',
       // 'material-icons-outlined',
       // optional, you are not bound to it
     ],
