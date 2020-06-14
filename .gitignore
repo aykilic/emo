@@ -3,6 +3,7 @@
 /node_modules
 # 22-04-yedek
 # Quasar core related directories
+quasar.conf.js
 /Apollo-server/node_modules
 /Apollo-server/package.json
 /dist
