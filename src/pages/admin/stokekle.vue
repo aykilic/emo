@@ -363,6 +363,8 @@
           <!-- TODO: VARYANT --------------------------------------------------------------------------------------------->
           <q-tab-panel name="three">
             <div class="q-pt-lg row">
+              <q-uploader></q-uploader>
+              <cloud></cloud>
               <cloud
                 :stokid="edittreemselect._id"
                 label="Ana Resim Yükleme"

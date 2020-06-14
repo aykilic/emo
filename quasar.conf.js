@@ -30,19 +30,19 @@ module.exports = function (ctx) {
 
       'roboto-font', // optional, you are not bound to it
       'material-icons',
-      'mdi-v4',
+      //'mdi-v4',
       // 'material-icons-outlined',
       // optional, you are not bound to it
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
-      // iconSet: 'material-icons',
+       iconSet: 'material-icons',
       
-      iconSet:'mdi-v4',
+      // iconSet:'mdi-v4',
       
       // Quasar icon set
-      lang: 'tr', // Quasar language pack
+      lang: 'en-us', // Quasar language pack
 
       // Possible values for "all":
       // * 'auto' - Auto-import needed Quasar components & directives
