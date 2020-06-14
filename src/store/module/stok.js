@@ -58,7 +58,7 @@ export default {
       //  console.log(type);
       },
       async varyantlist({commit}){
-        let varyantlist=await axios.post(
+        await axios.post(
           'http://'+ process.env.API +':4000/graphql', {
               query:`query childvaryantQuery{
                   childvaryantQuery{
@@ -79,8 +79,10 @@ export default {
                   }
                   }`,
               
-          }) 
-               commit('set_varyantlist',varyantlist.data.data.childvaryantQuery);
+          }).then((data)=>{
+            commit('set_varyantlist',data.data.data.childvaryantQuery);
+          })
+               
           
       }
       
