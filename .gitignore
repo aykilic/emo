@@ -6,8 +6,8 @@
 #.gitignore
 #quasar.conf.js
 /src/boot/apollo.js
-/Apollo-server/node_modules
-/Apollo-server/package.json
+/Apollo-Server/node_modules
+/Apollo-Server/package.json
 /dist
 #.gitignore
 # Cordova related directories and files
