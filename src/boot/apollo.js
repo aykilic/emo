@@ -9,7 +9,7 @@ import fetch from 'node-fetch'
 
 // const link =createUploadLink({ uri: 'http://localhost:4000/graphql',fetch: fetch });
 const link = apolloUploadClient.createUploadLink({
-  uri: 'http://localhost:4000/graphql',
+  uri: 'http://'+ process.env.API +':4000/graphql',
       credentials:'include'
 });
 
