@@ -199,7 +199,7 @@ export default {
             //     }
             //    ----- mail
             },
-            register() {
+            async register() {
                 // console.log(this.signup.username);
                 this.$refs.fldPasswordChangeConfirm.validate()
                 this.$refs.uemail.validate()
@@ -213,7 +213,28 @@ export default {
                  if(this.SignupData.password.length > 5 && this.SignupData.passwordConfirm > 5 && this.SignupData.passwordConfirm == this.SignupData.password){
                     // console.log("evet");
                  //----------------
-                 
+                 let checkmail= await axios.post(
+                'http://'+ process.env.API +':4000/graphql', {
+                 query: `query Search_checkmail($email:String){
+                    Search_checkmail(email:$email){
+                        _id
+                   }  
+                 }`,
+                   variables: {
+                    email: this.signup.email
+                    }
+            })
+             console.log("checkmail",checkmail.data.data.Search_checkmail);
+             if (checkmail.data.data.Search_checkmail != null ) {
+
+               if(checkmail.data.data.Search_checkmail._id != null){
+                    this.$q.notify({
+                        type: 'negative',
+                        message: `Mail Kullanımda`
+                    })  
+              return;
+             }
+             } 
                 this.$apollo
                             .mutate({
                               mutation: gql`
@@ -267,18 +288,18 @@ export default {
                         
                         this.$store.dispatch('search_ubasketlist',response)
 
-                        Cookies.remove('guid')
-                        this.$store.dispatch('delete_guid')
+                        // Cookies.remove('guid')
+                        // this.$store.dispatch('delete_guid')
                         // guesti sil
                         // --------
                         // uid ekle
-                        Cookies.set('uid',response)
-                        this.$store.dispatch('add_uid')
+                        // Cookies.set('uid',response)
+                        // this.$store.dispatch('add_uid')
                         let array=[]
                         if(this.get_ubasketlist.length > 0){
                           console.log("uid sepetinde ürün varsa");
                           this.get_ubasketlist.forEach(item=>{
-                                if(get_basketlist.length > 0){
+                                if(this.get_basketlist.length > 0){
                                   console.log("guid sepetinde ürün varsa");
                                   this.get_basketlist.forEach(value=>{
                                     
@@ -393,9 +414,12 @@ export default {
 
             },
             sellm(){
+              // eğer basketlist 0 ise 
+              
+              
+              // eğer basketlist o değilse
 
-
-              this.$router.push({ path: '/sell' }  )
+               this.$router.push({ path: '/sell' })
             }
     },
 };

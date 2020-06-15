@@ -689,25 +689,25 @@ import { Loading } from "quasar";
                     }
                     } else {
                     value.selected = !value.selected;
-                    this.user={
-                        _id:"",
-                        baslik:"",
-                        ad_soyad:"",
-                        cep:"",
-                        tc_v_no:"",
-                        v_daire:"",
-                        email:"",
-                        adres:"",
-                        p_kodu:"",
-                        il:{
-                            il:"",
-                            ilid:""
-                            },
-                        ilce:{
-                            ilce:"",
-                            ilceid:""
-                            }
-                        }
+                    // this.user={
+                    //     _id:"",
+                    //     baslik:"",
+                    //     ad_soyad:"",
+                    //     cep:"",
+                    //     tc_v_no:"",
+                    //     v_daire:"",
+                    //     email:"",
+                    //     adres:"",
+                    //     p_kodu:"",
+                    //     il:{
+                    //         il:"",
+                    //         ilid:""
+                    //         },
+                    //     ilce:{
+                    //         ilce:"",
+                    //         ilceid:""
+                    //         }
+                    //     }
                     }
                 });
                 console.log(this.user);

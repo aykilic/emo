@@ -171,6 +171,7 @@ export default {
         ]
       },
       // -----------------------------------------
+
       varyants:[],
       varyantname: [],
       selectid:"",
@@ -181,6 +182,9 @@ export default {
       id1:"",
       id2:"",
       id:"",
+      //innertext
+      // varyant0:"",
+      // varyant1:"",
       // -----------------------------------------
       miktar:1,
       //  parentname:this.$route.params.parentname
@@ -196,7 +200,11 @@ export default {
     // },
     stokad(val) {
       this.stokad = val;
-
+      document.getElementById('varyant0').innerHTML = ""
+      document.getElementById('varyant1').innerHTML = ""
+      this.id1="",
+      this.id2="",
+      this.id="",
       this.stok();
       this.hasvaryantsatirliste();
     },
@@ -235,6 +243,9 @@ export default {
     ])
   },
   mounted() {
+    // document.getElementById('varyant0').innerHTML = ""
+    // document.getElementById('varyant1').innerHTML = ""
+      
     // setTimeout(function() {
     //   console.log("mounted",this.anakategorilists);
     // }, 5000);
@@ -761,9 +772,10 @@ export default {
         // console.log(is_sepet);
       })
       }
-      if(sell){
-                this.$router.push({ path: '/shopping' })
-              }
+      // if(sell){
+      //   console.log("var dendi");
+      //           // this.$router.push({ path: '/shopping' })
+      //         }
         let guid=this.get_guid
         let uid = this.get_uid
           console.log("uid",uid,"guid",guid);
@@ -854,6 +866,60 @@ export default {
           }else{
             console.log("guid boş değil")
               if(this.get_basketlist.length > 0 && is_sepet) {
+                this.$apollo.mutate({
+                                              mutation: gql`
+                                                mutation createsepet_mutation(
+                                                  $uid: String,
+                                                  $guid: String,
+                                                  $stokid: ID,
+                                                  $stokad:String,
+                                                  $varyantid:ID,
+                                                  $varyantoption1:String,
+                                                  $varyantoption2:String,
+                                                  $fiyat:Float,
+                                                  $path:String,
+                                                  $publicid:String,
+                                                  $count:Int) {
+                                                  createsepet_mutation(
+                                                    uid: $uid,
+                                                    guid: $guid, 
+                                                    stokid: $stokid,
+                                                    stokad:$stokad,
+                                                    varyantid:$varyantid,
+                                                    varyantoption1:$varyantoption1,
+                                                    varyantoption2:$varyantoption2,
+                                                    fiyat:$fiyat,
+                                                    path:$path,
+                                                    publicid:$publicid,
+                                                    count:$count)
+                                                    {
+                                                      
+                                                      _id
+                                                    
+                                                  }
+                                                }
+                                              `,
+                                              variables: {
+                                                uid:uid,
+                                                guid:guid,
+                                                stokid: this.urundetay[0]._id,
+                                                stokad: this.stokad,
+                                                varyantid: this.id,
+                                                varyantoption1: this.varyant_option1_name,
+                                                varyantoption2: this.varyant_option2_name,
+                                                fiyat:this.d_indirimli_fiyat,
+                                                path: this.stok_path,
+                                                publicid: this.stok_publicid,
+                                                count: this.miktar
+                                              }
+                                            })
+                                            .then(data => {
+                                              console.log("sepete ürün eklendi");
+                                              this.$store.dispatch('search_basketlist',guid)
+                                              if(sell){
+                                                this.$router.push({ path: '/shopping' })
+                                              }
+                                            })
                 // const dialog = this.$q.dialog({
                 //           title: "Uyarı",
                 //           message: "Ürün Sepetinizde bulunmaktadır..!"
@@ -936,7 +1002,11 @@ export default {
     } else{
       console.log("Ürün Seçimini Tamamlamadınız.. yinede devam etmek istermisiniz");
       if(sell){
-                this.$router.push({ path: '/shopping' })
+        this.$q.notify({
+              type: 'negative',
+                  message: `Ürün Seçimini Tamamlamadınız...`
+              })
+                // this.$router.push({ path: '/shopping' })
               }
     }
     
