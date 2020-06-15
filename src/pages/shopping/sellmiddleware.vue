@@ -24,9 +24,9 @@
             <div class="text-h6 q-pb-md">Üye Girişi</div>
             <!-- <div class="text-h6 q-pb-md">{{get_guid}}</div> -->
             <div class="row justify-center ">
-            <q-input class="col-md-10 col-12 q-mb-lg" v-model="signin.email" label="Mail Adresi"  outlined/>
-            <q-input class="col-md-10 col-12 q-mb-lg" type="password" v-model="signin.password" label="Şifre" outlined/>
-            <q-btn class="col-md-4 col-6 q-mb-md " size="18px" color="positive " @click="login()" label="Giriş Yap " rounded/>
+            <q-input class="col-md-10 col-12 q-mb-lg" ref="email" v-model="signin.email" label="Mail Adresi" :rules="[val => !!val || 'Hatalı Mail', isValidEmail]" outlined/>
+            <q-input class="col-md-10 col-12 q-mb-lg" :rules="[val => !!val || 'Hatalı Password',val => val.length > 5 || 'Hatalı Password']" ref="password" type="password" v-model="signin.password" @keypress.enter.native="login()" label="Şifre" outlined/>
+            <q-btn class="col-md-4 col-6 q-mb-md"  size="18px" color="positive " label="Giriş Yap" @click="login()" rounded/>
             <div class="col-12 text-subtitle2 q-mb-md">veya</div>
             <q-btn class="col-md-8 col-11 text-pink-12" size="18px" color="white" @click="sellm()" label="Üye olmadan devam et" rounded/>
             </div>
@@ -35,15 +35,15 @@
           <q-tab-panel class=" items-center " name="kayit">
             <div class="text-h6 q-pb-md">Üye Kayıt</div>
             <div class="row justify-center ">
-            <q-input class="col-md-10 col-12 q-mb-lg" v-model="signup.username" label="Ad"  outlined/>
-            <q-input class="col-md-10 col-12 q-mb-lg" v-model="signup.lastname" label="Soyad"  outlined/>
-            <q-input class="col-md-10 col-12 q-mb-lg" v-model="signup.email" label="Mail Adresi"  outlined/>
-
+            <q-input class="col-md-10 col-12 q-mb-lg" ref="uad" :rules="[val => !!val || 'İsim Giriniz']" v-model="signup.username" label="Ad"  outlined/>
+            <q-input class="col-md-10 col-12 q-mb-lg" ref="usad" :rules="[val => !!val || 'Soyad Giriniz']" v-model="signup.lastname"  label="Soyad"  outlined/>
+            <q-input class="col-md-10 col-12 q-mb-lg" ref="uemail" v-model="signup.email" :rules="[val => !!val || 'Hatalı Mail', isValidEmail]" label="Mail Adresi"  outlined/>
+           
 
 
             <q-input 
             class="col-md-10 col-12 q-mb-lg"
-                 v-model="loginData.password"
+                 v-model="SignupData.password"
                  label="Şifre"
                  
                  v-bind:type="isPwd ? 'password' : ''"
@@ -59,7 +59,7 @@
         </q-input>
         <q-input 
         class="col-md-10 col-12 q-mb-lg"
-                 v-model="loginData.passwordConfirm"
+                 v-model="SignupData.passwordConfirm"
                  label="Şifre Tekrarı"
                  v-bind:type="isPwd ? 'password' : ''"
                  lazy-rules
@@ -101,7 +101,7 @@ export default {
             signin:{},
             signup:{},
             isPwd:true,
-            loginData:{
+            SignupData:{
               password:'',
               passwordConfirm:''
             },
@@ -160,7 +160,16 @@ export default {
 
     },
     methods: {
+      isValidEmail (val) {
+                const emailPattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+                return emailPattern.test(val) || 'Hatalı email';
+            },
      async login() {
+       this.$refs.email.validate()
+              this.$refs.password.validate()
+              if(this.$refs.email.hasError || this.$refs.password.hasError){
+                return;
+              }
          await axios
                 .post('http://'+ process.env.API +':4000/graphql', {
                   query: `query loginuser_Query($usermail: String,$password:String ){
@@ -179,26 +188,91 @@ export default {
                 .then(response => {
                     console.log(response.data.data.loginuser_Query);
                     if(response.data.data.loginuser_Query.res=='true'){
-                        this.$store.dispatch('search_ubasketlist',response.data.data.loginuser_Query._id)
+                        this.merge(response.data.data.loginuser_Query._id)
+                    // this.$router.push({ path: '/sell' }  )
+                    }
+                })
+            //    ----- mail
+            // mutation{sendmail(username:"asas"){
+            //     username
+            //     }
+            //     }
+            //    ----- mail
+            },
+            register() {
+                // console.log(this.signup.username);
+                this.$refs.fldPasswordChangeConfirm.validate()
+                this.$refs.uemail.validate()
+                this.$refs.uad.validate()
+                this.$refs.usad.validate()
+                if(this.$refs.uemail.hasError || this.$refs.uad.hasError || this.$refs.usad.hasError || this.$refs.fldPasswordChangeConfirm.hasError){
+
+
+                return;
+              }
+                 if(this.SignupData.password.length > 5 && this.SignupData.passwordConfirm > 5 && this.SignupData.passwordConfirm == this.SignupData.password){
+                    // console.log("evet");
+                 //----------------
+                 
+                this.$apollo
+                            .mutate({
+                              mutation: gql`
+                                mutation createUser($username: String, $lastname: String, $usermail: String, $password:String) {
+                                  createUser(username: $username, lastname: $lastname, usermail: $usermail, password:$password) {
+                                    _id
+                                    username
+                                    password
+                                    res
+                                  }
+                                }
+                              `,
+                              // loadingKey: 'loading',
+                              variables: {
+                                    username:this.signup.username,
+                                    lastname:this.signup.lastname,
+                                    usermail:this.signup.email,
+                                    password:this.SignupData.passwordConfirm,
+                              }
+                            })
+                            .then(response => {
+                                                this.merge(response.data.createUser._id)
+                                                // this.$q.notify({
+                                                //       type: 'positive',
+                                                //       message: `Kayıt Başarılı`
+                                                //   }) 
+                                                //   Cookies.remove('guid');
+                                                //   Cookies.set('uid',response.data.createUser._id)
+                                                //   this.$store.dispatch('add_uid')
+                                                // this.$router.push({ path: '/sell' })
+                                                
+
+                                              });
+                                    // this.$router.go(-1)
+                                    
+
+                 }
+            },
+            merge(response){
+              console.log(response);
+              this.$store.dispatch('search_ubasketlist',response)
                         // guesti sil
                         Cookies.remove('guid')
                         this.$store.dispatch('delete_guid')
                         // guesti sil
                         // --------
                         // uid ekle
-                        Cookies.set('uid',response.data.data.loginuser_Query._id)
-                        this.$store.dispatch('add_uid',response.data.data.loginuser_Query._id)
+                        Cookies.set('uid',response)
+                        this.$store.dispatch('add_uid',response)
                         //---------------
                         
-
-                        this.$store.dispatch('search_ubasketlist',response.data.data.loginuser_Query._id)
+                        this.$store.dispatch('search_ubasketlist',response)
 
                         Cookies.remove('guid')
                         this.$store.dispatch('delete_guid')
                         // guesti sil
                         // --------
                         // uid ekle
-                        Cookies.set('uid',response.data.data.loginuser_Query._id)
+                        Cookies.set('uid',response)
                         this.$store.dispatch('add_uid')
                         let array=[]
                         if(this.get_ubasketlist.length > 0){
@@ -213,7 +287,7 @@ export default {
                                   else{
                                     console.log("1");
                                       let avalue ={
-                                          uid:response.data.data.loginuser_Query._id,
+                                          uid:response,
                                           guid:"",
                                           stokid:value.stokid,
                                           stokad:value.stokad,
@@ -233,7 +307,7 @@ export default {
                                 console.log("guid sepetinde ürün yoksa");
                                 array=this.get_ubasketlist
                                 let avalue ={
-                                    uid:response.data.data.loginuser_Query._id,
+                                    uid:response,
                                     guid:"",
                                     stokid:avalue.stokid,
                                     stokad:avalue.stokad,
@@ -273,7 +347,7 @@ export default {
                           console.log("uid sepeti boş ise",array);
                           this.get_basketlist.forEach(value=>{
                             let avalue ={
-                                          uid:response.data.data.loginuser_Query._id,
+                                          uid:response,
                                           guid:"",
                                           stokid:value.stokid,
                                           stokad:value.stokad,
@@ -313,50 +387,10 @@ export default {
                         
                       if(this.get_basketlist.length==0 && this.get_ubasketlist.length==0){
                         this.$router.push({ path: '/' })
+                      }else{
+                        this.$router.push({ path: '/sell' })
                       }
 
-                    // this.$router.push({ path: '/sell' }  )
-                    }
-                })
-            //    ----- mail
-            // mutation{sendmail(username:"asas"){
-            //     username
-            //     }
-            //     }
-            //    ----- mail
-            },
-            register() {
-                console.log(this.signup.username);
-                 if(this.loginData.password.length > 5 && this.loginData.passwordConfirm > 5 && this.loginData.passwordConfirm == this.loginData.password){
-                    console.log("evet");
-                 // email adresi varsa
-                this.$apollo
-                            .mutate({
-                              mutation: gql`
-                                mutation createUser($username: String, $lastname: String, $usermail: String, $password:String) {
-                                  createUser(username: $username, lastname: $lastname, usermail: $usermail, password:$password) {
-                                    _id
-                                    username
-                                    password
-                                    res
-                                  }
-                                }
-                              `,
-                              // loadingKey: 'loading',
-                              variables: {
-                                    username:this.signup.username,
-                                    lastname:this.signup.lastname,
-                                    usermail:this.signup.email,
-                                    password:this.loginData.passwordConfirm,
-                              }
-                            })
-                            .then(response => {
-                                                // Cookies.set('guid', data.data.createguid_mutation._id, { expires: 30, path: '' });
-                                                console.log(response.data);
-                                                this.$router.push({ path: '/sell' })
-                                              });
-                                    // this.$router.go(-1)
-                                    }
             },
             sellm(){
 

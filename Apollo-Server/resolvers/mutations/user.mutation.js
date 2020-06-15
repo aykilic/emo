@@ -12,6 +12,7 @@ module.exports = {
       // throw new Error('Kullanıcı adı kullanımda')
       resolve({res:'Kullanıcı adı kullanımda'})
     }else{
+      console.log(usermail);
       // var token = jwt.sign({ foo: 'bar' }, privateKey, { algorithm: 'RS256'});
      new model({
       username,

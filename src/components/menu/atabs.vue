@@ -84,7 +84,7 @@ export default {
     margin-top:0px;
     margin-left:-20px;
     padding: 0px;
-    width:22%;
+    width:20%;
     height:420px;
     border-right: 5px solid rgb(240,240,240);
     

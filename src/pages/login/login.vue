@@ -32,14 +32,14 @@
           <q-tab-panel class=" items-center " name="kayit">
             <div class="text-h6 text-center q-pb-md">Üye Kayıt</div>
             <div class="row justify-center ">
-            <q-input class="col-md-10 col-12 q-mb-lg" v-model="signup.username" label="Ad"  outlined/>
-            <q-input class="col-md-10 col-12 q-mb-lg" v-model="signup.lastname" label="Soyad"  outlined/>
-            <q-input class="col-md-10 col-12 q-mb-lg" v-model="signup.email" label="Mail Adresi"  outlined/>
+            <q-input class="col-md-10 col-12 q-mb-lg" ref="uad" :rules="[val => !!val || 'İsim Giriniz']" v-model="signup.username" label="Ad"  outlined/>
+            <q-input class="col-md-10 col-12 q-mb-lg" ref="usad" :rules="[val => !!val || 'Soyad Giriniz']" v-model="signup.lastname"  label="Soyad"  outlined/>
+            <q-input class="col-md-10 col-12 q-mb-lg" ref="uemail" v-model="signup.email" :rules="[val => !!val || 'Hatalı Mail', isValidEmail]" label="Mail Adresi"  outlined/>
             <!-- <q-input class="col-md-10 col-12 q-mb-lg" v-model="signup.password" label="Şifre" outlined/>
             <q-input class="col-md-10 col-12 q-mb-lg" v-model="signup.repassword" label="Şifre Tekrarı" outlined/> -->
             <q-input 
             class="col-md-10 col-12 q-mb-lg"
-                 v-model="loginData.password"
+                 v-model="SignupData.password"
                  label="Şifre"
                  
                  v-bind:type="isPwd ? 'password' : ''"
@@ -55,7 +55,7 @@
         </q-input>
         <q-input 
         class="col-md-10 col-12 q-mb-lg"
-                 v-model="loginData.passwordConfirm"
+                 v-model="SignupData.passwordConfirm"
                  label="Şifre Tekrarı"
                  v-bind:type="isPwd ? 'password' : ''"
                  lazy-rules
@@ -94,7 +94,8 @@ import { Cookies } from "quasar"
 
                 // Required:"",
                 // ConfirmPWD:"",
-                loginData:{
+                
+                SignupData:{
                     password:'',
                     passwordConfirm:''
                 },
@@ -164,7 +165,101 @@ import { Cookies } from "quasar"
                 .then(response => {
                     console.log(response.data.data.loginuser_Query);
                     if(response.data.data.loginuser_Query.res=='true'){
-                        this.$store.dispatch('search_ubasketlist',response.data.data.loginuser_Query._id)
+                        this.merge(response)
+                    }else{
+                      this.$q.notify({
+                        type: 'negative',
+                        message: `${response.data.data.loginuser_Query.res}`
+                    })  
+                    }
+
+                })
+            //    ----- mail
+            // mutation{sendmail(username:"asas"){
+            //     username
+            //     }
+            //     }
+            //    ----- mail
+            },
+            async register() {
+                // console.log(this.signup.username);
+                this.$refs.fldPasswordChangeConfirm.validate()
+                this.$refs.uemail.validate()
+                this.$refs.uad.validate()
+                this.$refs.usad.validate()
+                if(this.$refs.uemail.hasError || this.$refs.uad.hasError || this.$refs.usad.hasError || this.$refs.fldPasswordChangeConfirm.hasError){
+
+
+                return;
+              }
+                 if(this.SignupData.password.length > 5 && this.SignupData.passwordConfirm > 5 && this.SignupData.passwordConfirm == this.SignupData.password){
+                    // console.log("evet");
+                 //----------------
+               let checkmail= await axios.post(
+                'http://'+ process.env.API +':4000/graphql', {
+                 query: `query Search_checkmail($email:String){
+                    Search_checkmail(email:$email){
+                        _id
+                   }  
+                 }`,
+                   variables: {
+                    email: this.signup.email
+                    }
+            })
+             console.log("checkmail",checkmail.data.data.Search_checkmail);
+             if (checkmail.data.data.Search_checkmail != null ) {
+
+               if(checkmail.data.data.Search_checkmail._id != null){
+                    this.$q.notify({
+                        type: 'negative',
+                        message: `Mail Kullanımda`
+                    })  
+              return;
+             }
+             } 
+
+             
+                  //----------------
+
+
+                this.$apollo
+                      .mutate({
+                        mutation: gql`
+                          mutation createUser($username: String, $lastname: String, $usermail: String, $password:String) {
+                            createUser(username: $username, lastname: $lastname, usermail: $usermail, password:$password) {
+                              _id
+                              username
+                              password
+                              res
+                            }
+                          }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                              username:this.signup.username,
+                              lastname:this.signup.lastname,
+                              usermail:this.signup.email,
+                              password:this.SignupData.passwordConfirm,
+                        }
+                      })
+                      .then(response => {
+                            // Cookies.set('guid', data.data.createguid_mutation._id, { expires: 30, path: '' });
+                            console.log(response.data);
+                            this.merge(response)
+                            // this.$q.notify({
+                            //     type: 'positive',
+                            //     message: `Kayıt Başarılı`
+                            // }) 
+                            // Cookies.remove('guid');
+                            // Cookies.set('uid',response.data.createUser._id)
+                            // this.$store.dispatch('add_uid')
+                            // this.$router.push({ path: '/' })
+                          });
+                // this.$router.go(-1)
+                }
+            },
+            merge(response){
+              this.$store.dispatch('search_ubasketlist',response.data.data.loginuser_Query._id)
                         // guesti sil
                         Cookies.remove('guid')
                         this.$store.dispatch('delete_guid')
@@ -314,74 +409,6 @@ import { Cookies } from "quasar"
                         
 
                     this.$router.go(-1)
-                    }else{
-                      this.$q.notify({
-                        type: 'negative',
-                        message: `${response.data.data.loginuser_Query.res}`
-                    })  
-                    }
-
-                })
-            //    ----- mail
-            // mutation{sendmail(username:"asas"){
-            //     username
-            //     }
-            //     }
-            //    ----- mail
-            },
-            async register() {
-                // console.log(this.signup.username);
-                 if(this.loginData.password.length > 5 && this.loginData.passwordConfirm > 5 && this.loginData.passwordConfirm == this.loginData.password){
-                    // console.log("evet");
-                 //----------------
-               let checkmail= await axios.post(
-                'http://'+ process.env.API +':4000/graphql', {
-                 query: `query Search_checkmail($email:String){
-                    Search_checkmail(email:$email){
-                        _id
-                   }  
-                 }`,
-                   variables: {
-                    email: this.signup.email
-                    }
-            })
-            // console.log("checkmail",checkmail);
-             if(checkmail.data.data.Search_checkmail._id != null){
-                    this.$q.notify({
-                        type: 'negative',
-                        message: `Mail Kullanımda`
-                    })  
-              return;
-             }
-                  //----------------
-
-
-                this.$apollo
-                      .mutate({
-                        mutation: gql`
-                          mutation createUser($username: String, $lastname: String, $usermail: String, $password:String) {
-                            createUser(username: $username, lastname: $lastname, usermail: $usermail, password:$password) {
-                              _id
-                              username
-                              password
-                              res
-                            }
-                          }
-                        `,
-                        // loadingKey: 'loading',
-                        variables: {
-                              username:this.signup.username,
-                              lastname:this.signup.lastname,
-                              usermail:this.signup.email,
-                              password:this.loginData.passwordConfirm,
-                        }
-                      })
-                      .then(response => {
-                            // Cookies.set('guid', data.data.createguid_mutation._id, { expires: 30, path: '' });
-                            console.log(response.data);
-                          });
-                // this.$router.go(-1)
-                }
             }
         },
     }
