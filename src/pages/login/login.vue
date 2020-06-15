@@ -312,7 +312,6 @@ import { Cookies } from "quasar"
                         }
                         
 
-
                     this.$router.go(-1)
                     }else{
                       this.$q.notify({
