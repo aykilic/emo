@@ -126,9 +126,6 @@ import { Cookies } from "quasar"
                     'get_guid',
                     ])
                 
-                  
-                
-            
         },
         methods: {
           // entir(){
