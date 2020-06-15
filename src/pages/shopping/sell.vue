@@ -1,9 +1,9 @@
 <template>
         <div class="row col-12  justify-center q-pt-xl" >
-            <div v-if="lists.length == 0"><q-img
-          src="statics/Emose_Logo.jpg"
-          style=" max-width: 140px"
-          /></div>
+            <div v-if="lists.length < 1 ">
+
+                 <q-btn size="lg" rounded to="/" class="text-pink" label="Mağazaya Dön" />
+          </div>
                 <q-stepper
                     v-else
                     class="col-12 "
