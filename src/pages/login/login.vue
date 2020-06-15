@@ -22,9 +22,9 @@
           <q-tab-panel class=" items-center " name="giris">
             <div class="text-h6 text-center q-pb-md">Üye Girişi</div>
             <div class="row justify-center ">
-            <q-input class="col-md-10 col-12 q-mb-lg" v-model="signin.email" label="Mail Adresi"  outlined/>
-            <q-input class="col-md-10 col-12 q-mb-lg" v-model="signin.password" label="Şifre" outlined/>
-            <q-btn class="col-md-4 col-6 q-mb-md " size="18px" color="positive " label="Giriş Yap" @click="login()" rounded/>
+            <q-input class="col-md-10 col-12 q-mb-lg" ref="email" v-model="signin.email" label="Mail Adresi" :rules="[val => !!val || 'Hatalı Mail', isValidEmail]" outlined/>
+            <q-input class="col-md-10 col-12 q-mb-lg" :rules="[val => !!val || 'Hatalı Password',val => val.length > 5 || 'Hatalı Password']" ref="password" type="password" v-model="signin.password" @keypress.enter.native="login()" label="Şifre" outlined/>
+            <q-btn class="col-md-4 col-6 q-mb-md"  size="18px" color="positive " label="Giriş Yap" @click="login()" rounded/>
             
             </div>
           </q-tab-panel>
@@ -131,8 +131,23 @@ import { Cookies } from "quasar"
             
         },
         methods: {
+          // entir(){
+          //   console.log("object");
+          // },
+          isValidEmail (val) {
+                const emailPattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+                return emailPattern.test(val) || 'Hatalı email';
+            },
            async login(){
-            
+              this.$refs.email.validate()
+              this.$refs.password.validate()
+
+              if(this.$refs.email.hasError || this.$refs.password.hasError){
+
+
+                return;
+              }
+            // console.log("onay");
                         await axios
                 .post('http://'+ process.env.API +':4000/graphql', {
                   query: `query loginuser_Query($usermail: String,$password:String ){
@@ -302,7 +317,13 @@ import { Cookies } from "quasar"
 
 
                     this.$router.go(-1)
+                    }else{
+                      this.$q.notify({
+                        type: 'negative',
+                        message: `${response.data.data.loginuser_Query.res}`
+                    })  
                     }
+
                 })
             //    ----- mail
             // mutation{sendmail(username:"asas"){
@@ -311,32 +332,54 @@ import { Cookies } from "quasar"
             //     }
             //    ----- mail
             },
-            register() {
-                console.log(this.signup.username);
+            async register() {
+                // console.log(this.signup.username);
                  if(this.loginData.password.length > 5 && this.loginData.passwordConfirm > 5 && this.loginData.passwordConfirm == this.loginData.password){
-                    console.log("evet");
-                 
+                    // console.log("evet");
+                 //----------------
+               let checkmail= await axios.post(
+                'http://'+ process.env.API +':4000/graphql', {
+                 query: `query Search_checkmail($email:String){
+                    Search_checkmail(email:$email){
+                        _id
+                   }  
+                 }`,
+                   variables: {
+                    email: this.signup.email
+                    }
+            })
+            // console.log("checkmail",checkmail);
+             if(checkmail.data.data.Search_checkmail._id != null){
+                    this.$q.notify({
+                        type: 'negative',
+                        message: `Mail Kullanımda`
+                    })  
+              return;
+             }
+                  //----------------
+
+
                 this.$apollo
-        .mutate({
-          mutation: gql`
-            mutation createUser($username: String, $lastname: String, $usermail: String, $password:String) {
-              createUser(username: $username, lastname: $lastname, usermail: $usermail, password:$password) {
-                _id
-                username
-                password
-                res
-              }
-            }
-          `,
-          // loadingKey: 'loading',
-          variables: {
-                username:this.signup.username,
-                lastname:this.signup.lastname,
-                usermail:this.signup.email,
-                password:this.loginData.passwordConfirm,
-          }
-        })
-        .then(response => {
+                      .mutate({
+                        mutation: gql`
+                          mutation createUser($username: String, $lastname: String, $usermail: String, $password:String) {
+                            createUser(username: $username, lastname: $lastname, usermail: $usermail, password:$password) {
+                              _id
+                              username
+                              password
+                              res
+                            }
+                          }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                              username:this.signup.username,
+                              lastname:this.signup.lastname,
+                              usermail:this.signup.email,
+                              password:this.loginData.passwordConfirm,
+                        }
+                      })
+                      .then(response => {
                             // Cookies.set('guid', data.data.createguid_mutation._id, { expires: 30, path: '' });
                             console.log(response.data);
                           });

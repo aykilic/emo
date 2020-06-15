@@ -269,5 +269,13 @@ module.exports = {
   //  return await stokturu.find({_id:id})
     return await model.find({uid:ObjectID(uid)})
   },
+  Search_checkmail:async(parent, {email}, {Models})=> {
+    // console.log({email});
+    const model = Models.User
+    //  console.log({guid});
+    
+  //  return await stokturu.find({_id:id})
+    return await model.findOne({'usermail':email})
+  },
 };
 

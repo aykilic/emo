@@ -25,7 +25,7 @@
             <!-- <div class="text-h6 q-pb-md">{{get_guid}}</div> -->
             <div class="row justify-center ">
             <q-input class="col-md-10 col-12 q-mb-lg" v-model="signin.email" label="Mail Adresi"  outlined/>
-            <q-input class="col-md-10 col-12 q-mb-lg" v-model="signin.password" label="Şifre" outlined/>
+            <q-input class="col-md-10 col-12 q-mb-lg" type="password" v-model="signin.password" label="Şifre" outlined/>
             <q-btn class="col-md-4 col-6 q-mb-md " size="18px" color="positive " @click="login()" label="Giriş Yap " rounded/>
             <div class="col-12 text-subtitle2 q-mb-md">veya</div>
             <q-btn class="col-md-8 col-11 text-pink-12" size="18px" color="white" @click="sellm()" label="Üye olmadan devam et" rounded/>
@@ -329,34 +329,34 @@ export default {
                 console.log(this.signup.username);
                  if(this.loginData.password.length > 5 && this.loginData.passwordConfirm > 5 && this.loginData.passwordConfirm == this.loginData.password){
                     console.log("evet");
-                 
+                 // email adresi varsa
                 this.$apollo
-        .mutate({
-          mutation: gql`
-            mutation createUser($username: String, $lastname: String, $usermail: String, $password:String) {
-              createUser(username: $username, lastname: $lastname, usermail: $usermail, password:$password) {
-                _id
-                username
-                password
-                res
-              }
-            }
-          `,
-          // loadingKey: 'loading',
-          variables: {
-                username:this.signup.username,
-                lastname:this.signup.lastname,
-                usermail:this.signup.email,
-                password:this.loginData.passwordConfirm,
-          }
-        })
-        .then(response => {
-                            // Cookies.set('guid', data.data.createguid_mutation._id, { expires: 30, path: '' });
-                            console.log(response.data);
-                            this.$router.push({ path: '/sell' })
-                          });
-                // this.$router.go(-1)
-                }
+                            .mutate({
+                              mutation: gql`
+                                mutation createUser($username: String, $lastname: String, $usermail: String, $password:String) {
+                                  createUser(username: $username, lastname: $lastname, usermail: $usermail, password:$password) {
+                                    _id
+                                    username
+                                    password
+                                    res
+                                  }
+                                }
+                              `,
+                              // loadingKey: 'loading',
+                              variables: {
+                                    username:this.signup.username,
+                                    lastname:this.signup.lastname,
+                                    usermail:this.signup.email,
+                                    password:this.loginData.passwordConfirm,
+                              }
+                            })
+                            .then(response => {
+                                                // Cookies.set('guid', data.data.createguid_mutation._id, { expires: 30, path: '' });
+                                                console.log(response.data);
+                                                this.$router.push({ path: '/sell' })
+                                              });
+                                    // this.$router.go(-1)
+                                    }
             },
             sellm(){
 

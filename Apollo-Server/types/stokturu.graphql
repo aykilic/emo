@@ -96,6 +96,7 @@ type Query{
     imgurlQuery(id:ID!):[Stoktur]
     loginuser_Query(usermail:String,password:String):User
     Search_Userdetail_Query(uid:ID):[User_detail]
+    Search_checkmail(email:String):User
     
     # altimgurlQuery(id:String!):[Varyantalt]
 }

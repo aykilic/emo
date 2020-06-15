@@ -108,11 +108,11 @@
           @mouseover= "listOver = true" @mouseout= "listOver = false"
           
         >
-          <q-tab-panel  name="a" style="padding-left:0; " >
-            <a-tabs  style= "" @menu="menu=$event">
+          <q-tab-panel class=""  name="a" style="padding-left:0; " >
+            <a-tabs class=""  style= "" @menu="menu=$event">
               <a-tab v-for="(anakategorilist,index) in treemmenu" :key='index' :title="(anakategorilist.stokturad)" :titleid="(anakategorilist._id)" class="row col-12"  >
                 
-                <div  class="col-3 q-pl-md" >
+                <div  class="col-md-3 col-xs-6 q-pl-md" >
                   <ul class= "ullistchild"  v-for="(altkategorilist,iindex) in anakategorilist.children" :key='iindex' >
                       <li  class="listchild" @click="link(altkategorilist.stokturad,altkategorilist._id)">
                         <!-- {{altkategorilist.stokturad}} -->
@@ -121,19 +121,19 @@
                         </li> 
                     </ul>
                 </div>
-                <div class="col-3 q-pl-md">
+                <div class="col-md-3 col-xs-6 q-pl-md">
                   <ul class= "ullistchild " >
-                      <li class="listchild">Lohusa Aksesuar</li>
+                      <li class="listchild"> Aksesuar</li>
                     </ul>
                 </div>
-                <div class=" col-6 ">
+                <div class="col-md-6 header_resim ">
                   
                 <q-intersection
                 once
                 transition="fade"
                 class=""
                 >
-                <div class="row items-start q-col-gutter-x-md">
+                <div  class="row items-start q-col-gutter-x-md ">
                 <q-card flat class="my-card col-6 ">
                   
                   <q-img
@@ -627,6 +627,12 @@ export default {
     
     .two   { grid-row: 2 / 3; grid-column: 1 / 3;margin-top:15px; }
     .three { grid-row: 1 / 2; grid-column: 2 / 3; }
+}
+@media only screen and (max-width: 1023px ) {
+ .header_resim{
+   display: none;
+ }
+    
 }
 .cartbadge{
   background-color:#ff4081;

@@ -1,6 +1,6 @@
 <template >
-  <div >
-    <ul class='tabs__header'>
+  <div class=''>
+    <ul class=' tabs__header '>
       <li v-for='(tab, index) in tabs'
         :key='tab.title'
         @mouseover='selectTab(index)'
@@ -82,8 +82,9 @@ export default {
     list-style: none;
     /* margin: 0 0 0 0; */
     margin-top:0px;
+    margin-left:-20px;
     padding: 0px;
-    width:20%;
+    width:22%;
     height:420px;
     border-right: 5px solid rgb(240,240,240);
     

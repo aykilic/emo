@@ -135,7 +135,7 @@
                                             <q-input class="q-pt-md q-pl-xs q-pr-xs col-6"  v-model="user.cep" ref="cep" :rules="[val => val.length > 9 || 'Yanlış Numara']" mask="+90(###) ### - ####" unmasked-value outlined label="Cep Telefonu" hint="Cep No Giriniz" dense />
                                             <q-input class="q-pt-xs q-pl-xs q-pr-xs col-6"  v-model="user.tc_v_no" ref="tc" :rules="[val => !!val || 'Boş Bırakmayınız']" outlined label="TC Kimlik No-Vergi No" hint="Lütfen Adınızı Giriniz" dense />
                                             <q-input class="q-pt-xs q-pl-xs q-pr-xs col-6"  v-model="user.v_daire"  outlined label="Vergi Dairesi" hint="Varsa - Vergi Dairesi Giriniz" dense />
-                                            <q-input class="q-pt-xs q-pl-xs q-pr-xs col-12" v-model="user.email" ref="email" outlined label="Mail" hint="Lütfen Adınızı Giriniz" :rules="[val => !!val || 'Email Alanı', isValidEmail]" dense />
+                                            <q-input class="q-pt-xs q-pl-xs q-pr-xs col-12" v-model="user.email" ref="email" outlined label="Mail" hint="Lütfen Mail Giriniz" :rules="[val => !!val || 'Email Alanı', isValidEmail]" dense />
                                             <q-input
                                                 outlined
                                                 ref="adres"
@@ -503,7 +503,7 @@
                                 class="hint col-6 q-pt-xs q-pl-xs q-pr-xs q-mb-md"
                                 outlined 
                                 ref="ilce"
-                                :rules="[val => !!val || 'Boş Bırakmayınız']"
+                                :rules="[val => !!val  || 'Boş Bırakmayınız']"
                                 label="ilçe" 
                                 hint="ilçe Seçiniz...!"
                                 v-model="user.ilce" 
@@ -521,7 +521,7 @@
                             
                             <q-btn v-if="user._id != null " class="q-ma-sm"  color="primary" @click="user_det_kaydet(user._id)" label="Güncelle"  v-close-popup ></q-btn>
                             <q-btn v-else class="q-ma-sm"  color="primary" label="Kaydet" @click="user_det_kaydet()" ></q-btn>
-                            <q-btn class="q-mr-md"  color="negative" label="Sil"  v-close-popup ></q-btn>
+                            <!-- <q-btn class="q-mr-md text-grey"  color="" label="Kapat"  v-close-popup ></q-btn> -->
                         </q-card-section>
                         </q-card>
                     </q-dialog>
@@ -571,11 +571,12 @@ import { Loading } from "quasar";
                     email:"",
                     adres:"",
                     p_kodu:"",
-                    il:{il:"",
-                        ilid:""},
-                    ilce:{ilce:"",
-                    ilceid:""}
-                    
+                    // il:{il:"",
+                    //     ilid:""},
+                    // ilce:{ilce:"",
+                    // ilceid:""}
+                    il:"",
+                    ilce:""
                     
                 },
                 // ------
@@ -714,7 +715,8 @@ import { Loading } from "quasar";
 
             },
             user_det_kaydet(a){
-                this.$refs.ad.validate()
+                
+                 this.$refs.ad.validate()
                  this.$refs.tc.validate()
                  this.$refs.cep.validate()
                  this.$refs.email.validate()
@@ -826,9 +828,9 @@ import { Loading } from "quasar";
                     this.$refs.stepper.next()
                 }else{
                     this.$q.notify({
-                type: 'negative',
-                message: `Adres Seçimini Yapmadınız..!`
-            })  
+                        type: 'negative',
+                        message: `Adres Seçimini Yapmadınız..!`
+                    })  
                 }
                 
                 
@@ -837,6 +839,7 @@ import { Loading } from "quasar";
                 // user seçildi mi?
                 //  console.log(this.$refs.email.rules);
                 //  this.$refs.baslik.validate()
+                console.log(this.user);
                  this.$refs.ad.validate()
                  this.$refs.tc.validate()
                  this.$refs.cep.validate()
@@ -866,6 +869,10 @@ import { Loading } from "quasar";
             },
             devam(){
                 // console.log(this.selected);
+                this.$q.notify({
+                        type: 'negative',
+                        message: `Ürün Seçimini Yapmadınız..!`
+                    })
             },
             payment_radio(val){
                 
