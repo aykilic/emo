@@ -1,148 +1,148 @@
 
-# type birim{
-#   _id:ID
-#   birimad: String
-#   createdAt: String
+type birim{
+  _id:ID
+  birimad: String
+  createdAt: String
   
-# }
-# type kategori{
-#   _id:ID
-#   stokturad: String
-#   parentid: String
-#   fiyat1:Float
-#   fiyat2:Float
-#   indirim:Int
-#   vars:[vars]
-#   children(_id:ID): kategori
+}
+type kategori{
+  _id:ID
+  stokturad: String
+  parentid: String
+  fiyat1:Float
+  fiyat2:Float
+  indirim:Int
+  vars:[vars]
+  children(_id:ID): kategori
   
-# }
+}
 
-# type User{
+type User{
+  _id:ID
+  username:String
+  lastname:String
+  usermail:String
+  password:String
+  res:String
+}
+type vars{
+  
+  images:images
+  
+}
+
+type images{
+  filename:String
+  imageurl:String
+  publicid:String
+  path:String
+  id:ID
+}
+type attr{
+  size:String
+}
+
+type Stoktur{
+  _id:ID!
+  stokturad: String
+  parentid: String
+  fiyat1:Float
+  fiyat2:Float
+  indirim:Int
+  createdAt: String
+  vars: [vars]
+}
+  
+#   type Varyantalt{
 #   _id:ID
-#   username:String
-#   lastname:String
-#   usermail:String
-#   password:String
-#   res:String
-# }
-# type vars{
-  
-#   images:images
-  
-# }
-
-# type images{
-#   filename:String
-#   imageurl:String
-#   publicid:String
-#   path:String
-#   id:ID
-# }
-# type attr{
-#   size:String
-# }
-
-# type Stoktur{
-#   _id:ID!
-#   stokturad: String
-#   parentid: String
-#   fiyat1:Float
-#   fiyat2:Float
-#   indirim:Int
-#   createdAt: String
+#   color:String
+#   varyantid: ID
+#   altvaryantname: String
 #   vars: [vars]
+#   createdAt: String
+  
 # }
-  
-# #   type Varyantalt{
-# #   _id:ID
-# #   color:String
-# #   varyantid: ID
-# #   altvaryantname: String
-# #   vars: [vars]
-# #   createdAt: String
-  
-# # }
-# # type Varyant{
-# #   _id:ID
-# #   stokid:ID
-# #   varyantname:String
-# #   Varyantalt:[Varyantalt]
-# #   createdAt: String
-# # }
-# type User_detail{
+# type Varyant{
 #   _id:ID
-#   uid:ID
-#   baslik:String
-#   ad_soyad:  String
-#   email:String
-#   cep:String
-#   tc_v_no:String
-#   v_daire:String
-#   adres:String
-#   p_kodu:String
-#   il:String
-#   ilid:String
-#   ilce:String
-#   ilceid:String
-#   id:ID
+#   stokid:ID
+#   varyantname:String
+#   Varyantalt:[Varyantalt]
+#   createdAt: String
 # }
-# type Query{
-#     user(id: ID!): User!
-#     users: [User!]!
-#     Query:[kategori]
-#     StokturuQuery(id:ID):[Stoktur]
-#     anakategoriQuery(parentid:ID):[Stoktur]
-#     birimList:[birim]
-#     imgurlQuery(id:ID!):[Stoktur]
-#     loginuser_Query(usermail:String,password:String):User
-#     Search_Userdetail_Query(uid:ID):[User_detail]
-#     Search_checkmail(email:String):User
+type User_detail{
+  _id:ID
+  uid:ID
+  baslik:String
+  ad_soyad:  String
+  email:String
+  cep:String
+  tc_v_no:String
+  v_daire:String
+  adres:String
+  p_kodu:String
+  il:String
+  ilid:String
+  ilce:String
+  ilceid:String
+  id:ID
+}
+type Query{
+    user(id: ID!): User!
+    users: [User!]!
+    Query:[kategori]
+    StokturuQuery(id:ID):[Stoktur]
+    anakategoriQuery(parentid:ID):[Stoktur]
+    birimList:[birim]
+    imgurlQuery(id:ID!):[Stoktur]
+    loginuser_Query(usermail:String,password:String):User
+    Search_Userdetail_Query(uid:ID):[User_detail]
+    Search_checkmail(email:String):User
     
-#     # altimgurlQuery(id:String!):[Varyantalt]
-# }
-# type Mutation {
-#   createBirim(birimad: String!): birim
-#   updateBirim(id:String!,birimad: String): birim
-#   deleteBirim(id:String!): birim
-#   # createUser(data: CreateUserInput!): User
-#   createStokturu(stokturad: String!, parentid: String): Stoktur
-#   deleteStokturu(id:String!): Stoktur
-#   updateStokturu(id:String!,stokturad: String, parentid: String,fiyat1:Float, fiyat2:Float): Stoktur
-#   updatestokimageurl(id:String!,imageurl: String,filename:String,publicid:String,path:String): Stoktur
-#   deleteimage(id:ID!,imageid:ID,path:String): Stoktur
-#   updateStok(id:String!,variant: StokInput): Stoktur
-#   updateStokalt(id:String!): Stoktur
-#   createUser(username: String,lastname: String,usermail:String,password: String):User
-#   user_detail_mutation(userdetail:userdetailInput):User_detail
-#   user_detail_edit_mutation(id:ID, userdetail:userdetailInput):User_detail
-#   # mergesepet_mutation(sepetlist:[sepetlistInput]):sepet
-#   sendmail(username:String):User
-# }
-# input StokInput{
-#   name:String
-#   value:String
-# }
+    # altimgurlQuery(id:String!):[Varyantalt]
+}
+type Mutation {
+  createBirim(birimad: String!): birim
+  updateBirim(id:String!,birimad: String): birim
+  deleteBirim(id:String!): birim
+  # createUser(data: CreateUserInput!): User
+  createStokturu(stokturad: String!, parentid: String): Stoktur
+  deleteStokturu(id:String!): Stoktur
+  updateStokturu(id:String!,stokturad: String, parentid: String,fiyat1:Float, fiyat2:Float): Stoktur
+  updatestokimageurl(id:String!,imageurl: String,filename:String,publicid:String,path:String): Stoktur
+  deleteimage(id:ID!,imageid:ID,path:String): Stoktur
+  updateStok(id:String!,variant: StokInput): Stoktur
+  updateStokalt(id:String!): Stoktur
+  createUser(username: String,lastname: String,usermail:String,password: String):User
+  user_detail_mutation(userdetail:userdetailInput):User_detail
+  user_detail_edit_mutation(id:ID, userdetail:userdetailInput):User_detail
+  # mergesepet_mutation(sepetlist:[sepetlistInput]):sepet
+  sendmail(username:String):User
+}
+input StokInput{
+  name:String
+  value:String
+}
 
-# input CreateUserInput{
-#   username: String
-#   lastname: String
-#   usermail:String
-#   password: String
-# }
-# input userdetailInput{
-#   _id:ID
-#   uid:ID
-#   baslik:String
-#   ad_soyad:String
-#   email:String
-#   cep:String
-#   tc_v_no:String
-#   v_daire:String
-#   adres:String
-#   p_kodu:String
-#   il:String
-#   ilid:String
-#   ilce:String
-#   ilceid:String
-#   id:ID
-# }
+input CreateUserInput{
+  username: String
+  lastname: String
+  usermail:String
+  password: String
+}
+input userdetailInput{
+  _id:ID
+  uid:ID
+  baslik:String
+  ad_soyad:String
+  email:String
+  cep:String
+  tc_v_no:String
+  v_daire:String
+  adres:String
+  p_kodu:String
+  il:String
+  ilid:String
+  ilce:String
+  ilceid:String
+  id:ID
+}
