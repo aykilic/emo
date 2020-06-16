@@ -52,8 +52,9 @@
                                     <q-td class="text-weight-bold" key="stokad" :props="props"  > 
                                         {{props.row.stokad}} <br> {{props.row.varyantoption1}} <br> {{props.row.varyantoption2}}
                                     </q-td>
-                                    <q-td style="width:115px" key="miktar"  :props="props"  > 
-                                        <q-input
+                                    <q-td style="" key="miktar"  :props="props"  > 
+                                        <!-- TODO: -->
+                                        <!-- <q-input
                                         style="margin-top:20px;"
                                             dense
                                             oninput=" if (this.value < 1) {this.value = 1}else if(this.value > 10){this.value = 10}"
@@ -62,8 +63,30 @@
                                             type="number"
                                             outlined
                                             :rules="[ val => val > 0  ]"
-                                            />
-
+                                            /> -->
+                                        <q-btn
+                                            v-model="props.row.count"
+                                            @click="hesaplama(props.row.count--)"
+                                            color="white"
+                                            size="xs"
+                                            push
+                                            round
+                                            class=" text-grey"
+                                            icon="remove"
+                                            ></q-btn>
+                                            <span class="q-mx-xs self-center">
+                                            {{  props.row.count  }}
+                                            </span>
+                                            <q-btn
+                                            v-model="props.row.count"
+                                            @click="hesaplama(props.row.count++)"
+                                            color="white"
+                                            size="xs"
+                                            push
+                                            round
+                                            class="text-grey"
+                                            icon="add"
+                                            ></q-btn>
                                     
                                     </q-td>
                                     <q-td class="text-weight-bold " key="fiyat" :props="props"  > 
@@ -391,8 +414,8 @@
                     </q-step>
 
                 </q-stepper>
-                <!-- <q-item class=" col-12 justify-center"><q-item-label>{{ JSON.stringify(selected) }}</q-item-label> 
-                    </q-item>-->
+                    <!-- <q-item class=" col-12 justify-center"><q-item-label>{{ JSON.stringify(selected) }}</q-item-label> 
+                        </q-item> -->
                     <q-dialog
                         v-model="user_detail_dialog"
                         
@@ -894,7 +917,20 @@ import { Loading } from "quasar";
                 }
                 // console.log(this.lists);
             },
+            // eksi () {
+      
+            //     // this.miktar--
+                
+            // },
+
+            // arti () {
+            //     // this.miktar++
+            //     // this.selected.forEach(item=>{
+            //     //     this.count=item.count++
+            //     // })
+            // },
             hesaplama(){
+                
                 // eğer stok miktarı varsa yazılacak
                 let aratoplam=0
                 let kdv=0

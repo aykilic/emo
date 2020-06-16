@@ -94,27 +94,31 @@
         <div class="row">
           <q-item-section class="col" >
                     <div class="col" style="text-transform: unset">MİKTAR:</div>
+                    <div class="row q-pt-md q-pb-md">
                         <q-btn
-      v-model="miktar"
-      @click="eksi"
-      color="white"
-      push
-      round
-      class=" text-grey"
-      icon="remove"
-    ></q-btn>
-    <span class="q-mx-md">
-      {{miktar}}
-    </span>
-    <q-btn
-      v-model="miktar"
-           @click="arti"
-      color="white"
-      push
-      round
-           class="text-grey"
-      icon="add"
-    ></q-btn>
+                          v-model="miktar"
+                          @click="eksi"
+                          color="white"
+                          size="md"
+                          push
+                          round
+                          class=" text-grey"
+                          icon="remove"
+                        ></q-btn>
+                        <span class="q-mx-md self-center">
+                          {{miktar}}
+                        </span>
+                        <q-btn
+                          v-model="miktar"
+                          @click="arti"
+                          color="white"
+                          size="md"
+                          push
+                          round
+                              class="text-grey"
+                          icon="add"
+                        ></q-btn>
+                        </div>
                     </q-item-section>
         </div>
         </q-item>
