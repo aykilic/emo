@@ -82,7 +82,7 @@ export default {
     list-style: none;
     /* margin: 0 0 0 0; */
     margin-top:0px;
-    margin-left:-20px;
+    
     padding: 0px;
     width:20%;
     height:420px;
@@ -91,7 +91,7 @@ export default {
   }
 
   ul.tabs__header > li {
-    padding: 8px 30px;
+    padding: 8px 0px;
     
     display:block;
     /* margin-right: 5px; */

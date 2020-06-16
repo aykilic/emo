@@ -1,5 +1,5 @@
 <template>
-    <div class="denemem row q-pl-md" v-show="isActive">
+    <div class="denemem row " v-show="isActive">
         <slot></slot>
         </div>
 </template>

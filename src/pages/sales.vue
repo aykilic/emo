@@ -1,6 +1,6 @@
 
 <template >
-  <q-page  class="row q-pt-md items-start q-col-gutter-md">
+  <q-page  class="row q-pt-md items-start">
     
     <load v-if="option_2=='' && option_1=='' "></load>
     <q-card v-else class="row col-12">
@@ -94,15 +94,27 @@
         <div class="row">
           <q-item-section class="col" >
                     <div class="col" style="text-transform: unset">MİKTAR:</div>
-                        <q-input 
-                                class="hint  q-pt-md q-mb-md "
-                                outlined 
-                                v-model="miktar"
-                                hint="Miktar Giriniz...!"
-                                
-                                type="number"
-                                
-                                />
+                        <q-btn
+      v-model="miktar"
+      @click="eksi"
+      color="white"
+      push
+      round
+      class=" text-grey"
+      icon="remove"
+    ></q-btn>
+    <span class="q-mx-md">
+      {{miktar}}
+    </span>
+    <q-btn
+      v-model="miktar"
+           @click="arti"
+      color="white"
+      push
+      round
+           class="text-grey"
+      icon="add"
+    ></q-btn>
                     </q-item-section>
         </div>
         </q-item>
@@ -198,6 +210,11 @@ export default {
     // getvaryantlist(val){
     //      this.stok()
     // },
+    miktar(val){
+      if(val < 1){
+        this.miktar= 1
+      }
+    },
     stokad(val) {
       this.stokad = val;
       document.getElementById('varyant0').innerHTML = ""
@@ -262,6 +279,14 @@ export default {
   },
 
   methods: {
+    eksi () {
+      
+      this.miktar--
+    },
+
+    arti () {
+      this.miktar++
+    },
     async stok() {
      
 

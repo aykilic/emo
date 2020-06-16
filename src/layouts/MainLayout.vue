@@ -86,6 +86,7 @@
               dense
               reveal
               class="col-12 bg-pink-12 text-white "
+              style="margin-top:-1px"
             >
                     
               <q-tab  name="a"  @mouseover= "menuOver = true" @mouseout= "menuOver = false"  label="LOHUSA & HAMİLE ÜRÜNLERİ" />
@@ -109,7 +110,7 @@
           
         >
           <q-tab-panel class=""  name="a" style="padding-left:0; " >
-            <a-tabs class=""  style= "" @menu="menu=$event">
+            <a-tabs class="text-center"  style= "" @menu="menu=$event">
               <a-tab v-for="(anakategorilist,index) in treemmenu" :key='index' :title="(anakategorilist.stokturad)" :titleid="(anakategorilist._id)" class="row col-12"  >
                 
                 <div  class="col-md-3 col-xs-6 q-pl-md" >
@@ -175,6 +176,7 @@
         </q-page-sticky>
     </q-page-container>
   </q-layout>
+  
 </template>
 
 <script>
@@ -420,22 +422,22 @@ export default {
     debounceFunc: debounce(function () {
         
         this.checkMenu()
-      }, 250) ,
+      }, 1) ,
     debounceFunc1: debounce(function () {
         
         this.checkMenu1()
-      }, 250) ,
+      }, 1) ,
     debounceFunc2: debounce(function () {
         
         this.checkMenu2()
-      }, 250) ,
+      }, 1) ,
       // debouncemenulist: debounce(function(val){
       //   this.parseTree(val)
       // },1000),
     debounceFunc3: debounce(function () {
 
       this.checkhesap()
-    }, 150),
+    }, 1),
     checkhesap(){
       
       if (this.hesapOver || this.hesaplistOver ) {
@@ -722,35 +724,4 @@ a.menu_link:hover + div{
       padding-left:0px;
       
       }
-    
-    
-      
-// li{border-right: 2px solid rgb(240,240,240) ;}
-// nav { position: relative;}
-// li{ width: 20%; height: 40px; padding-left:15px; padding-top:10px;}
-// li:hover { cursor:pointer; text-decoration: underline; background-color:rgb(240,240,240) ;}
-// li:hover section{ display: block; }
-// section{ display: block ; width: 80%; height:100%; position: absolute; right:1.5%; top:-9999px; text-align: center;   margin-left:-9999px}
-// li[data-role="thumb-1"], section[data-role="content-1"] { z-index:1; top:0.1%}
-
-
-// li[data-role="thumb-2"]:hover section[data-role="content-2"]{ top:0.01% }
-// li[data-role="thumb-3"]:hover section[data-role="content-3"]{ top:0.01% }
-// li[data-role="thumb-4"]:hover section[data-role="content-4"]{ top:0.01% }
-
-  // nav {  position: relative}
-  // li{ border-right: 5px solid rgb(240,240,240) ; width: 20%; height: 40px; padding-left:15px; padding-top:10px;}
-  // li:hover { cursor:pointer; background:rgb(240,240,240); text-decoration: underline; }
-  // li:hover section{ display: block;}  
-  // section{ display: none; width: 80%; height:100%; position: absolute; right:1%; top:-9999px; text-align: center; 
-
-  // // background: rgb(255,255,255); z-index: 10; margin-left:-9999px}
-  //  z-index: 1; margin-left:-9999px}
-  // li[data-role="thumb-1"], section[data-role="content-1"] { z-index=1; top:2% }
-  
-  // li[data-role="thumb-2"]:hover section[data-role="content-2"]{ top:2% }
-  // li[data-role="thumb-3"]:hover section[data-role="content-3"]{ top:2% }
-  // li[data-role="thumb-4"]:hover section[data-role="content-4"]{ top:2% }
-  // li{  width: 100%;   }
-  
 </style>

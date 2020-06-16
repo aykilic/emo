@@ -37,7 +37,7 @@
 </script>
 
 <style lang="scss" scoped>
-li{  width: 100%; height: 3em; padding-left:15px; padding-top:10px;}
+li{  width: 100%; height: 3em; padding-left:5px; padding-top:10px;}
   li:hover { cursor:pointer; background:rgb(240,240,240); text-decoration: underline; }
 //   li:hover section{ display: block;}  
   
