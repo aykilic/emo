@@ -52,7 +52,7 @@
                                     <q-td class="text-weight-bold" key="stokad" :props="props"  > 
                                         {{props.row.stokad}} <br> {{props.row.varyantoption1}} <br> {{props.row.varyantoption2}}
                                     </q-td>
-                                    <q-td style="" key="miktar"  :props="props"  > 
+                                    <q-td class=""  key="miktar"  :props="props"  > 
                                         <!-- TODO: -->
                                         <!-- <q-input
                                         style="margin-top:20px;"
@@ -74,7 +74,7 @@
                                             class=" text-grey"
                                             icon="remove"
                                             ></q-btn>
-                                            <span class="q-mx-xs self-center">
+                                            <span style="margin-left:4px;margin-right:4px" class=" self-center">
                                             {{  props.row.count  }}
                                             </span>
                                             <q-btn
