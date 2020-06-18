@@ -28,7 +28,6 @@ module.exports = {
   // console.log("hata");
 });
 },
-
   // createUser: async (parent, {  username},{ User }) => {
   //   const user = await User.findOne({ username });
 

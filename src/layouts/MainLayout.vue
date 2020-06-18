@@ -1,18 +1,18 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header :reveal-offset="1" reveal >
-      <q-toolbar class="text-amber-1 bg-white text-grey-9 text-weight-bold justify-center" >
+  <q-layout view="lHh Lpr lFf" >
+    <q-header   >
+      <q-toolbar class="text-amber-1 bg-white text-grey-9 text-weight-bold justify-center " >
        
-        <div class="row q-pt-lg col-md-8 col-sm-10 col-xs-12 grid ">
+        <div class="row q-pt-lg col-md-8 col-sm-10 col-xs-12 grid desktop-had" >
         <div class="col-md-4 col-sm-6   one">
-          <router-link to="/">
+          <router-link to="/" >
           <q-img
           src="statics/Emose_Logo.jpg"
           style=" max-width: 140px"
           />
           </router-link>
           </div>
-        <div class="col-md-4 col-sm-12 col-xs-12 two self-center justify-center" >
+        <div class="col-md-4 col-sm-12 col-xs-12 two self-center justify-center">
 
           <q-input rounded outlined dense v-model="search" class="main_search" placeholder="Kategori yada Ürün Ara" >
               <template v-slot:append>
@@ -21,9 +21,8 @@
           </q-input>
 
         </div>
-        
-        <div class="row col-md-4 col-sm-12 col-xs-12 self-center justify-end three">
-          
+        <!-- ---------------------------------------------------------desktop başlık -->
+        <div class="row col-md-4 col-sm-12 col-xs-12 self-center justify-end three ">
           
           <div class=" title-icons text-center  text-caption"><q-icon class="icon-heart text-center"    style="font-size: 26px;"/><q-item-label >Favorilerim</q-item-label ></div>
           <div  class="q-ml-lg title-icons text-center  text-caption" @click="sepet()"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>{{sepet_count}}</q-badge></q-icon><q-item-label >Sepetim</q-item-label ></div>
@@ -49,49 +48,165 @@
             </div>
             
           </div>
-          
+          <!-- --------------------------------------------------------- mobil başlık -->
         </div>
-      
+      <!-- ----------------------------------------------------------- -->
+
+        <div class="row q-pt-lg col-12  mobil-had" >
+        <div class="row col-12  ">
+          <div class="col-4">
+          <q-btn flat @click="drawer = !drawer" round dense icon="menu" size="md" />
+          </div>
+          <div class="col-4 text-center" style="margin-top:-5px;">
+          <router-link  to="/"  >
+          <q-img 
+          src="statics/Emose_Logo.jpg"
+          style=" max-width: 100px;"
+          />
+          </router-link>
+          </div>
+          
+          <div class="row col-4 justify-end">
+          <!-- <div class="q-pr-md title-icons text-center  text-caption"><q-icon class="icon-heart text-center"    style="font-size: 26px;"/><q-item-label >Favoriler</q-item-label ></div> -->
+          <div  class=" title-icons text-center  text-caption" @click="sepet()"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>{{sepet_count}}</q-badge></q-icon><q-item-label >Sepetim</q-item-label ></div>
+          <div v-if="this.get_uid =='' " class="q-pl-md title-icons text-center  text-caption" @click="login()" ><q-icon class="icon-person text-center"   style="font-size: 26px;"/><q-item-label >login</q-item-label >  </div>
+          <div ref="hesap" v-else class="q-pl-md title-icons text-center  text-caption"  @mouseover= "hesapOver = true" @mouseout= "hesapOver = false" >
+            <q-icon   class="icon-person text-center" style="font-size: 26px;"/>
+            <q-item-label >Hesabım</q-item-label >
+            <!-- :class="hesap ? 'icon-personn' : 'icon-person' " -->
+            <q-menu   @mouseover= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[15, 10]">
+            <!-- <q-menu v-if="hesap" @hesapOver= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[15, 15]"> -->
+              
+            <q-list v-if="hesap" style="min-width: 100px;">
+              <q-item clickable q-close-popup>
+                <q-item-section>Hesap Ayarları</q-item-section>
+              </q-item>
+              <q-separator />
+              <q-item clickable q-close-popup>
+                <q-item-section @click.prevent="logout()">Logout</q-item-section>
+              </q-item>
+            </q-list>
+            </q-menu>
+              <!-- </q-menu> -->
+          </div>
+            </div>
+          
+          </div>
+        <div class="q-pt-md q-pb-md col-xs-12  self-center justify-center">
+
+          <q-input rounded outlined dense v-model="search" class="main_search" placeholder="Kategori yada Ürün Ara" >
+              <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+          </q-input>
+
+        </div>
+        <!-- ---------------------------------------------------------desktop başlık -->
+        
+          <!-- --------------------------------------------------------- mobil başlık -->
+        </div>
+
+      <!-- ----------------------------------------------------------- -->
       </q-toolbar>
-      <div class="container " >
+      <div class="container" >
         <svg viewBox="0 5 500 40" preserveAspectRatio="xMinYMin meet">
           <path d="M-0,15 C190,70 220,-25 500,35  L500,00 L0,0 Z" style="stroke: none; fill:white;"></path>
         </svg>
       </div>
 
     </q-header>
+      <q-drawer
+        v-model="drawer"
+        :width="200"
+        
 
-    <q-page-container class="row flex-center">
+
+      >
+        <q-scroll-area  style="height: 100% ;  border-right: 1px solid #ddd;">
+          <q-list padding>
+            <q-item clickable v-ripple>
+              <!-- <q-item-section avatar>
+                <q-icon name="inbox"></q-icon>
+              </q-item-section> -->
+              <q-item-section>
+                Inbox
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <!-- <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section> -->
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple>
+              <!-- <q-item-section avatar>
+                <q-icon name="drafts"></q-icon>
+              </q-item-section> -->
+
+              <q-item-section>
+                Drafts
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-scroll-area>
+
+        
+      </q-drawer>
+    <q-page-container class="row flex-center " >
       
       <!-- <div  class="q-pt-xl col-md-8 col-sm-10 col-xs-12"> -->
           
       <!-- </div> -->
       
-      <div class="q-pt-xl col-md-8 col-sm-10 col-xs-12">
+      <div class=" col-md-8 col-sm-10 col-xs-12 q-pt-xl desktop-had" >
       <!-- TODO: slider -->
       
       <!-- <transition name="fade"> -->
         <keep-alive>
           <!-- <load v-if="$root.loading"></load> -->
-        <router-view ></router-view>
+          <router-view ></router-view>
         </keep-alive>
       <!-- </transition> -->
-        </div>
-          <q-page-sticky expand position="top" style="z-index:1">
+      </div>
+      <div class=" col-md-8 col-sm-10 col-xs-12  mobil-had" >
+      <!-- TODO: slider -->
+      
+      <!-- <transition name="fade"> -->
+        <keep-alive>
+          <!-- <load v-if="$root.loading"></load> -->
+          <router-view ></router-view>
+        </keep-alive>
+      <!-- </transition> -->
+      </div>
+      <!-- ------------------------------------------------------------------------------------------- -->
+      <q-page-sticky expand position="top" style="z-index:1">
             <!-- <div> -->
-                
+                <!-- TODO:desktop tabs -->
+          <!-- <q-header class="mobil-tab" elevated>      -->
+            <!-- <q-toolbar class="bg-pink-12 text-white mobil-tab" style="margin-top:-14px;">
+              
+            </q-toolbar> -->
+          <!-- </q-header>  -->
+        
+          <!-- <mobil-menu class="mobil-tab">  </mobil-menu> -->
+          
+        
             <q-tabs
               v-model="main_tab"
               indicator-color="transparent"
               dense
               reveal
-              class="col-12 bg-pink-12 text-white "
-              style="margin-top:-1px"
-            >
+              class="col-12 bg-pink-12 text-white desktop-tab "
+              style="margin-top:-1px;"
+              >
                     
-              <q-tab  name="a"  @mouseover= "menuOver = true" @mouseout= "menuOver = false"  label="LOHUSA & HAMİLE ÜRÜNLERİ" />
-              <q-tab  name="b" @mouseover= "menuOver1 = true" @mouseout= "menuOver1 = false" label="GÜNLÜK KULLANIM" />
-              <q-tab  name="c" @mouseover= "menuOver2 = true" @mouseout= "menuOver2 = false" label="EN ÇOK SATAN ÜRÜNLER" />
+              <q-tab  name="a" @click="menu = !menu" @mouseover= "menuOver = true" @mouseout= "menuOver = false"  label="LOHUSA & HAMİLE ÜRÜNLERİ" />
+              <q-tab  name="b" @click="menu = !menu" @mouseover= "menuOver1 = true" @mouseout= "menuOver1 = false" label="GÜNLÜK KULLANIM" />
+              <q-tab  name="c" @click="menu = !menu" @mouseover= "menuOver2 = true" @mouseout= "menuOver2 = false" label="EN ÇOK SATAN ÜRÜNLER" />
             
          </q-tabs>
           <!-- <div class="container">
@@ -99,80 +214,82 @@
     <path d="M-10,10 C70,70 300,-50 500,40  L500,00 L0,0 Z" style="stroke: none; fill:#ff4081;"></path>
   </svg>
 </div> ibo--> 
-<q-tab-panels
-          v-if="menu"
-          v-model="main_tab"
-          animated
-          transition-prev="fade"
-          transition-next="fade"
-          class="row col-md-8 col-sm-10 col-xs-12 shadow-10	"
-          @mouseover= "listOver = true" @mouseout= "listOver = false"
-          
-        >
-          <q-tab-panel class=""  name="a" style="padding-left:0; " >
-            <a-tabs class="text-center"  style= "" @menu="menu=$event">
-              <a-tab v-for="(anakategorilist,index) in treemmenu" :key='index' :title="(anakategorilist.stokturad)" :titleid="(anakategorilist._id)" class="row col-12"  >
-                
-                <div  class="col-md-3 col-xs-6 q-pl-md" >
-                  <ul class= "ullistchild"  v-for="(altkategorilist,iindex) in anakategorilist.children" :key='iindex' >
-                      <li  class="listchild" @click="link(altkategorilist.stokturad,altkategorilist._id)">
-                        <!-- {{altkategorilist.stokturad}} -->
-                        {{ altkategorilist.stokturad.split('-').reverse().join(' ') }}
-                        <!-- {{ altkategorilist.stokturad.split('-').join(' ') }} -->
-                        </li> 
-                    </ul>
-                </div>
-                <div class="col-md-3 col-xs-6 q-pl-md">
-                  <ul class= "ullistchild " >
-                      <li class="listchild"> Aksesuar</li>
-                    </ul>
-                </div>
-                <div class="col-md-6 header_resim ">
-                  
-                <q-intersection
-                once
-                transition="fade"
-                class=""
-                >
-                <div  class="row items-start q-col-gutter-x-md ">
-                <q-card flat class="my-card col-6 ">
-                  
-                  <q-img
-                      src="../statics/emose_h200.jpg"
-                      style=" height: 400px;"
-                    >
-                  </q-img>
-                </q-card>
-                <q-card flat class="my-card col-6 ">
-                  <q-img 
-                      flat
-                      src="../statics/emose1_h200.jpg"
-                      style=" height: 400px;"
-                    >
-                  </q-img>
-                </q-card>
-                </div>
-                </q-intersection>
-                
-                </div>
-              </a-tab>
-              
-              
-              
-            </a-tabs>
+          <q-tab-panels
+            v-if="menu"
+            v-model="main_tab"
             
-          </q-tab-panel>
+            animated
+            transition-prev="fade"
+            transition-next="fade"
+            class="row col-md-8 col-sm-10 col-xs-12 shadow-10	"
+            @mouseover= "listOver = true" @mouseout= "listOver = false"
+          
+            >
+            <q-tab-panel class=""  name="a" style="padding-left:0; " >
+              <a-tabs class="text-center"  style= "" @menu="menuOver=$event, listOver=$event">
+                <a-tab v-for="(anakategorilist,index) in treemmenu" :key='index' :title="(anakategorilist.stokturad)" :titleid="(anakategorilist._id)" class="row col-12"  >
+                  
+                  <div  class="col-md-3 col-xs-6 q-pl-md" >
+                    <ul class= "ullistchild"  v-for="(altkategorilist,iindex) in anakategorilist.children" :key='iindex' >
+                        <li  class="listchild" @click="link(altkategorilist.stokturad,altkategorilist._id),menuOver=false,listOver=false" >
+                          <!-- {{altkategorilist.stokturad}} -->
+                          {{ altkategorilist.stokturad.split('-').reverse().join(' ') }}
+                          <!-- {{ altkategorilist.stokturad.split('-').join(' ') }} -->
+                          </li> 
+                      </ul>
+                  </div>
+                  <div class="col-md-3 col-xs-6 q-pl-md">
+                    <ul class= "ullistchild " >
+                        <li class="listchild"> Aksesuar</li>
+                      </ul>
+                  </div>
+                  <div class="col-md-6 header_resim ">
+                    
+                  <q-intersection
+                  once
+                  transition="fade"
+                  class=""
+                  >
+                  <div  class="row items-start q-col-gutter-x-md ">
+                  <q-card flat class="my-card col-6 ">
+                    
+                    <q-img
+                        src="../statics/emose_h200.jpg"
+                        style=" height: 400px;"
+                      >
+                    </q-img>
+                  </q-card>
+                  <q-card flat class="my-card col-6 ">
+                    <q-img 
+                        flat
+                        src="../statics/emose1_h200.jpg"
+                        style=" height: 400px;"
+                      >
+                    </q-img>
+                  </q-card>
+                  </div>
+                  </q-intersection>
+                  
+                  </div>
+                </a-tab>
+                
+                
+                
+              </a-tabs>
+              
+            </q-tab-panel>
 
-          <q-tab-panel name="b">
-            <div class="text-h6">Alarms</div>
-            Ad molestiae non facere animi nobis, similique nemo velit reiciendis corporis impedit nam in.
-          </q-tab-panel>
+            <q-tab-panel name="b">
+              <div class="text-h6">Günlük Kullanım</div>
+              Ad molestiae non facere animi nobis, similique nemo velit reiciendis corporis impedit nam in.
+            </q-tab-panel>
 
-          <q-tab-panel name="c">
-            <div class="text-h6">Movies</div>
-            Nostrum necessitatibus expedita dolores? Voluptatem repudiandae magni ea.
-          </q-tab-panel>
+            <q-tab-panel name="c">
+              <div class="text-h6">En çok Satan ürünler</div>
+              Nostrum necessitatibus expedita dolores? Voluptatem repudiandae magni ea.
+            </q-tab-panel>
         </q-tab-panels>
+
         </q-page-sticky>
     </q-page-container>
   </q-layout>
@@ -182,12 +299,15 @@
 <script>
 // import EssentialLink from 'components/EssentialLink'
 import Vue  from 'vue'
+import { scroll } from 'quasar'
+const { getScrollPosition, setScrollPosition } = scroll
 import {debounce} from 'quasar'
 import {mapState} from 'vuex'
 import {mapGetters } from 'vuex'
 import router from "../router"
 import menuTab from '../components/menu/tab.vue'
 import menuTabs from '../components/menu/tabs.vue'
+import mobilMenu from '../components/menu/mobilMenu.vue'
 import aTab from '../components/menu/atab.vue'
 import aTabs from '../components/menu/atabs.vue'
 import load from '../pages/skeleton/deneme.vue'
@@ -202,12 +322,15 @@ export default {
     aTabs,
     menuTab,
     menuTabs,
-    load
+    load,
+    mobilMenu
 
   },
 
   data () {
     return {
+      drawer: false,
+      // --------
       menu: false,
       
       menuOver: false,
@@ -231,12 +354,21 @@ export default {
       ubasketlist:[],
       
        sepet_count:"",
-
+// getScrollPosition:""
       // selected: { default: false},
       //  isActive: false
+
     }
   },
+  // created() {
+  //   this.handleDebouncedScroll = debounce(this.handleScroll, 100);
+  //   window.addEventListener('scroll', this.handleDebouncedScroll);
+  // },
   watch: {
+    
+    menu(val){
+      console.log(val);
+    },
     menuOver (val) {
       this.main_tab="a"
       this.debounceFunc()
@@ -353,6 +485,7 @@ export default {
     //  } 
   // },
   methods:{
+    
    async userid_function(){
     //  console.log(Cookies.get('uid'));
                                   if(Cookies.get('uid') == null ){
@@ -455,6 +588,7 @@ export default {
     //   console.log("hesap",this.hesap);
      }
     },
+    
     checkMenu () {
       if (this.menuOver || this.listOver) {
         this.menu = true
@@ -622,6 +756,9 @@ export default {
 }
 
 @media only screen and (max-width: 1023px ) {
+  .header_resim{
+   display: none;
+ }
  .grid{
    display: grid;
  }
@@ -630,26 +767,33 @@ export default {
     .two   { grid-row: 2 / 3; grid-column: 1 / 3;margin-top:15px; }
     .three { grid-row: 1 / 2; grid-column: 2 / 3; }
 }
-@media only screen and (max-width: 1023px ) {
- .header_resim{
-   display: none;
- }
-    
-}
-.cartbadge{
-  background-color:#ff4081;
+@media only screen and (max-width: 601px ) {
+ 
+ .desktop-tab{
+    display: none;
   }
-.q-badge--floating{
-  top: -10px !important;
-  right: -15px !important;
+.container{
+  display:none;
+}   
+svg{
+  display:none;
 }
-svg {
-  display: inline-block;
-  position: absolute;
-  // top:0;
-  // left: 0;
+.hed{
+  height:160px;
 }
-.container {
+.desktop-had{
+  display:none;
+}
+}
+@media only screen and (min-width: 601px ) {
+ 
+ .mobil-tab{
+    display: none;
+  }   
+  .mobil-had{
+  display:none;
+}
+  .container {
   display: inline-block;
   position: relative;
   width: 100%;
@@ -658,6 +802,23 @@ svg {
   vertical-align: middle;
   overflow: hidden;
 }
+svg {
+  display: inline-block;
+  position: absolute;
+  // top:0;
+  // left: 0;
+}
+
+}
+.cartbadge{
+  background-color:#ff4081;
+  }
+.q-badge--floating{
+  top: -10px !important;
+  right: -15px !important;
+}
+
+
 /* .q-tab:hover .q-tab__indicator{
   background-color:  var(--indicator-color) !important;
   color:  var(--indicator-color) !important;
@@ -724,4 +885,5 @@ a.menu_link:hover + div{
       padding-left:0px;
       
       }
+
 </style>

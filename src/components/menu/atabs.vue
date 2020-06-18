@@ -60,15 +60,16 @@ export default {
       })
     },
     open(a,b){
-      // console.log(b);
+      //  console.log("b");
         
         // this.$router.push({ path: `/products/${b}` })
         // this.$store.dispatch('stoklistid', b)
         // const path = `/${a}`
         // if (this.$route.path !== path) this.$router.push(path)
         //  this.$router.push({ path:'/'+a })
-        this.$router.push({ name: 'stoklist', params: { parentname: a, parentid : b }})
         this.$emit('menu',false);
+        this.$router.push({ name: 'stoklist', params: { parentname: a, parentid : b }})
+        
         // window.location = '/'+a;
     }
   }

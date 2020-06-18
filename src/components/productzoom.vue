@@ -52,7 +52,7 @@ export default {
                 const target = getScrollTarget(ele)
                 // console.log(target);
                 const offset = ele.offsetTop - ele.scrollHeight
-                // console.log(offset);
+                 console.log("offset",offset);
                 const duration = 100
                 setScrollPosition(target, 170, duration)
         }

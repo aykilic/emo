@@ -66,7 +66,7 @@
                                             /> -->
                                         <q-btn
                                             v-model="props.row.count"
-                                            @click="hesaplama(props.row.count--)"
+                                            @click="hesaplama(props.row.count < 2 ? props.row.count=1 : props.row.count--)"
                                             color="white"
                                             size="xs"
                                             push
@@ -939,8 +939,9 @@ import { Loading } from "quasar";
                 this.selected.forEach(item=>{
                     if(item.count < 1 ){
                         item.count=1
-                      return  false
+                      
                     }
+                    // console.log(item.count);
                     aratoplam +=item.count * (item.fiyat/1.18);
                      
                 })
