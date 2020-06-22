@@ -14,7 +14,7 @@ export default {
       
      async anafunction({dispatch,commit}) {
       dispatch("varyantlist")
-        dispatch("anakategori")
+      dispatch("anakategori")
          
 
       },

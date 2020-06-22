@@ -136,7 +136,41 @@
         
       </div>
       </div>
+      <!-- <q-separator inset/> -->
+      
+    </q-card>
+    <q-card class="q-mt-md col-12">
+      <div class="col-12 ">
+        <q-tabs
+          v-model="uruntabs"
+          
+          class="col text-grey"
+          active-color="pink-12"
+          indicator-color="pink-12"
+          align="justify"
+          
+        >
+          <q-tab name="mails" label="Özellikler" />
+          <q-tab name="alarms" label="Yorumlar" />
+          
+        </q-tabs>
 
+        <q-separator />
+
+        <q-tab-panels v-model="uruntabs" animated>
+          <q-tab-panel name="mails">
+            <div class="text-h6">Özellikler</div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </q-tab-panel>
+
+          <q-tab-panel name="alarms">
+            <div class="text-h6">Yorumlar</div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </q-tab-panel>
+
+          
+        </q-tab-panels>
+      </div>
     </q-card>
   </q-page>
 </template>
@@ -203,6 +237,9 @@ export default {
       // varyant1:"",
       // -----------------------------------------
       miktar:1,
+      //------------------------------------------
+      uruntabs:"mails",
+      // uruntab:
       //  parentname:this.$route.params.parentname
     };
   },

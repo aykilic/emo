@@ -113,49 +113,43 @@
           <path d="M-0,15 C190,70 220,-25 500,35  L500,00 L0,0 Z" style="stroke: none; fill:white;"></path>
         </svg>
       </div>
-
+    <!-- TODO: -->
     </q-header>
-      <q-drawer
+    <!-- <mobil-menu :drawer="drawer" :nodes="treemmenu"></mobil-menu> -->
+    <q-drawer
         v-model="drawer"
-        :width="200"
-        
-
-
+        :width="270"
       >
         <q-scroll-area  style="height: 100% ;  border-right: 1px solid #ddd;">
-          <q-list padding>
-            <q-item clickable v-ripple>
-              <!-- <q-item-section avatar>
-                <q-icon name="inbox"></q-icon>
-              </q-item-section> -->
-              <q-item-section>
-                Inbox
+          <q-item class="bg-pink-5">
+          <q-item-section class="text-center text-white">
+          <q-item-label >Menü</q-item-label></q-item-section></q-item>
+          <mobil-menu :nodes="treemmenu" :depth="0"></mobil-menu>
+          <!-- </q-list> -->
+          <!-- <q-separator dark /> -->
+        </q-scroll-area>
+        
+      </q-drawer>
+      <!-- <q-drawer
+        v-model="drawer"
+        :width="200"
+      >
+        <q-scroll-area  style="height: 100% ;  border-right: 1px solid #ddd;">
+          <q-list  v-for="(list ,index) in treemmenu" :key="index" >
+            <q-item  clickable v-ripple>
+              
+              <q-item-section class="row col-12" @click="drawer1 = !drawer1">
+                <q-item-label class="col-6 text-weight-bold">{{list.stokturad}}</q-item-label> 
+                <q-item-label class="col-6 text-weight-bold text-right "><q-icon name="mdi-arrow-right-circle"></q-icon> </q-item-label> 
               </q-item-section>
-            </q-item>
-            <q-item clickable v-ripple>
-              <!-- <q-item-section avatar>
-                <q-icon name="send"></q-icon>
-              </q-item-section> -->
-
-              <q-item-section>
-                Send
-              </q-item-section>
-            </q-item>
-
-            <q-item clickable v-ripple>
-              <!-- <q-item-section avatar>
-                <q-icon name="drafts"></q-icon>
-              </q-item-section> -->
-
-              <q-item-section>
-                Drafts
-              </q-item-section>
+            
+            
             </q-item>
           </q-list>
         </q-scroll-area>
 
         
-      </q-drawer>
+      </q-drawer> -->
     <q-page-container class="row flex-center " >
       
       <!-- <div  class="q-pt-xl col-md-8 col-sm-10 col-xs-12"> -->
@@ -163,7 +157,7 @@
       <!-- </div> -->
       
       <div class=" col-md-8 col-sm-10 col-xs-12 q-pt-xl desktop-had" >
-      <!-- TODO: slider -->
+      
       
       <!-- <transition name="fade"> -->
         <keep-alive>
@@ -173,7 +167,7 @@
       <!-- </transition> -->
       </div>
       <div class=" col-md-8 col-sm-10 col-xs-12  mobil-had" >
-      <!-- TODO: slider -->
+      
       
       <!-- <transition name="fade"> -->
         <keep-alive>
@@ -365,9 +359,11 @@ export default {
   //   window.addEventListener('scroll', this.handleDebouncedScroll);
   // },
   watch: {
-    
+    // drawer(v){
+    //   v==false ? this.dra=v : ""
+    // },
     menu(val){
-      console.log(val);
+      // console.log(val);
     },
     menuOver (val) {
       this.main_tab="a"
@@ -395,14 +391,15 @@ export default {
     },
     anakategorilists(val) {
       this.parseTree(val)
+      console.log(this.treemmenu);
     },
     get_basketlist(val){
       this.sepet_count=val.length
-      console.log("watch:get_basketlist",val);
+      // console.log("watch:get_basketlist",val);
     },
     get_ubasketlist(val){
       this.sepet_count=val.length
-      console.log("watch:get_ubasketlist",val);
+      // console.log("watch:get_ubasketlist",val);
     }
   },
   updated(){
@@ -446,6 +443,7 @@ export default {
                                 //  console.log("uid",this.get_uid);
                                 //  console.log("guid",this.get_guid);
     this.userid_function()
+    // console.log(this.anaktegorilists);
     // this.parseTree(this.anakategorilists)
     // console.log(this.get_ubasketlist);
     //  console.log(this.get_basketlist);
@@ -491,7 +489,7 @@ export default {
                                   if(Cookies.get('uid') == null ){
                                       if( (Cookies.get('guid') == null )  ){
                                         
-                                         console.log("guid cookie yoksa");
+                                        //  console.log("guid cookie yoksa");
                                      await this.$apollo.mutate({
                                           mutation: gql`
                                             mutation createguid_mutation {
@@ -512,14 +510,14 @@ export default {
                                   
                                   // cookies guid yoksa
                                   }else{
-                                  console.log("cookies guid varsa"); 
+                                  // console.log("cookies guid varsa"); 
                                     
                                     this.$store.dispatch('add_guid',Cookies.get('guid'))
                                     // this.$store.dispatch('search_basketlist',Cookies.get('guid'))
                                     this.$store.dispatch('search_basketlist',Cookies.get('guid'))
                                   }
         }else{
-           console.log("m,burda");
+          //  console.log("m,burda");
           
           this.$store.dispatch('add_uid',Cookies.get('uid'))
           this.$store.dispatch('search_ubasketlist',Cookies.get('uid'))
@@ -540,7 +538,7 @@ export default {
     //     }
         // his.$refs.navbarToggle.$el.click()
         
-        console.log(this.get_ubasketlist);
+        // console.log(this.get_ubasketlist);
     },
     login(){
       this.$router.push({ path: '/login' })
@@ -619,7 +617,7 @@ export default {
         this.$router.push({ name: 'stoklist', params: { parentname: a, parentid : b }})
       //  this.$router.push({ path: '/', query:   a })
       // this.$router.push({ path: `${a}` })
-      console.log(a,b);
+      // console.log(a,b);
         
     },
      parseTree(selfQ, parentID=null){
