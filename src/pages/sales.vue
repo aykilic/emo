@@ -1,6 +1,6 @@
 
 <template >
-  <q-page  class="row q-pt-md items-start">
+  <q-page  class="row q-mt-md  items-start">
     
     <load v-if="option_2=='' && option_1=='' "></load>
     <q-card v-else class="row col-12">
@@ -78,7 +78,7 @@
                     class="q-pa-xs"
                     :id="altvalue.varyant_option2.varyant_option2_name "
                     @click.prevent="selectvar2(option_2,index,i,altvalue)"
-                    style="border-radius:21px;text-align:center;padding-top:20px"
+                    style="border-radius:22px;text-align:center;padding-top:17px"
                     :class=" (altvalue.toplam < 1  ) ? 'secilmez1':  [{ active:altvalue.selected },'firstvar1'] "
                     
                   >{{altvalue.varyant_option2.varyant_option2_name}}</li>
@@ -139,7 +139,7 @@
       <!-- <q-separator inset/> -->
       
     </q-card>
-    <q-card class="q-mt-md col-12">
+    <q-card class=" col-12">
       <div class="col-12 ">
         <q-tabs
           v-model="uruntabs"
@@ -1087,8 +1087,8 @@ export default {
   border: 1px dashed #ccc;
   pointer-events: none;
   box-sizing: content-box;
-  min-width: 38px;
-  height: 38px;
+  min-width: 34px;
+  height: 34px;
   pointer-events: none;
   margin-left: 5px;
   opacity: 0.9;
@@ -1097,8 +1097,8 @@ export default {
   border: 1px dashed #ccc;
   pointer-events: none;
   box-sizing: content-box;
-  min-width: 58px;
-  height: 58px;
+  min-width: 50px;
+  height: 50px;
   pointer-events: none;
   margin-left: 5px;
   opacity: 0.3;
@@ -1107,8 +1107,8 @@ export default {
   border: 2px solid rgb(216, 216, 216);
   /* border-radius: 4px; */
   box-sizing: content-box;
-  width: 58px;
-  height: 58px;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
   margin-left: 5px;
 }
@@ -1116,8 +1116,8 @@ export default {
   border: 2px solid rgb(216, 216, 216);
   /* border-radius: 4px; */
   box-sizing: content-box;
-  min-width: 38px;
-  height: 38px;
+  min-width: 34px;
+  height: 34px;
   cursor: pointer;
   margin-left: 5px;
 }

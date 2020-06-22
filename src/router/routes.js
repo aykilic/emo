@@ -49,6 +49,8 @@ const routes = [
       { path: '/kategori', component: () => import('pages/admin/kategori.vue') },
       { path: '/stokekle', component: () => import('pages/admin/stokekle.vue') },
       { path: '/varyantekle', component: () => import('pages/admin/varyantekle.vue') },
+      { path: '/stokdevir', component: () => import('pages/admin/fisler/stokdevirfis.vue') },
+      { path: '/stokalim', component: () => import('pages/admin/fisler/stokalimfis.vue') },
     ]
   },
   {
