@@ -717,8 +717,8 @@ export default {
     },
     listele(liste) {
       // console.log("hasvaryantsatirlists", this.hasvaryantsatirlists);
-        console.log("liste", liste);
-        console.log("varyantselected", this.varyantselected);
+        // console.log("liste", liste);
+        // console.log("varyantselected", this.varyantselected);
 
       let selectsat = [];
 

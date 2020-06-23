@@ -11,7 +11,8 @@
                <!-- <q-img src="../statics/emose_h200.jpg" /> -->
                <q-img 
                 
-                :src="list.vars.images.path + list.vars.images.publicid" 
+                :src="list.vars.images.path + list.vars.images.publicid " 
+                
                 alt="Not Found" 
                 
                 />

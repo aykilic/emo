@@ -160,10 +160,12 @@
 </template>
 
 <script>
+import Vue from "vue";
   import {openURL} from 'quasar'
   import Cookies from 'js-cookie'
 //   import store from "../store";
   import router from "../../router"
+  import {mapGetters } from 'vuex'
 //   import { auth } from '../services/fireinit.js'
   import { AppFullscreen } from 'quasar'
 
@@ -174,6 +176,8 @@
       return {
         leftDrawerOpen: this.$q.platform.is.desktop,
         loading:0,
+        treem:[],
+        treemselect:[]
         // userdetay: {
         //   userid:localStorage.getItem('userid'),
         //   username:localStorage.getItem('username'),
@@ -182,8 +186,43 @@
         // },
       }
     },
+    watch: {
+      anakategorilists(val){
+        this.fonk(val)
+      }
+    // treem(val){
+    //   let dem = [];
+    //   this.treemselected(dem);
+    // }
+    },
+    computed: {
+      ...mapGetters([
+      'anakategorilists',
+      'anakategorizelists',
+    ]),
+    },
+    async mounted () {
+      await this.$store.dispatch('anafunction');
+      // this.fonk(this.anakategorilists)
+      // this.parseTree(this.anakategorilists);
+      // let dem = [];
+      // this.treemselected(dem);
+      // console.log(this.treemselect);
+    },
     methods: {
       openURL,
+      async fonk(val){
+        let dem = [];
+        this.parseTree(val)
+        
+       await this.treemselected(dem)
+        // console.log(this.treemselect);
+        this.$store.dispatch("urunlist",this.treemselect)
+      // console.log(this.treemmenu);
+       
+       
+      // console.log(val);
+      },
     //   logout(){
 
     //     console.log("çıkış yapıldı");
@@ -199,6 +238,50 @@
     //       });
 
     //   }
+    parseTree(selfQ, parentID = null) {
+      let treem = [];
+
+      selfQ.forEach((value, index) => {
+        if (value.parentid === parentID) {
+          // console.log(value);
+          const children = this.parseTree(selfQ, value._id);
+
+          if (children.length > 0) {
+            // value.children = children;
+
+            Vue.set(value, "children", children);
+          }
+
+          treem.push(value);
+        }
+      });
+
+      this.treem = treem;
+
+      return this.treem;
+    },
+    treemselected(dem) {
+      // let treemm=[];
+      if (dem.length < 1) {
+        dem = this.treem;
+      }
+
+      // console.log(dem)
+      dem.forEach((value, index) => {
+        // console.log(value.children)
+        if (value.children.length > 0 ) {
+          // console.log(value.children)
+          this.treemselected(value.children);
+        } else {
+          // Vue.set(value, '', children);
+          this.treemselect.push(value);
+          // console.log(treemm)
+        }
+      });
+
+      return this.treemselect;
+      // return this.treemselect
+    },
     },
     // created() {
         // this.userdetay.userid=localStorage.getItem('userid');

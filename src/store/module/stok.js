@@ -8,15 +8,12 @@ export default {
       anakategorizelist:[],
       activestoklistid:"",
       varyantlist:[],
+      urunlist:[]
     },
-    
     actions: {
-      
      async anafunction({dispatch,commit}) {
       dispatch("varyantlist")
       dispatch("anakategori")
-         
-
       },
 
       async anakategori({commit}) {
@@ -82,20 +79,43 @@ export default {
           }).then((data)=>{
             commit('set_varyantlist',data.data.data.childvaryantQuery);
           })
-      }
-      
+      },
+      urunlist({commit},type){
+        console.log("type",type);
+        commit('set_urunlist', type);
+      },
     },
-    mutations:{
+    //   async urunlist({commit}){
+    //      await axios.post('http://'+ process.env.API +':4000/graphql', {
+    //   query: `{
+    //                 Query {
+    //                           stokturad
+    //                           _id
+    //                           parentid
+    //       }
+    //     }`,
+    //   loadingKey: "loading"
+    // }).then((data)=>{
+    //   commit('set_urunlist',data.data.data.Query);
+    // });
+      
+      
+    // },
+      
+     mutations:{
+       set_urunlist(state,type){
+         state.urunlist=type
+       },
       set_anakategorilist(state, stokListzeData){
         state.anakategorilist = stokListzeData
           // console.log( state.anakategorilist );
       },
-      set_anakategorizelist(state, stokListzeData){
+      async set_anakategorizelist(state, stokListzeData){
         // console.log(state.anakategorilist);
-        if(state){
-          // console.log(state.anakategorilist);
-          parseTree(state.anakategorilist);
-         function parseTree(list, parentID=null) {
+        // if(state){
+          //  console.log("state.anakategorilist",state.anakategorilist);
+            parseTree(state.anakategorilist);
+             function parseTree(list, parentID=null) {
               let treeem = [];
                 // console.log(list);
             
@@ -117,23 +137,9 @@ export default {
               });
       
               state.anakategorizelist = treeem
-                 
-              //  return this.state.stokListData
-          }  
-          
-        }
-
-
-
-
-
-
-
-
-
-        // state.anakategorizelist = stokListzeData
-        //  console.log( state.anakategorilist );
+          }
       },
+      
       set_activestoklistid(state, type){
         state.activestoklistid = type
         //  console.log(state.activestoklistid);
@@ -157,6 +163,10 @@ export default {
       getvaryantlist:(state,getters)=>{
         return state.varyantlist
       },
+      geturunlists:(state,getters)=>{
+        return state.urunlist
+      },
+      
   
       // gusermail(state) {
       //

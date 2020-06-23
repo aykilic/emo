@@ -77,7 +77,7 @@ module.exports = {
     const varyant = Models.varyant
     //  console.log(id,parentid);
     
-    return await varyant.find({stokid:ObjectID(stokid)})
+    return await varyant.find({stokid:ObjectID(stokid)})  
   },
   // childvaryantQuery: async (parent, args, { Models }) => {
   //   const varyant = Models.varyant

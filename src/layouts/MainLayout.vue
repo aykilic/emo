@@ -391,7 +391,7 @@ export default {
     },
     anakategorilists(val) {
       this.parseTree(val)
-      console.log(this.treemmenu);
+      // console.log(this.treemmenu);
     },
     get_basketlist(val){
       this.sepet_count=val.length
