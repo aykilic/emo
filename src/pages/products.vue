@@ -9,10 +9,10 @@
                   >
             <q-card @click="select(list._id,list.stokturad)"  class="my-card product-card box-shadow shadow-transition cursor-pointer">
                <!-- <q-img src="../statics/emose_h200.jpg" /> -->
+               
                <q-img 
-                
-                :src="list.vars.images.path + list.vars.images.publicid " 
-                
+                :srcset="list.vars.images.path + list.vars.images.publicid+'.jpg'"
+                :src="list.vars.images.path + list.vars.images.publicid+'.webp'" 
                 alt="Not Found" 
                 
                 />
