@@ -76,6 +76,7 @@ type varyant_skus{
   fiyat2: Float
   miktar: Int
   color: String
+  res:String
 }
 
 type Query{
@@ -100,6 +101,7 @@ type Mutation{
   deletealtVaryant(id:ID!): altvaryant
   createskuVal:skuVal
   createVaryantsatir(satirlist:[varyantlistInput]):varyant_skus
+  updateVaryantMiktar(veri:[varyantlistInput]):varyant_skus
   # updateVaryantval(stokid:ID!, varyantvalue:String,varyantaltvalue:String):[varyant]
   # updateAltVaryantval(stokid:ID!,varyantaltid:ID!,altvaryantaltid:ID, varyantname: String, varyantaltname: String):[varyant]
   # addaltVaryant(stokid:ID,altvaryantname:String, altvaryantvalue:String): varyant
@@ -110,7 +112,7 @@ type Mutation{
   # deletevaryantimage(id:ID!,imageid:ID,path:String): varyant
 }
 input varyantlistInput{
-  
+  id:ID # sonradan eklendi
   stokid: ID
   stokname: String
   varyant1_id: ID
@@ -125,5 +127,6 @@ input varyantlistInput{
   fiyat2: Float
   miktar: Int
   color:String
+  res:String
   
 }

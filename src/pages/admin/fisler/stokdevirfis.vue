@@ -1,13 +1,18 @@
 <template>
-    <div class="q-pa-xl row q-gutter-md">
-        <q-card class="col-md-10 row offset-md-1 col-sm-10 offset-sm-1 col-xs-12 justify-center">
+    <div class="q-pa-xl row q-gutter-md justify-center">
+        <q-card class="col-md-10 row  col-sm-10  col-xs-12 justify-center">
+            <q-card-section class="row">
+                <div class="text-h6">Stok Açılış Fişi</div>
+                
+            </q-card-section>
+            <q-separator inset />
             <q-select
           fill-input
           input-debounce="0"
           hide-selected
           use-input
           @filter="filterFn"
-          class="q-pa-md "
+          class="q-pa-md col-6"
           label="Stok Adı"
           outlined
           v-model="edittreemselect"
@@ -21,46 +26,55 @@
 
         
         </q-card>
-        <q-card class="col-md-10 row offset-md-1 col-sm-10 offset-sm-1 col-xs-12 ">
+        <q-card class="col-md-10 row  col-sm-10  col-xs-12 ">
             <q-table
-            title="Stok Tablosu"
+            title="Varyant Tablosu"
             :data="hasvaryantsatirlists"
             :columns="columns"
             row-key="_id"
-            :filter="arama"
             :pagination.sync="pagination"
             class="col-12"
           >
-          <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="arama" placeholder="Bul">
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-      </template>
+            <template v-if="hasvaryantsatirlists.length > 0" v-slot:top-right>
+                <!-- <q-input borderless dense debounce="300" v-model="arama" placeholder="Bul"> -->
+                    <q-btn @click="dialog=true">Düzenle</q-btn>
+            </template>
             <template v-slot:body="props" >
-              <q-tr :props="props"  class="cursor-pointer" @click.native="editItem(props.row)">
-                
+              <q-tr :props="props"  class="" >
                 <q-td key="adi" :props="props"  >
                   {{props.row.varyant_option1_name}} - {{props.row.varyant_option2_name}}
-
                 </q-td>
                 <q-td key="miktar" :props="props"  >
                   {{props.row.miktar}} 
-
                 </q-td>
-                <!-- <q-td key="ust" :props="props"  >
-                  {{props.row.stokturad}}
-
-                </q-td> -->
-                
-
               </q-tr>
 
 
             </template>
           </q-table>
         </q-card>
+        <q-dialog
+            v-model="dialog"
+        >
+            <q-card  style="width: 550px">
+              <q-card-section >
+                <div class="text-h6 text-center">({{edittreemselect.stokturad}}) - Düzenle</div>
+              </q-card-section>
+                <q-separator inset />
+                    <q-card-section class="row " style="margin-top:-10px;margin-bottom:-30px;" v-for="(list,index) in hasvaryantsatirlists" :key="index">
+                        <q-item-label  class="self-center col q-mr-md">{{index+1 }} -</q-item-label>
+                        <q-item-label  class="col q-mr-md self-center">{{list.varyant_option1_name}} - {{list.varyant_option2_name}}</q-item-label>
+                        <q-input class="col-3 q-mr-md " outlined v-model="list.ymiktar" label="Miktar Ekle" dense />
+                        <!-- <q-input class="col-3 " outlined v-model="list.emiktar" label="Miktar Çıkart" dense /> -->
+                        <q-separator class="q-mt-xs"  inset />
+                    </q-card-section>
+                
+              <q-card-section  class="text-right">
+                <q-btn class="q-ma-sm"  color="primary" @click="edit()" label="Güncelle"  v-close-popup ></q-btn>
+                <q-btn class="q-mr-md"   label="Kapat"  v-close-popup ></q-btn>
+              </q-card-section>
+            </q-card>
+        </q-dialog>
     </div>
 </template>
 
@@ -68,24 +82,30 @@
 import Vue from "vue";
 import axios from "axios";
 import gql from "graphql-tag";
+import _ from "lodash";
 import Cookies from 'js-cookie';
 import { Loading } from "quasar";
 import {mapGetters } from 'vuex';
     export default {
         data() {
             return {
-                arama:"",
+                list:{ymiktar:0,
+                       
+                    },
+                dialog:false,
                 edittreemselect: [],
                 selectoptions:[],
                 hasvaryantsatirlists:[],
+                array:[],
                 columns: [
-                    {name: 'adi', label: 'Ürün Adı', align: 'left', sortable: true,field: row => row.stokturad},
+                    {name: 'adi', label: 'Ürün Adı', align: 'left', sortable: true,
+                      field: row =>row.varyant_option1_name + row.varyant_option2_name
+                    },
                     {name: 'miktar', label: 'Miktar', align: 'left', sortable: true,field: row => row.miktar},
-                    // {name: 'ust', label: 'Üst Kategori', align: 'left', sortable: true}
           ],
           pagination: {
-           sortBy: 'adi',
-          ascending: false,
+             sortBy: 'adi',
+        //    ascending: false,
           page: 1,
           rowsPerPage: 20,
           // rowsNumber: 5,q
@@ -100,33 +120,92 @@ import {mapGetters } from 'vuex';
                 ]),
         },
         methods: {
-           async selectstokid() {
-                console.log(this.edittreemselect._id);
-                await axios
-        .post('http://'+ process.env.API +':4000/graphql',{
-          query: `query hasvaryantsatirQuery($id: ID! ){
-                 hasvaryantsatirQuery(id: $id){
-                      _id
-                      varyant_option1_id
-                      varyant_option1_name
-                      varyant_option2_id
-                      varyant_option2_name
-                      fiyat1
-                      fiyat2
-                      miktar
-                      
+            edit(){
+                
+                
+                  
+               let array=[]
+            //    console.log(this.hasvaryantsatirlists);
+                 this.hasvaryantsatirlists.forEach(item=>{
+                     let obj = {}
+                    var sayi=Number
+                    if(item.ymiktar == undefined || item.ymiktar == ""){
+                        sayi=0
+                    }else{
+                        sayi=Number(item.ymiktar)
                     }
-                 }`,
-
-          variables: {
-            id: this.edittreemselect._id
-          }
-        })
-        .then(data => {
-          this.hasvaryantsatirlists = data.data.data.hasvaryantsatirQuery;
-        //    console.log(this.hasvaryantsatirlists);
-        });
+                    
+                     obj.miktar= Number(item.miktar) + Number(sayi),
+                     obj.id=item._id
+                    //  console.log(obj);
+                    array.push(obj)
+                 })
+                 this.array=array
+                //    console.log(array);
+                 Loading.show()
+                  this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation updateVaryantMiktar($veri: [varyantlistInput]) {
+                            updateVaryantMiktar(veri: $veri) {
+                                _id
+                                res
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                            veri: this.array
+                        }
+                        })
+                        .then(data => {
+                            // console.log(data);
+                        // this.varyantlist();
+                        //  setTimeout(() => {
+                           Loading.hide()
+                        // }, 3)
+                        this.$q.notify({
+                            type: "positive",
+                            message: `Kayıt Başarılı...`,
+                            // color:'primary'
+                            position: "top-right"
+                        });
+                        this.selectstokid()
+                        }).catch(err=>{
+                            Loading.hide()
+                        });
             },
+            // save(){
+            //     console.log(this.array);
+            // },
+           async selectstokid() {
+                // console.log(this.edittreemselect);
+                await axios
+                    .post('http://'+ process.env.API +':4000/graphql',{
+                    query: `query hasvaryantsatirQuery($id: ID! ){
+                            hasvaryantsatirQuery(id: $id){
+                                _id
+                                varyant_option1_id
+                                varyant_option1_name
+                                varyant_option2_id
+                                varyant_option2_name
+                                fiyat1
+                                fiyat2
+                                miktar
+                                
+                                }
+                            }`,
+
+                    variables: {
+                        id: this.edittreemselect._id
+                    }
+                    })
+                .then(data => {
+                this.hasvaryantsatirlists = data.data.data.hasvaryantsatirQuery;
+                this.hasvaryantsatirlists = _.orderBy(this.hasvaryantsatirlists, ['varyant_option1_name','varyant_option2_name'],['asc']);
+                });
+            },
+
             filterFn(val, update, abort) {
                 update(() => {
                     const needle = val.toLowerCase();

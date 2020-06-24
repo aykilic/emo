@@ -34,7 +34,7 @@ mergesepet_mutation: async (root, parent, { Models }) => {
     const model = Models.sepet
   
   
-     Promise.all(
+    return await Promise.all(
       parent.sepetlist.map((item)=>{ 
           return model.insertMany(item,function(error, docs) {
            }); 

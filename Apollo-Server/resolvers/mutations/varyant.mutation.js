@@ -87,7 +87,63 @@ module.exports = {
     const varyant = Models.varyantValue
     return await varyant.findByIdAndDelete(id);
   },
+  updateVaryantMiktar:async (root, parent, { Models }) => {
+    const varyant = Models.varyant_skus
+    return await Promise.all(
+      parent.veri.map((item)=>{ 
+          // console.log(item)
+         return varyant.updateMany({"_id": item.id }, {"$set":   { "miktar": item.miktar}  },{multi:true}); 
 
+    })).then(function(results){
+      // console.log(results);
+        let data={'res':'ok'};
+         return  data
+        
+    });
+
+
+
+    // return await new Promise((resolve, reject) => {
+    //       parent.veri.map((item)=>{ 
+    //       // console.log(item)
+    //       varyant.updateMany({"_id": item.id }, {"$set":   { "miktar": item.miktar}  },{multi:true},(err)=>{
+    //         if (err) {
+    //                   reject(err);
+    //               } else {
+    //                 resolve({'res':'ok'});
+    //               }
+    //       }); 
+
+
+
+        // });
+
+
+      // model.findByIdAndDelete(id, (err) => {
+      //     if (err) {
+      //         reject(err);
+      //     } else {
+      //         // resolve(`Deleted article ${id} successfully`,{'_id':id});
+      //          resolve({'_id':id,'res':`Deleted article ${id} successfully`});
+      //     }
+      // });
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  },
   // updatevaryantimageurl: async (root, { id, imageurl, filename, path, publicid }, { Models }) => {
   //   const varyant = Models.varyant
   //   //  console.log(id, imageurl, filename, path, publicid);
@@ -159,7 +215,7 @@ module.exports = {
   createVaryantsatir:async (root, parent, { Models }) => {
 
     //  console.log(Models);
-    const varyant = Models.varyant_skus
+    
   // updatevaryantcolors: async (root,parent, { Models }) => {
   //   const varyant = Models.varyant
   //   console.log(parent);
@@ -181,8 +237,8 @@ module.exports = {
   //     console.log(new_arr)
       
 
-  
-     Promise.all(
+  const varyant = Models.varyant_skus
+    return await Promise.all(
       parent.satirlist.map((item)=>{ 
           // console.log(item)
         // return varyant.updateMany({"_id": item.id }, {"$set":   { "color": item.color, "miktar": item.miktar, "fiyat1": item.fiyat1, "fiyat2": item.fiyat2}  },{multi:true}); 
@@ -194,6 +250,7 @@ module.exports = {
            
     })
       ).then(function(results){
+        
         // console.log(results);
     });
   

@@ -71,14 +71,7 @@
 
             </div> -->
       </div>
-
-
-
-
-    
       </q-card>
-
-
     </q-card>
 
 
@@ -361,7 +354,8 @@ import {Loading} from 'quasar'
         users: [],
         ustkategoriid: null,
         ustkategoriad:"",
-        columnss: [{name: 'adi', label: 'Kategori', align: 'left', sortable: true,field: row => row.stokturad},
+        columnss: [
+          {name: 'adi', label: 'Kategori', align: 'left', sortable: true,field: row => row.stokturad},
           {name: 'ust', label: 'Üst Kategori', align: 'left', sortable: true,field: row => row.children.stokturad}
           ],
         
@@ -467,6 +461,7 @@ import {Loading} from 'quasar'
         }else{
           this.ustkategoriid=this.selected
         }
+        Loading.show()
         this.$apollo.mutate({
           mutation:gql`mutation createStoktur($stokturad: String!, $parentid: String){
                 createStokturu(stokturad: $stokturad, parentid: $parentid) {
@@ -497,20 +492,19 @@ import {Loading} from 'quasar'
             
             
             }
-          ],notifyOnNetworkStatusChange: true
-          ,awaitRefetchQueries:true
-            
-
+          ]
         }).then(data => {
           console.log('Done');
+          this.treedata()
            this.stokturad="";
           //  this.ustkategoriid=""
            this.ustkategoriad=""
-
+           
+          Loading.hide()
 
         });
 
-            this.treedata()
+            // this.treedata()
             this.selected=null
       },
       updateStoktur(){

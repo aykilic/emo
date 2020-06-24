@@ -11,18 +11,29 @@ module.exports = {
 
     // console.log("dgfdg");
     const stokturu = Models.stokturu
-    return await new stokturu({
+    // return await new stokturu({
       
-      stokturad,
-      parentid
+    //   stokturad,
+    //   parentid
 
-    }).save((error) => {
+    // }).save((error) => {
       
       
-      if(error){
-        throw error;
-      }
-    });
+    //   if(error){
+    //     throw error;
+    //   }
+    // });
+    return await new Promise((resolve,object) =>{
+      // console.log("parent",parent)
+       new stokturu({
+            stokturad,
+            parentid
+          }).save((err,doc) =>{
+              // console.log(err)
+          if(err) reject(err)
+          else resolve(doc)
+      })
+  })
   },
   updateStokturu: async (root, { id, stokturad, parentid, fiyat1,fiyat2}, { Models }) => {
     const stokturu = Models.stokturu

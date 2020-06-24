@@ -1,12 +1,14 @@
 <template>
-    <q-page class=" row q-pt-md items-start q-col-gutter-md">
+    <q-page class=" row q-pt-md q-pb-md items-start q-col-gutter-md">
     
+
         <div  v-for="(list,index) in lists" :key="index" v-if="list.vars" class="col-md-3 col-sm-4 col-xs-6 ">
            
          <q-intersection
                   once
                   transition="fade"
                   >
+                  
             <q-card @click="select(list._id,list.stokturad)"  class="my-card product-card box-shadow shadow-transition cursor-pointer">
                <!-- <q-img src="../statics/emose_h200.jpg" /> -->
                
@@ -47,10 +49,11 @@
                            ( <span class="  text-subtitle2 ">11</span> )</span></span>
                </q-card-section>
             </q-card>
+            
          </q-intersection>
          
         </div>
-        
+  
        <!-- <div>this.$route.params.parentname</div> -->
        <!-- <div>{{this.$route.params.parentname}}</div> -->
         <!-- <div><q-btn @click="deneme()">sfsf</q-btn></div> -->
@@ -65,6 +68,7 @@
     // import {store} from '../store/index'
     import {mapState,mapGetters} from 'vuex'
     import {Loading} from 'quasar'
+    const heavyList = []
     export default {
          props:['parentname','parentid'],
         data(){
@@ -73,6 +77,7 @@
                 treeem:[],
                 lists:[],
                 stokid:"",
+                heavyList
                //  parentname:this.$route.params.parentname
                 
             }
