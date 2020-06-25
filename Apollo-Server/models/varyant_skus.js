@@ -52,9 +52,17 @@ const vatyant_skusSchema = new Schema({
     type: Decimal,
     default:0
   },
-  fiyat2:{
-    type: Decimal,
+  indirim:{
+    type: Number,
     default:0
+  },
+  kdv:{
+    type: Number,
+    default:0
+  },
+  description:{
+    type:String,
+
   },
   miktar: {
     type: Number,

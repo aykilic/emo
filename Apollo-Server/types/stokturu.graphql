@@ -8,10 +8,12 @@ type birim{
 type kategori{
   _id:ID
   stokturad: String
+  stokkodu:String
   parentid: String
   fiyat1:Float
-  fiyat2:Float
-  indirim:Int
+  indirim:Float
+  kdv:Float
+  description:String
   vars:[vars]
   children(_id:ID): kategori
   
@@ -45,10 +47,12 @@ type attr{
 type Stoktur{
   _id:ID!
   stokturad: String
+  stokkodu:String
   parentid: String
   fiyat1:Float
-  fiyat2:Float
-  indirim:Int
+  indirim:Float
+  kdv:Float
+  description:String
   createdAt: String
   vars: [vars]
 }
@@ -107,7 +111,7 @@ type Mutation {
   # createUser(data: CreateUserInput!): User
   createStokturu(stokturad: String!, parentid: String): Stoktur
   deleteStokturu(id:String!): Stoktur
-  updateStokturu(id:String!,stokturad: String, parentid: String,fiyat1:Float, fiyat2:Float): Stoktur
+  updateStokturu(id:String!,stokkodu:String,stokturad: String, parentid: String,fiyat1:Float, indirim:Float, kdv:Float,description:String): Stoktur
   updatestokimageurl(id:String!,imageurl: String,filename:String,publicid:String,path:String): Stoktur
   deleteimage(id:ID!,imageid:ID,path:String): Stoktur
   updateStok(id:String!,variant: StokInput): Stoktur

@@ -4,9 +4,11 @@ type varyantkategori{
   stokturid: ID
   parentid: ID
   color:String
-  miktar:Int
   fiyat1:Float
-  fiyat2:Float
+  kdv: Int
+  indirim: Int
+  miktar: Int
+  description: String
   varyantname:String
   children(_id:ID): varyantkategori
   
@@ -28,9 +30,11 @@ type varyant{
   stokid:ID
   parentid:ID
   color:String
-  miktar:Int
   fiyat1:Float
-  fiyat2:Float
+  kdv: Int
+  indirim: Int
+  miktar: Int
+  description: String
   vars:[vars]
   createdAt: String
   varyant_options:[altvaryant]
@@ -73,8 +77,10 @@ type varyant_skus{
   varyant_option2_id: ID
   varyant_option2_name: String
   fiyat1: Float
-  fiyat2: Float
+  kdv: Int
+  indirim: Int
   miktar: Int
+  description: String
   color: String
   res:String
 }
@@ -124,8 +130,10 @@ input varyantlistInput{
   varyant_option2_id: ID
   varyant_option2_name: String
   fiyat1: Float
-  fiyat2: Float
+  kdv: Int
+  indirim: Int
   miktar: Int
+  description: String
   color:String
   res:String
   

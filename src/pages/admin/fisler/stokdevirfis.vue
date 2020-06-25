@@ -64,6 +64,7 @@
                     <q-card-section class="row " style="margin-top:-10px;margin-bottom:-30px;" v-for="(list,index) in hasvaryantsatirlists" :key="index">
                         <q-item-label  class="self-center col q-mr-md">{{index+1 }} -</q-item-label>
                         <q-item-label  class="col q-mr-md self-center">{{list.varyant_option1_name}} - {{list.varyant_option2_name}}</q-item-label>
+                        <q-input class="col-3 q-mr-md " outlined v-model="list.miktar" label="Stoktaki Miktar" dense readonly/>
                         <q-input class="col-3 q-mr-md " outlined v-model="list.ymiktar" label="Miktar Ekle" dense />
                         <!-- <q-input class="col-3 " outlined v-model="list.emiktar" label="Miktar Çıkart" dense /> -->
                         <q-separator class="q-mt-xs"  inset />
@@ -190,7 +191,6 @@ import {mapGetters } from 'vuex';
                                 varyant_option2_id
                                 varyant_option2_name
                                 fiyat1
-                                fiyat2
                                 miktar
                                 
                                 }

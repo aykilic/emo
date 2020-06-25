@@ -41,15 +41,18 @@
           </q-item>
 
           <q-separator inset />
-          <q-item style="padding-bottom:0px;padding-top:0px;" v-if="varyantname.length > 0" class v-for="(value,i) in varyantname" :key="i">
+          <q-item style="padding-bottom:0px;padding-top:10px;" v-if="varyantname.length > 0" class v-for="(value,i) in varyantname" :key="i">
             <div class="row col-12">
+              
               <div class="col-2" style="text-transform: unset;">{{value.varyantname}}:</div>
-              <div class="col-10 col-lg-10" :id="'varyant'+i"></div>
+              
+              <div class="col-10 col-lg-10" style="text-decoration:underline;" :id="'varyant'+i"></div>
 
               <div  v-if="i==0" v-for="(altvalue, index) in option_1" :key="index">
                 <div v-if="altvalue.length > 0"></div>
+                
                 <div >
-                  <ul  class="row" style="list-style-type:none;padding-left:0px;margin-top:5px;">
+                  <ul  class="row" style="list-style-type:none;padding-left:0px;margin-top:10px;">
                     <li
                       :id="altvalue.varyant_option1.varyant_option1_name "
                       @click.prevent="selectvar1(option_1,index,i,altvalue)"
@@ -59,15 +62,16 @@
                     ></li>
                   </ul>
                 </div>
+                
               </div>
-
+              <!-- <div v-if="altvalue.toplam < 4">Stokta Kalan Son {{altvalue.toplam}} Ürün</div> -->
               <div v-if="i==1" class="col-12">
                 <div class="row">
                   <ul
-                    v-for="(altvalue, index) in option_2  "
+                    v-for="(altvalue, index) in option_2"
                     :key="index"
                     class
-                    style="list-style-type:none;padding-left:0px;margin-top:5px;"
+                    style="list-style-type:none;padding-left:0px;margin-top:10px;"
                   >
                     <li
                       class="q-pa-xs"
@@ -76,6 +80,7 @@
                       style="border-radius:22px;text-align:center;padding-top:17px"
                       :class=" (altvalue.toplam < 1  ) ? 'secilmez1':  [{ active:altvalue.selected },'firstvar1'] "
                     >{{altvalue.varyant_option2.varyant_option2_name}}</li>
+                    
                     <!-- v-bind:style= "[condition_1 ? condition_2 ? {styleA} : {styleB} : {styleC}]" -->
                   </ul>
                 </div>
@@ -87,7 +92,7 @@
             <div class="row">
               <q-item-section class="col">
                 <div class="col" style="text-transform: unset;">MİKTAR:</div>
-                <div class="row q-pt-md q-pb-md">
+                <div class="row  q-pt-md q-pb-md">
                   <q-btn
                     v-model="miktar"
                     @click="eksi"
@@ -100,6 +105,7 @@
                   ></q-btn>
                   <span class="q-mx-md self-center">{{miktar}}</span>
                   <q-btn
+                  v-if="miktarcontroldata >= miktar +1"
                     v-model="miktar"
                     @click="arti"
                     color="white"
@@ -109,7 +115,19 @@
                     class="text-grey"
                     icon="add"
                   ></q-btn>
+                  <q-btn
+                    v-else
+                    color="white"
+                    size="md"
+                    push
+                    round
+                    class="text-grey"
+                    icon="add"
+                    readonly
+                  ></q-btn>
                 </div>
+                <div v-if="miktarcontroldata < 4" class="text-red">Stokta kalan son {{miktarcontroldata}} Ürün</div>
+                <div v-else-if="miktarcontroldata <= miktar " class="text-red">Alabileceğiniz en fazla miktara ulaştınız...</div>
               </q-item-section>
             </div>
           </q-item>
@@ -238,6 +256,7 @@ export default {
       id1: "",
       id2: "",
       id: "",
+      miktarcontroldata:4,
       //innertext
       // varyant0:"",
       // varyant1:"",
@@ -312,7 +331,9 @@ export default {
     // }, 5000);
 
     // this.stok()
-
+    // this.id1= ""
+    // this.id2= ""
+    // this.id= ""
     if (this.anakategorilists.length > 0) {
       this.stok();
       this.hasvaryantsatirliste();
@@ -545,36 +566,11 @@ export default {
           "desc"
         );
       }
-      // let arra=[]
-      //   let option_1=[]
-      //   this.varyants.forEach((value,i)=>{
-      //   let varyant_option1={}
-      //   let toplam=0
-      //   let sel=false
-      //     if(value.varyant_option2_id==id2) {
-      //       if(value.varyant_option1_id==this.id1){
-      //         sel=true
-      //       }
-      //       toplam +=  value.miktar
-      //        Object.assign(varyant_option1, {
-      //         varyant_option1: value,
-      //         toplam:toplam,
-      //         selected:sel
-      //     });
-      //     arra.push(varyant_option1)
-      //     }
-      //    })
-      //      this.option_1=arra
-      // if(this.id1!="" && this.id2!=""){
-      //   // this.option_2=this.
-      // }
+      // console.log("this.option_2",this.option_2);
+      this.miktar=1
+      this.miktarcontrol()
     },
     selectvar2(a, i, ii, aa) {
-      // console.log(a);
-      // console.log(i);
-      // console.log(ii);
-      // console.log(aa);
-      // console.log("a",a);
 
       let id1;
       let id2;
@@ -582,23 +578,16 @@ export default {
       let iii = ii + 1;
       let class_varyant_option = "varyant_option" + iii;
       let class_varyant_option_name = "varyant_option" + iii + "_name";
-      // let varyant_option = ""
-      // let varyant_option_name = ""
+      
       let varyant_option_id = "varyant_option" + iii + "_id";
 
       const varyant = "varyant" + ii;
 
-      // if (ii==0) {
-      //     id1=aa[class_varyant_option][varyant_option_id]
-      // }
       if (ii == 1) {
         id2 = aa[class_varyant_option][varyant_option_id];
         this.id2 = id2;
         //  console.log("id2",id2);
       }
-      //  console.log("id1",id1);
-      //  console.log("id1",id1,"id2",id2);
-      // this.selectid=id
       a.forEach((value, index) => {
         if (
           !value.selected ||
@@ -611,7 +600,6 @@ export default {
             // console.log("i",i,"index",index);
             document.getElementById(varyant).innerHTML =
               aa[class_varyant_option][class_varyant_option_name];
-            // document.getElementById(varyant).innerHTML = aa[class_varyant_option][class_varyant_option_name];
           } else {
           }
         } else {
@@ -626,25 +614,8 @@ export default {
           if (i == index) {
             this.id2 = "";
           }
-          //  console.log("id1",this.id1,"id2",this.id2);
-          // let option_2=[]
-          // this.varyantname.forEach((item,key)=>{
-          //   //  console.log(item);
-          //   if(item.varyant_option2){
-          //   item.varyant_option2.forEach((value,index)=>{
-          //       option_2.push(value)
-
-          // })
-          // this.option_2=option_2
-          //   console.log("option_2",this.option_2);
-          // }
-          // })
-          // this.hasvaryantsatirliste();
         }
       });
-      // console.log("id1",id1);
-      // console.log("id2",id2);
-
       if (this.id2 == "" || id2 == null || id2 == undefined) {
         let option_1 = [];
         this.varyantname.forEach((item, key) => {
@@ -664,8 +635,6 @@ export default {
           let varyant_option1 = {};
           let toplam = 0;
           let sel = false;
-          //  toplam =value.miktar
-          // console.log("value.miktar",value.miktar);
           if (value.varyant_option2_id == id2) {
             if (value.varyant_option1_id == this.id1) {
               sel = true;
@@ -681,7 +650,29 @@ export default {
         });
         this.option_1 = arra;
       }
-      // console.log("option_2",this.option_2);
+
+      //  console.log("this.varyants",this.varyants);
+      this.miktar=1
+       this.miktarcontrol()
+    },
+    miktarcontrol(){
+      let id1 = this.id1;
+      let id2 = this.id2;
+      let id;
+      //-----------------
+      if (id1 != "" && id2 != "") {
+        this.varyants.filter(item => {
+          // console.log(item);
+          if (
+            id1 === item.varyant_option1_id &&
+            id2 === item.varyant_option2_id
+          ) {
+            this.miktarcontroldata = item.miktar;
+             
+            
+          }
+        });
+      }
     },
     async hasvaryantsatirliste() {
       await axios
@@ -698,7 +689,6 @@ export default {
                       varyant_option2_id
                       varyant_option2_name
                       fiyat1
-                      fiyat2
                       miktar
                       color
                     }

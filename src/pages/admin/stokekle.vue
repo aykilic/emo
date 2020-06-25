@@ -48,69 +48,59 @@
 
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="one">
-            <!-- <q-badge color="red" class="text-h6 ">
-                  Kategori Listesinden Seçiniz !...
-            </q-badge>-->
             <div class="row">
               <div class="col-11 text-center text-h6">Stok Ayrıntı</div>
               <q-btn class="col-1 text-right" @click="UpdateStok()" color="primary" label="Kaydet" />
             </div>
             <div class="q-pt-xs row q-col-gutter-md">
-              <!-- <div class="col-2 text-h6" >Birim :</div> -->
-
               <div class="col-6 row q-gutter-y-md">
                 <div class="col-12 q-gutter-y-md">
                   <q-input
                     outlined
                     label="Stok Kodu"
                     class="col-6 hint"
+                    v-model="stok.stokkodu"
                     hint="Stok Kodu Girilmez ise Otomatik Oluşturulacaktır...!"
                   />
-                  <q-input outlined label="Kdv" class="col-6 hint" hint="Kdv Oranını Giriniz...!" />
-
-                  <q-select
-                    class="col-6 hint"
-                    outlined
-                    v-model="birimselect"
-                    :optionss="birimList"
-                    option-value="_id"
-                    option-label="birimad"
-                    hint="Birim Seçiniz...!"
-                    label="Birim"
+                  <q-input 
+                  outlined 
+                  label="Kdv" 
+                  v-model="stok.kdv" 
+                  class="col-6 hint" 
+                  hint="Kdv Oranını Giriniz...!" 
                   />
 
                   <q-input
                     outlined
                     v-model="stok.fiyat1"
+                    @input="ufhesap()"
                     suffix="TL"
-                    mask=" #"
+                    mask="#"
                     fill-mask="0"
                     reverse-fill-mask
-                    label="Fiyat 1"
+                    label="Fiyat"
                     class="col-6 hint"
                     hint="Ana Fiyatı Giriniz...!"
                   />
-                  <!-- <imask-input
-                    v-model="stok.fiyat1"
-                    :mask="Number"
-                    radix="."
-                    :unmask="true"
-                    
-                    @accept="onAccept"
-                    
-                    placeholder='Enter number here'
-                  />-->
-
                   <q-input
                     outlined
-                    v-model="stok.fiyat2"
-                    suffix="TL"
-                    mask=" #.##"
+                    @input="ufhesap()"
+                    v-model="stok.indirim"
+                    suffix="%"
                     fill-mask="0"
                     reverse-fill-mask
-                    label="Fiyat 2"
+                    label="indirim Oranı"
                     class="col-6 hint"
-                    hint="ikincil Fiyatı Giriniz...!"
+                    hint="indirim Oranı Giriniz...! (%)"
+                  />
+                  <q-input 
+                  outlined 
+                  label="Uygulanacak fiyat" 
+                  v-model="stok.hesaplama" 
+                  class="col-6 hint" 
+                  hint="Uygulanacak fiyat"
+                  suffix="TL"
+                  readonly 
                   />
                 </div>
               </div>
@@ -122,35 +112,11 @@
                     label="Açıklama"
                     class="col-6 hint"
                     hint="Açıklama Giriniz...!"
+                    v-model="stok.description"
                   />
                 </div>
               </div>
-
-              <!-- <q-select
-              
-                class="q-pa-md "
-                label="Stok Adı"
-                outlined
-                v-model="edittreemselect"
-                :options="options"
-                option-value="_id"
-                option-label="stokturad"
-              >-->
-              <!--      option-value="id"-->
-              <!--      option-label="stokturad"-->
-              <!--      :display-value ="`${ustkategori.stokturad ? ustkategori.stokturad : 'Yok'}`"-->
-              <!-- </q-select> -->
-
-              <!-- <div class="col-2 " >
-                <q-input  label="Birim"   outlined dense />
-              </div>-->
             </div>
-            <!--            <div class="q-pt-xs row">-->
-            <!--              <div class="col-2 text-h6" >Birim1 :</div>-->
-            <!--              <div class="col-2 " >-->
-            <!--                <q-input    outlined dense />-->
-            <!--              </div>-->
-            <!--            </div>-->
           </q-tab-panel>
           <!-- TODO: VARYANT ----------------------------------------------------------------------------------------------------->
           <q-tab-panel name="two">
@@ -276,16 +242,6 @@
             </div>
 
             <q-separator v-if="satirlists.length > 0" class="q-mt-lg" />
-            <!-- <q-card-section v-if="satirlists.length > 0">
-              
-              <div class="row">
-                <div class="col-12 text-center text-h6 text-positive">Varyant Satır</div>
-
-                
-              </div>
-              
-            </q-card-section>
-            -->
             <div v-if="satirlists.length > 0">
               <div class="q-mt-md q-mb-md row">
                 <div class="col-12 text-center text-h6 text-positive">Eklenecek Varyant Satırları</div>
@@ -328,17 +284,9 @@
                 <q-input
                   outlined
                   v-model="satirlist.fiyat1"
-                  label="Fiyat1"
+                  label="Fiyat"
                   suffix="TL"
-                  class="q-mb-md q-mr-md col-1 hint"
-                />
-
-                <q-input
-                  outlined
-                  v-model="satirlist.fiyat2"
-                  suffix="TL"
-                  label="Fiyat2"
-                  class="q-mb-md q-mr-md col-1 hint"
+                  class="q-mb-md q-mr-md col hint"
                 />
 
                 <q-input
@@ -562,18 +510,20 @@ export default {
       treemselect: [],
 
       edittreemselect: "",
-      tab: "two",
+      tab: "one",
 
       attrr: "",
 
       stok: {
-        kod: "",
+        stokkodu: "",
         kdv: "",
         birim: "",
         fiyat1: "",
-        fiyat2: "",
+        miktar:"",
+        indirim:"",
         doviz: "",
-        aciklama: ""
+        description: "",
+        hesaplama:""
       },
       birimselect: "",
       birimList: [],
@@ -665,6 +615,10 @@ export default {
     });
   },
   methods: {
+    ufhesap(){
+     this.stok.hesaplama=Number(this.stok.fiyat1) - (Number(this.stok.fiyat1) * (Number(this.stok.indirim)/100))
+     this.stok.hesaplama=this.formatPrice(this.stok.hesaplama)
+    },
     async create_varyantsatir() {
       this.satirlist = this.satirlists.map(item => ({
         stokid: item.stok_id,
@@ -679,11 +633,10 @@ export default {
         varyant_option2_name: item.varyant_option2_name,
         // fiyat1:Number(item.fiyat1) ,
         fiyat1: Number(item.fiyat1),
-        fiyat2: Number(item.fiyat2),
         miktar: Number(item.miktar),
         color:item.color
       }));
-      console.log("satirlist",this.satirlist);
+      // console.log("satirlist",this.satirlist);
 
       this.$apollo
         .mutate({
@@ -752,7 +705,6 @@ export default {
             obj.varyant_option1_name = altitem.varyantname;
             obj.varyant_option2_name = item.varyantname;
             obj.fiyat1 = "";
-            obj.fiyat2 = "";
             obj.miktar = "";
             obj.color=altitem.color;
             selectsat.push(obj);
@@ -814,8 +766,6 @@ export default {
     create_skus() {
       let arrayim = [];
 
-      
-      //TODO: secilen listeyi grupla
       this.allvaryantlist.forEach(item => {
         this.varyantselected.forEach(altitem => {
           if (item._id == altitem.varyant_id) {
@@ -830,7 +780,7 @@ export default {
 
       
     },
-
+    //TODO:
     UpdateStok() {
       // console.log(this.liste,this.edittreemselect);
       if (this.edittreemselect == "") {
@@ -862,16 +812,22 @@ export default {
               mutation updateStokturu(
                 $id: String!
                 $parentid: String
+                $stokkodu:String
                 $stokturad: String
                 $fiyat1: Float
-                $fiyat2: Float
+                $indirim: Float
+                $kdv:Float
+                $description:String
               ) {
                 updateStokturu(
                   id: $id
                   parentid: $parentid
+                  stokkodu: $stokkodu
                   stokturad: $stokturad
                   fiyat1: $fiyat1
-                  fiyat2: $fiyat2
+                  indirim: $indirim
+                  kdv:$kdv
+                  description:$description
                 ) {
                   _id
                 }
@@ -881,9 +837,12 @@ export default {
             variables: {
               id: this.edittreemselect._id,
               stokturad: this.edittreemselect.stokturad,
+              stokkodu: this.stok.stokkodu,
               parentid: this.edittreemselect.parentid,
               fiyat1: Number(this.stok.fiyat1),
-              fiyat2: Number(this.stok.fiyat2)
+              indirim: Number(this.stok.indirim),
+              kdv:Number(this.stok.kdv),
+              description:this.stok.description,
             }
           })
           .then(data => {
@@ -904,11 +863,11 @@ export default {
       }
     },
     // ******************************************
-    formatPrice(value) {
+    formatPrice(value) { //tr ye çevir
       let val = (value / 1).toFixed(2).replace(".", ",");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
-    formatNumber(value) {
+    formatNumber(value) { //us e cevir
       let val = value;
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
@@ -923,7 +882,9 @@ export default {
                       varyant_option2_id
                       varyant_option2_name
                       fiyat1
-                      fiyat2
+                      indirim
+                      kdv
+                      description
                       miktar
                       
                     }
@@ -961,8 +922,11 @@ export default {
                  StokturuQuery(id: $id){
                       _id
                       parentid
+                      stokkodu
                       fiyat1
-                      fiyat2
+                      kdv
+                      indirim
+                      description
                     }
                  }`,
 
@@ -972,7 +936,10 @@ export default {
         })
         .then(data => {
           this.stok.fiyat1 = data.data.data.StokturuQuery[0].fiyat1;
-          this.stok.fiyat2 = data.data.data.StokturuQuery[0].fiyat2;
+          this.stok.stokkodu = data.data.data.StokturuQuery[0].stokkodu;
+          this.stok.indirim = data.data.data.StokturuQuery[0].indirim;
+          this.stok.kdv = data.data.data.StokturuQuery[0].kdv;
+          this.stok.description = data.data.data.StokturuQuery[0].description;
         });
     },
     //TODO: varyant listeleri

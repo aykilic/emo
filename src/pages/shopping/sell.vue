@@ -209,7 +209,7 @@
                                     <div class="row col-12 " v-else>
                                         <div class=" col-md-4 col-xs-6 q-pa-xs" v-for="(get_userdetaillist ,index) in get_userdetaillists" :key="index">
                                             <q-card class="new_detail"
-                                            :class=" [{ new_detail_selected:get_userdetaillist.selected },'new_detail'] "
+                                            :class=" [{ new_detail_selected:get_userdetaillist.selected }] "
                                             >
                                                 <q-card-section @click="user=get_userdetaillist;selectdetail(get_userdetaillists,index)" style="height:170px;"  >
                                                     <!-- <div class="text-h6">Our Changing Planet</div> -->
@@ -272,7 +272,7 @@
                                     </div>
                                 <q-stepper-navigation>
                                 <div class="col-12">
-
+                                        <q-btn @click="goster()"></q-btn>
                                     <q-btn v-if="get_uid" @click="u_veriler()"  class="q-px-xl " size="lg" color="primary" :label="step === 3 ? 'Finish' : 'Devam'" rounded/>
                                     <q-btn v-else @click="veriler()"  class="q-px-xl " size="lg" color="primary" :label="step === 3 ? 'Finish' : 'Devam'" rounded/>
                                 </div>
@@ -399,7 +399,7 @@
                                     <q-btn @click="veriler()"  class="q-px-xl " size="lg" color="primary" :label="step === 3 ? 'Finish' : 'Devam'" rounded/>
                                 </div> -->
                                 <div class="col-12 ">
-                                <q-btn  class="q-px-xl" size="lg" color="primary" :label="step === 3 ? 'Tamamla' : 'DEVAM'" rounded/>
+                                <q-btn  class="q-px-xl" size="lg" color="primary" label="Tamamla" @click="tamamla()" rounded/>
                                 </div>
                                 <div class="col-12 q-mt-md">
                                 <q-btn v-if="step > 2" flat color="primary" @click="$refs.stepper.previous()" label="Geri" class="q-ml-sm" rounded/>
@@ -562,6 +562,7 @@ import ilcedata from '../../statics/ilce.json'
 import gql from "graphql-tag";
 import { mapState, mapGetters } from "vuex";
 import { Loading } from "quasar";
+let myBody = document.getElementsByTagName('body')[0];
     export default {
         data() {
             return {
@@ -583,6 +584,7 @@ import { Loading } from "quasar";
             // p_kodu,
             // il,
             // ilce,
+            // user:"",
                 user:{
                     _id:"",
                     uid:"",
@@ -600,10 +602,11 @@ import { Loading } from "quasar";
                     // ilceid:""}
                     il:"",
                     ilce:""
-                    
+            
                 },
+                // get_userdetaillist:{selected:false},
                 // ------
-                step:1,
+                step:2,
                 lists:[],
                 // ------
                 aratoplam:"0,00",
@@ -652,19 +655,29 @@ import { Loading } from "quasar";
                  this.fonk()
             },
             get_ubasketlist(newValue, oldValue) {
-                // console.log(newValue);
+                console.log(newValue);
                  this.fonk()
             },
             selected(){
                 this.hesaplama()
-                // console.log("1");
+                
             },
-            
+            // user(val){
+                // console.log("object");
+            // },
+            // get_userdetaillists(val){
+            //     if (this.user.cep="") {
+            //         this.selectdetail(val,null)
+            //     }
+            //     // console.log(val);
+                
+            // }
             // aratoplam(val){
             //     this.kdv=(val*0.18).toFixed(2)
             //     this.tutar=(val*1.18).toFixed(2)
             // }
-            
+
+
         },
         computed: {
             ...mapGetters([
@@ -676,66 +689,69 @@ import { Loading } from "quasar";
                 'get_userdetaillists'
       
     ]),
-        // get_guid(val){
-        //     console.log(val);
-        // }
         },
         mounted () {
+            
             this.fonk()
-            //  console.log(this.get_basketlist.length,this.get_ubasketlist.length);
-            // if (Cookies.get("uid")) {
-            //     console.log("1");
-            //     if(this.get_ubasketlist.length < 1){
-            //         this.$router.push({ path: '/' }  )
-            //     }
-                    
-                
-            //     }else{
-            //         console.log("2");
-            //         if (this.get_basketlist.length < 1) {
-            //             this.$router.push({ path: '/' }  )
-            //         }
-                    
-            //     }
+           
+           this.get_userdetaillists.forEach(item=>{ //adres selected hatası için
+               item.selected=false
+           })
+            
                 this.ilList=ildata
         },
+        // destroyed() {
+        //     this.toggleBodyClass('removeClass', 'new_detail_selected');
+        //     },
         methods: {
+            goster(){
+                console.log(this.user);
+                console.log(this.selected);
+            },
+            tamamla(){
+
+               if(this.val == ""){
+                   this.$q.notify({
+                        type: "negative",
+                        message: `Sipariş Seçimini Tamamlamadınız...`
+                    });
+                    return
+               } 
+
+                let val =this.val
+                if(val==="Kredi Kartı Hemen"){
+                    console.log(val);
+                }else if(val==="Havale"){
+                    this.havale_div=true
+                    console.log(val);
+                }else if(val==="Kapıda Nakit"){
+                    console.log(val);
+
+                }
+
+
+
+                console.log(this.user);
+                // console.log(this.lists);
+            },
             selectdetail(a,i){
                 // console.log(this.user);
                 a.forEach((value, index) => {
                     if (!value.selected || value.selected === false || value.selected === undefined) {
-                    if (i == index) {
-                        Vue.set(value, "selected", true);
-
-                        } else {
                         
-                    }
+                        if (i == index) {
+                            Vue.set(value, "selected", true);
+
+                            } else {
+                            
+                        }
                     } else {
-                    value.selected = !value.selected;
-                    // this.user={
-                    //     _id:"",
-                    //     baslik:"",
-                    //     ad_soyad:"",
-                    //     cep:"",
-                    //     tc_v_no:"",
-                    //     v_daire:"",
-                    //     email:"",
-                    //     adres:"",
-                    //     p_kodu:"",
-                    //     il:{
-                    //         il:"",
-                    //         ilid:""
-                    //         },
-                    //     ilce:{
-                    //         ilce:"",
-                    //         ilceid:""
-                    //         }
-                    //     }
+                    value.selected = !value.selected; // true ise false yap
                     }
+                    
                 });
+
                 console.log(this.user);
-
-
             },
             user_det_kaydet(a){
                 
@@ -850,6 +866,7 @@ import { Loading } from "quasar";
                 if(this.user.selected){
                     this.$refs.stepper.next()
                 }else{
+                    
                     this.$q.notify({
                         type: 'negative',
                         message: `Adres Seçimini Yapmadınız..!`
@@ -897,17 +914,17 @@ import { Loading } from "quasar";
                         message: `Ürün Seçimini Yapmadınız..!`
                     })
             },
-            payment_radio(val){
+            // payment_radio(val){
                 
-                if(val==="Kredi Kartı Hemen"){
-                    console.log("1");
-                }else if(val==="Havale"){
-                    this.havale_div=true
-                    console.log("2");
-                }else if(val==="Kapıda Nakit"){
-                    console.log("3");
-                }
-            },
+            //     if(val==="Kredi Kartı Hemen"){
+            //         console.log("1");
+            //     }else if(val==="Havale"){
+            //         this.havale_div=true
+            //         console.log("2");
+            //     }else if(val==="Kapıda Nakit"){
+            //         console.log("3");
+            //     }
+            // },
             fonk(){
                 if (Cookies.get("uid")) {
                     this.lists=this.get_ubasketlist
@@ -1042,7 +1059,17 @@ import { Loading } from "quasar";
                 let val = (value)
                 return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
             },
+            // toggleBodyClass(addRemoveClass, className) {    
+            //     const el = document.body;
+
+            //     if (addRemoveClass === 'addClass') {
+            //     el.classList.add(className);
+            //     } else {
+            //     el.classList.remove(className);
+            //     }
+            // },
         },
+        
     }
 </script>
 

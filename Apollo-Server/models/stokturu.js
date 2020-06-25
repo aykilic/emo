@@ -50,15 +50,24 @@ const stokturuSchema = new Schema({
     type: Decimal,
     default:null
   },
-  fiyat2:{
-    type: Decimal,
+  stokkodu:{
+    type: String,
     default:null
     // type: Number
   },
   indirim:{
     type: Number,
-    default:1
     // type: Number
+  },
+  
+  kdv:{
+    type: Number,
+    default:0
+    // type: Number
+  },
+  description: {
+    type: String,
+    
   },
   vars:
     [

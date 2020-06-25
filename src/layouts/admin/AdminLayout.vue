@@ -81,29 +81,16 @@
             <q-item-label >----</q-item-label>
           </q-item-section>
         </q-item>
-        <q-expansion-item
-          label="Stok Fişleri"
-          icon="money"
-          >
+        
           
-          <q-item  to="/stokalim" exact>
-            <q-item-section avatar>
-              <q-icon name="" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label >Stok Giriş Fişi</q-item-label>
-            </q-item-section>
-          </q-item>
           <q-item  to="/stokdevir" exact>
             <q-item-section avatar>
-              <q-icon name="" />
+              <q-icon name="money" />
             </q-item-section>
             <q-item-section>
-              <q-item-label >Açılış Fişi</q-item-label>
+              <q-item-label >Stok Fişi</q-item-label>
             </q-item-section>
           </q-item>
-
-        </q-expansion-item>
                 <q-expansion-item
                 label="Tanımlamalar"
                 icon="build"
