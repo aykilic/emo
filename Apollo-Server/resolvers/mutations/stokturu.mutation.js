@@ -228,8 +228,6 @@ module.exports = {
      
   // })
        
-    
-  
     // console.log(veri);
 
   },

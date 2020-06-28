@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 
 const ObjectID = require("mongodb").ObjectID;
 module.exports = {
-createsepet_mutation: async (parent, {uid , guid, stokid, stokad, varyantid,varyantoption1,varyantoption2,fiyat,path,publicid,count}, { Models }) => {
+createsepet_mutation: async (parent, {uid , guid, stokid, stokad, varyantid,varyantoption1,varyantoption2,fiyat,path,publicid,count,kdv}, { Models }) => {
     const varyant = Models.sepet
 
   return new Promise((resolve,object) =>{
@@ -19,7 +19,8 @@ createsepet_mutation: async (parent, {uid , guid, stokid, stokad, varyantid,vary
             fiyat,
             path,
             publicid, 
-            count
+            count,
+            kdv
         }).save((err,doc) =>{
             // console.log(err)
         if(err) reject(err)

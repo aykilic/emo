@@ -269,6 +269,36 @@ module.exports = {
   //  return await stokturu.find({_id:id})
     return await model.find({uid:ObjectID(uid)})
   },
+  search_siparislist:async(parent, args, {Models})=> {
+    const model = Models.siparis
+   return await model.aggregate([
+    // {$set: {userid: {$toObjectId: "$userid"} }},
+    
+      {
+        $lookup:
+          {
+            from: 'User_detail',
+            localField: 'userid',
+            foreignField: '_id',
+            as: 'user'
+          },
+          
+      },
+      //  { '$unwind': { 'path': '$satirs', 'preserveNullAndEmptyArrays': true } },
+      // {
+      //   $group: {
+      //     tutar: { $sum: "$satirs.tutar"}
+      //   }
+      // },
+      { $addFields: {
+        tutar: { $sum: {
+          $map: { input: "$satirs" , as: "a", in: "$$a.tutar" }
+        }}
+    }}
+   ])
+    // console.log(asd);
+    //  return await model.find()
+  },
   Search_checkmail:async(parent, {email}, {Models})=> {
     // console.log({email});
     const model = Models.User

@@ -77,9 +77,9 @@ type varyant_skus{
   varyant_option2_id: ID
   varyant_option2_name: String
   fiyat1: Float
-  kdv: Int
-  indirim: Int
-  miktar: Int
+  kdv: Float
+  indirim: Float
+  miktar: Float
   description: String
   color: String
   res:String
@@ -130,9 +130,9 @@ input varyantlistInput{
   varyant_option2_id: ID
   varyant_option2_name: String
   fiyat1: Float
-  kdv: Int
-  indirim: Int
-  miktar: Int
+  kdv: Float
+  indirim: Float
+  miktar: Float
   description: String
   color:String
   res:String

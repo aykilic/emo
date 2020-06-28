@@ -27,6 +27,8 @@ export default {
                 stokturad
                 parentid
                 fiyat1
+                kdv
+                description
                 indirim
                 _id
                 vars{
@@ -64,6 +66,9 @@ export default {
                   parentid
                   varyantname
                   color
+                  kdv
+                  indirim
+                  description
                   vars{
                       images{
                               publicid

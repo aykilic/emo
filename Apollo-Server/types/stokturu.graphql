@@ -102,6 +102,7 @@ type Query{
     Search_Userdetail_Query(uid:ID):[User_detail]
     Search_checkmail(email:String):User
     
+    
     # altimgurlQuery(id:String!):[Varyantalt]
 }
 type Mutation {

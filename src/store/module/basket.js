@@ -72,6 +72,7 @@ export default {
                         path
                         publicid
                         count
+                        kdv
                    }  
                  }`,
                    variables: {
@@ -103,6 +104,7 @@ export default {
                         path
                         publicid
                         count
+                        kdv
                    }  
                  }`,
                    variables: {

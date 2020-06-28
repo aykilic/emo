@@ -46,6 +46,9 @@ const sepetSchema = new Schema({
   count: {
     type: Number,
   },
+  kdv:{
+    type:Number
+  },
 //   variant: {
 //     name:  {type: String},
 //     value: {type: String}

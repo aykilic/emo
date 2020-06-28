@@ -256,6 +256,7 @@ export default {
       id1: "",
       id2: "",
       id: "",
+      kdv:0,
       miktarcontroldata:4,
       //innertext
       // varyant0:"",
@@ -355,7 +356,7 @@ export default {
       this.urundetay = this.anakategorilists.filter(item => {
         if (item.stokturad === this.stokad) {
           //    console.log(item.hasOwnProperty("children"));
-
+          this.kdv=item.kdv
           return item;
         }
       });
@@ -691,6 +692,7 @@ export default {
                       fiyat1
                       miktar
                       color
+                      kdv
                     }
                  }`,
 
@@ -834,8 +836,8 @@ export default {
         //         }
         let guid = this.get_guid;
         let uid = this.get_uid;
-        console.log("uid", uid, "guid", guid);
-        console.log("uid", Cookies.get("uid"), "guid", Cookies.get("guid")); // uid=null
+        // console.log("uid", uid, "guid", guid);
+        // console.log("uid", Cookies.get("uid"), "guid", Cookies.get("guid")); // uid=null
 
         if (uid != "") {
           console.log("uid boş değil");
@@ -874,6 +876,7 @@ export default {
                     $path: String
                     $publicid: String
                     $count: Int
+                    $kdv:Float
                   ) {
                     createsepet_mutation(
                       uid: $uid
@@ -887,6 +890,7 @@ export default {
                       path: $path
                       publicid: $publicid
                       count: $count
+                      kdv:$kdv
                     ) {
                       _id
                     }
@@ -903,7 +907,8 @@ export default {
                   fiyat: this.d_indirimli_fiyat,
                   path: this.stok_path,
                   publicid: this.stok_publicid,
-                  count: this.miktar
+                  count: this.miktar,
+                  kdv:this.urundetay[0].kdv
                 }
               })
               .then(data => {
@@ -932,6 +937,7 @@ export default {
                     $path: String
                     $publicid: String
                     $count: Int
+                    $kdv:float
                   ) {
                     createsepet_mutation(
                       uid: $uid
@@ -945,6 +951,7 @@ export default {
                       path: $path
                       publicid: $publicid
                       count: $count
+                      kdv:$kdv
                     ) {
                       _id
                     }
@@ -961,7 +968,8 @@ export default {
                   fiyat: this.d_indirimli_fiyat,
                   path: this.stok_path,
                   publicid: this.stok_publicid,
-                  count: this.miktar
+                  count: this.miktar,
+                  kdv:this.urundetay[0].kdv
                 }
               })
               .then(data => {
@@ -1006,6 +1014,7 @@ export default {
                     $path: String
                     $publicid: String
                     $count: Int
+                    $kdv:Float
                   ) {
                     createsepet_mutation(
                       uid: $uid
@@ -1019,6 +1028,7 @@ export default {
                       path: $path
                       publicid: $publicid
                       count: $count
+                      kdv:$kdv
                     ) {
                       _id
                     }
@@ -1035,7 +1045,8 @@ export default {
                   fiyat: this.d_indirimli_fiyat,
                   path: this.stok_path,
                   publicid: this.stok_publicid,
-                  count: this.miktar
+                  count: this.miktar,
+                  kdv:this.urundetay[0].kdv
                 }
               })
               .then(data => {

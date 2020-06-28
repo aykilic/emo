@@ -52,7 +52,7 @@
                                     <q-td class="text-weight-bold" key="stokad" :props="props"  > 
                                         {{props.row.stokad}} <br> {{props.row.varyantoption1}} <br> {{props.row.varyantoption2}}
                                     </q-td>
-                                    <q-td class=""  key="miktar"  :props="props"  > 
+                                    <q-td class=""  key="miktar"  :props="props" v-if="props.selected==false ? props.row.count=1:props.row.count" > 
                                         <!-- TODO: -->
                                         <!-- <q-input
                                         style="margin-top:20px;"
@@ -65,7 +65,7 @@
                                             :rules="[ val => val > 0  ]"
                                             /> -->
                                         <q-btn
-                                            v-model="props.row.count"
+                                            v-model="props.row.count" 
                                             @click="hesaplama(props.row.count < 2 ? props.row.count=1 : props.row.count--)"
                                             color="white"
                                             size="xs"
@@ -92,7 +92,6 @@
                                     <q-td class="text-weight-bold " key="fiyat" :props="props"  > 
                                         {{formatPrice(props.row.fiyat)}} TL
                 
-                                    
                                     </q-td>
                                     <q-td  key="delete" :props="props"  > 
                                         <q-btn size="md"  icon="delete" color="grey-7" @click="delete_basketproduct(props.row._id)" flat round></q-btn>
@@ -272,7 +271,7 @@
                                     </div>
                                 <q-stepper-navigation>
                                 <div class="col-12">
-                                        <q-btn @click="goster()"></q-btn>
+                                        <!-- <q-btn @click="goster()"></q-btn> -->
                                     <q-btn v-if="get_uid" @click="u_veriler()"  class="q-px-xl " size="lg" color="primary" :label="step === 3 ? 'Finish' : 'Devam'" rounded/>
                                     <q-btn v-else @click="veriler()"  class="q-px-xl " size="lg" color="primary" :label="step === 3 ? 'Finish' : 'Devam'" rounded/>
                                 </div>
@@ -562,6 +561,7 @@ import ilcedata from '../../statics/ilce.json'
 import gql from "graphql-tag";
 import { mapState, mapGetters } from "vuex";
 import { Loading } from "quasar";
+import { date } from 'quasar'
 let myBody = document.getElementsByTagName('body')[0];
     export default {
         data() {
@@ -606,7 +606,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 },
                 // get_userdetaillist:{selected:false},
                 // ------
-                step:2,
+                step:1,
                 lists:[],
                 // ------
                 aratoplam:"0,00",
@@ -614,6 +614,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 tutar:"0,00",
                 count:1,
                 selected:[],
+                odemedurumu:"",
                 // ------
                 columns: [
                      { name: "resim",   label: "Resim", align: "left"  },
@@ -691,7 +692,9 @@ let myBody = document.getElementsByTagName('body')[0];
     ]),
         },
         mounted () {
-            
+             this.lists=[]
+            //  this.props.row=""
+            // this.selected=[ ]
             this.fonk()
            
            this.get_userdetaillists.forEach(item=>{ //adres selected hatası için
@@ -709,7 +712,49 @@ let myBody = document.getElementsByTagName('body')[0];
                 console.log(this.selected);
             },
             tamamla(){
+                // console.log("this.get_uid",this.get_uid);
+                 console.log("user",this.user);
+                 console.log("selected",this.selected);
+                let userid=""
+                let satirList  = []
+                let siparisfis = ""
+                let sipno=Number(date.formatDate(Date.now(), 'X'))+225222222
+                sipno=sipno.toString()
+                if (this.get_uid == null || this.get_uid == undefined || this.get_uid == "") {
+                    // userid=this.get_guid
+                }else{
+                    // userid=this.get_uid
+                }
 
+
+                
+                let vm=this
+                function satlistolustur() {
+                siparisfis={
+                    sipno:sipno,
+                    userid:vm.user._id,
+                    odemetipi:vm.val,
+                    odemedurumu:vm.odemedurumu
+                    // stokid:this.selected[0],
+                    // aratoplam:this.formatNumber(this.aratoplam),
+                    // kdv:this.formatNumber(this.kdv),
+                    // tutar:this.formatNumber(this.tutar),
+                }    
+                
+                vm.selected.forEach(item=>{
+                    let obj={}
+                    
+                        obj.varyantid=item.varyantid
+                        obj.count=item.count
+                        obj.aratoplam=(item.fiyat)/((item.kdv+100)/100)*(item.count)
+                        obj.kdv=(item.kdv)
+                        obj.tutar=(item.fiyat)*(item.count)
+                        
+                        satirList.push(obj)
+                })
+                }
+                // console.log("satirList",satirList);
+                 
                if(this.val == ""){
                    this.$q.notify({
                         type: "negative",
@@ -720,18 +765,69 @@ let myBody = document.getElementsByTagName('body')[0];
 
                 let val =this.val
                 if(val==="Kredi Kartı Hemen"){
-                    console.log(val);
+                    // console.log(val);
+                    this.odemedurumu="Ödendi"
+                    satlistolustur()
+
+                    Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
+                            createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          satirList: satirList,
+                          siparisfis: siparisfis
+                        }
+                        })
+                        .then(data => {
+                            console.log("ok");
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
+
                 }else if(val==="Havale"){
                     this.havale_div=true
+                    this.odemedurumu="Beklemede"
+                    satlistolustur()
                     console.log(val);
+                    
+                    Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
+                            createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          satirList: satirList,
+                          siparisfis: siparisfis
+                        }
+                        })
+                        .then(data => {
+                            console.log("ok");
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
                 }else if(val==="Kapıda Nakit"){
+                    this.odemedurumu="Kapıda Ödeme"
                     console.log(val);
-
                 }
-
-
-
-                console.log(this.user);
+                // console.log(this.user);
+                // console.log(this.selected);
                 // console.log(this.lists);
             },
             selectdetail(a,i){
@@ -914,19 +1010,22 @@ let myBody = document.getElementsByTagName('body')[0];
                         message: `Ürün Seçimini Yapmadınız..!`
                     })
             },
-            // payment_radio(val){
+            payment_radio(val){
                 
-            //     if(val==="Kredi Kartı Hemen"){
-            //         console.log("1");
-            //     }else if(val==="Havale"){
-            //         this.havale_div=true
-            //         console.log("2");
-            //     }else if(val==="Kapıda Nakit"){
-            //         console.log("3");
-            //     }
-            // },
+                if(val==="Kredi Kartı Hemen"){
+                    console.log("1");
+                }else if(val==="Havale"){
+                    this.havale_div=true
+                    console.log("2");
+                }else if(val==="Kapıda Nakit"){
+                    console.log("3");
+                }
+            },
             fonk(){
+
+                // this.count=1
                 if (Cookies.get("uid")) {
+                    console.log(this.get_ubasketlist);
                     this.lists=this.get_ubasketlist
                     this.user.uid=Cookies.get("uid")
                 }else{
@@ -947,31 +1046,41 @@ let myBody = document.getElementsByTagName('body')[0];
             //     // })
             // },
             hesaplama(){
+                // Unix Timestamp
+                // let sipno=Number(date.formatDate(Date.now(), 'X'))+225222222
+                // sipno=sipno.toString()
                 
+                //  console.log("sipno",sipno);
+                // 
                 // eğer stok miktarı varsa yazılacak
                 let aratoplam=0
                 let kdv=0
+                let kdvoran=0
                 let tutar=0
-               
+                
                 this.selected.forEach(item=>{
                     if(item.count < 1 ){
                         item.count=1
-                      
                     }
+                    kdvoran=item.kdv
                     // console.log(item.count);
-                    aratoplam +=item.count * (item.fiyat/1.18);
-                     
+                    aratoplam +=item.count * (item.fiyat/((100+item.kdv)/100))
+                    kdv += item.count * (item.fiyat-(item.fiyat/((100+item.kdv)/100)))
                 })
-            
-               kdv=(aratoplam*0.18)
-               tutar=aratoplam*1.18
+                // console.log(kdv);
+            //    kdv=(aratoplam*kdvoran/100)
+            //    tutar=aratoplam*((100+kdvoran)/100)
+               tutar=aratoplam + kdv
                aratoplam=(aratoplam/1).toFixed(2).replace('.', ',')
                aratoplam=aratoplam.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
                this.aratoplam=aratoplam
+
                kdv=kdv.toFixed(2).replace('.', ',')
                this.kdv=kdv.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+
                tutar=tutar.toFixed(2).replace('.', ',')
                this.tutar=tutar.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+               console.log("selected",this.selected)
 
             },
             delete_basketproduct(val){
@@ -1056,9 +1165,14 @@ let myBody = document.getElementsByTagName('body')[0];
                 return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
             },
             formatNumber(value) {
-                let val = (value)
+                console.log("value",value);
+                let val = value
                 return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                // return val
             },
+            // formatNumber(value) {
+            // return value.toLocaleString("en-US", { maximumFractionDigits: 2, minimumFractionDigits: 2 })
+            // }
             // toggleBodyClass(addRemoveClass, className) {    
             //     const el = document.body;
 

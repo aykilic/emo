@@ -73,12 +73,12 @@
           </q-item-section>
         </q-item>
         
-         <q-item  to="/admin" exact>
+         <q-item  to="/siparislist" exact>
           <q-item-section avatar>
             <q-icon name="shopping_cart" />
           </q-item-section>
           <q-item-section>
-            <q-item-label >----</q-item-label>
+            <q-item-label >Sipariş Listesi</q-item-label>
           </q-item-section>
         </q-item>
         

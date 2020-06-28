@@ -319,6 +319,7 @@ export default {
                                           path:value.path,
                                           publicid:value.publicid,
                                           count:value.count,
+                                          kdv:value.count
                                       }
                                       array.push(avalue)
                                   }   
@@ -339,6 +340,7 @@ export default {
                                     path:avalue.path,
                                     publicid:avalue.publicid,
                                     count:avalue.count,
+                                    kdv:avalue.kdv
                                 }
                                 array.push(avalue)
                             }
@@ -379,6 +381,7 @@ export default {
                                           path:value.path,
                                           publicid:value.publicid,
                                           count:value.count,
+                                          kdv:value.kdv
                                       }
                                       array.push(avalue)
 

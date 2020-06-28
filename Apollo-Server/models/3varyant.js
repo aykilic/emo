@@ -63,7 +63,6 @@ const varyantSchema = new Schema({
   _id:{
     type: Schema.ObjectId,
     auto: true,
-    
   },
   stokid:{
     type: Schema.ObjectId,

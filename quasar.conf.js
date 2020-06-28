@@ -43,7 +43,7 @@ module.exports = function (ctx) {
        iconSet:'mdi-v4',
       
       // Quasar icon set
-      lang: 'en-us', // Quasar language pack
+      lang: 'tr', // Quasar language pack
 
       // Possible values for "all":
       // * 'auto' - Auto-import needed Quasar components & directives
