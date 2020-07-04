@@ -615,6 +615,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 count:1,
                 selected:[],
                 odemedurumu:"",
+                kdvtutar:0,
                 // ------
                 columns: [
                      { name: "resim",   label: "Resim", align: "left"  },
@@ -727,14 +728,27 @@ let myBody = document.getElementsByTagName('body')[0];
                 }
 
 
-                
+               let aratoplam =this.formatNumber(this.aratoplam)
+               let kdv =this.formatNumber(this.kdv)
+               let tutar =this.formatNumber(this.tutar)
+               
+               
                 let vm=this
                 function satlistolustur() {
+                    // let stokad=""
+                    // vm.selected.forEach(em=>{
+                    //     stokad=em.stokad+" "+em.varyantoption1+" "+em.varyantoption2
+                    // })
                 siparisfis={
                     sipno:sipno,
                     userid:vm.user._id,
                     odemetipi:vm.val,
-                    odemedurumu:vm.odemedurumu
+                    odemedurumu:vm.odemedurumu,
+                    aratoplam:aratoplam,// server yapı
+                    kdv:kdv,
+                    tutar:tutar
+                    // stokad:stokad
+                    // stokad:this.selected
                     // stokid:this.selected[0],
                     // aratoplam:this.formatNumber(this.aratoplam),
                     // kdv:this.formatNumber(this.kdv),
@@ -742,14 +756,19 @@ let myBody = document.getElementsByTagName('body')[0];
                 }    
                 
                 vm.selected.forEach(item=>{
+
                     let obj={}
                     
                         obj.varyantid=item.varyantid
                         obj.count=item.count
-                        obj.aratoplam=(item.fiyat)/((item.kdv+100)/100)*(item.count)
-                        obj.kdv=(item.kdv)
-                        obj.tutar=(item.fiyat)*(item.count)
+                        obj.stokad=item.stokad+" "+item.varyantoption1+" "+item.varyantoption2
+                        obj.birimfiyat=item.fiyat/((item.kdv+100)/100) //8
+                        obj.aratoplam=item.fiyat/((item.kdv+100)/100)*(item.count) // 9.26
+                        obj.kdv=(item.kdv) //0.08
+                        obj.kdvtutar=(item.fiyat/((item.kdv+100)/100))*item.count*((item.kdv)/100)
                         
+                        obj.tutar=(item.fiyat)*(item.count) // 10
+                        // obj.kdvtutar +=(item.fiyat)*(item.count)*()
                         satirList.push(obj)
                 })
                 }
@@ -1166,9 +1185,12 @@ let myBody = document.getElementsByTagName('body')[0];
             },
             formatNumber(value) {
                 console.log("value",value);
-                let val = value
-                return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-                // return val
+                let val = ""
+                value=value.replace(/\./g,"");
+                value=value.replace(/\,/g,".");
+                val=Number(value)
+                // return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                 return val
             },
             // formatNumber(value) {
             // return value.toLocaleString("en-US", { maximumFractionDigits: 2, minimumFractionDigits: 2 })

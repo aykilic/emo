@@ -20,19 +20,24 @@ scalar DateTime
 type satir{
     _id:ID
     count:Float
+    stokad:String
     varyantid:ID
+    birimfiyat:Float
     aratoplam:Float
     kdv:Float
+    kdvtutar:Float
     tutar:Float
 }
 type siparis{
     _id:ID
     userid:ID
     stokid:ID
+    
     sipno:String
     odemedurumu:String
     odemetipi:String
     teslimat:String
+    fatdurum:String
     aratoplam:Float
     kdv:Float
     tutar:Float
@@ -46,26 +51,41 @@ type siparis{
 #      mergesepet_mutation(sepetlist:[sepetlistInput]):sepet
 #      delete_basketproduct(id:ID):sepet
     createSiparisFis_mutation(satirList:[satirListInput],siparisfis:siparisfisinput):siparis
+    siparistutarupdate(id:ID, aratoplam:Float,kdv:Float,tutar:Float):siparis
+    siparissatirdelete(sipid:ID,satirid:ID):siparis
+    sipariskargodurumupdate(kargodurumlist:[kargodurumlistInput],kargodurum:String):siparis
+    siparisodemedurumupdate(odemedurumlist:[odemedurumlistInput],odemedurum:String):siparis
   }
  type Query {
      search_siparislist:[siparis]
 #     search_ubasketlist(uid:String):[sepet]
  }
 input satirListInput{
+    stokad:String
     varyantid:ID
     count:Float
     aratoplam:Float
+    birimfiyat:Float
     kdv:Float
+    kdvtutar:Float
     tutar:Float
 }
 input siparisfisinput{
     userid:ID
     stokid:ID
+    
     sipno:String
     odemedurumu:String
     odemetipi:String
     teslimat:String
+    fatdurum:String
     aratoplam:Float
     kdv:Float
     tutar:Float
+}
+input kargodurumlistInput{
+    sipno:String
+}
+input odemedurumlistInput{
+    sipno:String
 }

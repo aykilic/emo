@@ -87,6 +87,12 @@ module.exports = {
     const varyant = Models.varyantValue
     return await varyant.findByIdAndDelete(id);
   },
+  varyantstokmiktaredit:async (root, {id, count }, { Models }) => {
+     console.log(id,count);
+    const model = Models.varyant_skus
+   return await model.findOneAndUpdate({_id :id}, {$inc : {miktar : count}},{new: true})
+    // return await varyant.findByIdAndDelete(id);
+  },
   updateVaryantMiktar:async (root, parent, { Models }) => {
     const varyant = Models.varyant_skus
     return await Promise.all(
@@ -100,6 +106,8 @@ module.exports = {
          return  data
         
     });
+  
+  
 
 
 

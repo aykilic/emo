@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf" >
-    <q-header   >
+    <q-header  reveal >
       <q-toolbar class="text-amber-1 bg-white text-grey-9 text-weight-bold justify-center " >
        
         <div class="row q-pt-lg col-md-8 col-sm-10 col-xs-12 grid desktop-had" >
@@ -122,8 +122,14 @@
       >
         <q-scroll-area  style="height: 100% ;  border-right: 1px solid #ddd;">
           <q-item class="bg-pink-5">
-          <q-item-section class="text-center text-white">
-          <q-item-label >Menü</q-item-label></q-item-section></q-item>
+          <q-item-section class="row text-center  text-white">
+          Menu
+          <!-- <q-space /> -->
+          
+          
+          </q-item-section>
+          <q-btn class="text-white col-1"  icon="close" flat  dense @click="drawer=false" />
+          </q-item>
           <mobil-menu :nodes="treemmenu" :depth="0"></mobil-menu>
           <!-- </q-list> -->
           <!-- <q-separator dark /> -->
@@ -177,7 +183,7 @@
       <!-- </transition> -->
       </div>
       <!-- ------------------------------------------------------------------------------------------- -->
-      <q-page-sticky expand position="top" style="z-index:1">
+      <q-page-sticky expand position="top" style="z-index:1"  >
             <!-- <div> -->
                 <!-- TODO:desktop tabs -->
           <!-- <q-header class="mobil-tab" elevated>      -->

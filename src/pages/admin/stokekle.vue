@@ -208,12 +208,12 @@
                   outlined
                   v-model="hasvaryantsatirlists[key].varyant_option2_name"
                   label="İkinci Ad"
-                  class="q-mb-md q-mr-md col-1 hint"
+                  class="q-mb-md q-mr-md col-2 hint"
                   readonly
                 />
                 <q-separator class="q-mr-md" vertical />
 
-                <q-input
+                <!-- <q-input
                   outlined
                   v-model="hasvaryantsatirlists[key].fiyat1"
                   label="Fiyat1"
@@ -229,7 +229,7 @@
                   label="Fiyat2"
                   class="q-mb-md q-mr-md col-1 hint"
                   readonly
-                />
+                /> -->
 
                 <q-input
                   outlined
@@ -277,11 +277,11 @@
                   outlined
                   v-model="satirlists[key].varyant_option2_name"
                   label="İkinci Ad"
-                  class="q-mb-md q-mr-md col-1 hint"
+                  class="q-mb-md q-mr-md col-2 hint"
                 />
                 <q-separator class="q-mr-md" vertical />
 
-                <q-input
+                <!-- <q-input
                   outlined
                   v-model="satirlist.fiyat1"
                   label="Fiyat"
@@ -294,7 +294,7 @@
                   v-model="satirlist.miktar"
                   label="Miktar"
                   class="q-mb-md q-mr-md col hint"
-                />
+                /> -->
               </div>
             </div>
 

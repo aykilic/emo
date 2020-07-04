@@ -9,6 +9,9 @@ const satirSchema = new Schema({
     stokid: {
       type: Schema.ObjectId,
     },
+    stokad:{
+        type:String
+    },
     varyantid: {
       
       type: Schema.ObjectId,
@@ -17,12 +20,19 @@ const satirSchema = new Schema({
         type:Number
 
     },
+    birimfiyat: {
+        type: Decimal,
+    },
     aratoplam: {
         type: Decimal,
     },
     kdv: {
       type: Decimal,
     },
+    kdvtutar: {
+      type: Decimal,
+    },
+
     tutar: {
       type: Decimal,
     },
@@ -35,9 +45,10 @@ const satirSchema = new Schema({
     userid: {
           type: Schema.ObjectId, 
       },
-      sipno:{
-          type:String
-      },
+    sipno:{
+    type:String
+    },
+
     // --------------
     aratoplam: {
         type: Decimal,
@@ -54,7 +65,12 @@ const satirSchema = new Schema({
         type:String
     },
     teslimat:{
-        type:String
+        type:String,
+        default:"Beklemede"
+    },
+    fatdurum:{
+        type:String,
+        default:"Beklemede"
     },
 
 
