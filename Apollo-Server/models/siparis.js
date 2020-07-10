@@ -46,7 +46,13 @@ const satirSchema = new Schema({
           type: Schema.ObjectId, 
       },
     sipno:{
-    type:String
+      type: String
+    },
+    faturano:{
+      type: Number
+    },
+    irsaliyeno:{
+      type: Number
     },
 
     // --------------

@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 const ObjectID = require("mongodb").ObjectID;
 module.exports = {
     createSiparisFis_mutation:async (root,{ satirList, siparisfis },{Models}) => {
-        console.log(satirList);
+        // console.log(satirList);
         const siparis = Models.siparis
         return await new Promise((resolve,object) =>{
 
@@ -11,6 +11,8 @@ module.exports = {
             new siparis({
                 userid:siparisfis.userid,
                 stokid:siparisfis.stokid,
+                irsaliyeno:siparisfis.irsaliyeno,
+                faturano:siparisfis.faturano,
                 sipno:siparisfis.sipno,
                 odemetipi:siparisfis.odemetipi,
                 odemedurumu:siparisfis.odemedurumu,
@@ -30,6 +32,19 @@ module.exports = {
         })
 
     },
+    numara_guncelle:async (root, { faturano, irsaliyeno }, { Models }) => {
+        // console.log(id,count);
+       const model = Models.numaralar
+      return await model.findOneAndUpdate({'name' :'ilk'}, {"$set":   { "irsaliyeno": irsaliyeno,"faturano": faturano}  },{upsert:true})
+       // return await varyant.findByIdAndDelete(id);
+     },
+     siparis_numara_guncelle:async (root, { id, faturano, irsaliyeno }, { Models }) => {
+        // console.log(id,count);
+       const model = Models.siparis
+      return await model.findOneAndUpdate({_id :id}, {"$set":   { "irsaliyeno": irsaliyeno,"faturano": faturano}  },{upsert:true})
+       // return await varyant.findByIdAndDelete(id);
+     },
+     
     siparistutarupdate:async (root, {id, aratoplam,kdv,tutar }, { Models }) => {
         // console.log(id,count);
        const model = Models.siparis
@@ -37,7 +52,7 @@ module.exports = {
        // return await varyant.findByIdAndDelete(id);
      },
     siparissatirdelete: async (root, {sipid, satirid }, { Models }) => {
-         console.log(sipid, satirid);
+        //  console.log(sipid, satirid);
        const model = Models.siparis
       return await model.findOneAndUpdate({_id :sipid}, {$pull: {satirs: {"_id":ObjectID(satirid)}}})
     //   $pull: {vars: {"images._id":ObjectID(imageid)}},
@@ -73,4 +88,5 @@ module.exports = {
           
       });
     },
+    
 }

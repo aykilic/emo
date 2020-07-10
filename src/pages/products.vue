@@ -1,5 +1,5 @@
 <template>
-    <q-page class=" row q-pt-md q-pb-md items-start q-col-gutter-md">
+    <q-page class=" row q-pt-xl q-pb-md items-start q-col-gutter-md">
     
 
         <div  v-for="(list,index) in lists" :key="index" v-if="list.vars" class="col-md-3 col-sm-4 col-xs-6 ">

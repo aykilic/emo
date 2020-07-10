@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf" >
-    <q-header  reveal >
+    <q-header  reveal :reveal-offset="150">
       <q-toolbar class="text-amber-1 bg-white text-grey-9 text-weight-bold justify-center " >
        
         <div class="row q-pt-lg col-md-8 col-sm-10 col-xs-12 grid desktop-had" >
@@ -162,17 +162,14 @@
           
       <!-- </div> -->
       
-      <div class=" col-md-8 col-sm-10 col-xs-12 q-pt-xl desktop-had" >
+      <!-- <div class=" col-md-8 col-sm-10 col-xs-12 desktop-hada " >
       
-      
-      <!-- <transition name="fade"> -->
         <keep-alive>
-          <!-- <load v-if="$root.loading"></load> -->
           <router-view ></router-view>
         </keep-alive>
-      <!-- </transition> -->
-      </div>
-      <div class=" col-md-8 col-sm-10 col-xs-12  mobil-had" >
+      
+      </div> -->
+      <div class=" col-md-8 col-sm-10 col-xs-12  " >
       
       
       <!-- <transition name="fade"> -->

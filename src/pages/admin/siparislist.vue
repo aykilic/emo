@@ -1,5 +1,5 @@
 <template>
-    <div class="q-pa-xl row q-gutter-md justify-center">
+    <div class="q-pa-lg row  justify-center">
         <!-- <q-card class="col-md-11 row  col-sm-11  col-xs-11 justify-center">
             <q-card-section class="row">
                 <div class="text-h6">Sipariş Listesi</div>
@@ -8,19 +8,53 @@
             <q-separator inset />
             
         </q-card> -->
-        <q-card class="col-11 ">
-            <div class="row col-12 justify-center">
-            <div class="q-pa-xl "><q-btn @click="teslimatdialog=true"  color="primary" text-color="white" label="Teslimat Durumunu Değiştir" /></div>
-            <div class="q-pa-xl "><q-btn @click="odemedialog=true" color="primary" text-color="white" label="Ödeme Durumunu Değiştir" /></div>
-            <!-- <div class="q-pa-xl "><q-btn  color="primary" text-color="white" label="Teslimat Durumunu Değiştir" /></div> -->
+        
+        <q-card class="row col-11 ">
+            <div class="row col-12 q-pl-xl q-pt-xs q-pb-xs text-h6 ">
+            Sipariş Sorgu Seçenekleri
             </div>
+            
+        <q-separator  />
+
+        <div class="row col-12">
+        
+        
+        <div class=" col-3 q-pl-xl q-pt-md q-pb-md  ">
+            <q-select dense class="" outlined v-model="odemeyontemmodel" :options="odemeyontemdata" label="Ödeme Yöntemi" />
+        </div>
+        <div class=" col-3 q-pl-xs q-pt-md q-pb-md  ">
+            <q-select dense class="" outlined v-model="odemedurummodel" :options="odemedurumdata" label="Ödeme Durumu" />
+        </div>
+        <div class=" col-3 q-pl-xs q-pt-md q-pb-md  ">
+            <q-select dense class="" outlined v-model="teslimatdurummodel" :options="teslimatdurumdata" label="Teslimat Durumu" />
+        </div>
+        <div class=" col-3 q-pl-xs q-pt-md q-pb-md q-pr-xl ">
+            <q-select dense class="" outlined v-model="fatdurummodel" :options="fatdurumdata" label="Fatura Durumu" />
+        </div>
+        <!-- <div class=" col q-pl-xs q-pt-md q-pb-md q-pr-xl ">
+            <q-select dense class="" outlined v-model="fatdurummodel" :options="fatdurumdata" label="Fatura Durumu" />
+        </div> -->
+        </div>
+
+
+
+
+
+
+
+
+        <q-separator  />
+        <div class="q-ml-xl q-mt-md q-mb-md" >
+         <q-btn class="" @click="siplistfilter()"  color="primary" label="Sorgula"  v-close-popup ></q-btn></div>
+        </q-card>
+        <q-card class="row q-mt-md col-11 ">
             <div class="col-md-12 row  col-sm-12  col-xs-12 justify-center" >
             
             
-            <q-separator inset/>    
+            <!-- <q-separator inset/>     -->
             <q-table
             flat
-            title="Sipariş Listesi"
+            
             :data="siparislists"
             :columns="columns"
             row-key="_id"
@@ -30,10 +64,18 @@
             :selected.sync="selected"
             :filter="filter"
           >
-            <template v-if="siparislists.length > 0" v-slot:top-right>
-                <q-input borderless dense debounce="300" v-model="arama" placeholder="Bul" >
+            <template  v-slot:top>
+                <div class="row text-weight-medium text-h5 col-12">Sipariş Listesi
+                
+                <q-space />
+                <q-input borderless dense debounce="300" v-model="filter" placeholder="Bul" >
                 <q-icon slot="append" name="search" />
                 </q-input>
+                </div>
+                <div class=" q-gutter-md q-mt-md">
+                <q-btn @click="selected.length < 1 ? $q.notify({type: 'negative',message: `Listeden Seçim Yapmalısınız...`}) : teslimatdialog=true"  color="primary" text-color="white" label="Teslimat Durumunu Değiştir" />
+                <q-btn @click="selected.length < 1 ? $q.notify({type: 'negative',message: `Listeden Seçim Yapmalısınız...`}) : odemedialog=true" color="primary" text-color="white" label="Ödeme Durumunu Değiştir" />
+                </div>
                     <!-- <q-btn >Düzenle</q-btn> -->
             </template>
             <template v-slot:body="props" class="">
@@ -43,7 +85,7 @@
             </q-td>
                 <q-td key="tarih" :props="props"  >
                   <!-- {{moment(props.row.createdAt).format('DD-MM-YYYY')}} -->
-                  {{date().formatDate(props.row.createdAt, 'DD-MM-YYYY-HH:mm')}}
+                  {{date(props.row.createdAt)}}
                 </q-td>
                 <q-td key="sipno" :props="props"  class="sipno cursor-pointer"   @click.native="editsiparisdialogm(props.row),siparisdialog=true,sipno=props.row.sipno">
                     {{props.row.sipno}}
@@ -60,7 +102,7 @@
                  
                 </q-td>
                 <q-td key="odemedurumu" :props="props"  >
-                    <q-badge :color="props.row.odemedurumu === 'Ödendi' ? 'green' : props.row.odemedurumu === 'Banka' ? 'green' : props.row.odemedurumu === 'Nakit' ? 'green': 'deep-orange'">
+                    <q-badge :color="props.row.odemedurumu === 'Ödendi' ? 'green' : 'deep-orange' ">
                     {{props.row.odemedurumu}}
                     </q-badge>
                 </q-td>
@@ -77,7 +119,8 @@
                 </q-td>
               
                 <q-td key="tutar" :props="props"  >
-                    {{ Number(props.row.tutar).toLocaleString()}} TL
+                    <!-- {{ Number(props.row.tutar).toFixed(2).toLocaleString()}} TL -->
+                    {{props.row.tutar.toLocaleString('tr', {minimumFractionDigits: 2})}} TL
                   <!-- {{props.row.varyant_option1_name}} - {{props.row.varyant_option2_name}} -->
                   <!-- {{props.row.tutar}} -->
                 </q-td>
@@ -108,8 +151,12 @@
           <q-td colspan="">
             
           </q-td>
-          <q-td colspan="">
+          <q-td class="text-weight-bolder" colspan="">
             Toplam :
+          </q-td>
+          <q-td class="text-right text-weight-bolder" colspan="">
+            <!-- {{Number(tabletutar).toFixed(2).toLocaleString()}} TL -->
+            {{tabletutar.toLocaleString('tr', {minimumFractionDigits: 2})}} TL
           </q-td>
         </q-tr>
       </template>
@@ -118,6 +165,12 @@
 </template> -->
           </q-table>
           </div>
+          <!-- <div class="row col-5 justify-center"> -->
+            <!-- <div class="q-pt-md q-pl-xl col-12"><q-btn @click="selected.length < 1 ? $q.notify({type: 'negative',message: `Listeden Seçim Yapmalısınız...`}) : teslimatdialog=true"  color="primary" text-color="white" label="Teslimat Durumunu Değiştir" /></div> -->
+            <!-- <div class="q-pa-xl "><q-btn @click="teslimatdialog=true"  color="primary" text-color="white" label="Teslimat Durumunu Değiştir" /></div> -->
+            <!-- <div class="q-pt-md q-pl-xl q-pb-md col-12"><q-btn @click="selected.length < 1 ? $q.notify({type: 'negative',message: `Listeden Seçim Yapmalısınız...`}) : odemedialog=true" color="primary" text-color="white" label="Ödeme Durumunu Değiştir" /></div> -->
+            <!-- <div class="q-pa-xl "><q-btn  color="primary" text-color="white" label="Teslimat Durumunu Değiştir" /></div> -->
+            <!-- </div> -->
         </q-card>
         <!-- <q-dialog v-model="teslimatdialog" >
         <q-card style="min-width:300px">    
@@ -128,23 +181,24 @@
             v-model="teslimatdialog"
 
           >
-            <q-card  style="width: 500px; max-width: 80vw;">
+            <q-card  style="width: 550px; max-width: 80vw;">
               <q-card-section class="row justify-center">
                 <div class="text-h6 ">Teslimat Seçimi</div>
                 <q-space />
                 <q-btn icon="close" flat round dense v-close-popup />
               </q-card-section>
             <q-separator/>
-              <q-card-section >
-                <q-radio  v-model="kargodurum" val="Kargoya Teslim" label="Kargoya Teslim" />
-                <q-radio  v-model="kargodurum" val="Elden Teslim" label="Elden Teslim" />
-                <q-radio  v-model="kargodurum" val="iptal" label="İptal" />
+              <q-card-section class="row">
+                <q-radio class="col-12" v-model="kargodurum" val="Kargoya Teslim" label="Kargoya Teslim" />
+                <q-radio class="col-12" v-model="kargodurum" val="Elden Teslim" label="Elden Teslim" />
+                <q-radio class="col-12" v-model="kargodurum" val="Kargodan Teslim" label="Kargodan Teslim" />
+                <q-radio class="col-12" v-model="kargodurum" val="iptal" label="İptal Edildi" />
                 
               </q-card-section>
                 <q-separator/>
               <q-card-section  class="text-right">
 
-                <q-btn class="q-ma-sm"  color="primary" label="Güncelle" @click="teslimat()" v-close-popup ></q-btn>
+                <q-btn class=""  color="primary" label="Güncelle" @click="teslimat()" v-close-popup ></q-btn>
                 <!-- <q-btn class="q-mr-md text-black"  color="white" label="Kapat"  v-close-popup ></q-btn> -->
               </q-card-section>
             </q-card>
@@ -160,16 +214,16 @@
                 <q-btn icon="close" flat round dense v-close-popup />
               </q-card-section>
             <q-separator/>
-              <q-card-section >
-                <q-radio  v-model="odemedurum" val="Banka" label="Bankadan Ödeme" />
-                <q-radio  v-model="odemedurum" val="Nakit" label="Elden Ödeme" />
-                <q-radio  v-model="odemedurum" val="Beklemede" label="Beklemede" />
+              <q-card-section class="row">
+                <q-radio class="col-12" v-model="odemedurum" val="Ödendi" label="Bankadan Ödeme" />
+                <q-radio class="col-12" v-model="odemedurum" val="Nakit" label="Elden Ödeme" />
+                <q-radio class="col-12" v-model="odemedurum" val="Beklemede" label="Beklemede" />
                 
               </q-card-section>
                 <q-separator/>
               <q-card-section  class="text-right">
 
-                <q-btn class="q-ma-sm"  color="primary" label="Güncelle" @click="odeme()" v-close-popup ></q-btn>
+                <q-btn class=""  color="primary" label="Güncelle" @click="odeme()" v-close-popup ></q-btn>
                 <!-- <q-btn class="q-mr-md text-black"  color="white" label="Kapat"  v-close-popup ></q-btn> -->
               </q-card-section>
             </q-card>
@@ -266,6 +320,23 @@ Vue.use(VueMask);
     export default {
         data() {
             return {
+                fatdurummodel:"",
+                fatdurumdata: [
+                '','Faturalandı', 'Beklemede', 'İptal',
+                ],
+                odemedurummodel:"",
+                odemedurumdata:[
+                '','Ödendi', 'Beklemede'
+                ],
+                teslimatdurummodel:"",
+                teslimatdurumdata:[
+                    '','Beklemede', 'Kargoya Teslim', 'Elden Teslim', 'Kargodan Teslim', 'İptal Edildi'
+                ],
+                odemeyontemmodel:"",
+                odemeyontemdata:[
+                    '','Havale','Kredi Kartı Hemen', 'Kapıda Nakit'
+                ],
+                //----------
                 teslimatdialog:false,
                 odemedialog:false,
                 //------------
@@ -277,16 +348,16 @@ Vue.use(VueMask);
                 tarih:"",
                 filter:"",
                 columns: [
-                    {name: 'tarih', label: 'Tarih', align: 'left', sortable: true,field:row=>row.createdAt},
-                    {name: 'sipno', label: 'Sipariş No', align: 'left', sortable: true},
-                    {name: 'cep', label: 'Ad - Cep no', align: 'left', sortable: true},
+                    {name: 'tarih', label: 'Tarih', align: 'left', sortable: true,field:row=>this.date(row.createdAt)},
+                    {name: 'sipno', label: 'Sipariş No', align: 'left', sortable: true,field:row=>row.sipno},
+                    {name: 'cep', label: 'Ad - Cep no', align: 'left', sortable: true,field:row=>row.user[0].cep +' '+ row.user[0].ad_soyad},
                     
-                    {name: 'odemetipi', label: 'Ödeme Yöntemi', align: 'left', sortable: true},
-                    {name: 'odemedurumu', label: 'Ödeme Durumu', align: 'left', sortable: true},
-                    {name: 'teslimat', label: 'Teslimat', align: 'left', sortable: true},
-                    {name: 'faturadurumu', label: 'Fatura Durumu', align: 'left', sortable: true},
-
-                    {name: 'tutar', label: 'Toplam', align: 'right'}
+                    {name: 'odemetipi', label: 'Ödeme Yöntemi', align: 'left', sortable: true,field:row=>row.odemetipi},
+                    {name: 'odemedurumu', label: 'Ödeme Durumu', align: 'left', sortable: true,field:row=>row.odemedurumu},
+                    {name: 'teslimat', label: 'Teslimat', align: 'left', sortable: true,field:row=>row.teslimat},
+                    {name: 'faturadurumu', label: 'Fatura Durumu', align: 'left', sortable: true,field:row=>row.faturadurum},
+                    
+                    {name: 'tutar', label: 'Toplam', align: 'right',field:row=>row.tutar}
                 ],
                 pagination: {
                     sortBy: 'tarih',
@@ -297,13 +368,21 @@ Vue.use(VueMask);
                 // siparis edit dialog
                 siparisdialog:false,
                 editsiparisdialog:{},
+                tabletutar:0
                 // siparis edit dialog  
             }
         },
         watch: {
-            tarih(val) {
-                console.log(val);
+            siparislists(val){
+                this.tabletutar=0
+                val.forEach(item=>{
+                    this.tabletutar += item.tutar
+                })
+
             },
+            // tarih(val) {
+                // console.log(val);
+            // },
             // editsiparisdialog(val){
             //       console.log(val);
 
@@ -591,8 +670,9 @@ Vue.use(VueMask);
                 // siparis satir sil 
 
             },
-            date() {
-                return date;
+            date(val) {
+              return  date.formatDate(val, 'DD-MM-YYYY-HH:mm')
+                // return date;
             },
             formatPrice(value) {
                 let val = (value/1).toFixed(2).replace('.', ',')
@@ -603,6 +683,54 @@ Vue.use(VueMask);
             //     this.datem=date.formatDate(val.createdAt,'DD-MM-YYYY')
                 
             // }
+            async siplistfilter(){
+                await axios
+                    .post('http://'+ process.env.API +':4000/graphql',{
+                    query: `query search_siparisfilterlist($odemeyontemmodel:String,$odemedurummodel:String,$teslimatdurummodel:String,$fatdurummodel:String){
+                            search_siparisfilterlist(odemeyontemmodel:$odemeyontemmodel,odemedurummodel:$odemedurummodel,teslimatdurummodel:$teslimatdurummodel,fatdurummodel:$fatdurummodel){
+                                _id
+                                userid
+                                tutar
+                                odemetipi
+                                odemedurumu
+                                teslimat
+                                fatdurum
+                                sipno
+                                aratoplam
+                                kdv
+                                user{
+                                    ad_soyad
+                                    cep
+                                    _id
+                                }
+                                satirs{
+                                    _id
+                                    count
+                                    stokad
+                                    varyantid
+                                    birimfiyat
+                                    tutar
+                                    aratoplam
+                                    kdv
+                                    kdvtutar
+                                }
+                                createdAt
+                                }
+                            }`,
+
+                    variables: {
+                        odemeyontemmodel:this.odemeyontemmodel,
+                        odemedurummodel:this.odemedurummodel,
+                        teslimatdurummodel:this.teslimatdurummodel,
+                        fatdurummodel:this.fatdurummodel
+                    }
+                    })
+                    .then(data => {
+                     this.siparislists = data.data.data.search_siparisfilterlist;
+                    // console.log(data.data.data.hasvaryantsatirQuery);
+                    });
+
+            },
             async siplist(){
                 await axios
                     .post('http://'+ process.env.API +':4000/graphql',{

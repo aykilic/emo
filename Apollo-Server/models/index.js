@@ -9,6 +9,7 @@ const sepet = require('./sepet');
 const photo = require('./photo');
 const guest_user = require('./guest_user');
 const User_detail = require('./User_detail');
+const numaralar = require('./numaralar');
 const siparis = require('./siparis');
 
 const { GraphQLUpload } = require('graphql-upload')
@@ -48,6 +49,7 @@ module.exports = {
     User_detail,
     photo,
     siparis,
+    numaralar,
     UploadType,
     // images
     //  file

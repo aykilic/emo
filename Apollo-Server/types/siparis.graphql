@@ -32,8 +32,9 @@ type siparis{
     _id:ID
     userid:ID
     stokid:ID
-    
     sipno:String
+    irsaliyeno:Float
+    faturano:Float
     odemedurumu:String
     odemetipi:String
     teslimat:String
@@ -45,6 +46,11 @@ type siparis{
     satirs:[satir]
     createdAt: DateTime
 }
+type numaralar{
+    _id:ID
+    faturano:Float
+    irsaliyeno:Float
+}
   type Mutation {
 #      createsepet_mutation(uid:String,guid:String, stokid:ID, stokad:String, varyantid:ID, varyantoption1:String, varyantoption2:String, fiyat:Float, path:String, publicid:String, count:Int):sepet
 #      createguid_mutation:guest_user
@@ -55,9 +61,15 @@ type siparis{
     siparissatirdelete(sipid:ID,satirid:ID):siparis
     sipariskargodurumupdate(kargodurumlist:[kargodurumlistInput],kargodurum:String):siparis
     siparisodemedurumupdate(odemedurumlist:[odemedurumlistInput],odemedurum:String):siparis
+    numara_guncelle(irsaliyeno:Float,faturano:Float):numaralar
+    siparis_numara_guncelle(id:ID, irsaliyeno:Float,faturano:Float):siparis
+    
+    
   }
  type Query {
      search_siparislist:[siparis]
+     search_siparisfilterlist(odemeyontemmodel:String,odemedurummodel:String,teslimatdurummodel:String,fatdurummodel:String):[siparis]
+     son_numaralar:numaralar
 #     search_ubasketlist(uid:String):[sepet]
  }
 input satirListInput{
@@ -73,7 +85,8 @@ input satirListInput{
 input siparisfisinput{
     userid:ID
     stokid:ID
-    
+    irsaliyeno:Int
+    faturano:Int
     sipno:String
     odemedurumu:String
     odemetipi:String

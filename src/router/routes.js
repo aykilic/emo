@@ -52,6 +52,7 @@ const routes = [
       { path: '/stokdevir', component: () => import('pages/admin/fisler/stokdevirfis.vue') },
       { path: '/stokalim', component: () => import('pages/admin/fisler/stokalimfis.vue') },
       { path: '/siparislist', component: () => import('pages/admin/siparislist.vue') },
+      { path: '/faturalist', component: () => import('pages/admin/faturalist.vue') },
     ]
   },
   {

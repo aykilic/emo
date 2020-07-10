@@ -73,6 +73,14 @@
           </q-item-section>
         </q-item>
         
+         <q-item  to="/faturalist" exact>
+          <q-item-section avatar>
+            <q-icon name="mdi-file-multiple-outline" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label >Fatura Listesi</q-item-label>
+          </q-item-section>
+        </q-item>
          <q-item  to="/siparislist" exact>
           <q-item-section avatar>
             <q-icon name="shopping_cart" />

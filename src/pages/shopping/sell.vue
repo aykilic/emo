@@ -649,6 +649,7 @@ let myBody = document.getElementsByTagName('body')[0];
         ilceList:[],
         iloptions:[],
         ilceoptions:[],
+        numaralar:{}
         }
         },
         watch: {
@@ -690,7 +691,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 'get_ubasketlist',
                 'get_userdetaillists'
       
-    ]),
+            ]),
         },
         mounted () {
              this.lists=[]
@@ -703,19 +704,47 @@ let myBody = document.getElementsByTagName('body')[0];
            })
             
                 this.ilList=ildata
+
         },
-        // destroyed() {
-        //     this.toggleBodyClass('removeClass', 'new_detail_selected');
-        //     },
+        
         methods: {
             goster(){
                 console.log(this.user);
                 console.log(this.selected);
             },
-            tamamla(){
+            async tamamla(){
                 // console.log("this.get_uid",this.get_uid);
-                 console.log("user",this.user);
-                 console.log("selected",this.selected);
+                //  console.log("user",this.user);
+                //  console.log("selected",this.selected);
+                // this.numaralar_guncelle()
+                // return
+                await axios
+                    .post('http://'+ process.env.API +':4000/graphql',{
+                    query: `query son_numaralar{
+                            son_numaralar{
+                               
+                                faturano
+                                irsaliyeno
+                                }
+                            }`,
+
+                    variables: {
+                        
+                    }
+                    })
+                    .then(data => {
+                        console.log("data",data);
+                        if(data.data.data.son_numaralar == null){
+                            this.numaralar.faturano=1
+                            this.numaralar.irsaliyeno=1
+                        }else{
+                            this.numaralar.faturano=data.data.data.son_numaralar.faturano + 1
+                            this.numaralar.irsaliyeno=data.data.data.son_numaralar.irsaliyeno + 1
+                        }
+                    //  this.numaralar = data.data.data.son_numaralar;
+                      console.log("numaralar",this.numaralar);
+                    });
+                    //   return 
                 let userid=""
                 let satirList  = []
                 let siparisfis = ""
@@ -741,6 +770,8 @@ let myBody = document.getElementsByTagName('body')[0];
                     // })
                 siparisfis={
                     sipno:sipno,
+                    faturano:vm.numaralar.faturano,
+                    irsaliyeno:vm.numaralar.irsaliyeno,
                     userid:vm.user._id,
                     odemetipi:vm.val,
                     odemedurumu:vm.odemedurumu,
@@ -804,8 +835,9 @@ let myBody = document.getElementsByTagName('body')[0];
                           siparisfis: siparisfis
                         }
                         })
-                        .then(data => {
-                            console.log("ok");
+                        .then(async data => {
+                           await this.numaralar_guncelle()
+                            // console.log("ok");
                             Loading.hide()
                         }).catch(err => {
                             console.log(err);
@@ -834,20 +866,72 @@ let myBody = document.getElementsByTagName('body')[0];
                           siparisfis: siparisfis
                         }
                         })
-                        .then(data => {
-                            console.log("ok");
+                        .then(async data => {
+                           await this.numaralar_guncelle()
+                            // console.log("ok");
                             Loading.hide()
                         }).catch(err => {
                             console.log(err);
                             Loading.hide()
                         })
                 }else if(val==="Kapıda Nakit"){
-                    this.odemedurumu="Kapıda Ödeme"
-                    console.log(val);
+                    this.odemedurumu="Beklemede"
+                    satlistolustur()
+                    Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
+                            createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          satirList: satirList,
+                          siparisfis: siparisfis
+                        }
+                        })
+                        .then(async data => {
+                           await this.numaralar_guncelle()
+                            // console.log("ok");
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
+                    // console.log(val);
                 }
                 // console.log(this.user);
                 // console.log(this.selected);
                 // console.log(this.lists);
+            },
+           async numaralar_guncelle(){
+               
+               this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation numara_guncelle($faturano: Float,$irsaliyeno:Float) {
+                            numara_guncelle(faturano: $faturano, irsaliyeno: $irsaliyeno) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          faturano:this.numaralar.faturano ,
+                          irsaliyeno:this.numaralar.irsaliyeno
+                        }
+                        })
+                        .then( data => {
+                        //    await numaralar_guncelle()
+                            // console.log("ok");
+                            
+                        }).catch(err => {
+                            console.log(err);
+                            
+                        })
             },
             selectdetail(a,i){
                 // console.log(this.user);

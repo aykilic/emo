@@ -299,6 +299,69 @@ module.exports = {
     // console.log(asd);
     //  return await model.find()
   },
+  // filtreleme
+  search_siparisfilterlist:async(parent, {odemeyontemmodel, odemedurummodel,teslimatdurummodel,fatdurummodel}, {Models})=> {
+    const model = Models.siparis
+    // console.log("odemeyontemmodel",odemeyontemmodel,"odemedurummodel",odemedurummodel);
+  //  return await model.aggregate([
+   return await model.aggregate([
+    // {$set: {userid: {$toObjectId: "$userid"} }},
+    // { $match:{$and : [{$or:[{ "odemedurumu":  odemedurummodel},{"odemedurumu": { $ne:"" } }
+    // { $match:{ "odemedurumu":  odemedurummodel} }
+    // $match: {
+    //   $or: [
+    //     {
+    //       $expr: {
+    //         $cond: [
+    //           {
+    //             "$eq": [
+    //               {
+    { $match:
+    {$expr: 
+      {$and:[
+        { $cond: [{ $eq: [ odemedurummodel, "" ] },true,  { $eq: [ "$odemedurumu", odemedurummodel ] }] },
+        { $cond: [{ $eq: [ odemeyontemmodel, "" ] },true,  { $eq: [ "$odemetipi", odemeyontemmodel ] }] },
+        { $cond: [{ $eq: [ teslimatdurummodel, "" ] },true,  { $eq: [ "$teslimat", teslimatdurummodel ] }] },
+        { $cond: [{ $eq: [ fatdurummodel, "" ] },true,  { $eq: [ "$fatdurum", fatdurummodel ] }] },
+            //  { $eq: [ odemeyontemmodel, "" ] },true,  { $eq: [ "$odemetipi", odemeyontemmodel ] }
+             
+          // { $cond: [ { $eq: [ query.description, "" ] }, true, { $eq: [ "$description", query.description ] } ] },
+          // { $cond: [ { $eq: [ query.status, "" ] }, true, { $eq: [ "$status", query.status ] } ] },
+      ]}
+  }
+    }
+   
+      ,
+      {
+        $lookup:
+          {
+            from: 'User_detail',
+            localField: 'userid',
+            foreignField: '_id',
+            as: 'user'
+          },
+      },
+    //   //  { '$unwind': { 'path': '$satirs', 'preserveNullAndEmptyArrays': true } },
+    //   // {
+    //   //   $group: {
+    //   //     tutar: { $sum: "$satirs.tutar"}
+    //   //   }
+    //   // },
+    //   { $addFields: {
+    //     tutar: { $sum: {
+    //       $map: { input: "$satirs" , as: "a", in: "$$a.tutar" }
+    //     }}
+    // }}
+   ])
+     console.log(asd);
+    //  return await model.find()
+  },
+  son_numaralar:async(parent, args, {Models})=> {
+    const model = Models.numaralar
+    return await model.findOne()
+
+    console.log(asd);
+  },
   Search_checkmail:async(parent, {email}, {Models})=> {
     // console.log({email});
     const model = Models.User

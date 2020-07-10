@@ -1,6 +1,6 @@
 
 <template >
-  <q-page class="row q-mt-md items-start">
+  <q-page class="row q-mt-xl items-start">
     <load v-if="option_2=='' && option_1=='' "></load>
     <q-card v-else class="row col-12" >
       <div style="min-width: 350px;" class="row col-md-6">
@@ -46,7 +46,7 @@
               
               <div class="col-2" style="text-transform: unset;">{{value.varyantname}}:</div>
               
-              <div class="col-10 col-lg-10" style="text-decoration:underline;" :id="'varyant'+i"></div>
+              <div class="col-10 " style="text-decoration:underline" :id="'varyant'+i"></div>
 
               <div  v-if="i==0" v-for="(altvalue, index) in option_1" :key="index">
                 <div v-if="altvalue.length > 0"></div>
