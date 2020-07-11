@@ -1,11 +1,11 @@
 <template>
   <div class="q-pa-lg row justify-center">
-    <q-card class="row col-11">
+    <!-- <q-card class="row col-11">
       <div class="row col-12 q-pl-xl q-pt-xs q-pb-xs text-h6">Fatura Sorgu Seçenekleri</div>
 
       <q-separator />
 
-      <!-- <div class="row col-12">
+      <div class="row col-12">
         <div class="col-3 q-pl-xl q-pt-md q-pb-md">
           <q-select dense class outlined label="Ödeme Yöntemi" />
         </div>
@@ -19,12 +19,12 @@
           <q-select dense class outlined label="Fatura Durumu" />
         </div>
         
-      </div> -->
+      </div>
       <q-separator />
       <div class="q-ml-xl q-mt-md q-mb-md">
         <q-btn class @click="fatlistfilter()" color="primary" label="Sorgula" v-close-popup></q-btn>
       </div>
-    </q-card>
+    </q-card> -->
     <q-card class="row q-mt-md col-11 ">
         <div class="col-md-12 row  col-sm-12  col-xs-12 justify-center" >
             
@@ -114,7 +114,8 @@
                     <!-- <q-badge :color="props.row.fatdurum === 'Beklemede' ? 'deep-orange' : 'green'">
                     {{props.row.fatdurum}}
                     </q-badge> -->
-                    <q-btn @click="numara_guncelleopen(props.row)">{{props.row.faturano}}</q-btn>
+                    
+                    <q-btn class="" @click="numara_guncelleopen(props.row)" flat>{{props.row.faturano}}</q-btn>
                     
                 </q-td>
               
@@ -192,6 +193,57 @@
               </q-card-section>
             </q-card>
     </q-dialog>
+    <q-dialog
+            v-model="teslimatdialog"
+
+          >
+            <q-card  style="width: 550px; max-width: 80vw;">
+              <q-card-section class="row justify-center">
+                <div class="text-h6 ">Teslimat Seçimi</div>
+                <q-space />
+                <q-btn icon="close" flat round dense v-close-popup />
+              </q-card-section>
+            <q-separator/>
+              <q-card-section class="row">
+                <q-radio class="col-12" v-model="kargodurum" val="Kargoya Teslim" label="Kargoya Teslim" />
+                <q-radio class="col-12" v-model="kargodurum" val="Elden Teslim" label="Elden Teslim" />
+                <q-radio class="col-12" v-model="kargodurum" val="Kargodan Teslim" label="Kargodan Teslim" />
+                <q-radio class="col-12" v-model="kargodurum" val="iptal" label="İptal Edildi" />
+                
+              </q-card-section>
+                <q-separator/>
+              <q-card-section  class="text-right">
+
+                <q-btn class=""  color="primary" label="Güncelle" @click="teslimat()" v-close-popup ></q-btn>
+                <!-- <q-btn class="q-mr-md text-black"  color="white" label="Kapat"  v-close-popup ></q-btn> -->
+              </q-card-section>
+            </q-card>
+          </q-dialog>
+        <q-dialog
+            v-model="odemedialog"
+
+          >
+            <q-card  style="width: 500px; max-width: 80vw;">
+              <q-card-section class="row justify-center">
+                <div class="text-h6 ">Ödeme Durum Seçimi</div>
+                <q-space />
+                <q-btn icon="close" flat round dense v-close-popup />
+              </q-card-section>
+            <q-separator/>
+              <q-card-section class="row">
+                <q-radio class="col-12" v-model="odemedurum" val="Ödendi" label="Ödendi" />
+                <q-radio class="col-12" v-model="odemedurum" val="Nakit" label="Elden Ödeme" />
+                <q-radio class="col-12" v-model="odemedurum" val="Beklemede" label="Beklemede" />
+                
+              </q-card-section>
+                <q-separator/>
+              <q-card-section  class="text-right">
+
+                <q-btn class=""  color="primary" label="Güncelle" @click="odeme()" v-close-popup ></q-btn>
+                <!-- <q-btn class="q-mr-md text-black"  color="white" label="Kapat"  v-close-popup ></q-btn> -->
+              </q-card-section>
+            </q-card>
+          </q-dialog>   
     <div  style="display:none;">
         <div id="yazdirdiv" >
             <div v-for="(select,index) in selected" :key='index' style="" >
@@ -267,6 +319,29 @@ Vue.use(VueMask);
 export default {
   data() {
     return {
+        fatdurummodel:"",
+        fatdurumdata: [
+        '','Faturalandı', 'Beklemede', 'İptal',
+        ],
+        odemedurummodel:"",
+        odemedurumdata:[
+        '','Ödendi', 'Beklemede'
+        ],
+        teslimatdurummodel:"",
+        teslimatdurumdata:[
+            '','Beklemede', 'Kargoya Teslim', 'Elden Teslim', 'Kargodan Teslim', 'İptal Edildi'
+        ],
+        odemeyontemmodel:"",
+        odemeyontemdata:[
+            '','Havale','Kredi Kartı Hemen', 'Kapıda Nakit'
+        ],
+        kargodurum:"",
+        odemedurum:"",
+        //----------
+        teslimatdialog:false,
+        odemedialog:false,
+        //----------
+        sipno:"",
         faturanodialog:false,
         secimid:"",
         faturano:"",
@@ -284,7 +359,7 @@ export default {
                     {name: 'odemedurumu', label: 'Ödeme Durumu', align: 'left', sortable: true,field:row=>row.odemedurumu},
                     {name: 'teslimat', label: 'Teslimat', align: 'left', sortable: true,field:row=>row.teslimat},
                     {name: 'faturadurumu', label: 'Fatura Durumu', align: 'left', sortable: true,field:row=>row.faturadurum},
-                    {name: 'faturano', label: 'Fatura No', align: 'left', sortable: true,field:row=>row.faturano},
+                    {name: 'faturano', label: 'Fatura No', align: 'center', field:row=>row.faturano},
 
                     {name: 'tutar', label: 'Toplam', align: 'right',field:row=>row.tutar}
                 ],
@@ -362,8 +437,8 @@ export default {
       async fatlist(){
                 await axios
                     .post('http://'+ process.env.API +':4000/graphql',{
-                    query: `query search_siparislist{
-                            search_siparislist{
+                    query: `query search_faturalist{
+                            search_faturalist{
                                 _id
                                 userid
                                 tutar
@@ -406,9 +481,121 @@ export default {
                     }
                     })
                     .then(data => {
-                     this.faturalists = data.data.data.search_siparislist;
+                     this.faturalists = data.data.data.search_faturalist;
                     // console.log(data.data.data.hasvaryantsatirQuery);
                     });
+            },
+            teslimat(){
+                if(this.selected.length < 1  || this.kargodurum == ""){
+                    this.$q.notify({
+                    type: 'negative',
+                    message: `Seçim Yapmadınız...`
+                })
+                return 
+                }
+                // console.log("durdur",this.selected);
+                // return
+                // secilenlerin teslimat durumlarını değiştir...
+                let select=[]
+                this.selected.forEach(item=>{
+                    let obj={}
+                    obj={
+                        sipno:item.sipno
+                    }
+                    select.push(obj)
+                })
+                Loading.show()
+                this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation sipariskargodurumupdate($kargodurumlist: [kargodurumlistInput],$kargodurum:String) {
+                            sipariskargodurumupdate(kargodurumlist: $kargodurumlist, kargodurum: $kargodurum) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          kargodurumlist: select ,
+                          kargodurum: this.kargodurum
+                        }
+                        })
+                        .then(async data => {
+                            await this.fatlist()
+                            this.$q.notify({
+                                                type: "Positive",
+                                                message: `Teslimat Durumları Güncellendi...`,
+                                                position: "top-right",
+                                                color: "green",
+                                                icon: "check",
+                                            });
+                                            this.selected=[],
+                                            this.kargodurum=""
+                                            Loading.hide()
+                        }).catch(err => {
+                                console.log(err);
+                                 Loading.hide()
+                            
+
+                                // Loading.hide()
+                                })
+                
+            },
+            odeme(){
+                if(this.selected.length < 1  || this.odemedurum == ""){
+                    this.$q.notify({
+                    type: 'negative',
+                    message: `Seçim Yapmadınız...`
+                })
+                return 
+                }
+                // console.log("durdur",this.selected);
+                // return
+                // secilenlerin teslimat durumlarını değiştir...
+                let select=[]
+                this.selected.forEach(item=>{
+                    let obj={}
+                    obj={
+                        sipno:item.sipno
+                    }
+                    select.push(obj)
+                })
+                Loading.show()
+                this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation siparisodemedurumupdate($odemedurumlist: [odemedurumlistInput],$odemedurum:String) {
+                            siparisodemedurumupdate(odemedurumlist: $odemedurumlist, odemedurum: $odemedurum) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          odemedurumlist: select ,
+                          odemedurum: this.odemedurum
+                        }
+                        })
+                        .then(async data => {
+                            await this.fatlist()
+                            this.$q.notify({
+                                                type: "Positive",
+                                                message: `Ödeme Durumları Güncellendi...`,
+                                                position: "top-right",
+                                                color: "green",
+                                                icon: "check",
+                                            });
+                                            this.selected=[],
+                                            this.odemedurum=""
+                                            Loading.hide()
+                        }).catch(err => {
+                                console.log(err);
+                                 Loading.hide()
+                            
+
+                                // Loading.hide()
+                                })
+                
             },
             date(val) {
               return  date.formatDate(val, 'DD-MM-YYYY-HH:mm')

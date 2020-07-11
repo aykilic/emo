@@ -299,10 +299,40 @@ module.exports = {
     // console.log(asd);
     //  return await model.find()
   },
-  // filtreleme
-  search_siparisfilterlist:async(parent, {odemeyontemmodel, odemedurummodel,teslimatdurummodel,fatdurummodel}, {Models})=> {
+  search_faturalist:async(parent, args, {Models})=> {
     const model = Models.siparis
-    // console.log("odemeyontemmodel",odemeyontemmodel,"odemedurummodel",odemedurummodel);
+   return await model.aggregate([
+    // {$set: {userid: {$toObjectId: "$userid"} }},
+    { $match:{ "fatdurum":  "Faturalandı"} },
+      {
+        $lookup:
+          {
+            from: 'User_detail',
+            localField: 'userid',
+            foreignField: '_id',
+            as: 'user'
+          },
+          
+      },
+      //  { '$unwind': { 'path': '$satirs', 'preserveNullAndEmptyArrays': true } },
+      // {
+      //   $group: {
+      //     tutar: { $sum: "$satirs.tutar"}
+      //   }
+      // },
+      { $addFields: {
+        tutar: { $sum: {
+          $map: { input: "$satirs" , as: "a", in: "$$a.tutar" }
+        }}
+    }}
+   ])
+    // console.log(asd);
+    //  return await model.find()
+  },
+  // filtreleme
+  search_siparisfilterlist:async(parent, {startdate, enddate, odemeyontemmodel, odemedurummodel,teslimatdurummodel,fatdurummodel}, {Models})=> {
+    const model = Models.siparis
+      // console.log("startdate",new Date(startdate),"enddate",new Date(enddate) );
   //  return await model.aggregate([
    return await model.aggregate([
     // {$set: {userid: {$toObjectId: "$userid"} }},
@@ -316,22 +346,30 @@ module.exports = {
     //           {
     //             "$eq": [
     //               {
-    { $match:
-    {$expr: 
-      {$and:[
-        { $cond: [{ $eq: [ odemedurummodel, "" ] },true,  { $eq: [ "$odemedurumu", odemedurummodel ] }] },
-        { $cond: [{ $eq: [ odemeyontemmodel, "" ] },true,  { $eq: [ "$odemetipi", odemeyontemmodel ] }] },
-        { $cond: [{ $eq: [ teslimatdurummodel, "" ] },true,  { $eq: [ "$teslimat", teslimatdurummodel ] }] },
-        { $cond: [{ $eq: [ fatdurummodel, "" ] },true,  { $eq: [ "$fatdurum", fatdurummodel ] }] },
-            //  { $eq: [ odemeyontemmodel, "" ] },true,  { $eq: [ "$odemetipi", odemeyontemmodel ] }
-             
-          // { $cond: [ { $eq: [ query.description, "" ] }, true, { $eq: [ "$description", query.description ] } ] },
-          // { $cond: [ { $eq: [ query.status, "" ] }, true, { $eq: [ "$status", query.status ] } ] },
-      ]}
-  }
-    }
-   
-      ,
+      //  $and:[
+      //   {startDate:{$lte:new Date()}},
+      //     {endDate:{$gte:new Date()}}
+      // ]
+      //  {$match:{$and:[
+      //   { "createdAt": {$gte: new Date(startdate), $lte: new Date(enddate)}}]}},
+    {$match: {
+        createdAt: {
+          $gte: new Date(startdate),
+          $lte: new Date(enddate)
+        }
+      }
+    },
+    {$match:
+      {$expr: 
+        
+        {$and:[
+          { $cond: [{ $eq: [ odemedurummodel, "" ] },true,  { $eq: [ "$odemedurumu", odemedurummodel ] }] },
+          { $cond: [{ $eq: [ odemeyontemmodel, "" ] },true,  { $eq: [ "$odemetipi", odemeyontemmodel ] }] },
+          { $cond: [{ $eq: [ teslimatdurummodel, "" ] },true,  { $eq: [ "$teslimat", teslimatdurummodel ] }] },
+          { $cond: [{ $eq: [ fatdurummodel, "" ] },true,  { $eq: [ "$fatdurum", fatdurummodel ] }] },
+        ]}
+      }
+    },
       {
         $lookup:
           {

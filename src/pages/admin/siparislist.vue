@@ -14,28 +14,55 @@
             Sipariş Sorgu Seçenekleri
             </div>
             
-        <q-separator  />
+        <!-- <q-separator  /> -->
 
+        <div class="row q-ml-xl col">
+        
         <div class="row col-12">
-        
-        
-        <div class=" col-3 q-pl-xl q-pt-md q-pb-md  ">
-            <q-select dense class="" outlined v-model="odemeyontemmodel" :options="odemeyontemdata" label="Ödeme Yöntemi" />
-        </div>
         <div class=" col-3 q-pl-xs q-pt-md q-pb-md  ">
-            <q-select dense class="" outlined v-model="odemedurummodel" :options="odemedurumdata" label="Ödeme Durumu" />
-        </div>
-        <div class=" col-3 q-pl-xs q-pt-md q-pb-md  ">
-            <q-select dense class="" outlined v-model="teslimatdurummodel" :options="teslimatdurumdata" label="Teslimat Durumu" />
-        </div>
-        <div class=" col-3 q-pl-xs q-pt-md q-pb-md q-pr-xl ">
-            <q-select dense class="" outlined v-model="fatdurummodel" :options="fatdurumdata" label="Fatura Durumu" />
-        </div>
-        <!-- <div class=" col q-pl-xs q-pt-md q-pb-md q-pr-xl ">
-            <q-select dense class="" outlined v-model="fatdurummodel" :options="fatdurumdata" label="Fatura Durumu" />
-        </div> -->
-        </div>
+            <q-input outlined v-model="startdate"  label="Başlangıç Tarihi"  dense>
+                <template v-slot:append>
+                    <q-icon name="event" class="cursor-pointer">
+                          <q-popup-proxy transition-show="scale" transition-hide="scale">
+                            <q-date v-model="startdate" mask="DD-MM-YYYY" today-btn v-close-popup/>
+                          </q-popup-proxy>
+                    </q-icon>
 
+                </template>
+                </q-input>
+        </div>
+        <div class=" col-3 q-pl-xs q-pt-md q-pb-md  ">
+            <q-input outlined v-model="enddate" label="Bitiş Tarihi"  dense>
+                <template v-slot:append>
+                    <q-icon name="event" class="cursor-pointer">
+                          <q-popup-proxy transition-show="scale" transition-hide="scale">
+                            <q-date v-model="enddate" mask="DD-MM-YYYY" today-btn v-close-popup/>
+                          </q-popup-proxy>
+                    </q-icon>
+
+                </template>
+                </q-input>
+        </div>
+        </div>
+        <q-separator inset style="margin-left:5px;" />
+            <div class="row col-12">
+                <div class="col-3  q-pl-xs q-pt-md q-pb-md  ">
+                    <q-select dense class="" outlined v-model="odemeyontemmodel" :options="odemeyontemdata" label="Ödeme Yöntemi" />
+                </div>
+                <div class=" col-3 q-pl-xs q-pt-md q-pb-md  ">
+                    <q-select dense class="" outlined v-model="odemedurummodel" :options="odemedurumdata" label="Ödeme Durumu" />
+                </div>
+                <div class=" col-3 q-pl-xs q-pt-md q-pb-md  ">
+                    <q-select dense class="" outlined v-model="teslimatdurummodel" :options="teslimatdurumdata" label="Teslimat Durumu" />
+                </div>
+                <div class=" col-3 q-pl-xs q-pt-md q-pb-md q-pr-lg ">
+                    <q-select dense class="" outlined v-model="fatdurummodel" :options="fatdurumdata" label="Fatura Durumu" />
+                </div>
+                <!-- <div class=" col q-pl-xs q-pt-md q-pb-md q-pr-xl ">
+                    <q-select dense class="" outlined v-model="fatdurummodel" :options="fatdurumdata" label="Fatura Durumu" />
+                </div> -->
+            </div>
+        </div>
 
 
 
@@ -54,7 +81,6 @@
             <!-- <q-separator inset/>     -->
             <q-table
             flat
-            
             :data="siparislists"
             :columns="columns"
             row-key="_id"
@@ -64,17 +90,31 @@
             :selected.sync="selected"
             :filter="filter"
           >
-            <template  v-slot:top>
+            <template  v-slot:top class="row">
                 <div class="row text-weight-medium text-h5 col-12">Sipariş Listesi
                 
-                <q-space />
-                <q-input borderless dense debounce="300" v-model="filter" placeholder="Bul" >
-                <q-icon slot="append" name="search" />
-                </q-input>
+                    <q-space />
+                    <q-input borderless dense debounce="300" v-model="filter" placeholder="Bul" >
+                    <q-icon slot="append" name="search" />
+                    </q-input>
                 </div>
-                <div class=" q-gutter-md q-mt-md">
-                <q-btn @click="selected.length < 1 ? $q.notify({type: 'negative',message: `Listeden Seçim Yapmalısınız...`}) : teslimatdialog=true"  color="primary" text-color="white" label="Teslimat Durumunu Değiştir" />
-                <q-btn @click="selected.length < 1 ? $q.notify({type: 'negative',message: `Listeden Seçim Yapmalısınız...`}) : odemedialog=true" color="primary" text-color="white" label="Ödeme Durumunu Değiştir" />
+                <div class="col-10 q-gutter-x-md q-mt-md">
+                    <q-btn @click="selected.length < 1 ? $q.notify({type: 'negative',message: `Listeden Seçim Yapmalısınız...`}) : teslimatdialog=true"  color="primary" text-color="white" label="Teslimat Durumunu Değiştir" />
+                    <q-btn @click="selected.length < 1 ? $q.notify({type: 'negative',message: `Listeden Seçim Yapmalısınız...`}) : odemedialog=true" color="primary" text-color="white" label="Ödeme Durumunu Değiştir" />
+                
+                
+                </div>
+                <q-space/>
+                <div class="q-mt-md">
+                <!-- <q-btn
+                    class="text-grey-7"
+                    color=""
+                    icon-right="mdi-printer"
+                    label="Yazdır"
+                    @click="yazdir()"
+                    no-caps
+                    
+                    /> -->
                 </div>
                     <!-- <q-btn >Düzenle</q-btn> -->
             </template>
@@ -117,7 +157,13 @@
                     {{props.row.fatdurum}}
                     </q-badge>
                 </q-td>
-              
+              <q-td key="faturano" :props="props"  >
+                    <!-- <q-badge :color="props.row.fatdurum === 'Beklemede' ? 'deep-orange' : 'green'">
+                    {{props.row.fatdurum}}
+                    </q-badge> -->
+                    <q-btn @click="numara_guncelleopen(props.row)" flat>{{props.row.faturano}}</q-btn>
+                    
+                </q-td>
                 <q-td key="tutar" :props="props"  >
                     <!-- {{ Number(props.row.tutar).toFixed(2).toLocaleString()}} TL -->
                     {{props.row.tutar.toLocaleString('tr', {minimumFractionDigits: 2})}} TL
@@ -130,6 +176,9 @@
             </template>
             <template v-slot:bottom-row>
         <q-tr>
+          <q-td colspan="">
+            
+          </q-td>
           <q-td colspan="">
             
           </q-td>
@@ -178,6 +227,29 @@
         </q-card>
         </q-dialog> -->
         <q-dialog
+            v-model="faturanodialog"
+          >
+            <q-card  style="width: 400px; max-width: 80vw;">
+              <q-card-section class="row justify-center">
+                <div class="text-h6 ">Numara Güncelleme</div>
+                <q-space />
+                <q-btn icon="close" flat round dense v-close-popup />
+              </q-card-section>
+            <q-separator/>
+              <q-card-section class="row q-col-gutter-md">
+                <q-input class="col-12  "  v-model="faturano" label="Fatura No"  outlined/>
+                <q-input class="col-12  "  v-model="irsaliyeno" label="İrsaliye No"  outlined/>
+                
+              </q-card-section>
+                <q-separator/>
+              <q-card-section  class="text-right">
+
+                <q-btn class=""  color="primary" label="Güncelle" @click="numara_guncelle()"  v-close-popup ></q-btn>
+                <!-- <q-btn class="q-mr-md text-black"  color="white" label="Kapat"  v-close-popup ></q-btn> -->
+              </q-card-section>
+            </q-card>
+    </q-dialog>
+        <q-dialog
             v-model="teslimatdialog"
 
           >
@@ -215,7 +287,7 @@
               </q-card-section>
             <q-separator/>
               <q-card-section class="row">
-                <q-radio class="col-12" v-model="odemedurum" val="Ödendi" label="Bankadan Ödeme" />
+                <q-radio class="col-12" v-model="odemedurum" val="Ödendi" label="Ödendi" />
                 <q-radio class="col-12" v-model="odemedurum" val="Nakit" label="Elden Ödeme" />
                 <q-radio class="col-12" v-model="odemedurum" val="Beklemede" label="Beklemede" />
                 
@@ -302,6 +374,62 @@
         </q-card-section>
       </q-card>
         </q-dialog>
+
+       
+        <!-- <div  style="display:none;">
+            <div  id="yazdirdiv">
+            <div v-for="(select,index) in selected" :key='index' style="" >
+                
+               
+                <div style="margin-left:550px">
+                    {{datekisa(select.createdAt)}}
+                </div>
+                <div style="margin-top:50px">
+                    {{select.user[0].ad_soyad}}
+                </div>
+                
+                <div style="margin-top:30px">
+                    {{select.user[0].adres}}
+                </div>
+                <div style="margin-left:150px;margin-top:30px">
+                    {{select.user[0].il}} - {{select.user[0].ilce}}
+                </div>
+                <div style="margin-left:120px;margin-top:30px;">
+                    {{select.user[0].v_daire}} - {{select.user[0].tc_v_no}}
+                </div>
+                
+                <div style="margin-top:50px;">
+                    <table v-for="(satir,ind) in select.satirs" :key='ind' style="margin-top:10px;margin-left:10px;">
+                        <tr :style="'width:1200px;margin-top:5px;'">
+                        
+                        <td style="width:250px;" >{{satir.stokad}}</td>
+                        <td style="width:100px;">{{satir.birimfiyat.toLocaleString('tr', {minimumFractionDigits: 2})}} TL</td>
+                        <td style="width:100px;">{{satir.count}}</td>
+                        <td style="width:100px;">% {{satir.kdv}}</td>
+                        <td style="width:100px;">{{satir.kdvtutar.toLocaleString('tr', {minimumFractionDigits: 2})}} TL</td>
+                        <td style="width:100px;">{{satir.aratoplam.toLocaleString('tr', {minimumFractionDigits: 2})}} TL</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="width:100px;margin-left:600px;margin-top:25px;"><hr style="border:1px solid;"></div>
+                <div style="width:100px;margin-left:600px;"><hr style="border:1px solid;"></div>
+                <div style="width:665px;text-align:right;margin-top:25px;">{{select.aratoplam.toLocaleString('tr', {minimumFractionDigits: 2})}} TL</div>
+                <div style="width:665px;text-align:right;margin-top:10px;">{{select.kdv.toLocaleString('tr', {minimumFractionDigits: 2})}} TL</div>
+                <div style="width:100px;margin-left:600px;"><hr style="border:1px solid;"></div>
+                <div style="width:665px;text-align:right;margin-top:10px;">{{select.tutar.toLocaleString('tr', {minimumFractionDigits: 2})}} TL</div>
+
+
+
+
+
+                <div style="page-break-after:always;"></div>
+            
+            </div>
+            </div>
+            
+            
+        </div> -->
+    
     </div>
 </template>
 
@@ -311,15 +439,28 @@ import axios from "axios";
 import gql from "graphql-tag";
 import {mapGetters } from 'vuex';
 import { date } from 'quasar'
+import moment from 'moment'
 import { Loading } from "quasar";
+import printJS from 'print-js'
 // import moment from 'moment'
 import VueMask from 'v-mask'
 Vue.use(VueMask);
 // moment.locale('tr');
 
     export default {
+        
         data() {
+            // let now = new Date();
+            //  let startdate = new Date();
+            //  startdate = moment("2020-01-01 15:04:24.207").format( 'DD-MM-YYYY')
             return {
+                // startdate: moment(now).format( 'DD-MM-YYYY'),
+                startdate:date.formatDate('2020-07-01 00:00:00', 'DD-MM-YYYY'),
+                enddate:date.formatDate(Date.now(), 'DD-MM-YYYY'),
+                //------
+                reversestartdate:date.formatDate('2020-07-01', 'YYYY-MM-DD'),
+                reverseenddate:date.formatDate(Date.now(), 'YYYY-MM-DD'),
+                //------
                 fatdurummodel:"",
                 fatdurumdata: [
                 '','Faturalandı', 'Beklemede', 'İptal',
@@ -344,6 +485,10 @@ Vue.use(VueMask);
                 kargodurum:"",
                 odemedurum:"",
                 sipno: "",
+                secimid:"",
+                faturanodialog:false,
+                faturano:"",
+                irsaliyeno:"",
                 siparislists:[],
                 tarih:"",
                 filter:"",
@@ -356,7 +501,7 @@ Vue.use(VueMask);
                     {name: 'odemedurumu', label: 'Ödeme Durumu', align: 'left', sortable: true,field:row=>row.odemedurumu},
                     {name: 'teslimat', label: 'Teslimat', align: 'left', sortable: true,field:row=>row.teslimat},
                     {name: 'faturadurumu', label: 'Fatura Durumu', align: 'left', sortable: true,field:row=>row.faturadurum},
-                    
+                    {name: 'faturano', label: 'Fatura No', align: 'left', sortable: true,field:row=>row.faturano},
                     {name: 'tutar', label: 'Toplam', align: 'right',field:row=>row.tutar}
                 ],
                 pagination: {
@@ -380,35 +525,32 @@ Vue.use(VueMask);
                 })
 
             },
-            // tarih(val) {
-                // console.log(val);
-            // },
-            // editsiparisdialog(val){
-            //       console.log(val);
-
+            startdate(val){
+                // this.reversestartdate= date.formatDate(val,"YYYY-MM-DD")
+                val= moment(val, 'DD-MM-YYYY');   
+                // val=date.formatDate(val,"MM-DD-YYYY")
+                // this.reversestartdate= date.formatDate(val,"YYYY-DD-MM")  
+                this.reversestartdate=moment(val).format( 'YYYY-MM-DD')   
                  
-            //     this.editsiparisdialog.date=date.formatDate(val.createdAt,'DD-MM-YYYY')
-            //     // this.editsiparisdialog.ad=val.user.ad_soyad
-            //         val.user.forEach(item=>{
-            //             // console.log(object);
-            //             this.editsiparisdialog.ad=item.ad_soyad
-            //             this.editsiparisdialog.cep=item.cep
-
-            //         })
-            //         // val.satirs.forEach(item=>{
-            //         //     let obj={}
-            //         //     obj.kdv=item.kdv
-            //         //     // this.editsiparisdialog.satirs=item.satirs
-            //         //     this.editsiparisdialog.satirs.push(obj)
-            //         // })
-            //     // this.editsiparisdialog.ad_soyad=val.user[0].ad_soyad
-            // }
+                // console.log("val",val,"this.reversestartdate",this.reversestartdate);
+            },
+            enddate(val){
+                // this.reverseenddate= date.formatDate(val,"YYYY-MM-DD")
+                val=moment(val, 'DD-MM-YYYY');
+                // this.reverseenddate= date.formatDate(val,"YYYY-MM-DD")
+                this.reverseenddate= moment(val).format( 'YYYY-MM-DD')
+                // console.log("val",val,"this.reverseenddate",this.reverseenddate);
+            }
         },
        async mounted () {
         //    console.log(moment("12-25-1995").format('DD-MM-YYYY'));
         //    moment("12-25-1995").format('MM-DD-YYYY');
             this.siplist()
-                    console.log("sip",this.siparislists);
+            // this.startdate=date.formatDate(this.startdate, 'DD-MM-YYYY')
+                   
+                
+
+            
         },
         methods: {
             
@@ -686,8 +828,8 @@ Vue.use(VueMask);
             async siplistfilter(){
                 await axios
                     .post('http://'+ process.env.API +':4000/graphql',{
-                    query: `query search_siparisfilterlist($odemeyontemmodel:String,$odemedurummodel:String,$teslimatdurummodel:String,$fatdurummodel:String){
-                            search_siparisfilterlist(odemeyontemmodel:$odemeyontemmodel,odemedurummodel:$odemedurummodel,teslimatdurummodel:$teslimatdurummodel,fatdurummodel:$fatdurummodel){
+                    query: `query search_siparisfilterlist($startdate:DateTime,$enddate:DateTime,$odemeyontemmodel:String,$odemedurummodel:String,$teslimatdurummodel:String,$fatdurummodel:String){
+                            search_siparisfilterlist(startdate:$startdate,enddate:$enddate,odemeyontemmodel:$odemeyontemmodel,odemedurummodel:$odemedurummodel,teslimatdurummodel:$teslimatdurummodel,fatdurummodel:$fatdurummodel){
                                 _id
                                 userid
                                 tutar
@@ -695,13 +837,20 @@ Vue.use(VueMask);
                                 odemedurumu
                                 teslimat
                                 fatdurum
+                                faturano
+                                irsaliyeno
                                 sipno
                                 aratoplam
                                 kdv
                                 user{
+                                    _id
                                     ad_soyad
                                     cep
-                                    _id
+                                    adres
+                                    il
+                                    ilce
+                                    v_daire
+                                    tc_v_no
                                 }
                                 satirs{
                                     _id
@@ -719,6 +868,8 @@ Vue.use(VueMask);
                             }`,
 
                     variables: {
+                        startdate:this.reversestartdate,
+                        enddate:this.reverseenddate,
                         odemeyontemmodel:this.odemeyontemmodel,
                         odemedurummodel:this.odemedurummodel,
                         teslimatdurummodel:this.teslimatdurummodel,
@@ -744,12 +895,19 @@ Vue.use(VueMask);
                                 teslimat
                                 fatdurum
                                 sipno
+                                faturano
+                                irsaliyeno
                                 aratoplam
                                 kdv
                                 user{
+                                    _id
                                     ad_soyad
                                     cep
-                                    _id
+                                    adres
+                                    il
+                                    ilce
+                                    v_daire
+                                    tc_v_no
                                 }
                                 satirs{
                                     _id
@@ -774,7 +932,56 @@ Vue.use(VueMask);
                      this.siparislists = data.data.data.search_siparislist;
                     // console.log(data.data.data.hasvaryantsatirQuery);
                     });
-            }
+            },
+            numara_guncelleopen(val){
+                this.faturanodialog=true
+                this.secimid=val._id
+                this.faturano=val.faturano
+                this.irsaliyeno=val.irsaliyeno
+
+                //   console.log(val);
+            },
+            async numara_guncelle(){
+                Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation siparis_numara_guncelle($id:ID,$faturano: Float,$irsaliyeno:Float,$fatdurum:String) {
+                            siparis_numara_guncelle(id:$id,faturano: $faturano, irsaliyeno: $irsaliyeno,fatdurum:$fatdurum) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          id:this.secimid,
+                          faturano:Number(this.faturano) ,
+                          irsaliyeno:Number(this.irsaliyeno),
+                          fatdurum:"Faturalandı"
+                        }
+                        })
+                        .then( async data => {
+                        //    await numaralar_guncelle()
+                            // console.log("ok");
+                            await this.siplist()
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
+
+      },
+      datekisa(val){
+              return  date.formatDate(val, 'DD-MM-YYYY')
+            },
+      yazdir(){
+          printJS({
+                printable: 'yazdirdiv',
+                type: 'html',
+                targetStyles: ['*'],
+                // style: '.page-break'
+            })
+      },
         },
 
     }

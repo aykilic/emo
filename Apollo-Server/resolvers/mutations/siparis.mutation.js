@@ -38,10 +38,10 @@ module.exports = {
       return await model.findOneAndUpdate({'name' :'ilk'}, {"$set":   { "irsaliyeno": irsaliyeno,"faturano": faturano}  },{upsert:true})
        // return await varyant.findByIdAndDelete(id);
      },
-     siparis_numara_guncelle:async (root, { id, faturano, irsaliyeno }, { Models }) => {
+     siparis_numara_guncelle:async (root, { id, faturano, irsaliyeno, fatdurum }, { Models }) => {
         // console.log(id,count);
        const model = Models.siparis
-      return await model.findOneAndUpdate({_id :id}, {"$set":   { "irsaliyeno": irsaliyeno,"faturano": faturano}  },{upsert:true})
+      return await model.findOneAndUpdate({_id :id}, {"$set":   { "irsaliyeno": irsaliyeno, "faturano": faturano, "fatdurum":fatdurum}  },{upsert:true})
        // return await varyant.findByIdAndDelete(id);
      },
      

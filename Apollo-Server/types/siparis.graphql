@@ -62,13 +62,14 @@ type numaralar{
     sipariskargodurumupdate(kargodurumlist:[kargodurumlistInput],kargodurum:String):siparis
     siparisodemedurumupdate(odemedurumlist:[odemedurumlistInput],odemedurum:String):siparis
     numara_guncelle(irsaliyeno:Float,faturano:Float):numaralar
-    siparis_numara_guncelle(id:ID, irsaliyeno:Float,faturano:Float):siparis
+    siparis_numara_guncelle(id:ID, irsaliyeno:Float,faturano:Float,fatdurum:String):siparis
     
     
   }
  type Query {
      search_siparislist:[siparis]
-     search_siparisfilterlist(odemeyontemmodel:String,odemedurummodel:String,teslimatdurummodel:String,fatdurummodel:String):[siparis]
+     search_faturalist:[siparis]
+     search_siparisfilterlist(startdate:DateTime,enddate:DateTime,odemeyontemmodel:String,odemedurummodel:String,teslimatdurummodel:String,fatdurummodel:String):[siparis]
      son_numaralar:numaralar
 #     search_ubasketlist(uid:String):[sepet]
  }
