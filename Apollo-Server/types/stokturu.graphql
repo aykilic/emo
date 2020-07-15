@@ -88,6 +88,7 @@ type User_detail{
   ilid:String
   ilce:String
   ilceid:String
+  createdAt:DateTime
   id:ID
 }
 type Query{
@@ -99,7 +100,9 @@ type Query{
     birimList:[birim]
     imgurlQuery(id:ID!):[Stoktur]
     loginuser_Query(usermail:String,password:String):User
+    Search_luser(uid:ID):User
     Search_Userdetail_Query(uid:ID):[User_detail]
+    all_Userdetail_Query:[User_detail]
     Search_checkmail(email:String):User
     
     
@@ -120,6 +123,7 @@ type Mutation {
   createUser(username: String,lastname: String,usermail:String,password: String):User
   user_detail_mutation(userdetail:userdetailInput):User_detail
   user_detail_edit_mutation(id:ID, userdetail:userdetailInput):User_detail
+  deleteuserdetail_mutation(id:ID):User_detail
   # mergesepet_mutation(sepetlist:[sepetlistInput]):sepet
   sendmail(username:String):User
 }

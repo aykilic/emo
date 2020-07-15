@@ -23,10 +23,12 @@ type guest_user{
      createguid_mutation:guest_user
      mergesepet_mutation(sepetlist:[sepetlistInput]):sepet
      delete_basketproduct(id:ID):sepet
+     delete_basketsellproduct(satirList:[satirListInput]):siparis
  }
 type Query {
     search_basketlist(guid:String):[sepet]
     search_ubasketlist(uid:String):[sepet]
+    # search_user(uid:String):
 }
 input sepetlistInput{
   

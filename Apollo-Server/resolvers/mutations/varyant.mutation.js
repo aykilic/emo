@@ -88,10 +88,26 @@ module.exports = {
     return await varyant.findByIdAndDelete(id);
   },
   varyantstokmiktaredit:async (root, {id, count }, { Models }) => {
-     console.log(id,count);
+    //  console.log(id,count);
     const model = Models.varyant_skus
    return await model.findOneAndUpdate({_id :id}, {$inc : {miktar : count}},{new: true})
     // return await varyant.findByIdAndDelete(id);
+  },
+  varyantstoklistmiktaredit:async (root, {liste }, { Models }) => {
+    //  console.log(id,count);
+    const model = Models.varyant_skus
+     await Promise.all(
+      liste.map((item)=>{ 
+          // console.log(item)
+         return model.updateMany({"_id": item.id }, {"$inc":   { "miktar": item.count}  },{multi:true}); 
+
+    })).then(function(results){
+       console.log(results);
+        let data={'res':'ok'};
+         return  data
+        
+    });
+    // console.log(asd);
   },
   updateVaryantMiktar:async (root, parent, { Models }) => {
     const varyant = Models.varyant_skus

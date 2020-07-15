@@ -9,15 +9,19 @@ export default {
     state: {
       guid:"",
       uid:"",
+      user:{},
       basketid:"",
       basketlist:[],
       ubasketlist:[],
       userdetaillists:[]
     },
     actions: {
+        // add_getuser({commit,dispatch},type){
+        //     dispatch('search_getuser', Cookies.get('uid'));
+        // },
          add_basketid({commit} ,type   )
          {
-            commit('basketid', type);
+            commit('basketid', type);   
             
         },
         add_guid({commit,dispatch,state} ,type)
@@ -44,11 +48,12 @@ export default {
             commit('set_guid',"");
             
         },
-         add_uid({commit,dispatch} ,type   )
+         add_uid({commit,state,dispatch} ,type   )
          {
             commit('set_uid', Cookies.get('uid'));
             dispatch('search_ubasketlist', Cookies.get('uid'));
             dispatch('search_userdetaillists', Cookies.get('uid'));
+            // dispatch('search_getuser', state.uid);
 
         },
         
@@ -116,6 +121,26 @@ export default {
                
             })
         },
+        async search_getuser({commit,state}, type){
+            console.log("user",type);
+            await axios.post(
+                'http://'+ process.env.API +':4000/graphql', {
+                 query: `query Search_luser($uid:ID){
+                    Search_luser(uid:$uid){
+                        _id
+                        username
+                        lastname
+                        usermail
+                   }  
+                 }`,
+                   variables: {
+                    uid: type
+                    }
+            }).then( (response) => { 
+                console.log(response);
+                commit('set_luser', response.data.data.Search_luser);
+            })
+        },
         async search_userdetaillists({commit,state}, type){
             // console.log("type1",type);
             await axios.post(
@@ -143,34 +168,38 @@ export default {
                    variables: {
                     uid: type
                     }
-            }).then( (response) => { 
+            }).then( async (response) => { 
                 //    console.log("response",response.data.data);
-             commit('set_search_userdetaillists', response.data.data.Search_Userdetail_Query);
-               
+            await commit('set_search_userdetaillists', response.data.data.Search_Userdetail_Query);
+             
             })
-        },
-         logout({commit} ,type   )
-         {
-            commit('set_logout',type);
+            // console.log("uid",state.uid);
             
         },
+    logout({commit} ,type   )
+    {
+    commit('set_logout',type);
+    
+    },
     },
     mutations:{
+        set_luser(state, type){
+            state.user = type
+        },
         set_guid(state, type){
             
             state.guid = type;
             // console.log(Cookies.get('guid'));
-          },
+        },
         set_uid(state, type){
             
             state.uid = type
             // console.log(Cookies.get('guid'));
-          },
-
+        },
         set_basketid(state, type){
             state.basketid = type
             Cookies.set('basketid',type);
-          },
+        },
         set_search_basketlist(state, type){
             // console.log("type2",type);
             state.basketlist=type
@@ -200,6 +229,9 @@ export default {
           },
         get_uid:(state, getters) => {
             return state.uid
+        },
+        get_user:(state, getters) => {
+            return state.user
         },
         basketid: (state, getters) => {
             return state.basketid

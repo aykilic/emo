@@ -842,6 +842,10 @@ export default {
         if (uid != "") {
           console.log("uid boş değil");
           if (this.get_ubasketlist.length > 0 && is_sepet) {
+            this.$q.notify({
+            type: "negative",
+            message: `Ürün Sepetinizde Bulunmaktadır...`
+            });
             // const dialog = this.$q.dialog({
             //           title: "Uyarı",
             //           message: "Ürün Sepetinizde bulunmaktadır..!"

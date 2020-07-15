@@ -28,8 +28,41 @@
                </q-card-section>
                <q-card-section class="q-pt-none text-center">
                      
-                     <div class=" text-h5 ">
-                        99<span class="vertical-middle text-caption">,99 TL</span></div>
+                     <!-- <div class=" text-h5 ">
+                        99<span class="vertical-middle text-caption">,99 TL</span>
+                     </div> -->
+                     <div v-if="list.indirim === null || list.indirim === undefined || list.indirim === 0">
+                        {{list.fiyat1.toLocaleString('tr', {minimumFractionDigits: 2})}} TL
+                     </div>
+                     <div v-else>
+                        <div v-if="list.fiyat1 == null" >
+                           <div class=" text-subtitle2 ">
+                              Fiyat bilgisi yok
+                           </div>
+                           
+                           <div class=" text-h5  ">
+                           &nbsp;
+                           </div>
+                        </div>
+                        
+                        <div v-else-if="list.fiyat1 != null" >
+                           <div class="text-subtitle2 text-grey text-strike ">
+                           {{list.fiyat1.toLocaleString('tr', {minimumFractionDigits: 2})}} TL
+                           </div>
+                           <div class=" text-h5  ">
+                           {{((list.fiyat1)-(list.fiyat1*(list.indirim/100))).toLocaleString('tr', {minimumFractionDigits: 2})}} TL
+                           </div>
+                        </div>
+                        <!-- <div v-else-if="list.fiyat1 != null">
+                           
+                           </div> -->
+                     </div>
+                     <!-- <div v-if="" class=" text-h6 text-strike ">
+
+                     </div> -->
+                     <div class=" text-h6">
+
+                     </div>
                      
                </q-card-section>
 
@@ -188,12 +221,14 @@
                    
                    ;//childrenları  eşit seviyele
                   // console.log("result",result);
-                  // console.log(result); 
+                   console.log("result",result); 
                   let resultt=result.map(item =>{
                      return {
                         _id: item._id,
                         stokturad: item.stokturad,
                         parentid: item.parentid,
+                        fiyat1:item.fiyat1,
+                        indirim:item.indirim,
                         vars: item.vars[0]
 
                      }

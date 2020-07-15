@@ -73,6 +73,14 @@
           </q-item-section>
         </q-item>
         
+         <q-item  to="/customerlist" exact>
+          <q-item-section avatar>
+            <q-icon name="mdi-account-multiple" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label >Müşteri Listesi</q-item-label>
+          </q-item-section>
+        </q-item>
          <q-item  to="/faturalist" exact>
           <q-item-section avatar>
             <q-icon name="mdi-file-multiple-outline" />

@@ -237,8 +237,8 @@
               </q-card-section>
             <q-separator/>
               <q-card-section class="row q-col-gutter-md">
-                <q-input class="col-12  "  v-model="faturano" label="Fatura No"  outlined/>
-                <q-input class="col-12  "  v-model="irsaliyeno" label="İrsaliye No"  outlined/>
+                <q-input class="col-12  "  v-model="faturano" label="Fatura No"  outlined dense/>
+                <q-input class="col-12  "  v-model="irsaliyeno" label="İrsaliye No"  outlined dense/>
                 
               </q-card-section>
                 <q-separator/>
@@ -313,20 +313,29 @@
         <div class="row ">
             <q-input class="col-4" label="Tarih" v-model="editsiparisdialog.date"  outlined dense readonly/>
             <!-- <div v-for="editsiparisdialog.user,index" in editsiparisdialog.user></div> -->
-            <q-input class="q-pl-xs col-4"  label="Ad Soyad" v-model="editsiparisdialog.ad" dense outlined/>
-            <q-input class="q-pl-xs col-4" label="Cep No" mask="(###) ###-####" v-model="editsiparisdialog.cep" dense outlined/>
+            <q-input class="q-pl-xs col-4"  label="Ad Soyad" v-model="editsiparisdialog.ad" dense outlined readonly/>
+            <q-input class="q-pl-xs col-4" label="Cep No" mask="(###) ###-####" v-model="editsiparisdialog.cep" dense outlined readonly/>
             
         </div>
         <div class="row q-mt-md q-mb-md">
-            <q-input class=" col-8" label="Açıklama" v-model="editsiparisdialog.description" type="textarea" dense outlined/>
-            <!-- <div class=" q-ml-xl     self-center col">
-                <q-radio  v-model="kargodurum" val="Kargoya Teslim" label="Kargoya Teslim" disabled/>
-                <q-radio  v-model="kargodurum" val="Elden Teslim" label="Elden Teslim" disabled/>
-            
-            </div> -->
+            <q-input class=" col-8" label="Adres" v-model="editsiparisdialog.adres" type="textarea" dense outlined readonly/>
+            <div class="q-ml-xs col">
+                <q-input class="" label="Tc - Vergi No" v-model="editsiparisdialog.tc_v_no"  dense outlined readonly/> 
+                <q-input class="q-mt-xs" label="Vergi Dairesi" v-model="editsiparisdialog.v_daire"  dense outlined readonly/>
+                
+            </div>
+           
             
         </div>
-        <q-separator inset />
+        <div class="row q-mt-md q-mb-md">
+            <q-input class="col-3 " label="il" v-model="editsiparisdialog.il"  dense outlined readonly/>
+            <q-input class="col-3 q-pl-xs" label="ilce" v-model="editsiparisdialog.ilce"  dense outlined readonly/>
+            <q-input class="col-2 q-pl-xs" label="Posta Kodu" v-model="editsiparisdialog.p_kodu"  dense outlined readonly/>
+        </div> 
+        <div>
+            
+        </div>
+        <q-separator  />
         <div v-for="(editsiparisdialo, i) in editsiparisdialog.satirs" :key="i" class="row q-mt-md items-center">
             
                 <!-- <div>{{editsiparisdialog.satirs[i].kdv}}</div> -->
@@ -443,8 +452,8 @@ import moment from 'moment'
 import { Loading } from "quasar";
 import printJS from 'print-js'
 // import moment from 'moment'
-import VueMask from 'v-mask'
-Vue.use(VueMask);
+    import VueMask from 'v-mask'
+    Vue.use(VueMask);
 // moment.locale('tr');
 
     export default {
@@ -678,6 +687,12 @@ Vue.use(VueMask);
                         // console.log(object);
                         this.editsiparisdialog.ad=item.ad_soyad
                         this.editsiparisdialog.cep=item.cep
+                        this.editsiparisdialog.adres=item.adres
+                        this.editsiparisdialog.il=item.il
+                        this.editsiparisdialog.ilce=item.ilce
+                        this.editsiparisdialog.v_daire=item.v_daire
+                        this.editsiparisdialog.tc_v_no=item.tc_v_no
+                        this.editsiparisdialog.p_kodu=item.p_kodu
 
                     })
 

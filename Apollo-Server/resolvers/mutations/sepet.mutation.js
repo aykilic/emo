@@ -31,7 +31,7 @@ createsepet_mutation: async (parent, {uid , guid, stokid, stokad, varyantid,vary
 // mergesepet_mutation
 mergesepet_mutation: async (root, parent, { Models }) => {
 
-      console.log("parent",parent);
+      // console.log("parent",parent);
     const model = Models.sepet
   
   
@@ -86,5 +86,22 @@ return await new Promise((resolve, reject) => {
 });
   // console.log(id);
   // return await varyant.findByIdAndDelete(_id);
+},
+
+delete_basketsellproduct:async (root, {satirList }, { Models }) => {
+  //  console.log(id,count);
+  const model = Models.sepet
+   await Promise.all(
+    satirList.map((item)=>{ 
+        // console.log(item)
+       return model.deleteMany({"varyantid": item.varyantid }); 
+
+  })).then(function(results){
+    //  console.log(results);
+      let data={'res':'ok'};
+       return  data
+      
+  });
+  // console.log(asd);
 },
 }

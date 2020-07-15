@@ -227,7 +227,7 @@
                                                 </q-card-section>
                                                 <q-card-actions align="right">
                                                     <q-btn color="primary"  @click="user=get_userdetaillist;user_detail_dialog = !user_detail_dialog;edit_adress=true"  flat rounded >Düzenle</q-btn>
-                                                    <q-btn color="red" flat rounded>Sil</q-btn>
+                                                    <q-btn color="red" @click="selectadresid=get_userdetaillist._id,adressildialog=true" flat rounded>Sil</q-btn>
                                                 </q-card-actions>
                                         </q-card>
 
@@ -429,10 +429,11 @@
                         <q-card-section class="row col-12">
                             <q-input class="q-pt-md q-pl-xs q-pr-xs col-12"  v-model="user.baslik" ref="baslik" :rules="[val => !!val || 'Boş Bırakmayınız']" outlined label="Baslik" hint="Örnek Ev, İş vb." dense />
                             <q-input class="q-pt-md q-pl-xs q-pr-xs col-md-6 col-xs-12"  v-model="user.ad_soyad" ref="ad" :rules="[val => !!val || 'Boş Bırakmayınız']" outlined label="Ad-Soyad" hint="Ad-Soyad Giriniz" dense />
-                            <q-input class="q-pt-md q-pl-xs q-pr-xs col-md-6 col-xs-12"  v-model="user.cep" ref="cep" :rules="[val => val.length > 9 || 'Yanlış Numara']" mask="+90(###) ### - ####" unmasked-value outlined label="Cep Telefonu" hint="Cep No Giriniz" dense />
+                            <q-input class="q-pt-md q-pl-xs q-pr-xs col-md-6 col-xs-12"  v-model="user.cep" ref="cep" :rules="[val =>!!val, val.length > 9 || 'Yanlış Numara']" mask="+90(###) ### - ####" unmasked-value outlined label="Cep Telefonu" hint="Cep No Giriniz" dense />
                             <q-input class="q-pt-xs q-pl-xs q-pr-xs col-md-6 col-xs-12"  v-model="user.tc_v_no" ref="tc" :rules="[val => !!val || 'Boş Bırakmayınız']" outlined label="TC Kimlik No-Vergi No" hint="Lütfen Adınızı Giriniz" dense />
                             <q-input class="q-pt-xs q-pl-xs q-pr-xs col-md-6 col-xs-12"  v-model="user.v_daire"  outlined label="Vergi Dairesi" hint="Varsa - Vergi Dairesi Giriniz" dense />
-                            <q-input class="q-pt-xs q-pl-xs q-pr-xs col-12" v-model="user.email" ref="email" outlined label="Mail" hint="Lütfen Adınızı Giriniz" :rules="[val => !!val || 'Email Alanı', isValidEmail]" dense />
+                            <!-- <q-input class="q-pt-xs q-pl-xs q-pr-xs col-12" v-model="get_user.usermail"  outlined label="Mail"  :rules="[val => !!val || 'Email Alanı', isValidEmail]" dense /> -->
+                            <q-input class="q-pt-xs q-pl-xs q-pr-xs col-12" v-model="get_user.usermail"  outlined label="Mail" dense readonly/>
                             <q-input
                                 outlined
                                 ref="adres"
@@ -476,7 +477,7 @@
                                 :options="iloptions"
                                 option-value="ilid"
                                 option-label="il"
-                                @input=ilcesec()
+                                @input="ilcesec()"
                                 @filter="filteril"
                                 use-input
                                 auto-select
@@ -541,9 +542,39 @@
 
                         <q-card-section  class="text-right">
                             
-                            <q-btn v-if="user._id != null " class="q-ma-sm"  color="primary" @click="user_det_kaydet(user._id)" label="Güncelle"  v-close-popup ></q-btn>
+                            <q-btn v-if="user._id != null " class="q-ma-sm"  color="primary" @click="user_det_kaydet(user._id)" label="Güncelle"   ></q-btn>
                             <q-btn v-else class="q-ma-sm"  color="primary" label="Kaydet" @click="user_det_kaydet()" ></q-btn>
                             <!-- <q-btn class="q-mr-md text-grey"  color="" label="Kapat"  v-close-popup ></q-btn> -->
+                        </q-card-section>
+                        </q-card>
+                    </q-dialog>
+
+                    <q-dialog
+                        v-model="adressildialog"
+
+                    >
+                        <q-card  style="width: 500px; max-width: 80vw;">
+                        <q-card-section class="row justify-center">
+                            <div class="text-h6 self-center">
+                                <q-icon style="margin-top:-5px;" name="mdi-alert-outline" />
+                                <!-- <q-avatar icon="signal_wifi_off" color="primary" text-color="white" /> -->
+                                <span> Uyarı..!</span>
+                                  
+                                  </div>
+                            <q-space />
+                            <q-btn icon="close" flat round dense v-close-popup />
+                        </q-card-section>
+                        <q-separator/>
+                        <q-card-section class="row">
+                            
+                            Adresi Silmek İstediğinizden Eminmisiniz? 
+                            
+                        </q-card-section>
+                            <q-separator/>
+                        <q-card-section  class="text-right">
+
+                            <q-btn class=""  color="red" label="Sil" @click="adresdelete()" v-close-popup ></q-btn>
+                            <!-- <q-btn class="q-mr-md text-black"  color="white" label="Kapat"  v-close-popup ></q-btn> -->
                         </q-card-section>
                         </q-card>
                     </q-dialog>
@@ -566,6 +597,7 @@ let myBody = document.getElementsByTagName('body')[0];
     export default {
         data() {
             return {
+                adressildialog:false,
                 edit_adress:false,
                 val:"",
                 user_detail_dialog:false,
@@ -585,6 +617,7 @@ let myBody = document.getElementsByTagName('body')[0];
             // il,
             // ilce,
             // user:"",
+            selectadresid:"",
                 user:{
                     _id:"",
                     uid:"",
@@ -689,7 +722,8 @@ let myBody = document.getElementsByTagName('body')[0];
                 'get_uid',
                 'get_basketlist',
                 'get_ubasketlist',
-                'get_userdetaillists'
+                'get_userdetaillists',
+                'get_user',
       
             ]),
         },
@@ -708,6 +742,39 @@ let myBody = document.getElementsByTagName('body')[0];
         },
         
         methods: {
+            async adresdelete(){
+               console.log(this.selectadresid); 
+               Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation deleteuserdetail_mutation($id:ID) {
+                            deleteuserdetail_mutation(id: $id) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          id: this.selectadresid,
+                        }
+                        })
+                        .then(async data => {
+                           this.$store.dispatch('search_userdetaillists', Cookies.get('uid'));
+                            // console.log("ok");
+                            Loading.hide()
+                            this.$q.notify({
+                                                type: "Positive",
+                                                message: `Bilgiler Başarıyla Silindi...`,
+                                                position: "top-right",
+                                                color: "green",
+                                                icon: "check",
+                                            });
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
+            },
             goster(){
                 console.log(this.user);
                 console.log(this.selected);
@@ -751,11 +818,13 @@ let myBody = document.getElementsByTagName('body')[0];
                 let sipno=Number(date.formatDate(Date.now(), 'X'))+225222222
                 sipno=sipno.toString()
                 if (this.get_uid == null || this.get_uid == undefined || this.get_uid == "") {
-                    // userid=this.get_guid
+                      this.user._id=this.get_guid
+                    //   console.log(this.user)
+                      
                 }else{
-                    // userid=this.get_uid
+                    //  userid=this.get_uid
                 }
-
+                // return
 
                let aratoplam =this.formatNumber(this.aratoplam)
                let kdv =this.formatNumber(this.kdv)
@@ -817,38 +886,10 @@ let myBody = document.getElementsByTagName('body')[0];
                 if(val==="Kredi Kartı Hemen"){
                     // console.log(val);
                     this.odemedurumu="Ödendi"
+                    if(Cookies.get("uid")== null || Cookies.get("uid") == undefined || Cookies.get("uid") == ""){
+                    this.guser_det_kaydet() // guser detay kayıt
+                    }
                     satlistolustur()
-
-                    Loading.show()
-                    this.$apollo
-                        .mutate({
-                        mutation: gql`
-                            mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
-                            createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
-                                _id
-                            }
-                            }
-                        `,
-                        // loadingKey: 'loading',
-                        variables: {
-                          satirList: satirList,
-                          siparisfis: siparisfis
-                        }
-                        })
-                        .then(async data => {
-                           await this.numaralar_guncelle()
-                            // console.log("ok");
-                            Loading.hide()
-                        }).catch(err => {
-                            console.log(err);
-                            Loading.hide()
-                        })
-
-                }else if(val==="Havale"){
-                    this.havale_div=true
-                    this.odemedurumu="Beklemede"
-                    satlistolustur()
-                    console.log(val);
                     
                     Loading.show()
                     this.$apollo
@@ -869,14 +910,22 @@ let myBody = document.getElementsByTagName('body')[0];
                         .then(async data => {
                            await this.numaralar_guncelle()
                             // console.log("ok");
+                            await this.delete_basketsellproduct(satirList)
                             Loading.hide()
                         }).catch(err => {
                             console.log(err);
                             Loading.hide()
                         })
-                }else if(val==="Kapıda Nakit"){
+
+                }else if(val==="Havale"){
+                    this.havale_div=true
                     this.odemedurumu="Beklemede"
+                    if(Cookies.get("uid")== null || Cookies.get("uid") == undefined || Cookies.get("uid") == ""){
+                    this.guser_det_kaydet() // guser detay kayıt
+                    }
                     satlistolustur()
+                    
+                    
                     Loading.show()
                     this.$apollo
                         .mutate({
@@ -895,6 +944,41 @@ let myBody = document.getElementsByTagName('body')[0];
                         })
                         .then(async data => {
                            await this.numaralar_guncelle()
+                           await this.delete_basketsellproduct(satirList)
+                            // console.log("ok");
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
+                }else if(val==="Kapıda Nakit"){
+                    this.odemedurumu="Beklemede"
+                    if(Cookies.get("uid")== null || Cookies.get("uid") == undefined || Cookies.get("uid") == ""){
+                    await this.guser_det_kaydet() // guser detay kayıt
+                    }
+                    
+                    satlistolustur()
+                    
+                    
+                    Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
+                            createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          satirList: satirList,
+                          siparisfis: siparisfis
+                        }
+                        })
+                        .then(async data => {
+                           await this.numaralar_guncelle()
+                           await this.delete_basketsellproduct(satirList)
                             // console.log("ok");
                             Loading.hide()
                         }).catch(err => {
@@ -906,10 +990,57 @@ let myBody = document.getElementsByTagName('body')[0];
                 // console.log(this.user);
                 // console.log(this.selected);
                 // console.log(this.lists);
+                // miktar güncelle
+                this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation varyantstoklistmiktaredit($liste: [satiridcountinput]) {
+                            varyantstoklistmiktaredit(liste: $liste) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          liste: satirList.map(item=>({
+                              id : item.varyantid,
+                              count : (item.count)* (-1)
+                          })),
+                          
+                        }
+                        })
+                        .then(data => {
+                            
+                        })
             },
-           async numaralar_guncelle(){
+            // satılan urunu sepetten cıkar
+            async delete_basketsellproduct(satirList){
+                Loading.show()
+               await this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation delete_basketsellproduct($satirList: [satirListInput]) {
+                            delete_basketsellproduct(satirList: $satirList) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          satirList: satirList
+                        }
+                        })
+                        .then(async data => {
+
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
+            },
+            async numaralar_guncelle(){
                
-               this.$apollo
+              await this.$apollo
                         .mutate({
                         mutation: gql`
                             mutation numara_guncelle($faturano: Float,$irsaliyeno:Float) {
@@ -952,33 +1083,85 @@ let myBody = document.getElementsByTagName('body')[0];
 
                 console.log(this.user);
             },
+           async guser_det_kaydet(){
+               await this.$apollo
+                            .mutate({
+                            mutation: gql`
+                                mutation user_detail_mutation($userdetail: userdetailInput) {
+                                user_detail_mutation( userdetail: $userdetail) 
+                                    {
+                                    _id
+                                    }
+                                }
+                            `,
+                                loadingKey: 'loading',
+                                variables: {
+                                    
+                                    userdetail: {
+                                        id:this.user._id,
+                                        uid:Cookies.get("guid"),
+                                        baslik:this.user.baslik,
+                                        ad_soyad:this.user.ad_soyad,
+                                        cep:this.user.cep,
+                                        tc_v_no:this.user.tc_v_no,
+                                        v_daire:this.user.v_daire,
+                                        email:this.user.email,
+                                        // email:this.get_user.usermail,
+                                        adres:this.user.adres,
+                                        p_kodu:this.user.p_kodu,
+                                        il:this.user.il.il,
+                                        ilid:this.user.il.ilid,
+                                        ilce:this.user.ilce.ilce,
+                                        ilceid:this.user.ilce.ilceid,
+                                    }
+                                }
+                                })
+                                .then(data => {
+                                 console.log("data",data.data.user_detail_mutation._id);
+                                 this.user._id=data.data.user_detail_mutation._id
+                                // this.$store.dispatch('search_userdetaillists',Cookies.get('guid'))
+                                // search_userdetaillists
+                                // this.user_detail_dialog=false
+                                // this.$q.notify({
+                                //                 type: "Positive",
+                                //                 message: `Bilgiler Başarıyla Güncellendi...`,
+                                //                 position: "top-right",
+                                //                 color: "green",
+                                //                 icon: "check",
+                                //             });
+                                })
+
+
+            },
             user_det_kaydet(a){
-                
-                 this.$refs.ad.validate()
+                this.$refs.ad.validate()
                  this.$refs.tc.validate()
                  this.$refs.cep.validate()
-                 this.$refs.email.validate()
+                //  this.$refs.email.validate()
                  this.$refs.adres.validate()
-                 this.$refs.il.validate()
-                 this.$refs.ilce.validate()
+                  this.$refs.il.validate()
+                  this.$refs.ilce.validate()
+                //  console.log("user",this.user.ad_soyad);
                 if(
                 //    this.user.baslik == "" ||
-                   this.user.ad_soyad == "" ||
-                   this.user.tc_v_no == "" ||
-                   this.user.email == "" ||
-                   this.user.adres == "" ||
-                   this.user.il == "" ||
-                   this.user.ilce == ""
+                   this.user.ad_soyad == "" || this.user.ad_soyad == undefined ||
+                   this.user.tc_v_no == "" || this.user.tc_v_no == undefined ||
+                //    this.user.email == "" ||
+                   this.user.adres == "" || this.user.adres == undefined ||
+                    this.user.il == "" || this.user.il == undefined ||
+                    this.user.ilce == "" || this.user.ilce == undefined
                 ){
                     this.user_validate=false
                 }else{
                     this.user_validate=true
                 }
-                if(this.user_validate && !this.$refs.email.hasError){
-                    if(a){
+                if(this.user_validate ){
+                    // console.log("a",a)
+                    // return
+                    if(a != undefined){
 
 
-                        console.log(this.user);
+                        // console.log(this.user);
                         this.$apollo
                             .mutate({
                             mutation: gql`
@@ -1000,7 +1183,8 @@ let myBody = document.getElementsByTagName('body')[0];
                                         cep:this.user.cep,
                                         tc_v_no:this.user.tc_v_no,
                                         v_daire:this.user.v_daire,
-                                        email:this.user.email,
+                                        // email:this.user.email,
+                                        email:this.get_user.usermail,
                                         adres:this.user.adres,
                                         p_kodu:this.user.p_kodu,
                                         il:this.user.il,
@@ -1011,10 +1195,17 @@ let myBody = document.getElementsByTagName('body')[0];
                                 }
                                 })
                                 .then(data => {
-                                console.log("user detail sonuc");
+                                // console.log("user detail sonuc");
                                 this.$store.dispatch('search_userdetaillists',Cookies.get('uid'))
                                 // search_userdetaillists
                                 this.user_detail_dialog=false
+                                this.$q.notify({
+                                                type: "Positive",
+                                                message: `Bilgiler Başarıyla Güncellendi...`,
+                                                position: "top-right",
+                                                color: "green",
+                                                icon: "check",
+                                            });
                                 })
 
 
@@ -1033,14 +1224,15 @@ let myBody = document.getElementsByTagName('body')[0];
                              loadingKey: 'loading',
                             variables: {
                                 userdetail: {
-                                    id:this.user.id,
+                                    id:this.user._id,
                                     uid:Cookies.get("uid"),
                                     baslik:this.user.baslik,
                                     ad_soyad:this.user.ad_soyad,
                                     cep:this.user.cep,
                                     tc_v_no:this.user.tc_v_no,
                                     v_daire:this.user.v_daire,
-                                    email:this.user.email,
+                                    //  email:this.user.email,
+                                    email:this.get_user.usermail,
                                     adres:this.user.adres,
                                     p_kodu:this.user.p_kodu,
                                     il:this.user.il.il,
@@ -1054,10 +1246,22 @@ let myBody = document.getElementsByTagName('body')[0];
                               console.log("user detail sonuc");
                               this.$store.dispatch('search_userdetaillists',Cookies.get('uid'))
                               this.user_detail_dialog=false
+                              this.$q.notify({
+                                                type: "Positive",
+                                                message: `Bilgiler Başarıyla Güncellendi...`,
+                                                position: "top-right",
+                                                color: "green",
+                                                icon: "check",
+                                            });
                             })
                     }
+                    this.user_detail_dialog=false
                 }else{
-
+                    this.$q.notify({
+                        type: 'negative',
+                        message: `Eksik Bilgi Girişi...!`
+                    })
+                    
                 }
                 
             },
@@ -1078,7 +1282,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 // user seçildi mi?
                 //  console.log(this.$refs.email.rules);
                 //  this.$refs.baslik.validate()
-                console.log(this.user);
+                // console.log(this.user);
                  this.$refs.ad.validate()
                  this.$refs.tc.validate()
                  this.$refs.cep.validate()
@@ -1188,7 +1392,7 @@ let myBody = document.getElementsByTagName('body')[0];
             },
             delete_basketproduct(val){
                 this.$apollo.mutate({
-            mutation: gql`mutation delete_basketproduct($id: ID){
+                mutation: gql`mutation delete_basketproduct($id: ID){
                 delete_basketproduct(id: $id)
                 {
                 _id

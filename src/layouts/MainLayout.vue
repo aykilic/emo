@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf" >
-    <q-header  reveal :reveal-offset="150">
+    <q-header  reveal :reveal-offset="50">
       <q-toolbar class="text-amber-1 bg-white text-grey-9 text-weight-bold justify-center " >
        
         <div class="row q-pt-lg col-md-8 col-sm-10 col-xs-12 grid desktop-had" >
@@ -70,11 +70,11 @@
           <!-- <div class="q-pr-md title-icons text-center  text-caption"><q-icon class="icon-heart text-center"    style="font-size: 26px;"/><q-item-label >Favoriler</q-item-label ></div> -->
           <div  class=" title-icons text-center  text-caption" @click="sepet()"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>{{sepet_count}}</q-badge></q-icon><q-item-label >Sepetim</q-item-label ></div>
           <div v-if="this.get_uid =='' " class="q-pl-md title-icons text-center  text-caption" @click="login()" ><q-icon class="icon-person text-center"   style="font-size: 26px;"/><q-item-label >login</q-item-label >  </div>
-          <div ref="hesap" v-else class="q-pl-md title-icons text-center  text-caption"  @mouseover= "hesapOver = true" @mouseout= "hesapOver = false" >
+          <div v-else   class="q-pl-md title-icons text-center  text-caption"  @mouseover= "hesapOver = true" @mouseout= "hesapOver = false" >
             <q-icon   class="icon-person text-center" style="font-size: 26px;"/>
             <q-item-label >Hesabım</q-item-label >
             <!-- :class="hesap ? 'icon-personn' : 'icon-person' " -->
-            <q-menu   @mouseover= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[15, 10]">
+            <q-menu   @mouseover= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[10, 10]">
             <!-- <q-menu v-if="hesap" @hesapOver= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[15, 15]"> -->
               
             <q-list v-if="hesap" style="min-width: 100px;">
@@ -419,7 +419,8 @@ export default {
       'get_guid',
       'get_basketlist',
       'get_ubasketlist',
-      'get_uid'
+      'get_uid',
+      'get_user',
     ]),
     // sepet_count () {
     //   if(Cookies.get("uid") != null || Cookies.get("uid") != "" || Cookies.get("uid") != undefined){
@@ -524,6 +525,7 @@ export default {
           
           this.$store.dispatch('add_uid',Cookies.get('uid'))
           this.$store.dispatch('search_ubasketlist',Cookies.get('uid'))
+          this.$store.dispatch('search_getuser',Cookies.get('uid'))
           // this.$router.go(-1)
           // this.$store.dispatch('set_login',this.get_guid)
           // Cookies.remove('guid')
@@ -571,7 +573,7 @@ export default {
     debounceFunc3: debounce(function () {
 
       this.checkhesap()
-    }, 1),
+    }, 100),
     checkhesap(){
       
       if (this.hesapOver || this.hesaplistOver ) {

@@ -109,6 +109,7 @@ type Mutation{
   createVaryantsatir(satirlist:[varyantlistInput]):varyant_skus
   updateVaryantMiktar(veri:[varyantlistInput]):varyant_skus
   varyantstokmiktaredit(id:ID,count:Float):varyant_skus
+  varyantstoklistmiktaredit(liste: [satiridcountinput]):varyant_skus
   # updateVaryantval(stokid:ID!, varyantvalue:String,varyantaltvalue:String):[varyant]
   # updateAltVaryantval(stokid:ID!,varyantaltid:ID!,altvaryantaltid:ID, varyantname: String, varyantaltname: String):[varyant]
   # addaltVaryant(stokid:ID,altvaryantname:String, altvaryantvalue:String): varyant
@@ -138,4 +139,8 @@ input varyantlistInput{
   color:String
   res:String
   
+}
+input satiridcountinput{
+  id:ID
+  count:Float
 }

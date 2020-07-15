@@ -25,7 +25,8 @@ import { Cookies } from "quasar";
       'anakategorilists',
       'get_guid',
       'get_basketlist',
-      'get_userdetaillists'
+      'get_userdetaillists',
+      'get_user'
       
     ]),
     ...mapState([
@@ -39,6 +40,7 @@ import { Cookies } from "quasar";
      if(Cookies.get('guid')== null || Cookies.get('guid')== undefined || this.get_guid == "" || this.get_guid == undefined || this.get_guid == null  ){
           // console.log("11");
         if(Cookies.get('uid')){
+          this.$store.dispatch('search_getuser',Cookies.get('uid'))
           this.$store.dispatch('add_uid',Cookies.get('uid'))
           // this.$store.dispatch('user',Cookies.get('uid'))
 

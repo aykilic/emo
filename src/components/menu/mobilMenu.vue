@@ -11,7 +11,8 @@
                 >
                     <q-item  :style="indent" v-if="list.children.length > 1  " @click="open(list.stokturad,list._id)" clickable exact>
                         <q-item-section class="" >
-                        <q-item-label  class="row  " clickable>Tüm Ürünler <q-icon name="arrow_forward_ios" /> </q-item-label>
+                        <!-- <q-item-label  class="row  " clickable>Tüm Ürünler <q-icon name="arrow_forward_ios" /> </q-item-label> -->
+                        <q-item-label  class="row  " clickable>Tüm Ürünler  </q-item-label>
                         <!-- <q-item-label v-else>{{list.stokturad}}</q-item-label> -->
                         </q-item-section>
                     </q-item>

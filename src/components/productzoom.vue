@@ -61,13 +61,14 @@ textClickZoomHint: "sdsdsd"
         
         }else{
              MagicZoom.start();
-             const ele = document.getElementById('Zoom-1') // You need to get your element here
-                const target = getScrollTarget(ele)
-                // console.log(target);
-                const offset = ele.offsetTop - ele.scrollHeight
-                 console.log("offset",offset);
-                const duration = 100
-                setScrollPosition(target, 170, duration)
+             // scrool hareket
+            //  const ele = document.getElementById('Zoom-1') // You need to get your element here
+            //     const target = getScrollTarget(ele)
+            //     // console.log(target);
+            //     const offset = ele.offsetTop - ele.scrollHeight
+            //      console.log("offset",offset);
+            //     const duration = 100
+            //     setScrollPosition(target, 170, duration)
         }
             
 

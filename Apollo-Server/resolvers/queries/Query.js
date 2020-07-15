@@ -262,12 +262,25 @@ module.exports = {
       )
     })
   },
+  all_Userdetail_Query:async(parent, args, {Models})=> {
+    const model = Models.User_detail
+    //  console.log({guid});
+    
+  //  return await stokturu.find({_id:id})
+    return await model.find()
+  },
   Search_Userdetail_Query:async(parent, {uid}, {Models})=> {
     const model = Models.User_detail
     //  console.log({guid});
     
   //  return await stokturu.find({_id:id})
     return await model.find({uid:ObjectID(uid)})
+  },
+  Search_luser:async(parent, {uid}, {Models})=> {
+    // console.log(uid);
+    const model = Models.User
+    return await model.findOne({_id:ObjectID(uid)})
+    console.log(asd);
   },
   search_siparislist:async(parent, args, {Models})=> {
     const model = Models.siparis

@@ -61,7 +61,7 @@ module.exports = {
   user_detail_mutation: async (parent,{userdetail},  { Models }) => {
     // console.log(Models);
     const model = Models.User_detail
-    console.log(userdetail);
+    // console.log(userdetail);
   return new Promise((resolve,object) =>{
 
      new model({  
@@ -130,6 +130,11 @@ module.exports = {
 //         else resolve(doc)
 //     })
 // })
+},
+deleteuserdetail_mutation: async (root, { id }, { Models }) => {
+  // console.log(id);
+  const model = Models.User_detail
+  return await model.findByIdAndDelete(id);
 },
   sendmail:async (parent, {username}, { Models }) => {
      sendmail()

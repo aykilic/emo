@@ -4,6 +4,9 @@ const kodla = require('bcrypt');
 var jwt = require('jsonwebtoken');
 
 const  userSchema = new Schema({
+  _id: {
+    type: Schema.ObjectId,
+  },
   username: {
     type: String,
     
