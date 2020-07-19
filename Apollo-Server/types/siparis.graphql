@@ -16,6 +16,7 @@
 #   ad_soyad:String
 #   email:String
 # }
+
 scalar DateTime
 type satir{
     _id:ID
@@ -44,6 +45,7 @@ type siparis{
     tutar:Float
     user:[User_detail]
     satirs:[satir]
+    isViewed:Boolean
     createdAt: DateTime
 }
 type numaralar{
@@ -71,7 +73,15 @@ type numaralar{
      search_faturalist:[siparis]
      search_siparisfilterlist(startdate:DateTime,enddate:DateTime,odemeyontemmodel:String,odemedurummodel:String,teslimatdurummodel:String,fatdurummodel:String):[siparis]
      son_numaralar:numaralar
+     search_getviewsiparis:[siparis]
 #     search_ubasketlist(uid:String):[sepet]
+ }
+ type Subscription{
+     newsiparis:siparis
+     onConnec:denemem
+ }
+ type denemem{
+     ibo:String
  }
 input satirListInput{
     stokad:String

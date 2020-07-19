@@ -280,7 +280,7 @@ module.exports = {
     // console.log(uid);
     const model = Models.User
     return await model.findOne({_id:ObjectID(uid)})
-    console.log(asd);
+    // console.log(asd);
   },
   search_siparislist:async(parent, args, {Models})=> {
     const model = Models.siparis
@@ -404,14 +404,36 @@ module.exports = {
     //     }}
     // }}
    ])
-     console.log(asd);
+    //  console.log(asd);
     //  return await model.find()
   },
+
+   search_getviewsiparis:async(parent, args, {Models})=> {
+    const model = Models.siparis
+    return await model.aggregate([
+      {$match: {
+        isViewed: {
+          $eq: true
+        }
+      }
+    },
+    {
+      $lookup:
+        {
+          from: 'User_detail',
+          localField: 'userid',
+          foreignField: '_id',
+          as: 'user'
+        },
+    },
+  ])
+},
+  // search_getviewsiparis
   son_numaralar:async(parent, args, {Models})=> {
     const model = Models.numaralar
     return await model.findOne()
 
-    console.log(asd);
+    // console.log(asd);
   },
   Search_checkmail:async(parent, {email}, {Models})=> {
     // console.log({email});

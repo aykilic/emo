@@ -34,6 +34,7 @@ type varyant{
   kdv: Int
   indirim: Int
   miktar: Int
+  sira:Float
   description: String
   vars:[vars]
   createdAt: String
@@ -46,6 +47,7 @@ type altvaryant{
   stokid:ID
   parentid:ID
   color:String
+  sira:Float
   vars:[vars]
   createdAt: String
 }
@@ -82,7 +84,9 @@ type varyant_skus{
   miktar: Float
   description: String
   color: String
+  createdAt:DateTime
   res:String
+  sira:Float
 }
 
 type Query{
@@ -100,9 +104,9 @@ type Query{
 }
 type Mutation{
   createVaryant(varyantname: String): varyant
-  createaltVaryant(varyantname: String, varyant_id:ID): altvaryant
+  createaltVaryant(varyantname: String, varyant_id:ID,sira:Float): altvaryant
   updateVaryant(id:ID!,varyantname: String):varyant
-  updatealtVaryant(id:ID!,varyantname: String, color: String):altvaryant
+  updatealtVaryant(id:ID!,varyantname: String, color: String,sira:Float):altvaryant
   deleteVaryant(id:ID!): varyant
   deletealtVaryant(id:ID!): altvaryant
   createskuVal:skuVal
@@ -135,6 +139,7 @@ input varyantlistInput{
   kdv: Float
   indirim: Float
   miktar: Float
+  sira:Float
   description: String
   color:String
   res:String

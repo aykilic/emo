@@ -105,7 +105,7 @@ import {mapGetters } from 'vuex';
                     {name: 'miktar', label: 'Miktar', align: 'left', sortable: true,field: row => row.miktar},
           ],
           pagination: {
-             sortBy: 'adi',
+            //  sortBy: 'adi',
         //    ascending: false,
           page: 1,
           rowsPerPage: 20,
@@ -192,7 +192,7 @@ import {mapGetters } from 'vuex';
                                 varyant_option2_name
                                 fiyat1
                                 miktar
-                                
+                                sira
                                 }
                             }`,
 
@@ -202,7 +202,8 @@ import {mapGetters } from 'vuex';
                     })
                 .then(data => {
                 this.hasvaryantsatirlists = data.data.data.hasvaryantsatirQuery;
-                this.hasvaryantsatirlists = _.orderBy(this.hasvaryantsatirlists, ['varyant_option1_name','varyant_option2_name'],['asc']);
+                this.hasvaryantsatirlists = _.sortBy(this.hasvaryantsatirlists, "sira");
+                // this.hasvaryantsatirlists = _.orderBy(this.hasvaryantsatirlists, ['varyant_option1_name','varyant_option2_name'],['asc']);
                 });
             },
 

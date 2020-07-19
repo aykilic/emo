@@ -25,10 +25,9 @@ module.exports = {
       //         }
       // ,
       //             {upsert: true }
-               
+              
 
       //  )
-
 
       if (error) {
         console.log("hata")
@@ -36,9 +35,10 @@ module.exports = {
       }
     });
   },
-  createaltVaryant: async (parent, { varyantname, varyant_id}, { Models }) => {
+  createaltVaryant: async (parent, { varyantname, varyant_id,sira}, { Models }) => {
     const varyant = Models.varyantValue
     return await new varyant({
+      sira,
       varyant_id,
       varyantname
     }).save((error) => {
@@ -71,10 +71,10 @@ module.exports = {
      return await varyant.findByIdAndUpdate({_id:id},{varyantname:varyantname},{new: true});
     // collection.update({_id:"123"}, {author:"Jessica", title:"Mongo facts"});
   },
-  updatealtVaryant: async (root, { id, varyantname,color}, { Models }) => {
+  updatealtVaryant: async (root, { id, varyantname,color,sira}, { Models }) => {
     const varyant = Models.varyantValue
       // console.log(id,stokturad,parentid,fiyat1,fiyat2);
-     return await varyant.findByIdAndUpdate({_id:id},{varyantname:varyantname,color:color},{new: true});
+     return await varyant.findByIdAndUpdate({_id:id},{varyantname:varyantname,color:color,sira:sira},{new: true});
     // collection.update({_id:"123"}, {author:"Jessica", title:"Mongo facts"});
   },
   deleteVaryant: async (root, { id }, { Models }) => {
@@ -102,7 +102,7 @@ module.exports = {
          return model.updateMany({"_id": item.id }, {"$inc":   { "miktar": item.count}  },{multi:true}); 
 
     })).then(function(results){
-       console.log(results);
+      //  console.log(results);
         let data={'res':'ok'};
          return  data
         
@@ -264,7 +264,7 @@ module.exports = {
   const varyant = Models.varyant_skus
     return await Promise.all(
       parent.satirlist.map((item)=>{ 
-          // console.log(item)
+          //  console.log(item)
         // return varyant.updateMany({"_id": item.id }, {"$set":   { "color": item.color, "miktar": item.miktar, "fiyat1": item.fiyat1, "fiyat2": item.fiyat2}  },{multi:true}); 
           return varyant.insertMany(item,function(error, docs) {
             //  console.log("error",error)

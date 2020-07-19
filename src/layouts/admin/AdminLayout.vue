@@ -20,10 +20,38 @@
                flat>
           <q-icon></q-icon>
         </q-btn> -->
-        <q-btn round>
-          <q-avatar size="42px">
-            <img src="../../statics/Emose_Logo.jpg">
-          </q-avatar>
+        <q-btn dense round flat class="q-mr-lg" icon="mdi-bell-outline">
+          
+          <q-badge v-if="bildirim==false" class="text-capitalize " color="red" align="top" floating >!</q-badge>
+          <!-- <q-badge  align="top" color="red" >1</q-badge> -->
+          <q-menu style="width:500px;">
+            <q-toolbar style="width:500px;" class=" ">
+              
+            <q-toolbar-title>Yeni Siparişler</q-toolbar-title>
+            <q-space/>
+            <q-btn rounded flat dense >
+                <q-icon name="mdi-dots-vertical"/>
+            </q-btn>
+          </q-toolbar>
+          <q-separator/>
+        <q-list>
+          <q-item tag="label">
+            <q-item-section >
+              <q-item-label caption>58 TL tutarında ürün sipariş verildi... </q-item-label>
+              
+            </q-item-section>
+          </q-item>
+          <!-- <q-item
+            
+          >
+            <q-item-section>Menu Item </q-item-section>
+          </q-item> -->
+        </q-list>
+      </q-menu>
+        </q-btn>
+        
+        <q-btn round flat icon="mdi-account">
+          
           <q-menu :offset="[0, 5]">
             <q-list style="min-width: 100px;">
               <q-item clickable q-close-popup>
@@ -167,6 +195,7 @@ import Vue from "vue";
   import {openURL} from 'quasar'
   import Cookies from 'js-cookie'
 //   import store from "../store";
+import gql from "graphql-tag";
   import router from "../../router"
   import {mapGetters } from 'vuex'
 //   import { auth } from '../services/fireinit.js'
@@ -174,10 +203,44 @@ import Vue from "vue";
 
   export default {
     name: 'MyLayout',
-
+    apollo: {
+      $subscribe: {
+        tags: {
+          // query: gql`subscription {
+          //   newsiparis{
+              
+          //     user{
+          //       email
+          //       adres
+          //       ad_soyad
+          //         }
+          //     sipno
+          //     tutar
+          //     satirs{
+          //         stokad
+          //         count
+          //         tutar
+          //         }
+          //   }
+          // }`,
+          // result ({ data }) {
+          //   console.log(data);
+          // },
+          query: gql`subscription {
+            onConnec{
+              ibo
+            }
+          }`,
+          result ({ data }) {
+            console.log("dataaa",data);
+          },
+        },
+      },
+    },
     data() {
       return {
         leftDrawerOpen: this.$q.platform.is.desktop,
+        bildirim:false,
         loading:0,
         treem:[],
         treemselect:[]

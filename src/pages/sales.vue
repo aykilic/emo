@@ -537,6 +537,7 @@ export default {
           }
         });
         this.option_2 = option_2;
+        
       } else {
         let arra = [];
         let option_2;
@@ -561,10 +562,16 @@ export default {
         });
 
         //  this.option_2=_.sortBy(arra, ['desc']);
+        // this.option_2 = _.orderBy(
+        //   arra,
+        //   "varyant_option2.varyant_option2_name",
+        //   "desc"
+        // );
+      //  console.log("this.option_2",this.option_2);
         this.option_2 = _.orderBy(
           arra,
-          "varyant_option2.varyant_option2_name",
-          "desc"
+          "varyant_option2.sira",
+          "asc"
         );
       }
       // console.log("this.option_2",this.option_2);
@@ -649,7 +656,13 @@ export default {
             arra.push(varyant_option1);
           }
         });
+        // console.log(arra);
         this.option_1 = arra;
+        this.option_1 = _.orderBy(
+          arra,
+          "varyant_option1.varyant_option1_name",
+          "asc"
+        );
       }
 
       //  console.log("this.varyants",this.varyants);
@@ -693,6 +706,8 @@ export default {
                       miktar
                       color
                       kdv
+                      createdAt
+                      sira
                     }
                  }`,
 
@@ -707,7 +722,7 @@ export default {
           let varyant_option2 = [];
           let deneme = [];
           let varyants = data.data.data.hasvaryantsatirQuery;
-          varyants = _.sortBy(varyants, "varyant_option1_name");
+           varyants = _.orderBy(varyants, ["sira"]);
           //  arra= _(arra.varyant_option1.varyant_option1_name).sort()
           // console.log("varyants",varyants);
           this.varyants = varyants;
@@ -735,7 +750,7 @@ export default {
                   varyant_option1: p.varyant_option1_id
                 }))
               }))
-              .sortBy("varyant_option1.varyant_option1_name")
+              // .sortBy("varyant_option1.varyant_option1_name")
               .value();
             //  console.log("varyant_option1",varyant_option1);
             varyant_option2 = _(varyants)
@@ -746,8 +761,9 @@ export default {
                   varyant_option2: p.varyant_option2_id
                 }))
               }))
-              .sortBy("varyant_option2.varyant_option2_name")
-              .reverse()
+              // .sortBy("varyant_option2.varyant_option2_name")
+              // .sortBy("varyant_option2.createdAt")
+              // .reverse()
               .value();
             // console.log("varyant_option2",varyant_option2);
             // _.sortBy(varyant_option1, [ 'varyant_option1.varyant_option1_name']);
@@ -772,6 +788,11 @@ export default {
               });
 
               this.option_1 = option_1;
+              this.option_1 = _.orderBy(
+                this.option_1,
+                "varyant_option1.varyant_option1_name",
+                "asc"
+              );
               //  console.log("hasoption_1",option_1);
             }
           });
@@ -785,6 +806,11 @@ export default {
 
               this.option_2 = option_2;
               //  console.log("hasoption_2",option_2);
+              this.option_2 = _.orderBy(
+                this.option_2,
+                "varyant_option2.sira",
+                "asc"
+              );
             }
           });
         });

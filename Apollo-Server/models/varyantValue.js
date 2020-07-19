@@ -33,6 +33,10 @@ const varyantValueSchema = new Schema({
     type: String,
     default:""
   },
+  sira:{
+    type: Number,
+    default:1
+  },
   vars:
     [ 
       { images: imagesSchema }

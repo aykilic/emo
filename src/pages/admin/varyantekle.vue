@@ -73,6 +73,7 @@
           <q-tr :props="props" class="cursor-pointer" @click.native="editaltvaryant(props.row)">
             <q-td  key="adi" :props="props">{{props.row.varyantname}}</q-td>
             <q-td key="color" :props="props">{{props.row.color}}</q-td>
+            <q-td key="sira" :props="props">{{props.row.sira}}</q-td>
 
           </q-tr>
         </template>
@@ -147,6 +148,13 @@
             </q-icon>
           </template>
           </q-input>
+          <q-input
+            class="q-pa-md"
+            outlined
+            v-model="editedaltvaryantitem.sira"
+            label="Sira"
+            :dense="false"
+          />
         </q-card-section>
 
         <q-card-section class="text-right">
@@ -188,6 +196,7 @@ export default {
     return {
       varyantvalinput: "",
       altvaryantvalinput: "",
+      sira:1,
       varyantQuery: [],
       altvaryantQuery: [],
       columns: [
@@ -213,13 +222,20 @@ export default {
           align: "left",
           sortable: true,
           field: row => row.color
+        },
+        {
+          name: "sira",
+          label: "",
+          align: "left",
+          sortable: true,
+          field: row => row.sira
         }
       ],
       pagination: {
-        rowsPerPage: 6
+        rowsPerPage: 20
       },
       altpagination: {
-        rowsPerPage: 6
+        rowsPerPage: 20
       },
       editedvaryantitem: "",
       editedaltvaryantitem: "",
@@ -319,16 +335,16 @@ export default {
         this.$apollo
           .mutate({
             mutation: gql`
-              mutation createaltvaryant($varyantname: String!,$varyant_id: ID) {
-                createaltVaryant(varyantname: $varyantname, varyant_id: $varyant_id) {
+              mutation createaltvaryant($varyantname: String!,$varyant_id: ID,sira:Float) {
+                createaltVaryant(varyantname: $varyantname, varyant_id: $varyant_id,sira:$sira) {
                   _id
                 }
               }
             `,
             variables: {
               varyant_id: this.selected[0]._id,
-              varyantname: this.altvaryantvalinput
-
+              varyantname: this.altvaryantvalinput,
+              sira:this.sira
             }
           })
           .then(data => {
@@ -375,7 +391,8 @@ export default {
           // loadingKey: 'loading',
           variables: {
             id: this.editedvaryantitem._id,
-            varyantname: this.editedvaryantitem.varyantname
+            varyantname: this.editedvaryantitem.varyantname,
+            sira: this.editedvaryantitem.sira
           }
         })
         .then(data => {
@@ -400,8 +417,8 @@ export default {
       this.$apollo
         .mutate({
           mutation: gql`
-            mutation updatealtVaryant($id: ID!, $varyantname: String!, $color: String) {
-              updatealtVaryant(id: $id, varyantname: $varyantname, color: $color) {
+            mutation updatealtVaryant($id: ID!, $varyantname: String!, $color: String, $sira: Float ) {
+              updatealtVaryant(id: $id, varyantname: $varyantname, color: $color,sira:$sira) {
                 _id
                 varyantname
               }
@@ -411,7 +428,8 @@ export default {
           variables: {
             id: this.editedaltvaryantitem._id,
             varyantname: this.editedaltvaryantitem.varyantname,
-            color: this.editedaltvaryantitem.color
+            color: this.editedaltvaryantitem.color,
+            sira:Number(this.editedaltvaryantitem.sira)
           }
         })
         .then(data => {
@@ -525,6 +543,7 @@ export default {
                                 _id
                                 varyantname
                                 color
+                                sira
                                 
                 }
               }`,

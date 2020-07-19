@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
+const { newsiparis } = require('../subscriptions/siparis.subscription');
 
 const ObjectID = require("mongodb").ObjectID;
 module.exports = {
-    createSiparisFis_mutation:async (root,{ satirList, siparisfis },{Models}) => {
+    createSiparisFis_mutation:async (root,{ satirList, siparisfis },{ Models, pubsub}) => {
         // console.log(satirList);
         const siparis = Models.siparis
         return await new Promise((resolve,object) =>{
@@ -24,13 +25,16 @@ module.exports = {
                 tutar:siparisfis.tutar,
                 satirs:satirList
               }).save((err,doc) =>{
-                  // console.log(err)
+                  //  console.log(doc)
+                  pubsub.publish('newsiparis',{
+                    
+                    newsiparis: doc
+                  });
               if(err) reject(err)
               else resolve(doc)
           })
 
         })
-
     },
     numara_guncelle:async (root, { faturano, irsaliyeno }, { Models }) => {
         // console.log(id,count);

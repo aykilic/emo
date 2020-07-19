@@ -3,7 +3,7 @@
     <q-header  reveal :reveal-offset="50">
       <q-toolbar class="text-amber-1 bg-white text-grey-9 text-weight-bold justify-center " >
        
-        <div class="row q-pt-lg col-md-8 col-sm-10 col-xs-12 grid desktop-had" >
+        <div  class="row q-pt-lg  col-md-8 col-sm-10 col-xs-12 grid desktop-had" >
         <div class="col-md-4 col-sm-6   one">
           <router-link to="/" >
           <q-img
@@ -53,45 +53,45 @@
       <!-- ----------------------------------------------------------- -->
 
         <div class="row q-pt-lg col-12  mobil-had" >
-        <div class="row col-12  ">
-          <div class="col-4">
-          <q-btn flat @click="drawer = !drawer" round dense icon="menu" size="md" />
-          </div>
-          <div class="col-4 text-center" style="margin-top:-5px;">
-          <router-link  to="/"  >
-          <q-img 
-          src="statics/Emose_Logo.jpg"
-          style=" max-width: 100px;"
-          />
-          </router-link>
-          </div>
-          
-          <div class="row col-4 justify-end">
-          <!-- <div class="q-pr-md title-icons text-center  text-caption"><q-icon class="icon-heart text-center"    style="font-size: 26px;"/><q-item-label >Favoriler</q-item-label ></div> -->
-          <div  class=" title-icons text-center  text-caption" @click="sepet()"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>{{sepet_count}}</q-badge></q-icon><q-item-label >Sepetim</q-item-label ></div>
-          <div v-if="this.get_uid =='' " class="q-pl-md title-icons text-center  text-caption" @click="login()" ><q-icon class="icon-person text-center"   style="font-size: 26px;"/><q-item-label >login</q-item-label >  </div>
-          <div v-else   class="q-pl-md title-icons text-center  text-caption"  @mouseover= "hesapOver = true" @mouseout= "hesapOver = false" >
-            <q-icon   class="icon-person text-center" style="font-size: 26px;"/>
-            <q-item-label >Hesabım</q-item-label >
-            <!-- :class="hesap ? 'icon-personn' : 'icon-person' " -->
-            <q-menu   @mouseover= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[10, 10]">
-            <!-- <q-menu v-if="hesap" @hesapOver= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[15, 15]"> -->
-              
-            <q-list v-if="hesap" style="min-width: 100px;">
-              <q-item clickable q-close-popup>
-                <q-item-section>Hesap Ayarları</q-item-section>
-              </q-item>
-              <q-separator />
-              <q-item clickable q-close-popup>
-                <q-item-section @click.prevent="logout()">Logout</q-item-section>
-              </q-item>
-            </q-list>
-            </q-menu>
-              <!-- </q-menu> -->
-          </div>
+          <div class="row col-12  ">
+            <div class="col-4">
+            <q-btn flat @click="drawer = !drawer" round dense icon="menu" size="md" />
             </div>
-          
-          </div>
+            <div class="col-4 text-center" style="margin-top:-5px;">
+            <router-link  to="/"  >
+            <q-img 
+            src="statics/Emose_Logo.jpg"
+            style=" max-width: 100px;"
+            />
+            </router-link>
+            </div>
+            
+            <div class="row col-4 justify-end">
+            <!-- <div class="q-pr-md title-icons text-center  text-caption"><q-icon class="icon-heart text-center"    style="font-size: 26px;"/><q-item-label >Favoriler</q-item-label ></div> -->
+            <div  class=" title-icons text-center  text-caption" @click="sepet()"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>{{sepet_count}}</q-badge></q-icon><q-item-label >Sepetim</q-item-label ></div>
+            <div v-if="this.get_uid =='' " class="q-pl-md title-icons text-center  text-caption" @click="login()" ><q-icon class="icon-person text-center"   style="font-size: 26px;"/><q-item-label >login</q-item-label >  </div>
+            <div v-else   class="q-pl-md title-icons text-center  text-caption"  @mouseover= "hesapOver = true" @mouseout= "hesapOver = false" >
+              <q-icon   class="icon-person text-center" style="font-size: 26px;"/>
+              <q-item-label >Hesabım</q-item-label >
+              <!-- :class="hesap ? 'icon-personn' : 'icon-person' " -->
+              <q-menu   @mouseover= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[10, 10]">
+              <!-- <q-menu v-if="hesap" @hesapOver= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[15, 15]"> -->
+                
+              <q-list v-if="hesap" style="min-width: 100px;">
+                <q-item clickable q-close-popup>
+                  <q-item-section>Hesap Ayarları</q-item-section>
+                </q-item>
+                <q-separator />
+                <q-item clickable q-close-popup>
+                  <q-item-section @click.prevent="logout()">Logout</q-item-section>
+                </q-item>
+              </q-list>
+              </q-menu>
+                <!-- </q-menu> -->
+            </div>
+              </div>
+            
+            </div>
         <div class="q-pt-md q-pb-md col-xs-12  self-center justify-center">
 
           <q-input rounded outlined dense v-model="search" class="main_search" placeholder="Kategori yada Ürün Ara" >
@@ -108,7 +108,7 @@
 
       <!-- ----------------------------------------------------------- -->
       </q-toolbar>
-      <div class="container" >
+      <div class="container " >
         <svg viewBox="0 5 500 40" preserveAspectRatio="xMinYMin meet">
           <path d="M-0,15 C190,70 220,-25 500,35  L500,00 L0,0 Z" style="stroke: none; fill:white;"></path>
         </svg>
@@ -175,7 +175,7 @@
       <!-- <transition name="fade"> -->
         <keep-alive>
           <!-- <load v-if="$root.loading"></load> -->
-          <router-view ></router-view>
+          <router-view class="anamargin"></router-view>
         </keep-alive>
       <!-- </transition> -->
       </div>
@@ -206,11 +206,11 @@
               <q-tab  name="c" @click="menu = !menu" @mouseover= "menuOver2 = true" @mouseout= "menuOver2 = false" label="EN ÇOK SATAN ÜRÜNLER" />
             
          </q-tabs>
-          <!-- <div class="container">
-  <svg viewBox="0 0 500 420" preserveAspectRatio="xMinYMin meet">
-    <path d="M-10,10 C70,70 300,-50 500,40  L500,00 L0,0 Z" style="stroke: none; fill:#ff4081;"></path>
-  </svg>
-</div> ibo--> 
+                            <!-- <div class="container">
+                    <svg viewBox="0 0 500 420" preserveAspectRatio="xMinYMin meet">
+                      <path d="M-10,10 C70,70 300,-50 500,40  L500,00 L0,0 Z" style="stroke: none; fill:#ff4081;"></path>
+                    </svg>
+                  </div> ibo--> 
           <q-tab-panels
             v-if="menu"
             v-model="main_tab"
@@ -230,7 +230,8 @@
                     <ul class= "ullistchild"  v-for="(altkategorilist,iindex) in anakategorilist.children" :key='iindex' >
                         <li  class="listchild" @click="link(altkategorilist.stokturad,altkategorilist._id),menuOver=false,listOver=false" >
                           <!-- {{altkategorilist.stokturad}} -->
-                          {{ altkategorilist.stokturad.split('-').reverse().join(' ') }}
+                          {{ altkategorilist.stokturad.split('-').join(' ') }}
+                          <!-- {{ altkategorilist.stokturad.split('-').reverse().join(' ') }} -->
                           <!-- {{ altkategorilist.stokturad.split('-').join(' ') }} -->
                           </li> 
                       </ul>
@@ -323,7 +324,12 @@ export default {
     mobilMenu
 
   },
-
+socket: {
+    texto (text) {
+      console.log('oi')
+      this.activeAlert(text)
+    }
+  },
   data () {
     return {
       drawer: false,
@@ -487,6 +493,9 @@ export default {
     //  } 
   // },
   methods:{
+    activeAlert(text) {
+     alert(text)
+    },
     
    async userid_function(){
     //  console.log(Cookies.get('uid'));
@@ -759,6 +768,9 @@ export default {
 }
 
 @media only screen and (max-width: 1023px ) {
+  // .anamargin{
+  //   margin-top:175px;
+  // }
   .header_resim{
    display: none;
  }
@@ -789,7 +801,9 @@ svg{
 }
 }
 @media only screen and (min-width: 601px ) {
- 
+ .anamargin{
+    margin-top:40px;
+  }
  .mobil-tab{
     display: none;
   }   

@@ -71,6 +71,9 @@ const vatyant_skusSchema = new Schema({
   color: {
     type:  String,
   },
+  sira:{
+    type:Number,
+  },
 //   variant: {
 //     name:  {type: String},
 //     value: {type: String}

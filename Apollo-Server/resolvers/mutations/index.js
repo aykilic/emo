@@ -4,7 +4,7 @@ const birim = require('./birim.mutation');
 const varyant = require('./varyant.mutation');
 const sepet = require('./sepet.mutation');
 const siparis=require('./siparis.mutation');
- const photo = require('./photo.mutation');
+//  const photo = require('./photo.mutation');
 const Mutation = {
   ...user,
   ...birim,
@@ -12,6 +12,6 @@ const Mutation = {
   ...varyant,
   ...sepet,
   ...siparis,
-  ...photo
+  // ...photo
 };
 module.exports = Mutation;

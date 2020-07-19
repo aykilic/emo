@@ -12,5 +12,7 @@
 
 # import Query from './types/siparis.graphql'
 # import Mutation from './types/siparis.graphql'
+# import Subscription from './types/siparis.graphql'
+
 
 

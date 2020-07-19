@@ -86,8 +86,11 @@ const satirSchema = new Schema({
     satirs:
       [ 
         satirSchema 
-      ]
-    ,
+      ],
+    isViewed:{
+      type:Boolean,
+      default:true
+    },
     createdAt: {
       type: Date,
       default: Date.now

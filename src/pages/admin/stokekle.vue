@@ -149,6 +149,7 @@
               grid
               hide-header
               hide-bottom
+              
             >
               <template v-slot:item="props">
                 <div
@@ -164,6 +165,7 @@
                         row-key="_id"
                         :selected.sync="varyantselected"
                         hide-bottom
+                        :pagination.sync="paginationaa"
                       />
                     </q-list>
                   </q-card>
@@ -419,6 +421,7 @@ import cloud from "../../components/cloudinary.vue";
 import altcloud from "../../components/altcloudinary.vue";
 //   import firebase from '../../services/fireinit'
 //   import {storage} from '../../services/fireinit'
+import _ from "lodash";
 import * as is from "../../../node_modules/is_js";
 import { Loading } from "quasar";
 
@@ -503,7 +506,13 @@ export default {
       hasvaryantsatirlists: [],
       //TODO:VARYANT DATA
       options: [],
-
+      paginationaa: {
+          // sortBy: 'ust',
+          // descending: false,
+          page: 1,
+          rowsPerPage: 100,
+          // rowsNumber: 5,q
+        },
       ustkategori: { _id: null },
       denemem: [],
       treem: [],
@@ -528,7 +537,7 @@ export default {
       birimselect: "",
       birimList: [],
       pagination: {
-        rowsPerPage: 6
+        rowsPerPage: 26
       },
       prompt: false,
 
@@ -634,11 +643,17 @@ export default {
         // fiyat1:Number(item.fiyat1) ,
         fiyat1: Number(item.fiyat1),
         miktar: Number(item.miktar),
-        color:item.color
+        color:item.color,
+        sira:item.sira
       }));
       // console.log("satirlist",this.satirlist);
-
-      this.$apollo
+      this.satirlist = _.orderBy(this.satirlist, ['sira'],['asc']);
+      // console.log("satirlist",this.satirlist);
+      // return
+      // this.satirlist = _.sortBy(this.satirlist, "sira");
+      //  console.log("satirlist",this.satirlist);
+    // return
+     await this.$apollo
         .mutate({
           mutation: gql`
             mutation createVaryantsatir($satirlist: [varyantlistInput]) {
@@ -652,7 +667,7 @@ export default {
             satirlist: this.satirlist
           }
         })
-        .then(data => {
+        .then(async data => {
           // this.varyantlist();
           //  setTimeout(() => {
           //   Loading.hide()
@@ -663,7 +678,7 @@ export default {
             // color:'primary'
             position: "top-right"
           });
-          this.selectstokid()
+         await this.selectstokid()
           //  this.group1=""
           //  this.varyantvalinput=""
         });
@@ -692,11 +707,12 @@ export default {
                 obj.varyant1_name = varyantvalue.label;
               } else if (item.varyant_id == varyantvalue.value) {
                 obj.varyant2_name = varyantvalue.label;
+                
               }
             });
 
-            console.log("item.color",item.color);
-            console.log("item.color",altitem.color);
+            // console.log("item.color",item.color);
+            // console.log("item.color",altitem.color);
 
             obj.varyant2_id = item.varyant_id;
 
@@ -707,7 +723,9 @@ export default {
             obj.fiyat1 = "";
             obj.miktar = "";
             obj.color=altitem.color;
+            obj.sira=item.sira;
             selectsat.push(obj);
+            // selectsat = _.sortBy(selectsat, "sira");
             // console.log("sat",sat);
             // }
             // })
@@ -749,7 +767,7 @@ export default {
       }
       // console.log(this.hasvaryantsatirlists);
       // console.log(selectsat);
-      console.log("sat", sat);
+      //  console.log("sat", sat);
       this.satirlists = sat;
     },
     altsel() {
@@ -763,7 +781,7 @@ export default {
         });
       });
     },
-    create_skus() {
+    async create_skus() {
       let arrayim = [];
 
       this.allvaryantlist.forEach(item => {
@@ -774,9 +792,10 @@ export default {
           }
         });
       });
-      console.log("arrayim",arrayim);
+      // console.log("arrayim",arrayim);
+      //  arrayim = _.sortBy(arrayim, "sira");
       this.varyantselected = arrayim;
-      this.listele(this.varyantselected);
+     await this.listele(this.varyantselected);
 
       
     },
@@ -886,6 +905,7 @@ export default {
                       kdv
                       description
                       miktar
+                      sira
                       
                     }
                  }`,
@@ -896,6 +916,7 @@ export default {
         })
         .then(data => {
           this.hasvaryantsatirlists = data.data.data.hasvaryantsatirQuery;
+          this.hasvaryantsatirlists = _.sortBy(this.hasvaryantsatirlists, "sira");
           // console.log(data.data.data.hasvaryantsatirQuery);
         });
     },
@@ -911,11 +932,11 @@ export default {
       this.satirlist = [];
       this.hasvaryantsatirlists = [];
 
-      this.hasvaryantsatirliste();
-      this.varyantlists();
+      await this.hasvaryantsatirliste();
+      await this.varyantlists();
 
-      this.resimlistrefresh();
-
+      await this.resimlistrefresh();
+      Loading.show()
       await axios
         .post('http://'+ process.env.API +':4000/graphql',{
           query: `query StokturuQuery($id: ID! ){
@@ -941,6 +962,7 @@ export default {
           this.stok.kdv = data.data.data.StokturuQuery[0].kdv;
           this.stok.description = data.data.data.StokturuQuery[0].description;
         });
+        Loading.hide()
     },
     //TODO: varyant listeleri
 
@@ -1081,6 +1103,7 @@ export default {
       });
     },
     async varyantlists() {
+      Loading.show()
       await axios
         .post('http://'+ process.env.API +':4000/graphql',{
           query: `query allvaryantQuery{
@@ -1088,11 +1111,13 @@ export default {
                       _id
                       varyantname
                       color
+                      sira
                       varyant_options{
                         _id
                         varyantname
                         varyant_id
                         color
+                        sira
                       }
                     }
                  }`,
@@ -1107,6 +1132,7 @@ export default {
             label: item.varyantname
           }));
         });
+        Loading.hide()
     }
   }
 };

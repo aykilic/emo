@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import stok from './module/stok.js'
 import basket from './module/basket.js'
+import subscription from './module/subscription.js'
 
 // import example from './module-example'
 
@@ -22,6 +23,7 @@ export default function (/* { ssrContext } */) {
     modules: {
       stok,
       basket,
+      subscription,
     },
 
     // enable strict mode (adds overhead!)

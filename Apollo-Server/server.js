@@ -1,108 +1,86 @@
 const express = require('express');
+const http =require('http')
 require('dotenv').config();
-const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServer, gql, PubSub } = require('apollo-server-express');
 const { importSchema } = require('graphql-import');
  const { GraphQLUpload } = require('graphql-upload')
 const {createWriteStream} = require('fs')
 const mongoose = require("mongoose");
 const path = require("path");
+// const socketio = require('socket.io')
 const {sendmail}=require('./emailservice.js')
+// const socketio = require('socket.io') // my io.on('connection', socket => {}) function taking io as param
 
 var promisesAll = require('promises-all');
-
-// const {Stream}  = require('stream');
-// Construct a schema, using GraphQL schema language
-// const typeDefs = gql`
-//   type Query {
-//     hello: String
-//   }
-// `;
 
 // Provide resolver functions for your schema fields
 const resolvers = require('./resolvers/index');
 
-// const User = require('./models/User');
-// const variant = require('./models/variant');
-// const stokturu = require('./models/stokturu');
-// const birim = require('./models/birim');
-const Models =require('./models/index')
-
-// const kategori =require('./models/kategori');
-  // {
-  // Query: {
-  //   hello: () => 'Hello worldd!',
-  // },
-// };
+const Models =require('./models/index');
+const pubsub=new(PubSub);
 mongoose.connect(process.env.DB_HOST,{useNewUrlParser:true, useCreateIndex: true, useFindAndModify:false, useUnifiedTopology: true})
   .then(()=>console.log('connected'))
   .catch(e => console.log(e));
   
-
-const twotypeDefs = gql`
+  //  new Date().toLocaleString('tr', {
+  //   timeZone: 'Europe/Istanbul'
+  // });
   
-  type File {
-    
-    filename: String!
-    mimetype: String!
-    encoding: String!
-    
-    
-  }
-  extend type Mutation {
-    uploadFile(file: Upload!): File
-    
-  }
-`;
-
-
-const resolver = {
-  Mutation: {
-    
-  }
-}
-   
-  
-const root = {
-  Upload: GraphQLUpload
-}
+  //  console.log(Date());
+ 
 const basicDefs = importSchema('./schema.graphql')
 const server = new ApolloServer({
-  
-   typeDefs: [basicDefs,twotypeDefs]
-  ,
+   typeDefs: [basicDefs],
   resolvers: [
     resolvers,
-    resolver,
-    root
   ],
-  context: {
-    Models,
-    
-  },
+  // context: {
+  //   Models,
+  //   pubsub
+  // },
+  context: async ({ req, payload }) => {
+      // console.log("req*****************************************************",req, "payload", payload);
+    return {
+      ...req,
+      pubsub,
+      Models,
+    };
+},
   // Upload: false,
-  graphiql: true
-});
-
-// const schema = makeExecutableSchema({
-//   typeDefs: /* GraphQL */ `
-//     scalar Upload
-//   `,
-//   resolvers: {
-//     Upload: GraphQLUpload
-//   }
-// })
-// console.log(process.env.DB_HOST);
+  graphiql: true,
+  
+//   subscriptions: {
+//     onConnect: async (connectionParams, webSocket) => {
+//       console.log("connect",connectionParams);
+//       // log.info(`<ws> ${user.name} connected.`);
+//       // log.info(`<ws> ibo connected.`);
+//       let data = {}
+//        data = "ibo"
+//       return data
+//     },
+//     onDisconnect: (params, socket) => {
+//         // console.log("params-*****************************************************",params.client);
+//   },
+// }
+ });
 
 const app = express();
 server.applyMiddleware({
+  
   app,
   cors: {
     credentials: true,
     origin: true
   },
 });
-// app.use(ObjectID)
-app.use("/zimage",express.static(path.join(__dirname,"./zimage")))
-app.listen({ port: 4000 }, () =>
+const httpServer = http.createServer(app);
+server.installSubscriptionHandlers(httpServer);
+// httpServer.listen({ port: 4000 }, () =>
+//   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`),
+//   console.log(`🚀 Subscriptions ready at ws://localhost:4000${server.subscriptionsPath}`)
+// );
+// console.log(Date());
+httpServer.listen({ port: 4000 }, () => {
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
-);
+  console.log(`🚀 Subscriptions ready at ws://localhost:4000${server.subscriptionsPath}`)
+})

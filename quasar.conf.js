@@ -10,7 +10,8 @@ module.exports = function (ctx) {
     boot: [
       'i18n',
       'apollo',
-      'axios'
+      'axios',
+      // 'socket'
       
     ],
 

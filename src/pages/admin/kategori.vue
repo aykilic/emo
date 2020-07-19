@@ -195,6 +195,7 @@
                   option-value="parentid"
                   option-label="stokturad"
                   :display-value ="`${editedItem.children.stokturad}`"
+                  @click.native="deneme(editedItem.children)"
 
                 >
                 </q-select>
@@ -367,7 +368,7 @@ import {Loading} from 'quasar'
           sortBy: 'ust',
           descending: false,
           page: 1,
-          rowsPerPage: 20,
+          rowsPerPage: 1000,
           // rowsNumber: 5,q
         },
         // options:[],
@@ -669,6 +670,9 @@ import {Loading} from 'quasar'
         });
           
 
+      },
+      deneme(a){
+        console.log("a",a);
       },
       dene(){
           // console.log(this.stokturad);
