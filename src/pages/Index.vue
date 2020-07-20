@@ -27,7 +27,9 @@
                       >
                             <!-- <q-carousel-slide class="slidir" v-for="(list ,index) in get_slider1list" :key="index" :name="`${index}`" :img-src="list.imageurl" />-->
                             <q-carousel-slide v-for="(list ,index) in get_slider1list" :key="index" :name="index" class="q-pa-none">
-                                <img :src="list.imageurl" alt="mountains" class="fit" style="object-fit: contain;">
+                                <!-- <img :src="list.imageurl" alt="mountains" class="fit" style="object-fit: contain;"> -->
+                                <img :src="list.path + list.publicid+'.jpg'" alt="mountains" class="fit" style="object-fit: contain;">
+                                
                             </q-carousel-slide>
                       <!-- style="object-fit: contain;" -->
                       <!-- style="max-height: 367px; " -->
