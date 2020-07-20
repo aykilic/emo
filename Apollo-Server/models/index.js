@@ -11,6 +11,7 @@ const guest_user = require('./guest_user');
 const User_detail = require('./User_detail');
 const numaralar = require('./numaralar');
 const siparis = require('./siparis');
+const homePage = require('./homePage');
 
 const { GraphQLUpload } = require('graphql-upload')
 // const file = require('./File');
@@ -35,7 +36,6 @@ const {
     })
   });
   
-  
 module.exports = {
     Upload: GraphQLUpload,
     User,
@@ -50,6 +50,7 @@ module.exports = {
     photo,
     siparis,
     numaralar,
+    homePage,
     UploadType,
     // images
     //  file

@@ -4,6 +4,7 @@ import axios from 'axios'
 import stok from './module/stok.js'
 import basket from './module/basket.js'
 import subscription from './module/subscription.js'
+import anasayfa from './module/anasayfa.js'
 
 // import example from './module-example'
 
@@ -24,6 +25,7 @@ export default function (/* { ssrContext } */) {
       stok,
       basket,
       subscription,
+      anasayfa
     },
 
     // enable strict mode (adds overhead!)

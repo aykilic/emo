@@ -46,6 +46,7 @@ type siparis{
     user:[User_detail]
     satirs:[satir]
     isViewed:Boolean
+    res:String
     createdAt: DateTime
 }
 type numaralar{
@@ -65,7 +66,7 @@ type numaralar{
     siparisodemedurumupdate(odemedurumlist:[odemedurumlistInput],odemedurum:String):siparis
     numara_guncelle(irsaliyeno:Float,faturano:Float):numaralar
     siparis_numara_guncelle(id:ID, irsaliyeno:Float,faturano:Float,fatdurum:String):siparis
-    
+    deleteviewSiparislist(listid:[viewSiparisListsInput]):siparis
     
   }
  type Query {
@@ -78,10 +79,10 @@ type numaralar{
  }
  type Subscription{
      newsiparis:siparis
-     onConnec:denemem
+     
  }
- type denemem{
-     ibo:String
+ input viewSiparisListsInput{
+     listid:ID
  }
 input satirListInput{
     stokad:String

@@ -22,25 +22,58 @@
         </q-btn> -->
         <q-btn dense round flat class="q-mr-lg" icon="mdi-bell-outline">
           
-          <q-badge v-if="bildirim==false" class="text-capitalize " color="red" align="top" floating >!</q-badge>
+          <q-badge v-if="get_newviewSiparisLists.length > 0" class="text-capitalize " color="red" align="top" floating >{{get_newviewSiparisLists.length}}</q-badge>
+          
           <!-- <q-badge  align="top" color="red" >1</q-badge> -->
-          <q-menu style="width:500px;">
-            <q-toolbar style="width:500px;" class=" ">
+          <q-menu v-if="get_newviewSiparisLists.length > 0" style="width:500px;">
+            <q-toolbar class="q-mt-xs " style="width:500px;" >
               
-            <q-toolbar-title>Yeni Siparişler</q-toolbar-title>
-            <q-space/>
-            <q-btn rounded flat dense >
-                <q-icon name="mdi-dots-vertical"/>
-            </q-btn>
+              <q-toolbar-title >Yeni Siparişler</q-toolbar-title>
+              <!-- <q-btn dense round flat class="text-grey-6" @click="deleteviewSiparislist()"  icon="mdi-delete"/> -->
+              <q-space />
+              <q-btn rounded flat dense >
+                <q-icon name="mdi-dots-horizontal" />
+                <q-menu  >
+                  <q-item style="width:200px;min-height:0px;" @click="deleteviewSiparislist('all')" tag="label">
+                    Tüm Bildirimleri Sil
+                  </q-item>
+                </q-menu>
+                  <!-- <q-icon name="mdi-dots-horizontal" @click="deleteviewSiparislist('all')"/> -->
+              </q-btn>
           </q-toolbar>
-          <q-separator/>
-        <q-list>
-          <q-item tag="label">
-            <q-item-section >
-              <q-item-label caption>58 TL tutarında ürün sipariş verildi... </q-item-label>
+          <q-separator spaced/>
+        <q-list  v-for="(get_newviewSiparisList, i) in get_newviewSiparisLists" :key="i">
+          <q-item tag="label" @click="deleteviewSiparislist(get_newviewSiparisList._id)">
+            <q-item-section  >
+              <!-- <q-item-label caption>58 TL tutarında ürün sipariş verildi... </q-item-label> -->
+              <q-item-label class="text-grey-8 ">
+                {{get_newviewSiparisList.tutar.toLocaleString('tr', {minimumFractionDigits: 2})}} TL tutarında sipariş verildi.
+              </q-item-label>
+              <q-item-label v-for="(user, ind) in get_newviewSiparisList.user" :key="ind"  caption >
+                  <q-item-label class="q-mb-xs">{{user.ad_soyad}} </q-item-label>
+                 {{user.il}} - {{user.ilce}}
+              </q-item-label>
+              <!-- <q-item-label v-for="(user, inde) in get_newviewSiparisList.user" :key="inde"  caption lines="3">
+                 {{user.ad_soyad}}
+              </q-item-label> -->
+              <!-- <q-btn dense round flat  icon="mdi-bell-outline"/> -->
               
             </q-item-section>
+            <q-item-section  caption side top>
+              <q-item-label class="text-teal" caption  >
+              {{moment(get_newviewSiparisList.createdAt).fromNow()}} 
+              </q-item-label>
+              <q-item-label class="text-teal" caption  >
+              {{get_newviewSiparisList.odemetipi}} 
+              </q-item-label>
+            </q-item-section>
+            <!-- <q-item-section  caption >
+              
+              
+            </q-item-section> -->
+        
           </q-item>
+          <q-separator spaced inset/>
           <!-- <q-item
             
           >
@@ -172,6 +205,14 @@
                           </q-item-section>
                         </q-item>
                       </q-expansion-item>
+                      <q-item  to="/anasayfaayar" exact>
+                      <q-item-section avatar>
+                        <q-icon name="mdi-cogs" />
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label >Ana Sayfa Ayarları</q-item-label>
+                      </q-item-section>
+                    </q-item>
         <q-item  to="/admin" exact>
           <q-item-section avatar>
             <q-icon name="input" />
@@ -192,12 +233,15 @@
 
 <script>
 import Vue from "vue";
+import axios from "axios";
   import {openURL} from 'quasar'
   import Cookies from 'js-cookie'
 //   import store from "../store";
 import gql from "graphql-tag";
   import router from "../../router"
   import {mapGetters } from 'vuex'
+  import moment from 'moment'
+  moment.locale('tr');
 //   import { auth } from '../services/fireinit.js'
   import { AppFullscreen } from 'quasar'
 
@@ -206,40 +250,34 @@ import gql from "graphql-tag";
     apollo: {
       $subscribe: {
         tags: {
-          // query: gql`subscription {
-          //   newsiparis{
+          query: gql`subscription {
+            newsiparis{
               
-          //     user{
-          //       email
-          //       adres
-          //       ad_soyad
-          //         }
-          //     sipno
-          //     tutar
-          //     satirs{
-          //         stokad
-          //         count
-          //         tutar
-          //         }
+              sipno
+            
+            }
+          }`,
+          async result ({ data }) {
+            console.log(data);
+            await this.$store.dispatch('search_getviewsiparis');
+            
+          },
+          // query: gql`subscription {
+          //   onConnec{
+          //     ibo
           //   }
           // }`,
           // result ({ data }) {
-          //   console.log(data);
+          //   console.log("dataaa",data);
           // },
-          query: gql`subscription {
-            onConnec{
-              ibo
-            }
-          }`,
-          result ({ data }) {
-            console.log("dataaa",data);
-          },
         },
       },
     },
     data() {
       return {
+        moment:moment,
         leftDrawerOpen: this.$q.platform.is.desktop,
+        // leftDrawerOpen:false,
         bildirim:false,
         loading:0,
         treem:[],
@@ -265,15 +303,18 @@ import gql from "graphql-tag";
       ...mapGetters([
       'anakategorilists',
       'anakategorizelists',
+      'get_newviewSiparisLists'
     ]),
     },
     async mounted () {
       await this.$store.dispatch('anafunction');
+      await this.$store.dispatch('search_getviewsiparis');
       // this.fonk(this.anakategorilists)
       // this.parseTree(this.anakategorilists);
       // let dem = [];
       // this.treemselected(dem);
       // console.log(this.treemselect);
+      
     },
     methods: {
       openURL,
@@ -288,6 +329,45 @@ import gql from "graphql-tag";
        
        
       // console.log(val);
+      },
+      async deleteviewSiparislist(val){
+        // console.log(val);
+        let listid = []
+        if(val==='all'){
+          this.get_newviewSiparisLists.forEach(item=>{
+            let obj={}
+                    obj={
+                        listid:item._id
+                    }
+            listid.push(obj)
+          })
+        }else{
+          let obj={}
+                    obj={
+                        listid:val
+                    }
+          listid.push(obj)
+        }
+        console.log(listid);
+        this.$apollo
+          .mutate({
+            mutation: gql`
+              mutation deleteviewSiparislist($listid:[viewSiparisListsInput] ) {
+                deleteviewSiparislist(listid: $listid) {
+                  _id
+                }
+              } 
+            `,
+            variables: {
+              listid: listid,
+              
+            }
+          })
+          .then(async data => {
+            console.log("Done");
+            await this.$store.dispatch('search_getviewsiparis');
+          });
+
       },
     //   logout(){
 

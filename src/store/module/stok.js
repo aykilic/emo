@@ -86,7 +86,7 @@ export default {
           })
       },
       urunlist({commit},type){
-        console.log("type",type);
+        // console.log("type",type);
         commit('set_urunlist', type);
       },
     },

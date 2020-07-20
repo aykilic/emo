@@ -10,6 +10,9 @@
 # import Query from './types/sepet.graphql'
 # import Mutation from './types/sepet.graphql'
 
+# import Query from './types/anaSayfa.graphql'
+# import Mutation from './types/anaSayfa.graphql'
+
 # import Query from './types/siparis.graphql'
 # import Mutation from './types/siparis.graphql'
 # import Subscription from './types/siparis.graphql'

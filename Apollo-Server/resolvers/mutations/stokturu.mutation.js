@@ -175,7 +175,7 @@ module.exports = {
        
   }, 
   { 
-    $pull: {vars: {"images._id":ObjectID(imageid)}},
+    $pull: {vars: {"images._id":ObjectID(imageid)},},
   },
   {
       upsert:false,

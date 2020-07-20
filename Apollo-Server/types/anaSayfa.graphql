@@ -1,0 +1,21 @@
+
+type homeimages{
+  _id:ID
+  filename:String
+  imageurl:String
+  publicid:String
+  path:String
+  sira:Float
+}
+type homePage{
+  _id:ID
+  slider1:[homeimages]
+}
+type Query{
+  slider1list:[homePage]
+}
+type Mutation{
+  anasayfaimageUpload(imageurl: String, filename:String, publicid:String, path:String):homePage
+  anasayfaimageUpdate(id:ID,sayi:Float):homePage
+  deletehomePageimageSlider1(id: ID, imageid: ID, path: String):homePage
+}

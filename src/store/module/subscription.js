@@ -54,7 +54,7 @@ export default {
         },
     },
     getters:{
-        get_newSiparisList: (state, getters) => {
+        get_newviewSiparisLists: (state, getters) => {
             return state.newSiparisList
         },
     }

@@ -93,7 +93,7 @@ module.exports = {
    return await model.findOneAndUpdate({_id :id}, {$inc : {miktar : count}},{new: true})
     // return await varyant.findByIdAndDelete(id);
   },
-  varyantstoklistmiktaredit:async (root, {liste }, { Models }) => {
+  varyantstoklistmiktaredit:async (root, { liste }, { Models }) => {
     //  console.log(id,count);
     const model = Models.varyant_skus
      await Promise.all(

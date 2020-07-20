@@ -1,22 +1,34 @@
 <template>
     <div>
-        <!-- {{date.formatDate(Date.now(), 'DD-MM-YYYY')}} -->
-        {{moment(Date.now()).format('DD-MM-YYYY')}}
+
     </div>
 </template>
 
 <script>
 import Vue from "vue";
 import axios from "axios";
+import {mapGetters } from 'vuex';
 import gql from "graphql-tag";
-import { date } from 'quasar'
+// import { date } from 'quasar'
 import moment from 'moment'
-// moment.locale('tr');
     export default {
         data() {
             return {
-                moment:moment,
+                
             }
+        },
+        
+        watch: {
+            
+        },
+        computed: {
+
+        },
+        mounted () {
+            
+        },
+        methods: {
+
         },
     }
 </script>

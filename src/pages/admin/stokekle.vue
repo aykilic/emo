@@ -339,13 +339,13 @@
                       </q-item-section>
 
                       <q-item-section v-if="file.__img" thumbnail class="gt-xs">
-                        <img :src="file.__img.src" />
+                        <img style="object-fit: contain;" :src="file.__img.src" />
                       </q-item-section>
 
                       <q-item-section top side>
                         <q-btn
                           class="gt-xs"
-                          size="12px"
+                          size="14px"
                           flat
                           dense
                           round

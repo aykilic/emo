@@ -324,12 +324,7 @@ export default {
     mobilMenu
 
   },
-socket: {
-    texto (text) {
-      console.log('oi')
-      this.activeAlert(text)
-    }
-  },
+
   data () {
     return {
       drawer: false,

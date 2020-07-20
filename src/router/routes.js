@@ -54,6 +54,7 @@ const routes = [
       { path: '/siparislist', component: () => import('pages/admin/siparislist.vue') },
       { path: '/faturalist', component: () => import('pages/admin/faturalist.vue') },
       { path: '/customerlist', component: () => import('pages/admin/customerlist.vue') },
+      { path: '/anasayfaayar', component: () => import('pages/admin/anasayfaayar.vue') },
     ]
   },
   {

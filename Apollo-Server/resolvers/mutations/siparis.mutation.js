@@ -4,7 +4,7 @@ const { newsiparis } = require('../subscriptions/siparis.subscription');
 const ObjectID = require("mongodb").ObjectID;
 module.exports = {
     createSiparisFis_mutation:async (root,{ satirList, siparisfis },{ Models, pubsub}) => {
-        // console.log(satirList);
+        //  console.log('tarihimiz',Date());
         const siparis = Models.siparis
         return await new Promise((resolve,object) =>{
 
@@ -84,6 +84,21 @@ module.exports = {
         parent.odemedurumlist.map((item)=>{ 
             // console.log(item)
            return model.updateMany({"sipno": item.sipno }, {"$set":   { "odemedurumu": parent.odemedurum}  },{multi:true}); 
+  
+      })).then(function(results){
+        // console.log(results);
+          let data={'res':'ok'};
+           return  data
+          
+      });
+    },
+    deleteviewSiparislist:async (root, parent, { Models }) => {
+      // console.log(parent);
+      const model = Models.siparis
+      return await Promise.all(
+        parent.listid.map((item)=>{ 
+            //  console.log(item)
+           return model.updateMany({"_id": ObjectID(item.listid) }, {"$set":   { "isViewed": false}  },{multi:true}); 
   
       })).then(function(results){
         // console.log(results);

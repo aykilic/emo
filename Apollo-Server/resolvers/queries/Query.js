@@ -141,6 +141,13 @@ module.exports = {
   //  return await stokturu.find({_id:id})
     return await stokturu.find({_id:ObjectID(id)})
   },
+  slider1list: async (parent, args, {Models})=> {
+    const model = Models.homePage
+    // console.log({id});
+    
+  //  return await stokturu.find({_id:id})
+    return await model.find()
+  },
 //   altimgurlQuery: async (parent, { id }, { Models }) => {
 //     const varyantalt = Models.varyantalt
 //     //  console.log({id});
@@ -417,6 +424,7 @@ module.exports = {
         }
       }
     },
+    {$sort: {'createdAt': -1}},
     {
       $lookup:
         {
