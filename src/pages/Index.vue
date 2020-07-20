@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     
-      <div class="q-pt-md">
+      <div class="q-pt-md" >
       
       <!-- <q-page-sticky expand position="top" elevated>
             <q-toolbar class="bg-accent text-white">
@@ -23,12 +23,14 @@
                             arrows
                             transition-prev="slide-right"
                             transition-next="slide-left"
+                            height= "auto"
+                            
                             
                       >
                             <!-- <q-carousel-slide class="slidir" v-for="(list ,index) in get_slider1list" :key="index" :name="`${index}`" :img-src="list.imageurl" />-->
                             <q-carousel-slide v-for="(list ,index) in get_slider1list" :key="index" :name="index" class="q-pa-none">
                                 <!-- <img :src="list.imageurl" alt="mountains" class="fit" style="object-fit: contain;"> -->
-                                <img :src="list.path + list.publicid+'.jpg'" alt="mountains" class="fit" style="object-fit: contain;">
+                                <img :src="list.path + list.publicid+'.jpg'"  class="fit" style="object-fit: scale-down;">
                                 
                             </q-carousel-slide>
                       <!-- style="object-fit: contain;" -->
