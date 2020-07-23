@@ -8,7 +8,7 @@ cloudinary.config({
 var mongoose = require('mongoose');
 const ObjectID = require("mongodb").ObjectID;
 module.exports = {
-  anasayfaimageUpload: async (root, {imageurl, filename,path,publicid}, { Models }) => {
+  anasayfaimageUpload: async (root, {imageurl, filename,path,publicid,stokid,stokturad}, { Models }) => {
     const model = Models.homePage
     // var images = new images({
     //   imageurl: imageurl,
@@ -32,6 +32,8 @@ module.exports = {
                "filename": filename,
                "path": path,
                "publicid": publicid,
+               "stokid":stokid,
+               "stokturad":stokturad,
            }]
                     
          }

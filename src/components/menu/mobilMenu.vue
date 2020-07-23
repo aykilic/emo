@@ -20,7 +20,7 @@
                 </q-expansion-item>
                 </div>
                 <div  v-else>
-                <q-item :style="indent" @click="select(list._id,list.stokturad)" clickable exact>
+                <q-item :style="indent" @click="select(list.stokturad,list._id)" clickable exact>
                         <q-item-section >
                         <q-item-label >{{list.stokturad}}</q-item-label>
                         <!-- <q-item-label v-else>{{list.stokturad}}</q-item-label> -->
@@ -34,7 +34,9 @@
 </template>
 
 <script>
+import {mapGetters } from 'vuex'
 import mobilMenu from './mobilMenu.vue'
+
     export default {
         name:"mobilMenu",
         components: {
@@ -56,14 +58,18 @@ import mobilMenu from './mobilMenu.vue'
         computed:{
             indent() {
                 return { transform: `translate(${this.depth * 10}px)` }
-                }
+                },
+                ...mapGetters([
+                    'anakategorizelists',
+                    
+                ]),
         },
         watch:{
             //  drawer(val){
             //      this.draw = !this.draw
             // },
             nodes(val){
-                console.log(val);
+                // console.log(val);
             }
         },
         methods: {
@@ -72,9 +78,31 @@ import mobilMenu from './mobilMenu.vue'
             },
             select(a,b){
                   // stoklistid
-                   this.$store.dispatch('stoklistid',a)
-                  this.$router.push({ name: 'sales', params: { stokid: a, stokad:b }})
-                  
+                //    this.$store.dispatch('stoklistid',a)
+                //   this.$router.push({ name: 'sales', params: { stokad: a, stokid:b }})
+                  let self= this
+              // console.log("b",b);
+              let c=this.anakategorizelists
+              rota(this.anakategorizelists,b)
+
+               function rota(c,b){
+
+                 c.forEach(item=>{
+                  let parentname=item.stokturad
+                  if(item._id==b){
+                    if(item.children.length > 0){
+                      self.$router.push({ name: 'stoklist', params: { parentname: parentname, parentid : b }})
+                    }else{
+                      self.$store.dispatch('stoklistid',b)
+                      self.$router.push({ name: 'sales', params: { parentname:parentname, stokid: item._id, stokad:item.stokturad }})
+                    }
+                  }else{
+                    item.children.forEach(subitem=>{
+                        rota(subitem.children,b)
+                    })
+                  }
+                 })
+              }
                }
         },
     }

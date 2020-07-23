@@ -122,7 +122,7 @@ export default {
             })
         },
         async search_getuser({commit,state}, type){
-            console.log("user",type);
+            // console.log("user",type);
             await axios.post(
                 'http://'+ process.env.API +':4000/graphql', {
                  query: `query Search_luser($uid:ID){
@@ -137,7 +137,7 @@ export default {
                     uid: type
                     }
             }).then( (response) => { 
-                console.log(response);
+                // console.log(response);
                 commit('set_luser', response.data.data.Search_luser);
             })
         },

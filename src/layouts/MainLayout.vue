@@ -441,7 +441,7 @@ export default {
   
  async mounted(){
    
-   this.$store.dispatch('anafunction')
+    await this.$store.dispatch('anafunction')
     //  console.log("uid",this.get_guid);
                             // let guid =Cookies.get('guid');
                             //  console.log(Cookies.get('guid'));

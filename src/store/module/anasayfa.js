@@ -19,6 +19,8 @@ export default {
                         path
                         filename
                         imageurl
+                        stokturad
+                        stokid
                         sira
                         
                     }

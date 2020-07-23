@@ -20,6 +20,12 @@ const imagesSchema = new Schema({
   path: {
     type: String,
   },
+  stokturad:{
+    type: String
+  },
+  stokid:{
+    type: Schema.ObjectId,
+    },
   sira:{
     type: Number,
     default:1

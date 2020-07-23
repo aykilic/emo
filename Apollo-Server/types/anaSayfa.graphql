@@ -5,6 +5,8 @@ type homeimages{
   imageurl:String
   publicid:String
   path:String
+  stokid:ID
+  stokturad:String
   sira:Float
 }
 type homePage{
@@ -15,7 +17,7 @@ type Query{
   slider1list:[homePage]
 }
 type Mutation{
-  anasayfaimageUpload(imageurl: String, filename:String, publicid:String, path:String):homePage
+  anasayfaimageUpload(imageurl: String, filename:String, publicid:String, path:String, stokid:ID, stokturad:String):homePage
   anasayfaimageUpdate(id:ID,sayi:Float):homePage
   deletehomePageimageSlider1(id: ID, imageid: ID, path: String):homePage
 }

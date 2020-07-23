@@ -10,7 +10,9 @@ export default {
 name: "cloud",
   mixins: [QUploaderBase],
   props: {
-    id:"",  
+    stokid:"",  
+    stokturad:"",
+    uploadname:""
   },
   data () {
     return {
@@ -94,11 +96,11 @@ name: "cloud",
               
               
                           console.log(this.imageurl);
-                          /////////****/
+                          /////////****/ uploadname e gore duzenle
 
                           this.$apollo.mutate({
-                            mutation:gql`mutation anasayfaimageUpload($imageurl: String!, $filename:String!, $publicid:String!, $path:String!){
-                                  anasayfaimageUpload(imageurl: $imageurl, filename: $filename, publicid:$publicid, path:$path) 
+                            mutation:gql`mutation anasayfaimageUpload($imageurl: String!, $filename:String!, $publicid:String!, $path:String!,$stokid:ID,$stokturad: String){
+                                  anasayfaimageUpload(imageurl: $imageurl, filename: $filename, publicid:$publicid, path:$path,stokid:$stokid,stokturad: $stokturad) 
                                 {
                                     _id
                                 }
@@ -109,6 +111,8 @@ name: "cloud",
                                 imageurl : this.imageurl,
                                 path: this.path,
                                 publicid:this.publicid,
+                                stokid:this.stokid,
+                                stokturad:this.stokturad
                             },
                       
                             }).then(async data => {

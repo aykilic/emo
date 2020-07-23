@@ -271,7 +271,8 @@
                },
                select(a,b){
                   // stoklistid
-                   this.$store.dispatch('stoklistid',a)
+                  console.log("a",a,"b",b);
+                  this.$store.dispatch('stoklistid',a)
                   this.$router.push({ name: 'sales', params: { stokid: a, stokad:b }})
                   
                }

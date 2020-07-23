@@ -12,8 +12,8 @@ export default {
     },
     actions: {
      async anafunction({dispatch,commit}) {
-      dispatch("varyantlist")
-      dispatch("anakategori")
+       dispatch("varyantlist")
+       dispatch("anakategori")
       },
 
       async anakategori({commit}) {
@@ -41,11 +41,11 @@ export default {
                     }
             }`,
        }
-       ).then( (response) => { 
-            let stokListData = response.data.data.Query
+       ).then(  (response) => { 
+            let stokListData =  response.data.data.Query
             
           commit('set_anakategorilist',stokListData);
-          commit('set_anakategorizelist');
+          commit('set_anakategorizelist',stokListData);
           
 
             
