@@ -8,25 +8,88 @@ cloudinary.config({
 var mongoose = require('mongoose');
 const ObjectID = require("mongodb").ObjectID;
 module.exports = {
-  anasayfaimageUpload: async (root, {imageurl, filename,path,publicid,stokid,stokturad}, { Models }) => {
+  anasayfaslider1Upload: async (root, {imageurl, filename,path,publicid,stokid,stokturad}, { Models }) => {
     const model = Models.homePage
-    // var images = new images({
-    //   imageurl: imageurl,
-    //   filename: filename    // assign the _id from the person
-    // });
-    //  const stokturu = new Stokturu()
-    //  stokturu.vars.push([{ images: [{ imageurl: imageurl }], }])
-    //  const vars = stokturu.vars[0]
-    // vars.isNew;
-    // vars.save(function (err) {
-    //   if (err) return handleError(err)
-    //   console.log('Success!');
-    // });
      return await model.updateOne({},
       
        {
          "$push": {
            "slider1": [{
+              // "stok":id,
+               "imageurl": imageurl,
+               "filename": filename,
+               "path": path,
+               "publicid": publicid,
+               "stokid":stokid,
+               "stokturad":stokturad,
+           }]
+                    
+         }
+         
+       },
+          {upsert: true }
+     );
+
+
+    
+  },
+  anasayfaslider2Upload: async (root, {imageurl, filename,path,publicid,stokid,stokturad}, { Models }) => {
+    const model = Models.homePage
+     return await model.updateOne({},
+      
+       {
+         "$push": {
+           "slider2": [{
+              // "stok":id,
+               "imageurl": imageurl,
+               "filename": filename,
+               "path": path,
+               "publicid": publicid,
+               "stokid":stokid,
+               "stokturad":stokturad,
+           }]
+                    
+         }
+         
+       },
+          {upsert: true }
+     );
+
+
+    
+  },
+  anasayfareklam1Upload: async (root, {imageurl, filename,path,publicid,stokid,stokturad}, { Models }) => {
+    const model = Models.homePage
+     return await model.updateOne({},
+      
+       {
+         "$push": {
+           "reklam1": [{
+              // "stok":id,
+               "imageurl": imageurl,
+               "filename": filename,
+               "path": path,
+               "publicid": publicid,
+               "stokid":stokid,
+               "stokturad":stokturad,
+           }]
+                    
+         }
+         
+       },
+          {upsert: true }
+     );
+
+
+    
+  },
+  anasayfaetiket1Upload: async (root, {imageurl, filename,path,publicid,stokid,stokturad}, { Models }) => {
+    const model = Models.homePage
+     return await model.updateOne({},
+      
+       {
+         "$push": {
+           "etiket1": [{
               // "stok":id,
                "imageurl": imageurl,
                "filename": filename,
@@ -70,13 +133,115 @@ module.exports = {
 
    });
   },
+  deletehomePageimageSlider2: async (root, { id, imageid, path }, { Models }) => {
+    // console.log(id, imageid, path);
+
+   const model = Models.homePage
+  await cloudinary.uploader.destroy(path, (error,result) =>{
+     // console.log(result.result, error)
+     if (result.result === 'ok') {
+       
+         // console.log("id="+id,"imageid="+imageid);
+   
+    model.updateOne({ }, 
+    { 
+      $pull: {slider2: {"_id":ObjectID(imageid)}},
+    },
+    {
+        upsert:false,
+        new:true
+    }, function(error, product){
+        // console.log(error);
+        
+    })
+     }
+
+   });
+  },
+  deletehomePageimageReklam1: async (root, { id, imageid, path }, { Models }) => {
+    // console.log(id, imageid, path);
+
+   const model = Models.homePage
+  await cloudinary.uploader.destroy(path, (error,result) =>{
+     // console.log(result.result, error)
+     if (result.result === 'ok') {
+       
+         // console.log("id="+id,"imageid="+imageid);
+   
+    model.updateOne({ }, 
+    { 
+      $pull: {reklam1: {"_id":ObjectID(imageid)}},
+    },
+    {
+        upsert:false,
+        new:true
+    }, function(error, product){
+        // console.log(error);
+        
+    })
+     }
+
+   });
+  },
+  deletehomePageimageEtiket1: async (root, { id, imageid, path }, { Models }) => {
+    // console.log(id, imageid, path);
+
+   const model = Models.homePage
+  await cloudinary.uploader.destroy(path, (error,result) =>{
+     // console.log(result.result, error)
+     if (result.result === 'ok') {
+       
+         // console.log("id="+id,"imageid="+imageid);
+   
+    model.updateOne({ }, 
+    { 
+      $pull: {etiket1: {"_id":ObjectID(imageid)}},
+    },
+    {
+        upsert:false,
+        new:true
+    }, function(error, product){
+        // console.log(error);
+        
+    })
+     }
+
+   });
+  },
   // subdocument update işlemi
-  anasayfaimageUpdate:async (root, {id, sayi }, { Models }) => {
+  anasayfaslider1Update:async (root, {id, sayi }, { Models }) => {
       // console.log(id,sayi);
     const model = Models.homePage
    return await model.findOneAndUpdate({'slider1._id' :id},
     //  {$set :{slider1: {sira : sayi}}},
     {$set: {'slider1.$.sira':sayi}},
+     {new: true})
+    // return await varyant.findByIdAndDelete(id);
+  },
+  anasayfaslider2Update:async (root, {id, sayi }, { Models }) => {
+      // console.log(id,sayi);
+    const model = Models.homePage
+   return await model.findOneAndUpdate({'slider2._id' :id},
+    //  {$set :{slider1: {sira : sayi}}},
+    {$set: {'slider2.$.sira':sayi}},
+     {new: true})
+    // return await varyant.findByIdAndDelete(id);
+  },
+  anasayfareklam1Update:async (root, {id, sayi }, { Models }) => {
+      // console.log(id,sayi);
+    const model = Models.homePage
+   return await model.findOneAndUpdate({'reklam1._id' :id},
+    //  {$set :{slider1: {sira : sayi}}},
+    {$set: {'reklam1.$.sira':sayi}},
+     {new: true})
+    // return await varyant.findByIdAndDelete(id);
+  },
+  anasayfaetiket1Update:async (root, {id, sayi }, { Models }) => {
+      // console.log(id,sayi);
+    const model = Models.homePage
+   return await model.findOneAndUpdate({'etiket1._id' :id},
+    //  {$set :{slider1: {sira : sayi}}},
+    {$set: {'etiket1.$.sira':sayi}},
      {new: true})
     // return await varyant.findByIdAndDelete(id);
   },

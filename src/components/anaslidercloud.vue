@@ -43,6 +43,9 @@ name: "cloud",
       if (this.canUpload === false) {
         return;
       }
+
+      // console.log("this.uploadname",this.uploadname);
+      // return
       const url='https://res.cloudinary.com/aykilic/image/upload'
       // console.log(this.files);
       const fd = new FormData()
@@ -97,10 +100,10 @@ name: "cloud",
               
                           console.log(this.imageurl);
                           /////////****/ uploadname e gore duzenle
-
+                          if(this.uploadname=="slider1"){
                           this.$apollo.mutate({
-                            mutation:gql`mutation anasayfaimageUpload($imageurl: String!, $filename:String!, $publicid:String!, $path:String!,$stokid:ID,$stokturad: String){
-                                  anasayfaimageUpload(imageurl: $imageurl, filename: $filename, publicid:$publicid, path:$path,stokid:$stokid,stokturad: $stokturad) 
+                            mutation:gql`mutation anasayfaslider1Upload($imageurl: String!, $filename:String!, $publicid:String!, $path:String!,$stokid:ID,$stokturad: String){
+                                  anasayfaslider1Upload(imageurl: $imageurl, filename: $filename, publicid:$publicid, path:$path,stokid:$stokid,stokturad: $stokturad) 
                                 {
                                     _id
                                 }
@@ -121,8 +124,88 @@ name: "cloud",
                                 this.$emit('refreshlist')
 
                             });   
+                          }
+                        else if(this.uploadname=="slider2"){
+                            this.$apollo.mutate({
+                            mutation:gql`mutation anasayfaslider2Upload($imageurl: String!, $filename:String!, $publicid:String!, $path:String!,$stokid:ID,$stokturad: String){
+                                  anasayfaslider2Upload(imageurl: $imageurl, filename: $filename, publicid:$publicid, path:$path,stokid:$stokid,stokturad: $stokturad) 
+                                {
+                                    _id
+                                }
+                              }`,
+                            variables: {
+                                // id:this.id,
+                                filename : this.filename,
+                                imageurl : this.imageurl,
+                                path: this.path,
+                                publicid:this.publicid,
+                                stokid:this.stokid,
+                                stokturad:this.stokturad
+                            },
+                      
+                            }).then(async data => {
+                              console.log('Done');
+                              
+                                this.$emit('refreshlist')
+
+                            });
 
 
+                        }
+                        else if(this.uploadname=="reklam1"){
+                            this.$apollo.mutate({
+                            mutation:gql`mutation anasayfareklam1Upload($imageurl: String!, $filename:String!, $publicid:String!, $path:String!,$stokid:ID,$stokturad: String){
+                                  anasayfareklam1Upload(imageurl: $imageurl, filename: $filename, publicid:$publicid, path:$path,stokid:$stokid,stokturad: $stokturad) 
+                                {
+                                    _id
+                                }
+                              }`,
+                            variables: {
+                                // id:this.id,
+                                filename : this.filename,
+                                imageurl : this.imageurl,
+                                path: this.path,
+                                publicid:this.publicid,
+                                stokid:this.stokid,
+                                stokturad:this.stokturad
+                            },
+                      
+                            }).then(async data => {
+                              console.log('Done');
+                              
+                                this.$emit('refreshlist')
+
+                            });
+
+
+                        }
+                        else if(this.uploadname=="etiket1"){
+                            this.$apollo.mutate({
+                            mutation:gql`mutation anasayfaetiket1Upload($imageurl: String!, $filename:String!, $publicid:String!, $path:String!,$stokid:ID,$stokturad: String){
+                                  anasayfaetiket1Upload(imageurl: $imageurl, filename: $filename, publicid:$publicid, path:$path,stokid:$stokid,stokturad: $stokturad) 
+                                {
+                                    _id
+                                }
+                              }`,
+                            variables: {
+                                // id:this.id,
+                                filename : this.filename,
+                                imageurl : this.imageurl,
+                                path: this.path,
+                                publicid:this.publicid,
+                                stokid:this.stokid,
+                                stokturad:this.stokturad
+                            },
+                      
+                            }).then(async data => {
+                              console.log('Done');
+                              
+                                this.$emit('refreshlist')
+
+                            });
+
+
+                        }
 
                         });
 

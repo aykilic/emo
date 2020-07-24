@@ -12,12 +12,25 @@ type homeimages{
 type homePage{
   _id:ID
   slider1:[homeimages]
+  slider2:[homeimages]
+  reklam1:[homeimages]
+  etiket1:[homeimages]
+  
 }
 type Query{
-  slider1list:[homePage]
+  sliderlist:[homePage]
 }
 type Mutation{
-  anasayfaimageUpload(imageurl: String, filename:String, publicid:String, path:String, stokid:ID, stokturad:String):homePage
-  anasayfaimageUpdate(id:ID,sayi:Float):homePage
+  anasayfaslider1Upload(imageurl: String, filename:String, publicid:String, path:String, stokid:ID, stokturad:String):homePage
+  anasayfaslider2Upload(imageurl: String, filename:String, publicid:String, path:String, stokid:ID, stokturad:String):homePage
+  anasayfareklam1Upload(imageurl: String, filename:String, publicid:String, path:String, stokid:ID, stokturad:String):homePage
+  anasayfaetiket1Upload(imageurl: String, filename:String, publicid:String, path:String, stokid:ID, stokturad:String):homePage
+  anasayfaslider1Update(id:ID,sayi:Float):homePage
+  anasayfaslider2Update(id:ID,sayi:Float):homePage
+  anasayfareklam1Update(id:ID,sayi:Float):homePage
+  anasayfaetiket1Update(id:ID,sayi:Float):homePage
   deletehomePageimageSlider1(id: ID, imageid: ID, path: String):homePage
+  deletehomePageimageSlider2(id: ID, imageid: ID, path: String):homePage
+  deletehomePageimageReklam1(id: ID, imageid: ID, path: String):homePage
+  deletehomePageimageEtiket1(id: ID, imageid: ID, path: String):homePage
 }

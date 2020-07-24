@@ -404,6 +404,9 @@ export default {
     get_ubasketlist(val){
       this.sepet_count=val.length
       // console.log("watch:get_ubasketlist",val);
+    },
+    get_user(val){
+      console.log("getuser",val);
     }
   },
   updated(){

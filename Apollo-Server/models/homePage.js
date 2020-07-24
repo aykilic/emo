@@ -41,8 +41,19 @@ const homePageSchema = new Schema({
   slider1:
     [ 
        imagesSchema 
-    ]
-  ,
+    ],
+  slider2:
+    [ 
+       imagesSchema 
+    ],
+  reklam1:
+    [ 
+       imagesSchema 
+    ],
+  etiket1:
+    [ 
+       imagesSchema 
+    ],
   createdAt: {
     type: Date,
     default: Date.now

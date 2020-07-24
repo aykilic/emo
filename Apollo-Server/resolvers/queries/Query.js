@@ -141,7 +141,7 @@ module.exports = {
   //  return await stokturu.find({_id:id})
     return await stokturu.find({_id:ObjectID(id)})
   },
-  slider1list: async (parent, args, {Models})=> {
+  sliderlist: async (parent, args, {Models})=> {
     const model = Models.homePage
     // console.log({id});
     

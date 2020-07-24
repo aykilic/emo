@@ -1,7 +1,8 @@
 <template>
   <q-page class="row flex flex-center col-12">
     <div v-if="anakategorilists.length < 1">Loading...</div>
-    <div v-else-if="get_slider1list.length < 1">Loading...</div>
+    <div v-else-if="slider1list.length < 1 && slider2list.length < 1 && reklam1list.length < 1">Loading...</div>
+    
       <!-- <q-carousel
                   class="q-pt-md col-12 karousel"
                   animated
@@ -18,29 +19,41 @@
         </q-carousel-slide>
       </q-carousel> -->
       <div v-else class="q-pt-xs q-pb-xs col-12">
-      <VueSlickCarousel  style="cursor:pointer;"  v-bind="settings1">
+      <VueSlickCarousel v-if="slider1list.length > 0" style="cursor:pointer;"  v-bind="settings1">
         
-        <div v-for="(list ,index) in get_slider1list" :key="index"  class="text-center" >
-          <img   :src="list.path + list.publicid+'.jpg'"  class="fit" style="cursor:pointer;object-fit:container" @click="select(list.stokturad,list.stokid)">
+        <div v-for="(list ,index) in slider1list" :key="index"  class=" text-center" >
+          <img   :src="list.path + list.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
           </div>
         
       </VueSlickCarousel>
       </div>
-      <div class="q-pt-lg q-pb-lg col-12">
-      <VueSlickCarousel   v-bind="settings2">
-        <div class="text-center"><h4>1</h4></div>
-        <div class="text-center"><h4>2</h4></div>
-        <div class="text-center"><h4>3</h4></div>
-        <div class="text-center"><h4>4</h4></div>
-        <div class="text-center"><h4>5</h4></div>
-        <div class="text-center"><h4>6</h4></div>
+      <div class="text-center q-pt-md col-12">
+      <VueSlickCarousel v-if="slider2list.length > 0" style=" cursor:pointer;" v-bind="settings2">
+
+        <div v-for="(list ,index) in slider2list" :key="index" class="slider2 " >
+          <img   :src="list.path + list.publicid+'.jpg'"  class="fit" style="" @click="select(list.stokturad,list.stokid)">
+        </div>
       </VueSlickCarousel>
+      </div>
+      <div class="row cursor-pointer" v-if="reklam1list.length > 0">
+        <div   class="row q-gutter-md " >
+          <div v-for="(list ,index) in reklam1list" :key="index" class="q-pt-md col " style="">
+            <img   :src="list.path + list.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+          </div>
+        </div>
+      </div>
+      <div class="row cursor-pointer" v-if="etiket1list.length > 0">
+        <div   class="row q-gutter-md " >
+          <div v-for="(list ,index) in etiket1list" :key="index" class="q-pt-md col " style="">
+            <img   :src="list.path + list.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+          </div>
+        </div>
       </div>
       <p v-for="n in 15" :key="n">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci,
         dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
       </p>
-    
+    <q-btn v-if="get_user.usermail=='a@a.com'" @click="admin()"></q-btn>
   </q-page>
 </template>
 
@@ -65,6 +78,9 @@ export default {
       result:[],
       activestokid:"",
       slider1list:[],
+      slider2list:[],
+      reklam1list:[],
+      etiket1list:[],
       // --------- 
       settings1:{
 
@@ -83,10 +99,9 @@ export default {
       settings2:{
         "arrows": false,
         "autoplay": true,
-        "autoplaySpeed": 1500,
-        "focusOnSelect": true,
+        "autoplaySpeed": 2500,
         "infinite": true,
-        "speed": 700,
+        "speed": 1500,
         "slidesToShow": 4,
         "slidesToScroll": 1,
         "touchThreshold": 5
@@ -97,14 +112,30 @@ export default {
     watch: {
       get_slider1list(val){
          this.slider1list=val
-        
-      }
+        console.log("this.slider1list",this.slider1list);
+      },
+      get_slider2list(val){
+         this.slider2list=val
+        console.log("this.slider2list",this.slider2list);
+      },
+      get_reklam1list(val){
+         this.reklam1list=val
+        console.log("this.reklam1list",this.reklam1list);
+      },
+      get_etiket1list(val){
+         this.etiket1list=val
+        console.log("this.etiket1list",this.etiket1list);
+      },
     },
     computed: {
       ...mapGetters([
       'get_slider1list',
+      'get_slider2list',
+      'get_reklam1list',
+      'get_etiket1list',
       'anakategorilists',
       'anakategorizelists',
+      'get_user',
       
     ]),
     },
@@ -149,7 +180,9 @@ export default {
                   // this.$store.dispatch('stoklistid',b)
                   // this.$router.push({ name: 'sales', params: { stokad: a, stokid:b }})
               },
-              
+              admin(){
+                this.$router.push({ path: '/admin' })
+              }
     
     }
 
@@ -179,4 +212,14 @@ min-height:550px;
 width:100%;
 }
 }
+.slider2{
+ max-width:200px;
+}
+.slider2 img{
+max-width:200px;
+border-radius: 100px;
+}
+// .reklam1{
+//   max-width:500px
+// }
 </style>
