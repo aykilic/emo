@@ -18,7 +18,7 @@
           <img   :src="list.path + list.publicid+'.jpg'"  class="fit" style="cursor:pointer;object-fit:container" @click="select(list.stokturad,list.stokid)">
         </q-carousel-slide>
       </q-carousel> -->
-      <div v-else class="q-pt-xs q-pb-xs col-12">
+      <div v-else class="q-pt-xl q-pb-xs col-12">
       <VueSlickCarousel v-if="slider1list.length > 0" style="cursor:pointer;"  v-bind="settings1">
         
         <div v-for="(list ,index) in slider1list" :key="index"  class=" text-center" >
@@ -35,25 +35,71 @@
         </div>
       </VueSlickCarousel>
       </div>
-      <div class="row cursor-pointer" v-if="reklam1list.length > 0">
+      <!-- row içine çoklu resim -->
+      <!-- <div class="row cursor-pointer" v-if="reklam1list.length > 0">
         <div   class="row q-gutter-md " >
           <div v-for="(list ,index) in reklam1list" :key="index" class="q-pt-md col " style="">
             <img   :src="list.path + list.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
           </div>
         </div>
+      </div> -->
+      <div class="row cursor-pointer" v-if="reklam1list.length > 0">
+          <div v-for="(list ,index) in reklam1list" :key="index" class="col-6  q-pt-md " style="">
+            <img   :src="list.path + list.publicid+'.jpg'"  class="fit q-pa-xs" style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+          </div>
       </div>
       <div class="row cursor-pointer" v-if="etiket1list.length > 0">
-        <div   class="row q-gutter-md " >
-          <div v-for="(list ,index) in etiket1list" :key="index" class="q-pt-md col " style="">
+        <div   class="row  " >
+          <div v-for="(list ,index) in etiket1list" :key="index" class="q-pt-md col" style="">
+            <img   :src="list.path + list.publicid+'.jpg'"  class="fit" style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+          </div>
+        </div>
+      </div>
+      <div class="row  cursor-pointer " v-if="get_reklam2list.length > 0">
+          <div v-for="(list ,index) in get_reklam2list" :key="index" class="col-6  q-pt-md  " style="">
+            
+            <!-- <img  v-if="index % 2 != 0" :src="list.path + list.publicid+'.jpg'"  class="fit q-pl-md" style="object-fit:contain" @click="select(list.stokturad,list.stokid)"> -->
+            
+              <img  :src="list.path + list.publicid+'.jpg'"  class="fit q-pa-xs" style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+            
+          </div>
+          
+      </div>
+      <div class="row cursor-pointer q-pl-xs q-pr-xs" v-if="get_reklam3list.length > 0">
+        <div   class="row q-gutter-xs " >
+          <div v-for="(list ,index) in get_reklam3list" :key="index" class="q-pt-md col " style="">
             <img   :src="list.path + list.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
           </div>
         </div>
       </div>
-      <p v-for="n in 15" :key="n">
+      <!-- -*-*-*-*-*-*-*-*-*-*-*-*-*- -->
+      <div class="row q-pt-md">
+      <div class="row col-6  cursor-pointer q-pl-xs " v-if="get_reklam4list.length > 0">
+          <div v-for="(list ,index) in get_reklam4list" :key="index" class="row   " style="">
+            <div v-if="index==0" class=""><img  :src="list.path + list.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list.stokturad,list.stokid)"></div>
+            <!-- <img  v-if="index % 2 != 0" :src="list.path + list.publicid+'.jpg'"  class="fit q-pl-md" style="object-fit:contain" @click="select(list.stokturad,list.stokid)"> -->
+            
+              
+            
+          </div>
+          
+      </div>
+      <div class="col cursor-pointer " v-if="get_reklam4list.length > 0">
+          <div v-for="(list ,index) in get_reklam4list" :key="index" class="row col-6   " style="">
+            <div v-if="index!=0" class="">
+              <img  :src="list.path + list.publicid+'.jpg'"  class="fit q-pa-xs" style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+            </div>
+            <!-- <img  v-if="index % 2 != 0" :src="list.path + list.publicid+'.jpg'"  class="fit q-pl-md" style="object-fit:contain" @click="select(list.stokturad,list.stokid)"> -->
+            
+          </div>
+      </div>
+      </div>
+      <!-- *-*-*-*-*-*-*-*-*-*-*-*-*- -->
+      <!-- <p v-for="n in 15" :key="n">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci,
         dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-      </p>
-    <q-btn v-if="get_user.usermail=='a@a.com'" @click="admin()"></q-btn>
+      </p> -->
+    
   </q-page>
 </template>
 
@@ -133,6 +179,9 @@ export default {
       'get_slider2list',
       'get_reklam1list',
       'get_etiket1list',
+      'get_reklam2list',
+      'get_reklam3list',
+      'get_reklam4list',
       'anakategorilists',
       'anakategorizelists',
       'get_user',
@@ -180,9 +229,7 @@ export default {
                   // this.$store.dispatch('stoklistid',b)
                   // this.$router.push({ name: 'sales', params: { stokad: a, stokid:b }})
               },
-              admin(){
-                this.$router.push({ path: '/admin' })
-              }
+              
     
     }
 

@@ -54,6 +54,18 @@ const homePageSchema = new Schema({
     [ 
        imagesSchema 
     ],
+  reklam2:
+    [ 
+       imagesSchema 
+    ],
+  reklam3:
+    [ 
+       imagesSchema 
+    ],
+  reklam4:
+    [ 
+       imagesSchema 
+    ],
   createdAt: {
     type: Date,
     default: Date.now

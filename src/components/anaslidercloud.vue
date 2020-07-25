@@ -206,6 +206,87 @@ name: "cloud",
 
 
                         }
+                        else if(this.uploadname=="reklam2"){
+                            this.$apollo.mutate({
+                            mutation:gql`mutation anasayfareklam2Upload($imageurl: String!, $filename:String!, $publicid:String!, $path:String!,$stokid:ID,$stokturad: String){
+                                  anasayfareklam2Upload(imageurl: $imageurl, filename: $filename, publicid:$publicid, path:$path,stokid:$stokid,stokturad: $stokturad) 
+                                {
+                                    _id
+                                }
+                              }`,
+                            variables: {
+                                // id:this.id,
+                                filename : this.filename,
+                                imageurl : this.imageurl,
+                                path: this.path,
+                                publicid:this.publicid,
+                                stokid:this.stokid,
+                                stokturad:this.stokturad
+                            },
+                      
+                            }).then(async data => {
+                              console.log('Done');
+                              
+                                this.$emit('refreshlist')
+
+                            });
+
+
+                        }
+                        else if(this.uploadname=="reklam3"){
+                            this.$apollo.mutate({
+                            mutation:gql`mutation anasayfareklam3Upload($imageurl: String!, $filename:String!, $publicid:String!, $path:String!,$stokid:ID,$stokturad: String){
+                                  anasayfareklam3Upload(imageurl: $imageurl, filename: $filename, publicid:$publicid, path:$path,stokid:$stokid,stokturad: $stokturad) 
+                                {
+                                    _id
+                                }
+                              }`,
+                            variables: {
+                                // id:this.id,
+                                filename : this.filename,
+                                imageurl : this.imageurl,
+                                path: this.path,
+                                publicid:this.publicid,
+                                stokid:this.stokid,
+                                stokturad:this.stokturad
+                            },
+                      
+                            }).then(async data => {
+                              console.log('Done');
+                              
+                                this.$emit('refreshlist')
+
+                            });
+
+
+                        }
+                        else if(this.uploadname=="reklam4"){
+                            this.$apollo.mutate({
+                            mutation:gql`mutation anasayfareklam4Upload($imageurl: String!, $filename:String!, $publicid:String!, $path:String!,$stokid:ID,$stokturad: String){
+                                  anasayfareklam4Upload(imageurl: $imageurl, filename: $filename, publicid:$publicid, path:$path,stokid:$stokid,stokturad: $stokturad) 
+                                {
+                                    _id
+                                }
+                              }`,
+                            variables: {
+                                // id:this.id,
+                                filename : this.filename,
+                                imageurl : this.imageurl,
+                                path: this.path,
+                                publicid:this.publicid,
+                                stokid:this.stokid,
+                                stokturad:this.stokturad
+                            },
+                      
+                            }).then(async data => {
+                              console.log('Done');
+                              
+                                this.$emit('refreshlist')
+
+                            });
+
+
+                        }
 
                         });
 

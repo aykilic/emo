@@ -15,7 +15,9 @@ type homePage{
   slider2:[homeimages]
   reklam1:[homeimages]
   etiket1:[homeimages]
-  
+  reklam2:[homeimages]
+  reklam3:[homeimages]
+  reklam4:[homeimages]
 }
 type Query{
   sliderlist:[homePage]
@@ -25,12 +27,21 @@ type Mutation{
   anasayfaslider2Upload(imageurl: String, filename:String, publicid:String, path:String, stokid:ID, stokturad:String):homePage
   anasayfareklam1Upload(imageurl: String, filename:String, publicid:String, path:String, stokid:ID, stokturad:String):homePage
   anasayfaetiket1Upload(imageurl: String, filename:String, publicid:String, path:String, stokid:ID, stokturad:String):homePage
+  anasayfareklam2Upload(imageurl: String, filename:String, publicid:String, path:String, stokid:ID, stokturad:String):homePage
+  anasayfareklam3Upload(imageurl: String, filename:String, publicid:String, path:String, stokid:ID, stokturad:String):homePage
+  anasayfareklam4Upload(imageurl: String, filename:String, publicid:String, path:String, stokid:ID, stokturad:String):homePage
   anasayfaslider1Update(id:ID,sayi:Float):homePage
   anasayfaslider2Update(id:ID,sayi:Float):homePage
   anasayfareklam1Update(id:ID,sayi:Float):homePage
   anasayfaetiket1Update(id:ID,sayi:Float):homePage
+  anasayfareklam2Update(id:ID,sayi:Float):homePage
+  anasayfareklam3Update(id:ID,sayi:Float):homePage
+  anasayfareklam4Update(id:ID,sayi:Float):homePage
   deletehomePageimageSlider1(id: ID, imageid: ID, path: String):homePage
   deletehomePageimageSlider2(id: ID, imageid: ID, path: String):homePage
   deletehomePageimageReklam1(id: ID, imageid: ID, path: String):homePage
   deletehomePageimageEtiket1(id: ID, imageid: ID, path: String):homePage
+  deletehomePageimageReklam2(id: ID, imageid: ID, path: String):homePage
+  deletehomePageimageReklam3(id: ID, imageid: ID, path: String):homePage
+  deletehomePageimageReklam4(id: ID, imageid: ID, path: String):homePage
 }

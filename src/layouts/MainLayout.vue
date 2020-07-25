@@ -156,6 +156,7 @@
 
         
       </q-drawer> -->
+      
     <q-page-container class="row flex-center " >
       
       <!-- <div  class="q-pt-xl col-md-8 col-sm-10 col-xs-12"> -->
@@ -290,6 +291,9 @@
 
         </q-page-sticky>
     </q-page-container>
+    <div class="row q-mt-xl bg-pink-5 text-white" >
+      <q-btn v-if="get_user.usermail=='a@a.com'" @click="admin()">Admin</q-btn>
+    </div>
   </q-layout>
   
 </template>
@@ -667,7 +671,10 @@ export default {
         },
         sepet(){
           this.$router.push({ path: '/sell' })
-        }
+        },
+        admin(){
+                this.$router.push({ path: '/admin' })
+              }
 },
 
 }
