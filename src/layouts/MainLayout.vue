@@ -290,15 +290,15 @@
         </q-tab-panels>
 
         </q-page-sticky>
-        
-    </q-page-container>
-    <q-item class="q-pa-none">
+        <q-item class="q-pa-none">
       <q-item-section class="q-pa-none">
     <div class="row  bg-pink-5 text-white q-pa-none" >
       <q-btn v-if="get_user.usermail=='a@a.com'" @click="admin()">Admin</q-btn>
     </div>
     </q-item-section>
     </q-item>
+    </q-page-container>
+    
   </q-layout>
   
 </template>
