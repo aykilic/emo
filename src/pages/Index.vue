@@ -68,7 +68,7 @@
       <div class="row cursor-pointer q-pl-xs q-pr-xs" v-if="get_reklam3list.length > 0">
         <div   class="row q-gutter-xs " >
           <div v-for="(list ,index) in get_reklam3list" :key="index" class="q-pt-md col " style="">
-            <img   :src="list.path + list.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+            <img   :src="list.path + list.publicid+'.jpg'"  class="fit " style="object-fit:cover" @click="select(list.stokturad,list.stokid)">
           </div>
         </div>
       </div>
