@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf" >
-    <q-header  reveal :reveal-offset="50">
+    <q-header  reveal :reveal-offset="20">
       <q-toolbar class="text-amber-1 bg-white text-grey-9 text-weight-bold justify-center " >
        
         <div  class="row q-pt-lg  col-md-8 col-sm-10 col-xs-12 grid desktop-had" >
@@ -290,10 +290,11 @@
         </q-tab-panels>
 
         </q-page-sticky>
-    </q-page-container>
-    <div class="row q-mt-xl bg-pink-5 text-white" >
+        <div class="row q-mt-xl bg-pink-5 text-white" >
       <q-btn v-if="get_user.usermail=='a@a.com'" @click="admin()">Admin</q-btn>
     </div>
+    </q-page-container>
+    
   </q-layout>
   
 </template>
