@@ -12,6 +12,7 @@ export default {
         reklam2list:[],
         reklam3list:[],
         reklam4list:[],
+        stamplist:[],
     },
     actions:{
         async search_slider1listrefresh({commit,state}, type){
@@ -99,6 +100,17 @@ export default {
                             stokid
                             sira
                         }
+                        stamp
+                          {
+                            _id
+                            publicid
+                            path
+                            filename
+                            imageurl
+                            stokturad
+                            stokid
+                            sira
+                        }
                 }
              }`,
             }).then(async res => {
@@ -109,6 +121,7 @@ export default {
                 let veri5=[]
                 let veri6=[]
                 let veri7=[]
+                let veri8=[]
                     veri=res.data.data.sliderlist[0].slider1
                     veri2=res.data.data.sliderlist[0].slider2
                     veri3=res.data.data.sliderlist[0].reklam1
@@ -116,6 +129,7 @@ export default {
                     veri5=res.data.data.sliderlist[0].reklam2
                     veri6=res.data.data.sliderlist[0].reklam3
                     veri7=res.data.data.sliderlist[0].reklam4
+                    veri8=res.data.data.sliderlist[0].stamp
                     veri = _.orderBy(veri, ['sira'],['asc']);
                     veri2 = _.orderBy(veri2, ['sira'],['asc']);
                     veri3 = _.orderBy(veri3, ['sira'],['asc']);
@@ -123,6 +137,7 @@ export default {
                     veri5 = _.orderBy(veri5, ['sira'],['asc']);
                     veri6 = _.orderBy(veri6, ['sira'],['asc']);
                     veri7 = _.orderBy(veri7, ['sira'],['asc']);
+                    veri8 = _.orderBy(veri8, ['sira'],['asc']);
                    await commit('search_slider1listrefresh', veri);
                    await commit('search_slider2listrefresh', veri2);
                    await commit('search_reklam1listrefresh', veri3);
@@ -130,6 +145,7 @@ export default {
                    await commit('search_reklam2listrefresh', veri5);
                    await commit('search_reklam3listrefresh', veri6);
                    await commit('search_reklam4listrefresh', veri7);
+                   await commit('search_stamplistrefresh', veri8);
                 });  
             }
     },
@@ -169,6 +185,11 @@ export default {
             state.reklam4list=type
             // console.log("state.basketlist",state.basketlist);
         },
+        search_stamplistrefresh(state, type){
+            //  console.log("type2",type);
+            state.stamplist=type
+            // console.log("state.basketlist",state.basketlist);
+        },
     },
     getters:{
         get_slider1list: (state, getters) => {
@@ -191,6 +212,9 @@ export default {
         },
         get_reklam4list: (state, getters) => {
             return state.reklam4list
+        },
+        get_stamplist: (state, getters) => {
+            return state.stamplist
         },
     }
 }

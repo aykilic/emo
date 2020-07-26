@@ -66,6 +66,10 @@ const homePageSchema = new Schema({
     [ 
        imagesSchema 
     ],
+  stamp:
+    [ 
+       imagesSchema 
+    ],
   createdAt: {
     type: Date,
     default: Date.now

@@ -182,6 +182,7 @@ export default {
       'get_reklam2list',
       'get_reklam3list',
       'get_reklam4list',
+      'get_stamplist',
       'anakategorilists',
       'anakategorizelists',
       'get_user',

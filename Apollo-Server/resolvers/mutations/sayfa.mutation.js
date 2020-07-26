@@ -183,6 +183,31 @@ module.exports = {
 
     
   },
+  anasayfastampUpload: async (root, {imageurl, filename,path,publicid,stokid,stokturad}, { Models }) => {
+    const model = Models.homePage
+     return await model.updateOne({},
+      
+       {
+         "$push": {
+           "stamp": [{
+              // "stok":id,
+               "imageurl": imageurl,
+               "filename": filename,
+               "path": path,
+               "publicid": publicid,
+               "stokid":stokid,
+               "stokturad":stokturad,
+           }]
+                    
+         }
+         
+       },
+          {upsert: true }
+     );
+
+
+    
+  },
   deletehomePageimageSlider1: async (root, { id, imageid, path }, { Models }) => {
     // console.log(id, imageid, path);
 
@@ -358,6 +383,31 @@ module.exports = {
 
    });
   },
+  deletehomePageimageStamp: async (root, { id, imageid, path }, { Models }) => {
+    // console.log(id, imageid, path);
+
+   const model = Models.homePage
+  await cloudinary.uploader.destroy(path, (error,result) =>{
+     // console.log(result.result, error)
+     if (result.result === 'ok') {
+       
+         // console.log("id="+id,"imageid="+imageid);
+   
+    model.updateOne({ }, 
+    { 
+      $pull: {stamp: {"_id":ObjectID(imageid)}},
+    },
+    {
+        upsert:false,
+        new:true
+    }, function(error, product){
+        // console.log(error);
+        
+    })
+     }
+
+   });
+  },
   // subdocument update işlemi
   anasayfaslider1Update:async (root, {id, sayi }, { Models }) => {
       // console.log(id,sayi);
@@ -419,6 +469,15 @@ module.exports = {
  return await model.findOneAndUpdate({'reklam4._id' :id},
   //  {$set :{slider1: {sira : sayi}}},
   {$set: {'reklam4.$.sira':sayi}},
+   {new: true})
+  // return await varyant.findByIdAndDelete(id);
+},
+  anasayfastampUpdate:async (root, {id, sayi }, { Models }) => {
+    // console.log(id,sayi);
+  const model = Models.homePage
+ return await model.findOneAndUpdate({'stamp._id' :id},
+  //  {$set :{slider1: {sira : sayi}}},
+  {$set: {'stamp.$.sira':sayi}},
    {new: true})
   // return await varyant.findByIdAndDelete(id);
 },

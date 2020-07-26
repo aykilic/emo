@@ -287,6 +287,33 @@ name: "cloud",
 
 
                         }
+                        else if(this.uploadname=="stamp"){
+                            this.$apollo.mutate({
+                            mutation:gql`mutation anasayfastampUpload($imageurl: String!, $filename:String!, $publicid:String!, $path:String!,$stokid:ID,$stokturad: String){
+                                  anasayfastampUpload(imageurl: $imageurl, filename: $filename, publicid:$publicid, path:$path,stokid:$stokid,stokturad: $stokturad) 
+                                {
+                                    _id
+                                }
+                              }`,
+                            variables: {
+                                // id:this.id,
+                                filename : this.filename,
+                                imageurl : this.imageurl,
+                                path: this.path,
+                                publicid:this.publicid,
+                                stokid:this.stokid,
+                                stokturad:this.stokturad
+                            },
+                      
+                            }).then(async data => {
+                              console.log('Done');
+                              
+                                this.$emit('refreshlist')
+
+                            });
+
+
+                        }
 
                         });
 
