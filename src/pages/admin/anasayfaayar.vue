@@ -1,5 +1,5 @@
 <template>
-    <div class="q-pa-xl  q-gutter-md col-12">
+    <div class="q-pa-md  q-gutter-md col-12">
       <q-tabs
           v-model="tab"
           dense
@@ -33,8 +33,8 @@
                   hide-selected
                   use-input
                   @filter="filterFn"
-                  class="q-pa-md col-6"
-                  label="Stok Adı"
+                  class="q-pa-md col-xs-12 col-6"
+                  label="Stok yada Kategori Adı"
                   outlined
                   v-model="edittreemselect"
                   :options="select_options"
@@ -116,7 +116,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-4">
+                  <div class="q-pa-xs row col-xs-12 col-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
@@ -167,8 +167,8 @@
                   hide-selected
                   use-input
                   @filter="filterFn"
-                  class="q-pa-md col-6"
-                  label="Stok Adı"
+                  class="q-pa-md col-xs-12 col-6"
+                  label="Stok yada Kategori Adı"
                   outlined
                   v-model="edittreemselect"
                   :options="select_options"
@@ -249,7 +249,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-4">
+                  <div class="q-pa-xs row col-xs-12 col-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
@@ -303,8 +303,8 @@
                   hide-selected
                   use-input
                   @filter="filterFn"
-                  class="q-pa-md col-6"
-                  label="Stok Adı"
+                  class="q-pa-md col-xs-12 col-6"
+                  label="Stok yada Kategori Adı"
                   outlined
                   v-model="edittreemselect"
                   :options="select_options"
@@ -385,7 +385,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-4">
+                  <div class="q-pa-xs row col-xs-12 col-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
@@ -434,8 +434,8 @@
                   hide-selected
                   use-input
                   @filter="filterFn"
-                  class="q-pa-md col-6"
-                  label="Stok Adı"
+                  class="q-pa-md col-xs-12 col-6"
+                  label="Stok yada Kategori Adı"
                   outlined
                   v-model="edittreemselect"
                   :options="select_options"
@@ -516,7 +516,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-4">
+                  <div class="q-pa-xs row col-xs-12 col-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
@@ -565,8 +565,8 @@
                   hide-selected
                   use-input
                   @filter="filterFn"
-                  class="q-pa-md col-6"
-                  label="Stok Adı"
+                  class="q-pa-md col-xs-12 col-6"
+                  label="Stok yada Kategori Adı"
                   outlined
                   v-model="edittreemselect"
                   :options="select_options"
@@ -647,7 +647,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-4">
+                  <div class="q-pa-xs row col-xs-12 col-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
@@ -696,8 +696,8 @@
                   hide-selected
                   use-input
                   @filter="filterFn"
-                  class="q-pa-md col-6"
-                  label="Stok Adı"
+                  class="q-pa-md col-xs-12 col-6"
+                  label="Stok yada Kategori Adı"
                   outlined
                   v-model="edittreemselect"
                   :options="select_options"
@@ -778,7 +778,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-4">
+                  <div class="q-pa-xs row col-xs-12 col-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
@@ -827,8 +827,8 @@
                   hide-selected
                   use-input
                   @filter="filterFn"
-                  class="q-pa-md col-6"
-                  label="Stok Adı"
+                  class="q-pa-md col-xs-12 col-6"
+                  label="Stok yada Kategori Adı"
                   outlined
                   v-model="edittreemselect"
                   :options="select_options"
@@ -909,7 +909,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-4">
+                  <div class="q-pa-xs row col-xs-12 col-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
@@ -958,8 +958,8 @@
                   hide-selected
                   use-input
                   @filter="filterFn"
-                  class="q-pa-md col-6"
-                  label="Stok Adı"
+                  class="q-pa-md col-xs-12 col-6"
+                  label="Stok yada Kategori Adı"
                   outlined
                   v-model="edittreemselect"
                   :options="select_options"
@@ -1040,7 +1040,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-4">
+                  <div class="q-pa-xs row col-xs-12 col-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
