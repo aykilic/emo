@@ -28,9 +28,9 @@
       </VueSlickCarousel>
       </div>
       <div class="text-center q-pt-md col-12">
-      <VueSlickCarousel v-if="slider2list.length > 0" style=" cursor:pointer;" v-bind="settings2">
+      <VueSlickCarousel v-if="get_slider2list.length.length > 0" style=" cursor:pointer;" v-bind="settings2">
 
-        <div v-for="(list ,index) in slider2list" :key="index" class="slider2 " >
+        <div v-for="(list ,index) in get_slider2list" :key="index" class="slider2 " >
           <img   :src="list.path + list.publicid+'.jpg'"  class="fit" style="" @click="select(list.stokturad,list.stokid)">
         </div>
       </VueSlickCarousel>
