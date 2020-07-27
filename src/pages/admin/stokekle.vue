@@ -1018,7 +1018,7 @@ export default {
 
     //TODO: sON tab
     async resimlistrefresh() {
-      const resimlist = await axios.post("http://localhost:4000/graphql", {
+      const resimlist = await axios.post('http://'+ process.env.API +':4000/graphql',{
         query: `query imgurlQuery($id: ID! ){
                  imgurlQuery(id: $id){
                       vars
