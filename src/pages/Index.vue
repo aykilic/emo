@@ -1,6 +1,6 @@
 <template>
   <q-page class="row flex flex-center col-12">
-    <div v-if="anakategorilists.length < 1">Loading...</div>
+    <!-- <div v-if="anakategorilists.length < 1">Loading...</div> -->
     <!-- <div v-else-if="slider1list.length < 1 && slider2list.length < 1 && reklam1list.length < 1">Loading...</div> -->
     
       <!-- <q-carousel
@@ -18,7 +18,7 @@
           <img   :src="list.path + list.publicid+'.jpg'"  class="fit" style="cursor:pointer;object-fit:container" @click="select(list.stokturad,list.stokid)">
         </q-carousel-slide>
       </q-carousel> -->
-      <div v-else class="q-pt-md q-pb-xs col-12">
+      <div  class="q-pt-md q-pb-xs col-12">
       <VueSlickCarousel v-if="get_slider1list.length > 0" style="cursor:pointer;"  v-bind="settings1">
         
         <div v-for="(list ,index) in get_slider1list" :key="index"  class=" text-center" >
