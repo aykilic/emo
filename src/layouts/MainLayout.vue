@@ -68,11 +68,11 @@
             
             <div class="row col-4 justify-end">
             <!-- <div class="q-pr-md title-icons text-center  text-caption"><q-icon class="icon-heart text-center"    style="font-size: 26px;"/><q-item-label >Favoriler</q-item-label ></div> -->
-            <div  class=" title-icons text-center  text-caption" @click="sepet()"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>{{sepet_count}}</q-badge></q-icon><q-item-label >Sepetim</q-item-label ></div>
+            <div  class=" title-icons text-center  text-caption" @click="sepet()"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>{{sepet_count}}</q-badge></q-icon><q-item-label >Sepet</q-item-label ></div>
             <div v-if="this.get_uid =='' " class="q-pl-md title-icons text-center  text-caption" @click="login()" ><q-icon class="icon-person text-center"   style="font-size: 26px;"/><q-item-label >login</q-item-label >  </div>
             <div v-else   class="q-pl-md title-icons text-center  text-caption"  @mouseover= "hesapOver = true" @mouseout= "hesapOver = false" >
               <q-icon   class="icon-person text-center" style="font-size: 26px;"/>
-              <q-item-label >Hesabım</q-item-label >
+              <q-item-label >Hesap</q-item-label >
               <!-- :class="hesap ? 'icon-personn' : 'icon-person' " -->
               <q-menu   @mouseover= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[10, 10]">
               <!-- <q-menu v-if="hesap" @hesapOver= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[15, 15]"> -->
@@ -290,15 +290,18 @@
         </q-tab-panels>
 
         </q-page-sticky>
-        <q-item class="q-pa-none">
+        
+    </q-page-container>
+    <div class="footer   row col-12  flex flex-center">
       <q-item-section class="q-pa-none">
     <div class="row  bg-pink-5 text-white q-pa-none" >
-      <q-btn v-if="get_user.usermail=='a@a.com'" @click="admin()">Admin</q-btn>
+      <div v-if="get_user.usermail=='a@a.com'">
+      <q-btn  @click="admin()">Admin</q-btn>
+      </div>
+      <q-item-label>Liste</q-item-label>
     </div>
     </q-item-section>
-    </q-item>
-    </q-page-container>
-    
+    </div>
   </q-layout>
   
 </template>
@@ -411,7 +414,10 @@ export default {
       // console.log("watch:get_basketlist",val);
     },
     get_ubasketlist(val){
+      console.log("main-val",val);
+      if(val!=null){
       this.sepet_count=val.length
+      }
       // console.log("watch:get_ubasketlist",val);
     },
     get_user(val){
@@ -911,6 +917,15 @@ a.menu_link:hover + div{
       padding-top:10px;
       padding-left:0px;
       
+      }
+      .footer{
+        position: relative;
+        padding-top:10px;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        color: white;
+        text-align: center;
       }
 
 </style>

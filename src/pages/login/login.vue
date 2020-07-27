@@ -151,7 +151,7 @@ import { Cookies } from "quasar"
                 .post('http://'+ process.env.API +':4000/graphql', {
                   query: `query loginuser_Query($usermail: String,$password:String ){
                          loginuser_Query(usermail: $usermail,password: $password){
-                             _id
+                              _id
                               username
                               usermail
                               res
@@ -165,7 +165,7 @@ import { Cookies } from "quasar"
                 .then(response => {
                     console.log(response.data.data.loginuser_Query);
                     if(response.data.data.loginuser_Query.res=='true'){
-                        this.merge(response)
+                        this.merge(response.data.data.loginuser_Query)
                     }else{
                       this.$q.notify({
                         type: 'negative',
@@ -242,10 +242,10 @@ import { Cookies } from "quasar"
                               password:this.SignupData.passwordConfirm,
                         }
                       })
-                      .then(response => {
+                      .then(async response => {
                             // Cookies.set('guid', data.data.createguid_mutation._id, { expires: 30, path: '' });
-                            console.log(response.data);
-                            this.merge(response)
+                            console.log("createİD",response.data.createUser._id);
+                            await this.merge(response.data.createUser)
                             // this.$q.notify({
                             //     type: 'positive',
                             //     message: `Kayıt Başarılı`
@@ -258,27 +258,27 @@ import { Cookies } from "quasar"
                 // this.$router.go(-1)
                 }
             },
-            merge(response){
-              this.$store.dispatch('search_ubasketlist',response.data.data.loginuser_Query._id)
+            async merge(response){
+              this.$store.dispatch('search_ubasketlist',response._id)
                         // guesti sil
                         Cookies.remove('guid')
                         this.$store.dispatch('delete_guid')
                         // guesti sil
                         // --------
                         // uid ekle
-                        Cookies.set('uid',response.data.data.loginuser_Query._id)
+                        Cookies.set('uid',response._id)
                         this.$store.dispatch('add_uid')
                         //---------------
                         
 
-                        this.$store.dispatch('search_ubasketlist',response.data.data.loginuser_Query._id)
+                        this.$store.dispatch('search_ubasketlist',response._id)
 
                         Cookies.remove('guid')
                         this.$store.dispatch('delete_guid')
                         // guesti sil
                         // --------
                         // uid ekle
-                        Cookies.set('uid',response.data.data.loginuser_Query._id)
+                        Cookies.set('uid',response._id)
                         this.$store.dispatch('add_uid')
                         let array=[]
                         if(this.get_ubasketlist.length > 0){
@@ -293,7 +293,7 @@ import { Cookies } from "quasar"
                                   else{
                                     console.log("1");
                                       let avalue ={
-                                          uid:response.data.data.loginuser_Query._id,
+                                          uid:response._id,
                                           guid:"",
                                           stokid:value.stokid,
                                           stokad:value.stokad,
@@ -328,17 +328,17 @@ import { Cookies } from "quasar"
                                 //     count:avalue.count,
                                 // }))
                                let avalue={
-                                    uid:response.data.data.loginuser_Query._id,
+                                    uid:response._id,
                                     guid:"",
-                                    stokid:avalue.stokid,
-                                    stokad:avalue.stokad,
-                                    varyantid:avalue.varyantid,
-                                    varyantoption1:avalue.varyantoption1,
-                                    varyantoption2:avalue.varyantoption2,
-                                    fiyat:avalue.fiyat,
-                                    path:avalue.path,
-                                    publicid:avalue.publicid,
-                                    count:avalue.count,
+                                    stokid:value.stokid,
+                                    stokad:value.stokad,
+                                    varyantid:value.varyantid,
+                                    varyantoption1:value.varyantoption1,
+                                    varyantoption2:value.varyantoption2,
+                                    fiyat:value.fiyat,
+                                    path:value.path,
+                                    publicid:value.publicid,
+                                    count:value.count,
 
                                }
                                 array.push(avalue)
@@ -369,7 +369,7 @@ import { Cookies } from "quasar"
                           console.log("uid sepeti boş ise",array);
                           this.get_basketlist.forEach(value=>{
                             let avalue ={
-                                          uid:response.data.data.loginuser_Query._id,
+                                          uid:response._id,
                                           guid:"",
                                           stokid:value.stokid,
                                           stokad:value.stokad,

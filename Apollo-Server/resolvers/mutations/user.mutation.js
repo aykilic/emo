@@ -1,4 +1,6 @@
 var jwt = require('jsonwebtoken');
+var mongoose = require('mongoose');
+const ObjectID = require("mongodb").ObjectID;
 const {sendmail}=require('../../emailservice.js')
 module.exports = {
   createUser: async (parent, {  username, lastname ,usermail, password },{ Models }) => {
@@ -6,44 +8,58 @@ module.exports = {
     const model = Models.User
     // console.log(model);
      const user = await model.findOne({ 'usermail':usermail });
-     console.log(user);
-    return new Promise((resolve,object) =>{
-    if(user){
-      // throw new Error('Kullanıcı adı kullanımda')
-      resolve({res:'Kullanıcı adı kullanımda'})
-    }else{
-      console.log(usermail);
-      // var token = jwt.sign({ foo: 'bar' }, privateKey, { algorithm: 'RS256'});
-     new model({
-      username,
-      lastname,
-      usermail,
-      password
-    }).save((err,doc) =>{
+    //  console.log(user);
+     return await new Promise( (resolve,reject) =>{
+      if(user){
+        console.log("user1",user);
+        // throw new Error('Kullanıcı adı kullanımda')
+         resolve({res:'Kullanıcı adı kullanımda'})
+      }else{
+        // console.log(usermail);
+        // var token = jwt.sign({ foo: 'bar' }, privateKey, { algorithm: 'RS256'});
+        // console.log(username, lastname ,usermail, password);
+          new model({
+        username,
+        lastname,
+        usermail,
+        password,
+      }).save((err,doc) =>{
 
-      if(err) reject(err)
-      else resolve(doc)
-    });
+        if(err) 
+        reject(err)
+        else 
+        resolve(doc)
+      });
   }
-  // console.log("hata");
 });
 },
-  // createUser: async (parent, {  username},{ User }) => {
-  //   const user = await User.findOne({ username });
+  // createUser: async (parent, {  username, lastname ,usermail, password },{ Models }) => {
+  //   const model = Models.User
+  //   // const user = await model.findOne({ 'usermail':usermail });
+  //   // console.log(user);
 
-  //   if(user){
-  //     throw new Error('var')
-  //   }
-  //   return await new User({
+  //   // if(user){
+      
+  //     // throw new Error('var')
+  //   // }
+  //   // else{
+  //     console.log("burda");
+  //   return await new model({
   //     username,
   //     lastname,
-  //     mail,
+  //     usermail,
   //     password
-  //   }).save((error)=>{
+  //   }).save((error,doc)=>{
   //     if(error){
+  //       // console.log(error);
+  //       console.log("hayır");
   //       throw error;
+  //     }else{
+  //       console.log("evet");
+  //       resolve(doc)
   //     }
   //   });
+  // // }
   // },
   // _id:ID
   // uid:ID
@@ -62,7 +78,7 @@ module.exports = {
     // console.log(Models);
     const model = Models.User_detail
     // console.log(userdetail);
-  return new Promise((resolve,object) =>{
+  return await new Promise((resolve,object) =>{
 
      new model({  
       

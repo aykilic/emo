@@ -1,5 +1,5 @@
 <template>
-    <div class="q-pa-md  q-gutter-md col-12">
+    <div class="q-pt-md q-pb-md  q-gutter-md col-12">
       <q-tabs
           v-model="tab"
           dense
@@ -18,7 +18,7 @@
           <q-tab  name="seven" label="Reklam 4"></q-tab>
           <q-tab  name="eight" label="stamp"></q-tab>
         </q-tabs>
-        <q-separator />
+        <q-separator class="q-ml-none  "/>
         <!-- // TODO: Slider1 -->
         <q-tab-panels class="row " v-model="tab" animated>
           <q-tab-panel class="col-12 q-pa-none" name="one">
@@ -33,7 +33,7 @@
                   hide-selected
                   use-input
                   @filter="filterFn"
-                  class="q-pa-md col-xs-12 col-6"
+                  class="q-pa-md  col-6 col-md-6 col-xs-12"
                   label="Stok yada Kategori Adı"
                   outlined
                   v-model="edittreemselect"
@@ -44,7 +44,7 @@
                   auto-select
                 ></q-select>
             </div>
-            <q-separator></q-separator>
+            <q-separator/>
             <anaslidercloud
                 v-if="edittreemselect !=''"
                 v-on:refreshlist="slider1listrefresh"
@@ -116,7 +116,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-xs-12 col-4">
+                  <div class="q-pa-xs row col-xs-12 col-md-4 ">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
@@ -249,7 +249,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-xs-12 col-4">
+                  <div class="q-pa-xs row col-xs-12 col-md-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
@@ -385,7 +385,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-xs-12 col-4">
+                  <div class="q-pa-xs row col-xs-12 col-md-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
@@ -402,7 +402,7 @@
                         ></q-btn>
                       </q-card-section>
                       <q-separator></q-separator>
-                      <q-card-section @click="slider2sira=true,val=props.row" style="cursor:pointer;position: relative;text-align: center;">
+                      <q-card-section @click="reklam1sira=true,val=props.row" style="cursor:pointer;position: relative;text-align: center;">
                           <!-- :label="`${props.row.sira}`" -->
                           
                         <q-img
@@ -516,7 +516,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-xs-12 col-4">
+                  <div class="q-pa-xs row col-xs-12 col-md-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
@@ -647,7 +647,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-xs-12 col-4">
+                  <div class="q-pa-xs row col-xs-12 col-md-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
@@ -778,7 +778,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-xs-12 col-4">
+                  <div class="q-pa-xs row col-xs-12 col-md-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
@@ -909,7 +909,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-xs-12 col-4">
+                  <div class="q-pa-xs row col-xs-12 col-md-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">
@@ -1040,7 +1040,7 @@
                 class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
                 :style="props.selected ? 'transform: scale(0.95);' : ''"
                   >-->
-                  <div class="q-pa-xs row col-xs-12 col-4">
+                  <div class="q-pa-xs row col-xs-12 col-md-4">
                     <!-- <q-card :class="props.selected ? 'bg-grey-2' : ''"> -->
                     <q-card class="col">
                       <q-card-section class="row">

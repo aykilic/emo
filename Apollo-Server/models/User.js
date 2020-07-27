@@ -6,10 +6,11 @@ var jwt = require('jsonwebtoken');
 const  userSchema = new Schema({
   _id: {
     type: Schema.ObjectId,
+    auto: true,
   },
   username: {
     type: String,
-    
+  
   },
   lastname: {
     type: String,
@@ -21,6 +22,10 @@ const  userSchema = new Schema({
   password: {
     type: String,
     // required: true
+  },
+  role:{
+    type:String,
+    default: 'user'
   },
   token:{
     type: String
@@ -39,7 +44,6 @@ userSchema.pre('save',function(next){
 
       this.password=hash;
       next();
-
     })
 
 });

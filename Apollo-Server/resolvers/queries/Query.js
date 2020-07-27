@@ -444,7 +444,7 @@ module.exports = {
     // console.log(asd);
   },
   Search_checkmail:async(parent, {email}, {Models})=> {
-    // console.log({email});
+    //  console.log({email});
     const model = Models.User
     //  console.log({guid});
     
