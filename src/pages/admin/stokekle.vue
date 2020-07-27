@@ -1007,11 +1007,11 @@ export default {
               imageid: obj.id
             }
           })
-          .then(data => {
+          .then(async data => {
             console.log("Done");
             // storageRef.delete()
 
-            this.resimlistrefresh();
+            await this.resimlistrefresh();
           });
       }
     },
@@ -1044,6 +1044,7 @@ export default {
         this.imgdata = [];
         console.log("boşşşşşşşşşşşşş");
       } else {
+        console.log("var");
         this.imgdata = resimlist.data.data.imgurlQuery[0].vars;
       }
 
