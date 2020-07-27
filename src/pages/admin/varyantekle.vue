@@ -116,7 +116,7 @@
       </q-card>
     </q-dialog>
     <q-dialog v-model="altmedium">
-      <q-card style="width: 500px; max-width: 80vw;">
+      <q-card style="width: 500px; max-width: 80vw;"> 
         <q-card-section class="row items-center">
           <div class="text-h6 text-center">Alt Varyant Düzenle</div>
           <q-space />
@@ -335,7 +335,7 @@ export default {
         this.$apollo
           .mutate({
             mutation: gql`
-              mutation createaltvaryant($varyantname: String!,$varyant_id: ID,sira:Float) {
+              mutation createaltvaryant($varyantname: String!,$varyant_id: ID, $sira:Float) {
                 createaltVaryant(varyantname: $varyantname, varyant_id: $varyant_id,sira:$sira) {
                   _id
                 }

@@ -35,7 +35,7 @@ module.exports = {
       }
     });
   },
-  createaltVaryant: async (parent, { varyantname, varyant_id,sira}, { Models }) => {
+  createaltVaryant: async (parent, { varyantname, varyant_id, sira}, { Models }) => {
     const varyant = Models.varyantValue
     return await new varyant({
       sira,
