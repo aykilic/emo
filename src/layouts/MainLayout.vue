@@ -295,7 +295,7 @@
     <div class="footer   row col-12  flex flex-center">
       <q-item-section class="q-pa-none">
     <div class="row  bg-pink-5 text-white q-pa-none" >
-      <div v-if="get_user.usermail=='a@a.com'">
+      <div v-if="get_user.usermail === 'a@a.com'">
       <q-btn  @click="admin()">Admin</q-btn>
       </div>
       <q-item-label>Liste</q-item-label>
