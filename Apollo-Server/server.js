@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 // const socketio = require('socket.io')
 const {sendmail}=require('./emailservice.js')
+var jwt = require('jsonwebtoken');
 // const socketio = require('socket.io') // my io.on('connection', socket => {}) function taking io as param
 
 var promisesAll = require('promises-all');
@@ -27,7 +28,7 @@ mongoose.connect(process.env.DB_HOST,{useNewUrlParser:true, useCreateIndex: true
   // });
   
   //  console.log(Date());
- 
+
 const basicDefs = importSchema('./schema.graphql')
 const server = new ApolloServer({
    typeDefs: [basicDefs],
@@ -63,8 +64,25 @@ const server = new ApolloServer({
 //   },
 // }
  });
-
 const app = express();
+app.use(async(req, res, next)=>{
+  // console.log("req.headers",req.headers);
+const token=req.headers['authorization'];
+if(token && token !=='null'){
+  //  console.log(token);
+// try {
+  const User= await jwt.verify(token,process.env.JWT_SECRET)
+  req.role = User
+  // console.log("User",User);
+// } catch (e) {
+  // console.log("hata",e);
+// }
+  if(User){
+
+  }
+}
+next()
+});
 server.applyMiddleware({
   
   app,

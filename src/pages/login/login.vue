@@ -154,6 +154,8 @@ import { Cookies } from "quasar"
                               _id
                               username
                               usermail
+                              token
+                              role
                               res
                             }
                          }`,
@@ -163,8 +165,9 @@ import { Cookies } from "quasar"
                   }
                 })
                 .then(response => {
-                    console.log(response.data.data.loginuser_Query);
+                    console.log("response.data.data.loginuser_Query",response.data.data.loginuser_Query);
                     if(response.data.data.loginuser_Query.res=='true'){
+                        Cookies.set('token',response.data.data.loginuser_Query.token)
                         this.merge(response.data.data.loginuser_Query)
                     }else{
                       this.$q.notify({
@@ -289,6 +292,7 @@ import { Cookies } from "quasar"
                                   this.get_basketlist.forEach(value=>{
                                     
                                   if (value.varyantid == item.varyantid) {
+                                    // aynı ürün
                                   }
                                   else{
                                     console.log("1");
@@ -327,22 +331,22 @@ import { Cookies } from "quasar"
                                 //     publicid:avalue.publicid,
                                 //     count:avalue.count,
                                 // }))
-                               let avalue={
-                                    uid:response._id,
-                                    guid:"",
-                                    stokid:value.stokid,
-                                    stokad:value.stokad,
-                                    varyantid:value.varyantid,
-                                    varyantoption1:value.varyantoption1,
-                                    varyantoption2:value.varyantoption2,
-                                    fiyat:value.fiyat,
-                                    path:value.path,
-                                    publicid:value.publicid,
-                                    count:value.count,
+                            //    let avalue={
+                            //         uid:response._id,
+                            //         guid:"",
+                            //         stokid:item.stokid,
+                            //         stokad:item.stokad,
+                            //         varyantid:item.varyantid,
+                            //         varyantoption1:item.varyantoption1,
+                            //         varyantoption2:item.varyantoption2,
+                            //         fiyat:item.fiyat,
+                            //         path:item.path,
+                            //         publicid:item.publicid,
+                            //         count:item.count,
 
-                               }
-                                array.push(avalue)
-                            }
+                            //    }
+                            //     array.push(avalue)
+                             }
                             })
 
                           // mutation

@@ -1,4 +1,7 @@
-import { Loading } from "quasar";
+import { Loading, Cookies } from "quasar";
+var jwt = require('../../Apollo-Server/node_modules/jsonwebtoken');
+import token from "../../Apollo-Server/helpers/token";
+require('../../Apollo-Server/node_modules/dotenv').config();
 // import basket from "../boot/basket.js"
 // meta: {
 //   middleware: [ basket ]
@@ -55,8 +58,28 @@ const routes = [
       { path: '/faturalist', component: () => import('pages/admin/faturalist.vue') },
       { path: '/customerlist', component: () => import('pages/admin/customerlist.vue') },
       { path: '/anasayfaayar', component: () => import('pages/admin/anasayfaayar.vue') },
-    ]
+    ],
+    beforeEnter: (to, from, next) => {
+      console.log("to",to);
+      console.log("from",from);
+      console.log("next",next);
+
+      // console.log(Cookies.get('token'));
+      // if(Cookies.get('token') || Cookies.get('token') != null || Cookies.get('token') != undefined){
+        // const token=  jwt.verify(Cookies.get('token'),process.env.JWT_SECRET)
+        // var token = Cookies.get('token')
+        // if(token.role='superuser'){
+        //   next();
+        // }else{
+        //   next('/admin')
+        // }
+        
+      // }
+      next('/')
+      
+    },
   },
+  
   {
     // beforeEnter: ifAuthenticated,
     beforeEnter: (to, from, next) => {

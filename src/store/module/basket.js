@@ -221,6 +221,7 @@ export default {
         set_logout(state, type){
             state.uid = ""
             Cookies.remove('uid');
+            Cookies.remove('token');
           },
     },
     getters:{ 

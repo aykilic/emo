@@ -1,6 +1,7 @@
 const ObjectID = require("mongodb").ObjectID;
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const tokens = require('../../helpers/token')
 var jwt = require('jsonwebtoken');
 module.exports = {
   user: async (parent, args, context)=>{
@@ -258,7 +259,9 @@ module.exports = {
         }else{
         bcrypt.compare(password, user.password).then(function(hash) {
           if(hash){
-            Object.assign(user, {res:'true'});
+            //bura
+            var token = tokens.generate(user.username,user.lastname,user.usermail,user.role)
+            Object.assign(user, {res:'true',token:token});
             return resolve(user)
           }else{
             return resolve({_id:"",username:"",lastname:"",usermail:"",res:'Şifre yanlış'})
@@ -269,10 +272,30 @@ module.exports = {
       )
     })
   },
+  role_Query:async (parent, {usermail}, {Models,req})=> {
+    console.log(req);
+    // const model = Models.User
+    // let login=""
+    // return new Promise((resolve,object) =>{
+    //    model.findOne({ 'usermail': usermail})
+    //   .then((user=>{
+    //     if(!user){
+    //       return resolve({_id:"",username:"",lastname:"",usermail:"",res:'Kayıtlı Mail Bulunamadı'})
+    //     }else{
+        
+    //         Object.assign(user, {res:'true',token:token});
+    //         return resolve(user)
+          
+         
+    // }
+    //   })
+    //   )
+    // })
+  },
   all_Userdetail_Query:async(parent, args, {Models})=> {
     const model = Models.User_detail
     //  console.log({guid});
-    
+  
   //  return await stokturu.find({_id:id})
     return await model.find()
   },

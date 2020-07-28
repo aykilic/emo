@@ -25,6 +25,8 @@ type User{
   lastname:String
   usermail:String
   password:String
+  role:String
+  token:String
   res:String
 }
 type vars{
@@ -32,7 +34,6 @@ type vars{
   images:images
   
 }
-
 type images{
   filename:String
   imageurl:String
@@ -100,6 +101,7 @@ type Query{
     birimList:[birim]
     imgurlQuery(id:ID!):[Stoktur]
     loginuser_Query(usermail:String,password:String):User
+    role_Query(usermail:String):User
     Search_luser(uid:ID):User
     Search_Userdetail_Query(uid:ID):[User_detail]
     all_Userdetail_Query:[User_detail]

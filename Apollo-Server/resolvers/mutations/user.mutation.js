@@ -1,4 +1,5 @@
 var jwt = require('jsonwebtoken');
+const tokens = require('../../helpers/token')
 var mongoose = require('mongoose');
 const ObjectID = require("mongodb").ObjectID;
 const {sendmail}=require('../../emailservice.js')
@@ -18,7 +19,7 @@ module.exports = {
         // console.log(usermail);
         // var token = jwt.sign({ foo: 'bar' }, privateKey, { algorithm: 'RS256'});
         // console.log(username, lastname ,usermail, password);
-          new model({
+        new model({
         username,
         lastname,
         usermail,
@@ -28,7 +29,10 @@ module.exports = {
         if(err) 
         reject(err)
         else 
-        resolve(doc)
+        var role ="user"
+        var token = tokens.generate({username,lastname,usermail,role})
+        
+        resolve({username,lastname,usermail,role,token})
       });
   }
 });
