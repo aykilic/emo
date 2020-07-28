@@ -75,7 +75,7 @@ const routes = [
         // }
         
       // }
-      next('/')
+      next()
       
     },
   },
