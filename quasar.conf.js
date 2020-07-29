@@ -1,8 +1,12 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
-
+// const envparsers = require('./src/boot/envparser')
+// const DotEnv = require('./node_modules/dotenv')
+// const envparser = require('./src/boot/envparser')
 module.exports = function (ctx) {
-  console.log(ctx)
+  // console.log(ctx)
+  // console.info(process.env)
+  // console.log(process.env)
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -11,6 +15,7 @@ module.exports = function (ctx) {
       'i18n',
       'apollo',
       'axios',
+      // 'jwt'
       // 'socket'
       
     ],
@@ -81,6 +86,8 @@ module.exports = function (ctx) {
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       
+      
+      
       scopeHoisting: true,
       vueRouterMode: 'history', // available values: 'hash', 'history'
       showProgress: true,
@@ -90,16 +97,19 @@ module.exports = function (ctx) {
       ? '' :  'http://34.71.100.141/gecelik/',
       env: ctx.dev
     ? { // so on dev we'll have
-      API: JSON.stringify('localhost')
+      API: JSON.stringify('localhost'),
+      // JWT_SECRET:JSON.stringify('emose2-app3-jwt4')
     }
     : { // and on build (production):
-      API: JSON.stringify('34.71.100.141')
+      API: JSON.stringify('34.71.100.141'),
+      // JWT_SECRET:JSON.stringify('emose2-app3-jwt4')
     },
       // Options below are automatically set depending on the env, set them if you want to override
       // preloadChunks: false,
       // extractCSS: false,
 
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
+      // env:envparser(),
       extendWebpack (cfg) {
       }
     },
@@ -203,7 +213,15 @@ module.exports = function (ctx) {
       extendWebpack (cfg) {
         // do something with Electron main process Webpack cfg
         // chainWebpack also available besides this extendWebpack
-      }
+        // cfg.resolve.alias.env=path.resolve(__dirname,'./src/boot/helpers/env.js')
+        // cfg.plugins.push(
+        //   new webpack.ProvidePlugin({
+        //     'env':'env'
+        //   })
+        // )
+      },
+      
     }
   }
+  
 }

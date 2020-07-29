@@ -1,6 +1,7 @@
 .DS_Store
 .thumbs.db
 /node_modules
+.env
 # 22-04-yedek
 # Quasar core related directories
 #.gitignore

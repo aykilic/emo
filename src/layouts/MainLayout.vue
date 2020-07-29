@@ -35,6 +35,10 @@
             <!-- <q-menu v-if="hesap" @hesapOver= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[15, 15]"> -->
               
             <q-list v-if="hesap" style="min-width: 100px;">
+              <q-item v-if="user.role=='superuser'" @click="admin()" clickable  q-close-popup>
+                  <q-item-section>Admin</q-item-section>
+                </q-item>
+                <q-separator />
               <q-item clickable q-close-popup>
                 <q-item-section>Hesap Ayarları</q-item-section>
               </q-item>
@@ -78,6 +82,9 @@
               <!-- <q-menu v-if="hesap" @hesapOver= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[15, 15]"> -->
                 
               <q-list v-if="hesap" style="min-width: 100px;">
+                <q-item v-if="user.role=='superuser'" @click="admin()" clickable  q-close-popup>
+                  <q-item-section>Admin</q-item-section>
+                </q-item>
                 <q-item clickable q-close-popup>
                   <q-item-section>Hesap Ayarları</q-item-section>
                 </q-item>
@@ -295,9 +302,9 @@
     <div class="footer   row col-12  flex flex-center">
       <q-item-section class="q-pa-none">
     <div class="row  bg-pink-5 text-white q-pa-none" >
-      <div v-if="get_user.usermail === 'a@a.com'">
+      <!-- <div v-if="this.user.usermail == 'a@a.com'">
       <q-btn  @click="admin()">Admin</q-btn>
-      </div>
+      </div> -->
       <q-item-label>Liste</q-item-label>
     </div>
     </q-item-section>
@@ -364,6 +371,7 @@ export default {
       ubasketlist:[],
       
        sepet_count:"",
+       user:{},
 // getScrollPosition:""
       // selected: { default: false},
       //  isActive: false
@@ -421,8 +429,9 @@ export default {
       // console.log("watch:get_ubasketlist",val);
     },
     get_user(val){
-      console.log("getuser",val);
-    }
+      console.log("get_user",val);
+        this.user=val
+      }
   },
   updated(){
     
@@ -926,6 +935,12 @@ a.menu_link:hover + div{
         width: 100%;
         color: white;
         text-align: center;
+        clear:both;
+        //-*-*-*-*-*-*-*-*
+        // position: relative;
+    //  margin-top: -133px; /* altAlan yuksekliginin eksi degeri */
+    // height: 133px;
+    // clear:both;
       }
 
 </style>

@@ -177,6 +177,7 @@ export default {
                              _id
                               username
                               usermail
+                              token
                               res
                             }
                          }`,
@@ -188,6 +189,7 @@ export default {
                 .then(response => {
                     console.log(response.data.data.loginuser_Query);
                     if(response.data.data.loginuser_Query.res=='true'){
+                      Cookies.set('token',response.data.data.loginuser_Query.token)
                         this.merge(response.data.data.loginuser_Query._id)
                     // this.$router.push({ path: '/sell' }  )
                     }
@@ -328,21 +330,21 @@ export default {
                             else{
                                 console.log("guid sepetinde ürün yoksa");
                                 array=this.get_ubasketlist
-                                let avalue ={
-                                    uid:response,
-                                    guid:"",
-                                    stokid:avalue.stokid,
-                                    stokad:avalue.stokad,
-                                    varyantid:avalue.varyantid,
-                                    varyantoption1:avalue.varyantoption1,
-                                    varyantoption2:avalue.varyantoption2,
-                                    fiyat:avalue.fiyat,
-                                    path:avalue.path,
-                                    publicid:avalue.publicid,
-                                    count:avalue.count,
-                                    kdv:avalue.kdv
-                                }
-                                array.push(avalue)
+                                // let avalue ={
+                                //     uid:response,
+                                //     guid:"",
+                                //     stokid:item.stokid,
+                                //     stokad:item.stokad,
+                                //     varyantid:item.varyantid,
+                                //     varyantoption1:item.varyantoption1,
+                                //     varyantoption2:item.varyantoption2,
+                                //     fiyat:item.fiyat,
+                                //     path:item.path,
+                                //     publicid:item.publicid,
+                                //     count:item.count,
+                                //     kdv:item.kdv
+                                // }
+                                // array.push(avalue)
                             }
                             })
 

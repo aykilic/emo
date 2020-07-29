@@ -5,6 +5,7 @@
 </template>
 
 <script>
+
 import axios from 'axios'
 import {Loading} from 'quasar'
 export default {

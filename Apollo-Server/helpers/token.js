@@ -1,8 +1,8 @@
 var jwt = require('jsonwebtoken');
 require('dotenv').config();
 const token ={
-    generate:({usermail})=>{
-        return jwt.sign({usermail},process.env.JWT_SECRET);
+    generate:({usermail,role})=>{
+        return jwt.sign({usermail,role},process.env.JWT_SECRET);
     }
 };
 module.exports = token;

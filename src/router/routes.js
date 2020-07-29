@@ -1,7 +1,8 @@
+import Vue from 'vue'
 import { Loading, Cookies } from "quasar";
-var jwt = require('../../Apollo-Server/node_modules/jsonwebtoken');
+var jwt = require('../../node_modules/jsonwebtoken');
 import token from "../../Apollo-Server/helpers/token";
-require('../../Apollo-Server/node_modules/dotenv').config();
+require('../../node_modules/dotenv').config();
 // import basket from "../boot/basket.js"
 // meta: {
 //   middleware: [ basket ]
@@ -59,12 +60,35 @@ const routes = [
       { path: '/customerlist', component: () => import('pages/admin/customerlist.vue') },
       { path: '/anasayfaayar', component: () => import('pages/admin/anasayfaayar.vue') },
     ],
-    beforeEnter: (to, from, next) => {
-      console.log("to",to);
-      console.log("from",from);
-      console.log("next",next);
+    beforeEnter: async (to, from, next) => {
+      // console.log("to",process.env);
+      // console.log("from",from);
+      // console.log("next",next);
+      const token =Cookies.get('token')
+       await jwt.verify(token, process.env.JWT_SECRET ,async function(err, token)  {
+          if(err){
+          //  console.log("token error burada",err);
+           next('/')
+          return
+         }else{
+          //  console.log("User",token);
+            if(token.role == 'superuser'){
+              console.log("burada");
+              next()
+            }else{
+              next('/')
+            }
+            // 
+          return
+         }
+        // console.log(token);
+      });
+       
 
-      // console.log(Cookies.get('token'));
+      //  var decoded = jwt.decode(token);
+      //   console.log("routes token",User);
+      //   console.log("routes decoded",decoded);
+
       // if(Cookies.get('token') || Cookies.get('token') != null || Cookies.get('token') != undefined){
         // const token=  jwt.verify(Cookies.get('token'),process.env.JWT_SECRET)
         // var token = Cookies.get('token')
@@ -75,7 +99,7 @@ const routes = [
         // }
         
       // }
-      next()
+      // next()
       
     },
   },

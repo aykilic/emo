@@ -131,6 +131,7 @@ export default {
                         username
                         lastname
                         usermail
+                        role
                    }  
                  }`,
                    variables: {

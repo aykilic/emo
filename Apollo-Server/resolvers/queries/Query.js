@@ -254,13 +254,14 @@ module.exports = {
     return new Promise((resolve,object) =>{
        model.findOne({ 'usermail': usermail})
       .then((user=>{
+        // console.log(user);
         if(!user){
           return resolve({_id:"",username:"",lastname:"",usermail:"",res:'Kayıtlı Mail Bulunamadı'})
         }else{
         bcrypt.compare(password, user.password).then(function(hash) {
           if(hash){
             //bura
-            var token = tokens.generate(user.username,user.lastname,user.usermail,user.role)
+            var token = tokens.generate({username:user.username,lastname:user.lastname,usermail:user.usermail,role:user.role})
             Object.assign(user, {res:'true',token:token});
             return resolve(user)
           }else{

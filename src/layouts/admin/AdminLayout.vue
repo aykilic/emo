@@ -369,8 +369,10 @@ import gql from "graphql-tag";
           });
 
       },
-    //   logout(){
-
+      logout(){
+        this.$store.dispatch('logout')
+        Cookies.remove('token')
+        this.$router.push({ path: '/' })
     //     console.log("çıkış yapıldı");
     //      auth.signOut().then(function() {
     //     //   console.log("çıkış yapıldı")
@@ -383,7 +385,7 @@ import gql from "graphql-tag";
     //         console.log(error)
     //       });
 
-    //   }
+      },
     parseTree(selfQ, parentID = null) {
       let treem = [];
 
