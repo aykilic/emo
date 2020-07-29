@@ -464,5 +464,8 @@ $black-1 ?= #222D32
 
 .q-list .q-expansion-item a
   margin-left 20px
+.q-badge--floating
+  top -5px !important;
+  right -7px !important;
 
 </style>
