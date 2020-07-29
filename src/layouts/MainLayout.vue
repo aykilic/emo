@@ -85,6 +85,7 @@
                 <q-item v-if="user.role=='superuser'" @click="admin()" clickable  q-close-popup>
                   <q-item-section>Admin</q-item-section>
                 </q-item>
+                <q-separator />
                 <q-item clickable q-close-popup>
                   <q-item-section>Hesap Ayarları</q-item-section>
                 </q-item>
