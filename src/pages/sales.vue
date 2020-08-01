@@ -1,6 +1,6 @@
 
 <template >
-  <q-page class="row q-mt-xl items-start">
+  <q-page class="row q-pt-lg items-start">
     <load v-if="option_2=='' && option_1=='' "></load>
     <q-card v-else class="row col-12" >
       <div style="min-width: 350px;" class="row col-md-6">

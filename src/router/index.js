@@ -3,6 +3,10 @@ import VueRouter from 'vue-router'
 // var qs = require('qs');
 import routes from './routes'
 import basket from "../boot/basket.js"
+import { Loading, Cookies } from "quasar";
+var jwt = require('../../node_modules/jsonwebtoken'); 
+
+require('../../node_modules/dotenv').config();
 const originalPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
@@ -50,6 +54,26 @@ export default function (/* { store, ssrContext } */) {
   //     console.log("seesion-auth-2")
   //   }
     
+  })
+  Router.beforeEach( (to, from, next) => {
+     let  authorize =[] 
+    const token =Cookies.get('token')
+    to.matched.some(record => 
+      authorize = record.meta.authorize
+      ) 
+    if(authorize){
+          jwt.verify(token, process.env.JWT_SECRET ,async function(err, token)  {
+        if(err){
+         next('/')
+        return
+       }else{
+        if (authorize.length && !authorize.includes(token.role)) {
+          return next({ path: '/' });
+      }
+       }
+    });
+    }
+    next()
   })
   // Router.beforeEach((to, from, next) => {
   //   console.log(to);

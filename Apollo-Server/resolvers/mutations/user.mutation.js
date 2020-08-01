@@ -12,7 +12,7 @@ module.exports = {
     //  console.log(user);
      return await new Promise( (resolve,reject) =>{
       if(user){
-        console.log("user1",user);
+        // console.log("user1",user);
         // throw new Error('Kullanıcı adı kullanımda')
          resolve({res:'Kullanıcı adı kullanımda'})
       }else{

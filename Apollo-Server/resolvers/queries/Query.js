@@ -249,7 +249,7 @@ module.exports = {
   },
   loginuser_Query:async (parent, {usermail, password}, {Models})=> {
     const model = Models.User
-    let login=""
+    // console.log("req",req);
     //  let ibo= await model.find({usermail:usermail})
     return new Promise((resolve,object) =>{
        model.findOne({ 'usermail': usermail})
@@ -274,7 +274,7 @@ module.exports = {
     })
   },
   role_Query:async (parent, {usermail}, {Models,req})=> {
-    console.log(req);
+    // console.log(req);
     // const model = Models.User
     // let login=""
     // return new Promise((resolve,object) =>{

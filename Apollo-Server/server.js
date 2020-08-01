@@ -65,24 +65,24 @@ const server = new ApolloServer({
 // }
  });
 const app = express();
-app.use(async(req, res, next)=>{
-  // console.log("req.headers",req.headers);
-const token=req.headers['authorization'];
-if(token && token !=='null'){
-  //  console.log(token);
-// try {
-  const User= await jwt.verify(token,process.env.JWT_SECRET)
-  req.role = User
-  // console.log("User",User);
-// } catch (e) {
-  // console.log("hata",e);
-// }
-  if(User){
+// app.use(async(req, res, next)=>{
+//   // console.log("req.headers",req.headers);
+// const token=req.headers['authorization'];
+// if(token && token !=='null'){
+//   //  console.log(token);
+// // try {
+//   const User= await jwt.verify(token,process.env.JWT_SECRET)
+//   req.role = User
+//    console.log("User",User);
+// // } catch (e) {
+//   // console.log("hata",e);
+// // }
+//   if(User){
 
-  }
-}
-next()
-});
+//   }
+// }
+// next()
+// });
 server.applyMiddleware({
   
   app,

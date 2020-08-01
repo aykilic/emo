@@ -61,7 +61,7 @@
             <div class="col-4">
             <q-btn flat @click="drawer = !drawer" round dense icon="menu" size="md" />
             </div>
-            <div class="col-4 text-center" style="margin-top:-5px;">
+            <div class="col-3 text-center" style="margin-top:-5px;">
             <router-link  to="/"  >
             <q-img 
             src="statics/Emose_Logo.jpg"
@@ -70,13 +70,13 @@
             </router-link>
             </div>
             
-            <div class="row col-4 justify-end">
+            <div class="row col-5 justify-end">
             <!-- <div class="q-pr-md title-icons text-center  text-caption"><q-icon class="icon-heart text-center"    style="font-size: 26px;"/><q-item-label >Favoriler</q-item-label ></div> -->
-            <div  class=" title-icons text-center  text-caption" @click="sepet()"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>{{sepet_count}}</q-badge></q-icon><q-item-label >Sepet</q-item-label ></div>
+            <div  class=" title-icons text-center  text-caption" @click="sepet()"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>{{sepet_count}}</q-badge></q-icon><q-item-label >Sepetim</q-item-label ></div>
             <div v-if="this.get_uid =='' " class="q-pl-md title-icons text-center  text-caption" @click="login()" ><q-icon class="icon-person text-center"   style="font-size: 26px;"/><q-item-label >login</q-item-label >  </div>
             <div v-else   class="q-pl-md title-icons text-center  text-caption"  @mouseover= "hesapOver = true" @mouseout= "hesapOver = false" >
               <q-icon   class="icon-person text-center" style="font-size: 26px;"/>
-              <q-item-label >Hesap</q-item-label >
+              <q-item-label >Hesabım</q-item-label >
               <!-- :class="hesap ? 'icon-personn' : 'icon-person' " -->
               <q-menu   @mouseover= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[10, 10]">
               <!-- <q-menu v-if="hesap" @hesapOver= "hesaplistOver = true" @mouseout= "hesaplistOver = false" :offset="[15, 15]"> -->
@@ -165,7 +165,7 @@
         
       </q-drawer> -->
       
-    <q-page-container class="row flex-center " >
+    <q-page-container class="row flex-center  " >
       
       <!-- <div  class="q-pt-xl col-md-8 col-sm-10 col-xs-12"> -->
           
@@ -184,7 +184,7 @@
       <!-- <transition name="fade"> -->
         <keep-alive>
           <!-- <load v-if="$root.loading"></load> -->
-          <router-view class="anamargin"></router-view>
+          <router-view class="anamargin" ></router-view>
         </keep-alive>
       <!-- </transition> -->
       </div>
@@ -300,16 +300,34 @@
         </q-page-sticky>
         
     </q-page-container>
-    <div class="footer   row col-12  flex flex-center">
+    <div class="footer   ">
       <q-item-section class="q-pa-none">
     <div class="row  bg-pink-5 text-white q-pa-none" >
-      <!-- <div v-if="this.user.usermail == 'a@a.com'">
-      <q-btn  @click="admin()">Admin</q-btn>
-      </div> -->
-      <q-item-label>Liste</q-item-label>
+      <q-item-label>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+        Liste <br>
+       
+      </q-item-label>
     </div>
     </q-item-section>
     </div>
+    <!-- <div>&nbsp;</div> -->
   </q-layout>
   
 </template>
@@ -929,19 +947,16 @@ a.menu_link:hover + div{
       
       }
       .footer{
-        position: relative;
-        padding-top:10px;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        color: white;
-        text-align: center;
-        clear:both;
-        //-*-*-*-*-*-*-*-*
-        // position: relative;
-    //  margin-top: -133px; /* altAlan yuksekliginin eksi degeri */
-    // height: 133px;
-    // clear:both;
+          // margin-top: 50px;
+        // // min-height: fit-content;
+        position:relative;
+        
+        width:100%;
       }
+      // .ana-container{
+      //   height: auto;
+      //   // min-height:1094px;
+      //   min-height:100%;
+      // }
 
 </style>

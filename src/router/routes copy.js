@@ -1,9 +1,7 @@
 import Vue from 'vue'
-// import VueRouter from 'vue-router'
 import { Loading, Cookies } from "quasar";
 var jwt = require('../../node_modules/jsonwebtoken');
 import token from "../../Apollo-Server/helpers/token";
-import router from '.'; 
 require('../../node_modules/dotenv').config();
 // import basket from "../boot/basket.js"
 // meta: {
@@ -33,7 +31,7 @@ require('../../node_modules/dotenv').config();
 //   }
 // }
 
- const routes = [
+export const routes = [
   {
     // meta: {
     //   middleware: [basket],
@@ -49,10 +47,8 @@ require('../../node_modules/dotenv').config();
     // }),
     
     path: '/admin',
-    name:'admin',
-    meta: { authorize: ["superuser"] },
     component: () => import('layouts/admin/AdminLayout.vue'),
-    
+    meta: { authorize: ['superuser'] },
     children: [
       { path: '', component: () => import('pages/admin/index.vue') },
       { path: '/kategori', component: () => import('pages/admin/kategori.vue') },
@@ -65,9 +61,35 @@ require('../../node_modules/dotenv').config();
       { path: '/customerlist', component: () => import('pages/admin/customerlist.vue') },
       { path: '/anasayfaayar', component: () => import('pages/admin/anasayfaayar.vue') },
     ],
+    beforeEnter: async (to, from, next) => {
+      const token =Cookies.get('token')
+       await jwt.verify(token, process.env.JWT_SECRET ,async function(err, token)  {
+          if(err){
+          
+           next('/')
+          return
+         }else{
+          
+            if(token.role == 'superuser'){
+              console.log("burada");
+              next()
+            }else{
+              next('/')
+            }
+           
+          return
+         }
+        
+      });
+      
+    },
   },
   
   {
+    // beforeEnter: ifAuthenticated,
+    // beforeEnter: (to, from, next) => {
+    //   next();
+    // },
     path: '/shopping',
     component: () => import('layouts/LoginLayout.vue'),
     children: [
@@ -76,6 +98,8 @@ require('../../node_modules/dotenv').config();
     ]
   },
   {
+    // beforeEach:yukle,
+    // afterEach:bitir,
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
@@ -96,12 +120,44 @@ require('../../node_modules/dotenv').config();
 ]
 
 // Always leave this as last one
-// if (process.env.MODE !== 'ssr') {
-//   routes.push({
-//     path: '*',
-//     component: () => import('pages/Error404.vue')
-//   })
-// }
-    
- export default routes
+if (process.env.MODE !== 'ssr') {
+  routes.push({
+    path: '*',
+    component: () => import('pages/Error404.vue')
+  })
+}
+  // if (process.client) {
+      // console.log(process.env.MODE)
+    // } else {
+      // console.log("seesion-auth-2")
+    // }
+    // routes.beforeEach(async (to, from, next) => {
+    //   const { authorize } = to.meta;
+    //   const token =Cookies.get('token')
+
+    //   if(authorize){
+    //        await jwt.verify(token, process.env.JWT_SECRET ,async function(err, token)  {
+    //       if(err){
+          
+    //        next('/')
+    //       return
+    //      }else{
+    //       //   if(token.role == 'superuser'){
+    //       //     console.log("burada");
+    //       //     next()
+    //       //   }else{
+    //       //     next('/')
+    //       //   }
+    //       // return
+    //       if (authorize.length && !authorize.includes(token.role)) {
+    //         // role not authorised so redirect to home page
+    //         return next({ path: '/' });
+    //     }
+    //      }
+        
+    //   });
+    //   }
+    //   next()
+    // })
+export default routes
 // export const routes

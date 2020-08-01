@@ -1,7 +1,8 @@
 <template>
-    <div class=" row col-12  justify-center q-pt-xl">
+    <div class=" row col-12   justify-center  items-center	window-height"  >
     <!-- <div class="q-pa-xl">{{login}}</div> -->
-    <q-card class="col-md-6 col-xs-12 ">
+   
+    <q-card class="col-md-6 col-xs-12 " style="margin-top:-250px;">
         <q-tabs
           v-model="tab"
           
@@ -77,6 +78,7 @@
         </q-tab-panels>
       </q-card>
   </div>
+ 
 </template>
 
 <script>
@@ -419,5 +421,7 @@ import { Cookies } from "quasar"
 </script>
 
 <style lang="scss" scoped>
-
+.footer{
+  // display:none !important;
+}
 </style>
