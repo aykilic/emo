@@ -2,7 +2,7 @@ var jwt = require('jsonwebtoken');
 const tokens = require('../../helpers/token')
 var mongoose = require('mongoose');
 const ObjectID = require("mongodb").ObjectID;
-const {sendmail}=require('../../emailservice.js')
+const {sendmail}=require('../../helpers/emailservice.js')
 module.exports = {
   createUser: async (parent, {  username, lastname ,usermail, password },{ Models }) => {
      

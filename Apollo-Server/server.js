@@ -8,7 +8,7 @@ const {createWriteStream} = require('fs')
 const mongoose = require("mongoose");
 const path = require("path");
 // const socketio = require('socket.io')
-const {sendmail}=require('./emailservice.js')
+// const {sendmail}=require('./helpers/emailservice.js')
 var jwt = require('jsonwebtoken');
 // const socketio = require('socket.io') // my io.on('connection', socket => {}) function taking io as param
 

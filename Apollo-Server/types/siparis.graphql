@@ -54,6 +54,7 @@ type numaralar{
     faturano:Float
     irsaliyeno:Float
 }
+
   type Mutation {
 #      createsepet_mutation(uid:String,guid:String, stokid:ID, stokad:String, varyantid:ID, varyantoption1:String, varyantoption2:String, fiyat:Float, path:String, publicid:String, count:Int):sepet
 #      createguid_mutation:guest_user
@@ -67,6 +68,9 @@ type numaralar{
     numara_guncelle(irsaliyeno:Float,faturano:Float):numaralar
     siparis_numara_guncelle(id:ID, irsaliyeno:Float,faturano:Float,fatdurum:String):siparis
     deleteviewSiparislist(listid:[viewSiparisListsInput]):siparis
+    kartsendmail(sipno:String):numaralar
+    havalesendmail(sipno:String):numaralar
+    doorsendmail(sipno:String):numaralar
     
   }
  type Query {

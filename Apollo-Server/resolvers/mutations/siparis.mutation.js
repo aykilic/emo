@@ -107,5 +107,14 @@ module.exports = {
           
       });
     },
+    kartsendmail:async (parent, {sipno}, { Models }) => {
+      sendmail()
+   },
+    havalesendmail:async (parent, {sipno}, { Models }) => {
+      sendmail()
+   },
+    doorsendmail:async (parent, {sipno}, { Models }) => {
+      sendmail()
+   },
     
 }

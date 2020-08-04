@@ -945,6 +945,7 @@ let myBody = document.getElementsByTagName('body')[0];
                         .then(async data => {
                            await this.numaralar_guncelle()
                            await this.delete_basketsellproduct(satirList)
+                           this.havalesendmail()
                             // console.log("ok");
                             Loading.hide()
                         }).catch(err => {
@@ -1479,6 +1480,15 @@ let myBody = document.getElementsByTagName('body')[0];
                 val=Number(value)
                 // return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
                  return val
+            },
+            kartsendmail(){
+
+            },
+            havalesendmail(){
+
+            },
+            doorsendmail(){
+
             },
             // formatNumber(value) {
             // return value.toLocaleString("en-US", { maximumFractionDigits: 2, minimumFractionDigits: 2 })
