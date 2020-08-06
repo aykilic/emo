@@ -7,6 +7,7 @@ const { importSchema } = require('graphql-import');
 const {createWriteStream} = require('fs')
 const mongoose = require("mongoose");
 const path = require("path");
+const ejs = require("ejs");
 // const socketio = require('socket.io')
 // const {sendmail}=require('./helpers/emailservice.js')
 var jwt = require('jsonwebtoken');
@@ -83,6 +84,33 @@ const app = express();
 // }
 // next()
 // });
+app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, './helpers')))
+// express.static(path.join(__dirname, './'));
+app.get("/hello", (req, res, next) => {
+  let emailTemplate;
+  let capitalizedFirstName = "John";
+  let userEmail = "John@example.com";
+  
+  ejs
+  .renderFile(path.join(__dirname, "./helpers/havale.ejs"),
+  {
+    username:"Ali Sakin", //capitalizedFirstName,
+    confirm_link: "http://www.8link.in/confirm=", //+ userEmail
+    sipno:"59243435"
+  })
+  .then(result => {
+    emailTemplate = result;
+    res.send(emailTemplate);
+  })
+  .catch(err => {
+    res.status(400).json({
+        message: "Error Rendering emailTemplate",
+        error: err
+       });
+    });
+  
+  });
 server.applyMiddleware({
   
   app,

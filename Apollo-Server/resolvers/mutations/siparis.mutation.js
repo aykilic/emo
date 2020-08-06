@@ -1,6 +1,9 @@
 var mongoose = require('mongoose');
 const { newsiparis } = require('../subscriptions/siparis.subscription');
-
+const {sendmail}=require('../../helpers/emailservice.js')
+const { havalesendmail }=require('../../helpers/havale.js')
+const { doorsendmail }=require('../../helpers/doormail.js')
+const { kartsendmail }=require('../../helpers/kartmail.js')
 const ObjectID = require("mongodb").ObjectID;
 module.exports = {
     createSiparisFis_mutation:async (root,{ satirList, siparisfis },{ Models, pubsub}) => {
@@ -107,14 +110,15 @@ module.exports = {
           
       });
     },
-    kartsendmail:async (parent, {sipno}, { Models }) => {
-      sendmail()
+    kartsendmail_mutation:async (parent, { sipno, username, usermail }, { Models }) => {
+      kartsendmail({ sipno, username, usermail })
    },
-    havalesendmail:async (parent, {sipno}, { Models }) => {
-      sendmail()
+   havalesendmail_mutation:async (parent, { sipno, username, usermail }, { Models }) => {
+    //  console.log("mut",sipno, username);
+      havalesendmail( {sipno, username, usermail } )
    },
-    doorsendmail:async (parent, {sipno}, { Models }) => {
-      sendmail()
+    doorsendmail_mutation:async (parent, { sipno, username, usermail }, { Models }) => {
+      doorsendmail({ sipno, username, usermail })
    },
     
 }

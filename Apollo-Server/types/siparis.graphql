@@ -68,9 +68,9 @@ type numaralar{
     numara_guncelle(irsaliyeno:Float,faturano:Float):numaralar
     siparis_numara_guncelle(id:ID, irsaliyeno:Float,faturano:Float,fatdurum:String):siparis
     deleteviewSiparislist(listid:[viewSiparisListsInput]):siparis
-    kartsendmail(sipno:String):numaralar
-    havalesendmail(sipno:String):numaralar
-    doorsendmail(sipno:String):numaralar
+    kartsendmail_mutation(sipno:Float,username:String,usermail:String):numaralar
+    havalesendmail_mutation(sipno:Float,username:String,usermail:String):numaralar
+    doorsendmail_mutation(sipno:Float,username:String,usermail:String):numaralar
     
   }
  type Query {

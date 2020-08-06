@@ -885,6 +885,31 @@ let myBody = document.getElementsByTagName('body')[0];
                 let val =this.val
                 if(val==="Kredi Kartı Hemen"){
                     // console.log(val);
+                    Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation kartsendmail_mutation($sipno: Float,$username:String, $usermail:String) {
+                            kartsendmail_mutation(sipno: $sipno, username: $username, usermail: $usermail) {
+                                _id
+                            }
+                            }
+                        `,
+                        variables: {
+                            sipno:Number(sipno),
+                            username:this.user.ad_soyad,
+                            usermail:this.user.email,
+                        },
+                    })
+                        .then(async data => {
+
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
+
+                    return
                     this.odemedurumu="Ödendi"
                     if(Cookies.get("uid")== null || Cookies.get("uid") == undefined || Cookies.get("uid") == ""){
                     this.guser_det_kaydet() // guser detay kayıt
@@ -918,6 +943,36 @@ let myBody = document.getElementsByTagName('body')[0];
                         })
 
                 }else if(val==="Havale"){
+                    // console.log(this.user,sipno);
+                    
+                    Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation havalesendmail_mutation($sipno: Float,$username:String, $usermail:String) {
+                            havalesendmail_mutation(sipno: $sipno, username: $username, usermail: $usermail) {
+                                _id
+                            }
+                            }
+                        `,
+                        variables: {
+                            sipno:Number(sipno),
+                            username:this.user.ad_soyad,
+                            usermail:this.user.email,
+                        },
+                    })
+                        .then(async data => {
+
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
+
+
+
+
+                    return
                     this.havale_div=true
                     this.odemedurumu="Beklemede"
                     if(Cookies.get("uid")== null || Cookies.get("uid") == undefined || Cookies.get("uid") == ""){
@@ -953,6 +1008,33 @@ let myBody = document.getElementsByTagName('body')[0];
                             Loading.hide()
                         })
                 }else if(val==="Kapıda Nakit"){
+
+
+
+                    Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation doorsendmail_mutation($sipno: Float,$username:String, $usermail:String) {
+                            doorsendmail_mutation(sipno: $sipno, username: $username, usermail: $usermail) {
+                                _id
+                            }
+                            }
+                        `,
+                        variables: {
+                            sipno:Number(sipno),
+                            username:this.user.ad_soyad,
+                            usermail:this.user.email,
+                        },
+                    })
+                        .then(async data => {
+                            
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
+                    return
                     this.odemedurumu="Beklemede"
                     if(Cookies.get("uid")== null || Cookies.get("uid") == undefined || Cookies.get("uid") == ""){
                     await this.guser_det_kaydet() // guser detay kayıt
