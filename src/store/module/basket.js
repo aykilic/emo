@@ -175,13 +175,15 @@ export default {
              
             })
             // console.log("uid",state.uid);
-            
+        
         },
-    logout({commit} ,type   )
+     logout({commit} ,type   )
     {
-    commit('set_logout',type);
-    Cookies.remove('uid');
-            Cookies.remove('token');
+        // console.log("state",type);
+        
+     commit('set_logout',type);
+    
+    
     },
     },
     mutations:{
@@ -222,8 +224,9 @@ export default {
           },
         set_logout(state, type){
             state.uid = ""
-            Cookies.remove('uid');
-            Cookies.remove('token');
+            // console.log("set_type",type);
+            Cookies.remove('uid',{ path: type });
+            Cookies.remove('token',{ path: type });
           },
     },
     getters:{ 

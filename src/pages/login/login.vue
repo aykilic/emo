@@ -148,7 +148,7 @@ import { Cookies } from "quasar"
 
                 return;
               }
-            // console.log("onay");
+              // console.log("onay");
                         await axios
                 .post('http://'+ process.env.API +':4000/graphql', {
                   query: `query loginuser_Query($usermail: String,$password:String ){
@@ -179,12 +179,13 @@ import { Cookies } from "quasar"
                     }
 
                 })
-            //    ----- mail
-            // mutation{sendmail(username:"asas"){
-            //     username
-            //     }
-            //     }
-            //    ----- mail
+                // location.reload()
+              //    ----- mail
+              // mutation{sendmail(username:"asas"){
+              //     username
+              //     }
+              //     }
+              //    ----- mail
             },
             async register() {
                 // console.log(this.signup.username);
@@ -300,7 +301,7 @@ import { Cookies } from "quasar"
                                     console.log("1");
                                       let avalue ={
                                           uid:response._id,
-                                          guid:"",
+                                          guid:null,
                                           stokid:value.stokid,
                                           stokad:value.stokad,
                                           varyantid:value.varyantid,
@@ -376,7 +377,7 @@ import { Cookies } from "quasar"
                           this.get_basketlist.forEach(value=>{
                             let avalue ={
                                           uid:response._id,
-                                          guid:"",
+                                          guid:null,
                                           stokid:value.stokid,
                                           stokad:value.stokad,
                                           varyantid:value.varyantid,
@@ -421,7 +422,7 @@ import { Cookies } from "quasar"
 </script>
 
 <style lang="scss" scoped>
-.footer{
+// .footer{
   // display:none !important;
-}
+// }
 </style>

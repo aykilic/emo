@@ -13,15 +13,18 @@
                       <q-item-label style="text-align: justify;margin-top:10px;" class="col-12">{{children.yorum}} </q-item-label>
                       <!-- <q-btn round color="primary" icon="mdi-thumb-up" /> -->
                       <div class="q-mt-md row">
-                          <div class="row" v-if="children.votes.length && children.is_vote">
+                          <div class="row" v-if="children.votes.length && children.is_vote && get_uid">
                             <!-- <div class="row" v-if="children.votes.length "> -->
-                                <q-icon  class="q-mr-md " :class="(children.vote == 1)  ? 'select-like-icons' :'like-icons'" @click="children.vote == -1 ? children.vote = 1 : children.vote == 1 ? children.vote = 0 : children.vote = 1  ,like( children._id, children.vote, 1)"  style="font-size: 20px;" /><q-item-label>{{children.like}}</q-item-label> 
-                                <q-icon  class="q-mr-md q-ml-md " :class="(children.vote == -1)  ? 'select-dislike-icons' :'dislike-icons'"  @click="children.vote == 1 ? children.vote = -1 : children.vote== -1 ? children.vote = 0 : children.vote = -1 , like( children._id, children.vote, 1)"  style="font-size: 20px;" /><q-item-label>{{children.dislike}}</q-item-label> 
+                                
+                                <q-item-label v-if="depth==0" @click="cevapla()" class="q-mr-md cursor-pointer" style="opacity:0.6;">Cevapla</q-item-label>
+                                <q-icon  class="q-mr-md " :class="(children.vote == 1)  ? 'select-like-icons' :'like-icons'" @click="children.vote == -1 ? children.vote = 1 : children.vote == 1 ? children.vote = 0 : children.vote = 1  ,get_uid == undefined || get_uid == '' || get_uid == null ? logindialog() :like( children._id, children.vote, 1)"  style="font-size: 20px;" /><q-item-label>{{children.like}}</q-item-label> 
+                                <q-icon  class="q-mr-md q-ml-md " :class="(children.vote == -1)  ? 'select-dislike-icons' :'dislike-icons'"  @click="children.vote == 1 ? children.vote = -1 : children.vote== -1 ? children.vote = 0 : children.vote = -1 ,get_uid == undefined || get_uid == '' || get_uid == null  ? logindialog() : like( children._id, children.vote, 1)"  style="font-size: 20px;" /><q-item-label>{{children.dislike}}</q-item-label> 
                             <!-- </div>  -->
                           </div>    
                           <div class="row" v-else>
-                                <q-icon  class="q-mr-md like-icons"  @click=" like( children._id, 1, 0)"  style="font-size: 20px;" /><q-item-label>{{children.like}}</q-item-label> 
-                                <q-icon  class="q-mr-md q-ml-md dislike-icons"   @click=" like( children._id, -1, 0)"  style="font-size: 20px;" /><q-item-label>{{children.dislike}}</q-item-label> 
+                              <q-item-label v-if="depth==0" @click="cevapla()" class="q-mr-md cursor-pointer" style="opacity:0.6;">Cevapla</q-item-label>
+                                <q-icon  class="q-mr-md like-icons"  @click="get_uid == undefined || get_uid == '' || get_uid == null  ? logindialog() : like( children._id, 1, 0)"  style="font-size: 20px;" /><q-item-label>{{children.like}}</q-item-label> 
+                                <q-icon  class="q-mr-md q-ml-md dislike-icons"   @click="get_uid == undefined || get_uid == '' || get_uid == null  ? logindialog() : like( children._id, -1, 0)"  style="font-size: 20px;" /><q-item-label>{{children.dislike}}</q-item-label> 
                             
                           </div>
                       
@@ -64,7 +67,7 @@
                     :nodes="children.children" 
                     :depth="depth + 1"
                     :stokid="stokid"
-                    
+                    :key="componentKey"
                     
                     >
                   </tree-yorum>
@@ -84,7 +87,7 @@ import moment from 'moment'
     export default {
         name:"treeYorum",
         components: { treeYorum },
-        props: [ 'nodes','depth','stokid' ],
+        props: [ 'nodes','depth','stokid','componentKey' ],
         data() {
             return {
                 moment:moment,
@@ -97,7 +100,7 @@ import moment from 'moment'
         },
         watch: {
             yorum(val){
-                console.log("yorum",val);
+                console.log("nodes",this.nodes);
                 
             },
             
@@ -167,10 +170,26 @@ import moment from 'moment'
                             Loading.hide()
                         })
             },
-            dislike() {
-                console.log("dislike");
+            logindialog() {
+                // console.log("logindialog");
+                this.$q.dialog({
+                    title: 'Uyarı...!',
+                    message: 'Oy kullanabilmek için "LOGİN" olmalısınız. ',
+                    cancel: false,
+                    persistent: true
+                }).onOk(() => {
+                    // console.log('>>>> OK')
+                }).onOk(() => {
+                    // console.log('>>>> second OK catcher')
+                }).onCancel(() => {
+                    // console.log('>>>> Cancel')
+                }).onDismiss(() => {
+                    // console.log('I am triggered on both OK and Cancel')
+                })
             },
-
+            cevapla(){
+                console.log("cevapla");
+            }
         },
     }
 </script>

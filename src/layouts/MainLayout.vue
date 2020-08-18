@@ -73,7 +73,7 @@
             <div class="row col-5 justify-end">
             <!-- <div class="q-pr-md title-icons text-center  text-caption"><q-icon class="icon-heart text-center"    style="font-size: 26px;"/><q-item-label >Favoriler</q-item-label ></div> -->
             <div  class=" title-icons text-center  text-caption" @click="sepet()"><q-icon class="icon-cart"   style="font-size: 26px;"><q-badge class="cartbadge" align="top"  floating transparent>{{sepet_count}}</q-badge></q-icon><q-item-label >Sepetim</q-item-label ></div>
-            <div v-if="this.get_uid =='' " class="q-pl-md title-icons text-center  text-caption" @click="login()" ><q-icon class="icon-person text-center"   style="font-size: 26px;"/><q-item-label >login</q-item-label >  </div>
+            <div v-if="this.get_uid == '' || this.get_uid == null || this.get_uid == 'undefined' " class="q-pl-md title-icons text-center  text-caption" @click="login()" ><q-icon class="icon-person text-center"   style="font-size: 26px;"/><q-item-label >login</q-item-label >  </div>
             <div v-else   class="q-pl-md title-icons text-center  text-caption"  @mouseover= "hesapOver = true" @mouseout= "hesapOver = false" >
               <q-icon   class="icon-person text-center" style="font-size: 26px;"/>
               <q-item-label >Hesabım</q-item-label >
@@ -488,6 +488,7 @@ export default {
                                 //  console.log("uid",this.get_uid);
                                 //  console.log("guid",this.get_guid);
     this.userid_function()
+    // console.log("path", this.$route.path);
     // console.log(this.anaktegorilists);
     // this.parseTree(this.anakategorilists)
     // console.log(this.get_ubasketlist);
@@ -593,13 +594,17 @@ export default {
       this.$router.push({ path: '/login' })
     },
     async logout(){
-      // console.log("object");
-      await this.$store.dispatch('logout')
-      // Cookies.remove('uid');
-      // Cookies.remove('token');
+      this.$router.push({ name: 'Home' });
+        await this.$store.dispatch('logout',this.$route.path)
+        // console.log("logout");
+      this.$router.push({ name: 'Home' });
+      // await Cookies.remove('uid',{ path: '/' });
+      // await Cookies.remove('token',{ path: '/' });
       this.userid_function()
       // this.$router.push({ path: '/' })
-      this.$router.push({ name: 'Home' });
+      // location.reload()
+      
+
       // window.location.href = "http://siwei.me"
     },
     debounceFunc: debounce(function () {

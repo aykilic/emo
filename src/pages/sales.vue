@@ -191,21 +191,22 @@
           </q-tab-panel>
 
           <q-tab-panel name="yorum">
-            <div v-if="get_uid && (get_user.username !== undefined)">
+            <!-- <div v-if="get_uid && (get_user.username !== undefined)"> tree-yorumda v-if vardı-->
+            <div >
               <div class="q-gutter-md" >
               <q-item-label class=" text-h6 text-weight-medium">
                     Yorumlar({{yorumlar.length}})  
               </q-item-label>
               <div><q-separator  /></div>
-              <div class="text-h6 text-center" v-if="get_guid">
+              <!-- <div class="text-h6 text-center" v-if="get_guid">
                 Lütfen Giriş Yapınız...
-              </div>
+              </div> -->
               <tree-yorum
-                v-if="get_uid && (get_user.username !== undefined) "
+                
                 :nodes="treeYorum"
                 :depth="0"
                 :stokid="stokid"
-                
+                :key="componentKey"
                 @refreshYorum="stok(),hasvaryantsatirliste()"
                 >
               </tree-yorum>
@@ -214,10 +215,14 @@
               
               
                 
-                <!-- <div><q-separator  /></div> -->
+                <div><q-separator  /></div>
                 
+                <q-item-label class=" text-h6 text-weight-medium">
+                    Yorum Gönder 
+              </q-item-label>
                       <q-input outlined v-model="yorum" label="Yorum" type="textarea" class="q-mb-md"/>
-                      <q-btn class="float-right q-mb-md" @click="yorumCreate()">Yorum Gönder</q-btn>
+                      <q-btn class="float-right q-mb-md" @click="yorumCreate()"> Gönder</q-btn>
+                      
               </div>
               
               </div>
@@ -305,6 +310,7 @@ export default {
       yorum:"",
       yorumlar:[],
       treeYorum:[],
+      componentKey:0,
       // votes:[],
       // uruntab:
       //  parentname:this.$route.params.parentname
@@ -349,7 +355,13 @@ export default {
     },
     getvaryantlist(val) {
       // this.stok()
-    }
+    },
+    get_uid(val){
+                // this.forceRerender()
+                // this.stok();
+                // this.hasvaryantsatirliste();
+                 this.yorumTree(this.yorumlar)
+            }
     // option_2(val){
     //   this.option_2=val
     // }
@@ -401,6 +413,9 @@ export default {
   },
 
   methods: {
+    forceRerender() {
+      this.componentKey += 1
+    },
     eksi() {
       this.miktar--;
     },
@@ -1242,7 +1257,7 @@ export default {
                    if(item.votes.length){
                        item.votes.forEach(sitem=>{
                            
-                           if(sitem.userid == this.get_uid && say ){
+                           if((sitem.userid == this.get_uid) && say ){
 
                                Object.assign(item, {is_vote:true,vote:sitem.vote})
                                say=false

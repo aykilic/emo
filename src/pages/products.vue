@@ -3,13 +3,13 @@
     
 
         <div  v-for="(list,index) in lists" :key="index" v-if="list.vars" class="col-md-3 col-sm-4 col-xs-6 ">
-           
+           <!-- <div>{{JSON.stringify(list)}}</div> -->
          <q-intersection
                   once
                   transition="fade"
                   >
                   
-            <q-card @click="select(list._id,list.stokturad)"  class="my-card product-card box-shadow shadow-transition cursor-pointer">
+            <q-card @click="select(list._id,list.stokturad)" style="" class="my-card product-card box-shadow shadow-transition cursor-pointer">
                <!-- <q-img src="../statics/emose_h200.jpg" /> -->
                
                <q-img 
@@ -18,7 +18,8 @@
                 alt="Not Found" 
                 
                 />
-               <q-card-section>
+                
+               <q-card-section class="q-pl-xs q-pr-xs">
                      <div class="row  text-center">
                      <div class="col   ">
                         {{list.stokturad}}
@@ -60,27 +61,35 @@
                      <!-- <div v-if="" class=" text-h6 text-strike ">
 
                      </div> -->
-                     <div class=" text-h6">
+                     <!-- <div class=" text-h6">
 
-                     </div>
+                     </div> -->
                      
                </q-card-section>
 
-               <q-card-section class="q-pt-none text-center ">
+               <q-card-section class="q-pt-none q-pl-none q-pr-none text-center ">
                      <q-rating
-                        v-model="ratingModel"
+                        v-model="ratingModel[index]"
                         size="1.1em"
                         :max="5"
                         style="color:#ff4081"
                         icon="mdi-heart"
+                        icon-half="mdi-heart-half-full"
                         readonly
                         />
                         <!-- style="color:#ff4081" -->
                         <!-- <q-space/> -->
-                        <span class="q-ml-md text-center text-weight-regular text-subtitle2" >
-                           <span class="" style="color:grey">Yorum</span><span class="text-grey">
-                           ( <span class="  text-subtitle2 ">11</span> )</span></span>
+
+                        <span v-if="list.yorumlar" class="  text-center justify-center text-weight-regular text-subtitle2" >
+                           <span class="row " ></span><span class="text-weight-bold text-blue-7">
+                           Yorumlar( <span class="  text-subtitle2 ">{{list.yorumlar.length}}</span> )</span>
+                        </span>
+                        <span v-else class="  text-center justify-center text-weight-regular text-subtitle2" >
+                           <span class="row " ></span><span class="text-weight-bold text-blue-7">
+                           Yorumlar( <span class="  text-subtitle2 ">0</span> )</span>
+                        </span>
                </q-card-section>
+               
             </q-card>
             
          </q-intersection>
@@ -106,7 +115,7 @@
          props:['parentname','parentid'],
         data(){
             return{
-                ratingModel:4,
+                ratingModel:[],
                 treeem:[],
                 lists:[],
                 stokid:"",
@@ -164,14 +173,17 @@
             anakategorilists(val){
                
                // console.log(this.parentname);
-               let id=this.anakategorilists.find((item=>{
+               let id=val.find((item=>{
               if (item.stokturad===this.parentname){
-               //   console.log(item._id);
+               //   console.log(item._id); rating model ve data
+
                  return item
               }
                }));
                this.stokid=id._id;
             this.stoklist()
+            // console.log("anakategorilistssss",val);
+
             }
         },
       
@@ -229,12 +241,45 @@
                         parentid: item.parentid,
                         fiyat1:item.fiyat1,
                         indirim:item.indirim,
-                        vars: item.vars[0]
+                        vars: item.vars[0],
+                        yorumlar:item.yorumlar
 
                      }
                   })
                   //   console.log("resultt",resultt);
                    this.lists=resultt
+
+                   // rating
+                   let deneme
+                  //  console.log("deneme",(deneme = 0/0));
+                   let say
+                   resultt.forEach((item,i)=>{
+                     //  console.log("result",item.yorumlar);
+                     // this.ratingModel[i]=
+
+                     if (item.yorumlar && item.yorumlar.length ) {
+                        item.yorumlar.forEach((aitem,a)=>{
+                           if(a==0){
+                              let yorumlikenumber = 0
+                              let yorumdislikenumber = 0
+                              // console.log("aitem.like",aitem.like);
+                              aitem.like > 0 ? yorumlikenumber=aitem.like  : yorumlikenumber = 0
+                              aitem.dislike < 0 ? yorumdislikenumber=(aitem.dislike * (-1))  :yorumdislikenumber=0
+                              // console.log("numberlar",aitem.like,yorumlikenumber,yorumdislikenumber,(yorumlikenumber + yorumdislikenumber));
+                              say =  aitem.like / (yorumlikenumber + yorumdislikenumber)  * 5
+                           //  say = 3.5  
+                           }
+                        })
+                        // console.log("item.yorumlar.length",item.yorumlar.length);
+                        
+                        // console.log("say",say);
+                        this.ratingModel[i]=say
+                        
+                     }else{
+                     this.ratingModel[i]=5
+                     }
+                   })
+                   console.log("ratingmodel", this.ratingModel);
                },
                parseTree(selfQ, parentID){
       
@@ -283,7 +328,9 @@
 <style lang="stylus" scoped>
 
   
- .product-card:hover
-    // box-shadow $shadow-15  
-    box-shadow 5px 15px 9px rgba(0, 0, 0, 0.5) 
+   .product-card:hover
+      // box-shadow $shadow-15  
+      box-shadow 5px 15px 9px rgba(0, 0, 0, 0.5) 
+   .my-card
+      min-height:460px;
 </style>

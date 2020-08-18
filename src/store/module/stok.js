@@ -124,7 +124,7 @@ export default {
     // }).then((data)=>{
     //   commit('set_urunlist',data.data.data.Query);
     // });
-      
+    
       
     // },
       
