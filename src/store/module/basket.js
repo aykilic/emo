@@ -180,7 +180,8 @@ export default {
     logout({commit} ,type   )
     {
     commit('set_logout',type);
-    
+    Cookies.remove('uid');
+            Cookies.remove('token');
     },
     },
     mutations:{

@@ -278,6 +278,63 @@ module.exports = {
      let asd= await stokturu.findOne({_id:id});
       // console.log(asd.variant.name[0]);
   },
+  createYorum: async (root,{ id, userid, parentid, yorum },{Models}) => {
+    //  console.log(id,userid, parentid, yorum);
+    const stokturu = Models.stokturu
+    return await stokturu.findByIdAndUpdate({_id:id},
+      // {$push:{ variant: {name:variant} } },{new: true});
+      {$push:{ 
+        "yorumlar": [{ 
+          "_id":ObjectID(),
+          "userid":userid,
+          "parentid":parentid,
+          "yorum":yorum
+         }]
+         } },{new: true});
+    // {_id:id},
+    // { $push: { variantname: variantname  } },
+    // {new: true});
+  },
+  votes_mutation: async (root,{ stokid, userid, yorumid, vote, set },{Models}) => {
+      // console.log(stokid,yorumid,userid,vote);
+    //  return
+    const stokturu = Models.stokturu
+    // return await stokturu.findByIdAndUpdate({_id:stokid,'yorumlar._id':yorumid,'votes.userid':userid},
+    //   // {$push:{ variant: {name:variant} } },{new: true});
+    //   {$push:{ 
+    //     "yorumlar.0.votes": [{ 
+    //       "userid":userid,
+    //       "vote":vote
+    //      }]
+    //      } },{new: true});
+    console.log("set",set);
+    if(set == 1){
+      console.log("1");
+      console.log(yorumid);
+      console.log(userid);
+      return await stokturu.findOneAndUpdate({'_id':ObjectID(stokid)},
+      // {$set: {"a.$[i].c.$[j].d": 2}}, {arrayFilters: [{"i.b": 0}, {"j.d": 0}]} TODO: Önemli
+      // Input: {a: [{b: 0, c: [{d: 0}, {d: 1}]}, {b: 1, c: [{d: 0}, {d: 1}]}]} TODO: Önemli
+      {$set: {"yorumlar.$[i].votes.$[j].vote": vote}},
+       {arrayFilters: [{"i._id": ObjectID(yorumid)}, {"j.userid": ObjectID(userid)}]},
+      );
+    }else if(set == 0){
+      console.log("0");
+      console.log("push",stokid);
+      console.log("push",yorumid);
+      return await stokturu.findOneAndUpdate({'_id':ObjectID(stokid),'yorumlar._id':ObjectID(yorumid)},
+      // {$set: {"a.$[i].c.$[j].d": 2}}, {arrayFilters: [{"i.b": 0}, {"j.d": 0}]} TODO: Önemli
+      // Input: {a: [{b: 0, c: [{d: 0}, {d: 1}]}, {b: 1, c: [{d: 0}, {d: 1}]}]} TODO: Önemli
+      
+         {$push:{ 
+        "yorumlar.$.votes": [{ 
+          "userid":userid,
+          "vote":vote
+         }]
+         } },{new: true});
+      
+    }
+  },
   
   
 };

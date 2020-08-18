@@ -37,7 +37,28 @@ export default {
                     publicid
                 }
               }
-                
+              yorumlar{
+                _id
+                userid
+                parentid
+                like
+                dislike
+                yorum
+                createdAt
+                User{
+                  _id
+                  username
+                  lastname
+                  usermail
+                }
+                votes{
+                  _id
+                  userid
+                  vote
+                  createdAt
+                }
+              }
+              
                     }
             }`,
        }

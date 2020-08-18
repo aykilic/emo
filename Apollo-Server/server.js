@@ -27,7 +27,6 @@ mongoose.connect(process.env.DB_HOST,{useNewUrlParser:true, useCreateIndex: true
   //  new Date().toLocaleString('tr', {
   //   timeZone: 'Europe/Istanbul'
   // });
-  
   //  console.log(Date());
 
 const basicDefs = importSchema('./schema.graphql')

@@ -51,5 +51,6 @@ const kategori = {
     // }
 
   },
+  
 };
 module.exports = kategori;

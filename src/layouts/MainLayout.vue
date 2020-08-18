@@ -316,12 +316,6 @@
         Liste <br>
         Liste <br>
         Liste <br>
-        Liste <br>
-        Liste <br>
-        Liste <br>
-        Liste <br>
-        Liste <br>
-        Liste <br>
        
       </q-item-label>
     </div>
@@ -598,12 +592,15 @@ export default {
     login(){
       this.$router.push({ path: '/login' })
     },
-    logout(){
+    async logout(){
       // console.log("object");
-      this.$store.dispatch('logout')
+      await this.$store.dispatch('logout')
+      // Cookies.remove('uid');
+      // Cookies.remove('token');
       this.userid_function()
-      this.$router.push({ path: '/' })
-      
+      // this.$router.push({ path: '/' })
+      this.$router.push({ name: 'Home' });
+      // window.location.href = "http://siwei.me"
     },
     debounceFunc: debounce(function () {
         
@@ -804,8 +801,8 @@ export default {
     animation: toColor 0.5s;
   }
   @keyframes toColor {
-    0%    { -webkit-filter: opacity(0%); filter: opacity(0%); }
-    25%   { -webkit-filter: opacity(25%); filter: opacity(25%); }
+    0%    { -webkit-filter: opacity(20%); filter: opacity(30%); }
+    25%   { -webkit-filter: opacity(25%); filter: opacity(40%); }
     50%   { -webkit-filter: opacity(50%); filter: opacity(50%); }
     75%   { -webkit-filter: opacity(75%); filter: opacity(75%); }
     100%  { -webkit-filter: opacity(100%); filter: opacity(100%); }

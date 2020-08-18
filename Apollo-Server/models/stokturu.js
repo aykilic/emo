@@ -26,6 +26,65 @@ const attrSchema = new Schema({
     default: null,
   }
 });
+const votesSchema = new Schema({
+  
+  _id: {
+    type: Schema.ObjectId,
+  },
+  userid: {
+    type: Schema.ObjectId,
+  },
+  vote:{
+    type: Number,
+  },
+  createdAt:{
+    type:Date,
+    default: Date.now
+  }
+});
+// const userSchema = new Schema({
+  
+//   _id: {
+    
+//     type: Schema.ObjectId,
+//   },
+//   username:{
+//     type: String,
+//   }
+// });
+const yorumSchema = new Schema({
+
+  _id: {
+    type: Schema.ObjectId,
+    required: true
+  },
+  parentid:{
+    type: Schema.ObjectId,
+     default: null,
+  },
+  userid:{
+    type: Schema.ObjectId,
+    //  default: null,
+  },
+  yorum: {
+    type: String,
+    required: true
+  },
+  votes:[
+    
+    votesSchema
+  
+],
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+//   User:[
+    
+//     userSchema
+  
+// ],
+});
 const stokvarsSchema = new Schema({
    _id: {
      type: Schema.ObjectId,
@@ -73,6 +132,16 @@ const stokturuSchema = new Schema({
     [
       { images: imagesSchema }
     ],
+  yorumlar:[
+    
+      yorumSchema
+    
+  ],
+  
+  // slider1:
+  //   [ 
+  //      imagesSchema 
+  //   ],
   isvariant: {
     type: String,
     default: 2,

@@ -884,7 +884,8 @@ let myBody = document.getElementsByTagName('body')[0];
 
                 let val =this.val
                 if(val==="Kredi Kartı Hemen"){
-                    // console.log(val);
+                     console.log("kredi kartı entegrasyonu");
+                    return
                     Loading.show()
                     this.$apollo
                         .mutate({
@@ -909,7 +910,7 @@ let myBody = document.getElementsByTagName('body')[0];
                             Loading.hide()
                         })
 
-                    return
+                    // return
                     this.odemedurumu="Ödendi"
                     if(Cookies.get("uid")== null || Cookies.get("uid") == undefined || Cookies.get("uid") == ""){
                     this.guser_det_kaydet() // guser detay kayıt
@@ -972,7 +973,7 @@ let myBody = document.getElementsByTagName('body')[0];
 
 
 
-                    return
+                    // return
                     this.havale_div=true
                     this.odemedurumu="Beklemede"
                     if(Cookies.get("uid")== null || Cookies.get("uid") == undefined || Cookies.get("uid") == ""){
@@ -1009,7 +1010,7 @@ let myBody = document.getElementsByTagName('body')[0];
                         })
                 }else if(val==="Kapıda Nakit"){
 
-
+                    // yorum dialog
 
                     Loading.show()
                     this.$apollo
@@ -1034,7 +1035,7 @@ let myBody = document.getElementsByTagName('body')[0];
                             console.log(err);
                             Loading.hide()
                         })
-                    return
+                    // return
                     this.odemedurumu="Beklemede"
                     if(Cookies.get("uid")== null || Cookies.get("uid") == undefined || Cookies.get("uid") == ""){
                     await this.guser_det_kaydet() // guser detay kayıt
@@ -1043,7 +1044,7 @@ let myBody = document.getElementsByTagName('body')[0];
                     satlistolustur()
                     
                     
-                    Loading.show()
+                    
                     this.$apollo
                         .mutate({
                         mutation: gql`

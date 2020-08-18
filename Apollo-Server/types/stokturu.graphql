@@ -16,6 +16,8 @@ type kategori{
   description:String
   vars:[vars]
   children(_id:ID): kategori
+  yorumlar:[yorumlar]
+  
   
 }
 
@@ -56,24 +58,9 @@ type Stoktur{
   description:String
   createdAt: String
   vars: [vars]
+  yorumlar:[yorumlar]
 }
-  
-#   type Varyantalt{
-#   _id:ID
-#   color:String
-#   varyantid: ID
-#   altvaryantname: String
-#   vars: [vars]
-#   createdAt: String
-  
-# }
-# type Varyant{
-#   _id:ID
-#   stokid:ID
-#   varyantname:String
-#   Varyantalt:[Varyantalt]
-#   createdAt: String
-# }
+ 
 type User_detail{
   _id:ID
   uid:ID
@@ -91,6 +78,29 @@ type User_detail{
   ilceid:String
   createdAt:DateTime
   id:ID
+}
+type yorumlar{
+  _id:ID
+  parentid:ID
+  userid:ID
+  yorum:String
+  createdAt:DateTime
+  like:Float
+  dislike:Float  
+  User(userid:ID):User
+  votes:[votes]
+  
+}
+type like{
+  like:Float
+  dislike:Float
+}
+type votes{
+  _id:ID  
+  userid:ID
+  vote:Float
+  createdAt:DateTime 
+  
 }
 type Query{
     user(id: ID!): User!
@@ -128,7 +138,11 @@ type Mutation {
   deleteuserdetail_mutation(id:ID):User_detail
   # mergesepet_mutation(sepetlist:[sepetlistInput]):sepet
   sendmail(username:String):User
+  createYorum(id:ID, userid:ID, parentid:ID, yorum:String):yorumlar
+  votes_mutation(stokid:ID, userid:ID, yorumid:ID, vote:Float, set:Float):votes
 }
+
+
 input StokInput{
   name:String
   value:String

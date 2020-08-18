@@ -1,6 +1,7 @@
 // query resolvers
 const Query = require('./queries/Query');
 const kategori = require('./queries/kategori');
+const yorumlar = require('./queries/yorumlar');
 const varyantkategori = require('./queries/varyantkategori');
 const { GraphQLUpload } = require('graphql-upload')
 // const Upload = require ('./upload');
@@ -12,6 +13,8 @@ module.exports = {
   Upload: GraphQLUpload,
   Query,
   kategori,
+  yorumlar,
+  
   varyantkategori,
   Mutation,
   Subscription

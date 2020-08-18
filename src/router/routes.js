@@ -80,7 +80,7 @@ require('../../node_modules/dotenv').config();
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {path: 'deneme', name:'deneme', component: () => import('pages/skeleton/deneme.vue')},
-      { path: '', component: () => import('pages/Index.vue') },
+      { path: '',name:'Home', component: () => import('pages/Index.vue') },
       { path: 'login', component: () => import('pages/login/login.vue') },
 
       { path: ':parentname', name:'stoklist', component: () => import('pages/products.vue'), props:true},

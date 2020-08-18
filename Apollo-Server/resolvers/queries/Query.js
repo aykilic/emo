@@ -12,10 +12,99 @@ module.exports = {
     return await context.Models.User.find({})
   },
   // Query: async (parent, args, {stokturu})=> {
-  Query: async (parent, args, context)=> {
-    // return await User.find({}).sort({'createdAt': 'asc'})
-    // return cars.find(car => (car.id = args.id));
-    return await context.Models.stokturu.find()
+  Query: async (parent, args, { Models })=> {
+    const stokturu = Models.stokturu
+    // return await stokturu.find()
+     let asd = await stokturu.aggregate(
+       [
+      //    {
+      //   "$project": {
+      //     stokad:1,
+      //     yorumlar:1,
+      //     parentid:1
+
+      // }},
+        {$unwind: "$yorumlar"},
+        {$unwind: "$yorumlar.votes"},
+        { "$group": {
+          
+               "_id":  "$yorumlar._id",
+              "like": {$sum: {$cond: {if: {$gt: ["$yorumlar.votes.vote", 0]},then: 1,else: 0}}}, 
+              "dislike": {$sum: {$cond: {if: {$lt: ["$yorumlar.votes.vote", 0]},then: -1,else: 0 }}    
+            } 
+          }
+        },
+        {
+          "$project": {
+              "_id":"$_id",
+              "like": "$like",
+              "dislike": "$dislike",
+              
+          }
+      },
+      
+   ])
+   
+
+        // console.log("asd",asd);
+    // console.log("afd", afd);
+   
+    
+    // console.log(asd);
+    let afd = await stokturu.find()
+    // console.log("afd",afd);
+    let arr1=[]
+    let obj1
+    afd.forEach(item=>{
+      // arr1.push(item)
+      // console.log(arr1);
+       obj1={
+        parentid: item.parentid,
+        fiyat1: item.fiyat1,
+        stokkodu: item.stokkodu,
+        kdv: item.kdv,
+        isvariant: item.isvariant,
+        _id: item._id,
+        stokturad: item.stokturad,
+        vars: item.vars,
+        createdAt: item.createdAt,
+        __v: item.__v,
+        description: item.description,
+        indirim: item.indirim,
+      }
+      //  console.log(item);  
+      let yorumlar=[]
+      item.yorumlar.forEach(aitem=>{
+        
+        let a 
+        
+        if(asd.length){
+          asd.forEach(sitem=>{
+              if(aitem._id.toString () === sitem._id.toString ()){
+                a = Object.assign(aitem.toObject(), {like:sitem.like,dislike:sitem.dislike})
+                  //  b=Object.assign(obj1,{yorumlar:a})
+                  yorumlar.push(a)
+                  // Object.assign(obj1,{yorumlar:arr2})
+                    //  console.log("obj1",obj1);
+                }else{
+                  // Object.assign(obj1,{yorumlar:[{a:1},{a:2}]})
+                }
+          })
+            }
+            
+              //  b=Object.assign(obj1,{yorumlar:aitem})
+               
+               Object.assign(obj1,{yorumlar:yorumlar})
+            
+          })
+      // console.log(arr2);
+      arr1.push(obj1)
+      // arr1.push(arr2)
+    })
+    
+        // console.log(arr1);
+    //  console.log(arr1);
+     return await arr1
   },
   StokturuQuery:async (parent, {id}, { Models }) => {
     const stokturu = Models.stokturu

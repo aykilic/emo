@@ -1,6 +1,6 @@
 
 <template >
-  <q-page class="row q-pt-lg items-start">
+  <q-page class="row q-pt-lg q-pb-lg items-start">
     <load v-if="option_2=='' && option_1=='' "></load>
     <q-card v-else class="row col-12" >
       <div style="min-width: 350px;" class="row col-md-6">
@@ -48,7 +48,7 @@
               
               <div class="col-10 " style="text-decoration:underline" :id="'varyant'+i"></div>
 
-              <div  v-if="i==0" v-for="(altvalue, index) in option_1" :key="index">
+              <div  v-if="i == 0" v-for="(altvalue, index) in option_1" :key="index">
                 <div v-if="altvalue.length > 0"></div>
                 
                 <div >
@@ -170,7 +170,7 @@
       </div>
       <!-- <q-separator inset/> -->
     </q-card>
-    <q-card class="col-12" >
+    <q-card class="col-12 q-mt-md" >
       <div class="col-12">
         <q-tabs
           v-model="uruntabs"
@@ -179,19 +179,48 @@
           indicator-color="pink-12"
           align="justify"
         >
-          <q-tab name="mails" label="Özellikler" />
-          <q-tab name="alarms" label="Yorumlar" />
+          <q-tab name="ozellik" label="Özellikler" />
+          <q-tab name="yorum" label="Yorumlar" />
         </q-tabs>
 
         <q-separator />
 
-        <q-tab-panels v-model="uruntabs" animated>
-          <q-tab-panel name="mails">
+        <q-tab-panels v-model="uruntabs" animated >
+          <q-tab-panel name="ozellik">
             <div class="text-h6">Özellikler</div>Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </q-tab-panel>
 
-          <q-tab-panel name="alarms">
-            <div class="text-h6">Yorumlar</div>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          <q-tab-panel name="yorum">
+            <div v-if="get_uid && (get_user.username !== undefined)">
+              <div class="q-gutter-md" >
+              <q-item-label class=" text-h6 text-weight-medium">
+                    Yorumlar({{yorumlar.length}})  
+              </q-item-label>
+              <div><q-separator  /></div>
+              <div class="text-h6 text-center" v-if="get_guid">
+                Lütfen Giriş Yapınız...
+              </div>
+              <tree-yorum
+                v-if="get_uid && (get_user.username !== undefined) "
+                :nodes="treeYorum"
+                :depth="0"
+                :stokid="stokid"
+                
+                @refreshYorum="stok(),hasvaryantsatirliste()"
+                >
+              </tree-yorum>
+              
+              
+              
+              
+                
+                <!-- <div><q-separator  /></div> -->
+                
+                      <q-input outlined v-model="yorum" label="Yorum" type="textarea" class="q-mb-md"/>
+                      <q-btn class="float-right q-mb-md" @click="yorumCreate()">Yorum Gönder</q-btn>
+              </div>
+              
+              </div>
           </q-tab-panel>
         </q-tab-panels>
       </div>
@@ -207,13 +236,16 @@ import gql from "graphql-tag";
 import { mapState, mapGetters } from "vuex";
 import { Loading } from "quasar";
 import _ from "lodash";
+import treeYorum from "../components/tree-yorum.vue";
 import ProductZoomer from "../components/productzoom";
 import cloudinaryVue from "../components/cloudinary.vue";
 import load from "../pages/skeleton/deneme.vue";
 import { Cookies } from "quasar";
+import moment from 'moment'
+  moment.locale('tr');
 
 export default {
-  components: { ProductZoomer, load },
+  components: { ProductZoomer, load, treeYorum },
   props: ["stokad"],
   route: {
     data: function(transition) {
@@ -222,6 +254,7 @@ export default {
   },
   data() {
     return {
+      moment:moment,
       zoomerKey: 0,
       urunad: "",
       urundetay: "",
@@ -233,6 +266,9 @@ export default {
       d_indirimli_fiyat: "",
       stok_path: "",
       stok_publicid: "",
+      stokid:"",
+      
+      
       images: {
         thumbs: [
           {
@@ -264,7 +300,12 @@ export default {
       // -----------------------------------------
       miktar: 1,
       //------------------------------------------
-      uruntabs: "mails"
+      uruntabs: "yorum",
+      //------------------------------------------
+      yorum:"",
+      yorumlar:[],
+      treeYorum:[],
+      // votes:[],
       // uruntab:
       //  parentname:this.$route.params.parentname
     };
@@ -277,6 +318,17 @@ export default {
     // getvaryantlist(val){
     //      this.stok()
     // },
+    // yorumlar(val){
+    //   if (val.length > 0){
+    //     this.yorumTree(val)
+    //   }
+    // },
+    treeYorum(val){
+      
+        // console.log("watch treeYorum",val);
+        // this.treeYorum=val
+      
+    },
     miktar(val) {
       if (val < 1) {
         this.miktar = 1;
@@ -320,10 +372,12 @@ export default {
       "get_basketlist",
       "get_ubasketlist",
       "get_guid",
-      "get_uid"
+      "get_uid",
+      "get_user"
     ])
   },
-  mounted() {
+
+  async mounted() {
     // document.getElementById('varyant0').innerHTML = ""
     // document.getElementById('varyant1').innerHTML = ""
 
@@ -338,6 +392,8 @@ export default {
     if (this.anakategorilists.length > 0) {
       this.stok();
       this.hasvaryantsatirliste();
+       
+      // console.log("this.treeYorum",this.treeYorum);
     }
     if (this.activestoklistids === "") {
       // this.stokad
@@ -356,10 +412,17 @@ export default {
       this.urundetay = this.anakategorilists.filter(item => {
         if (item.stokturad === this.stokad) {
           //    console.log(item.hasOwnProperty("children"));
+          // console.log("salessss",item.votes);
+          
+          this.yorumlar=item.yorumlar
           this.kdv=item.kdv
+          // this.votes=item.votes
           return item;
         }
       });
+       
+      // console.log("this.urundetay[0]",this.urundetay[0]);
+      // console.log("yorumlar",this.yorumlar);
       // console.log(this.urundetay[0].vars[0].images);
 
       //  ---------------------
@@ -814,6 +877,10 @@ export default {
             }
           });
         });
+      await this.yorumTree(this.yorumlar)
+      this.stokid=this.urundetay[0]._id
+      // this.votes=this.urundetay[0].votes
+      // console.log("stok", this.votes);
     },
     sell(sell) {
       let id1 = this.id1;
@@ -1100,7 +1167,106 @@ export default {
           // this.$router.push({ path: '/shopping' })
         }
       }
-    }
+    },
+    yorumCreate(){
+      
+      //  console.log("this.urundetay[0]._id",this.get_uid);
+      //  console.log("this.urundetay",this.urundetay[0].yorumlar);
+      //  console.log("this.urundetay",this.yorumlar);
+      
+        // let YorumInput=[]
+        // return
+                Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation createYorum($id: ID, $userid:ID, $parentid:ID, $yorum:String) {
+                            createYorum(id: $id, userid: $userid, parentid: $parentid, yorum: $yorum) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          id: this.urundetay[0]._id,
+                          userid: this.get_uid,
+                          parentid:null,
+                          yorum:this.yorum
+                        }
+                        })
+                        .then(async data => {
+                          //  await this.numaralar_guncelle()
+                            // console.log("ok");
+                            // await this.delete_basketsellproduct(satirList)
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
+          
+    },
+    yorumTree(selfQ, parentID=null){
+
+      //  console.log("yorumTree",this.urundetay[0]._id);
+      // parseTree(selfQ, parentID=null){
+      //  console.log(selfQ);
+
+          let treemmenu = [];
+
+           selfQ.forEach((value, index) => {
+
+            if(value.parentid === parentID){
+              // console.log(value);
+              const children = this.yorumTree(selfQ, value._id);
+
+              if (children.length > 0) {
+                // value.children = children;
+
+                Vue.set(value, 'children', children);
+
+              }else{
+                Vue.set(value,'children',[])
+              }
+
+              treemmenu.push(value);
+
+            }
+          });
+
+          // -*-*-*-*-*-*-*-*
+              let arr=[]
+              
+               treemmenu.forEach(item=>{
+                   let say=true
+                   let obj={}
+                   if(item.votes.length){
+                       item.votes.forEach(sitem=>{
+                           
+                           if(sitem.userid == this.get_uid && say ){
+
+                               Object.assign(item, {is_vote:true,vote:sitem.vote})
+                               say=false
+
+                           }else if(say){
+                               Object.assign(item, {is_vote:false,vote:0})
+                           }
+                           
+
+                       })
+                   }
+                   arr.push(item)
+               })
+                console.log("arr",arr);
+              //  this.nodes=arr
+
+
+
+
+          // -*-*-*-*-*-*-*-*
+          this.treeYorum=arr;
+          // console.log(this.treemmenu);
+            return this.treeYorum
+        },
   }
 };
 </script>
