@@ -124,7 +124,7 @@ import moment from 'moment'
         }
         },
         mounted () {
-               console.log("nodes",this.nodes);
+            //    console.log("nodes",this.nodes);
         },
         methods: {
             like( yorumid, vote, set) {
@@ -138,7 +138,7 @@ import moment from 'moment'
                 // }else{
                 //     vote --
                 // }
-                console.log("likedata",vote);
+                // console.log("likedata",vote);
                 //  return
                 Loading.show()
                     this.$apollo

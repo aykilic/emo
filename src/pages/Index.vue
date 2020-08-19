@@ -173,19 +173,19 @@ export default {
     watch: {
       get_slider1list(val){
          this.slider1list=val
-        console.log("this.slider1list",this.slider1list);
+        // console.log("this.slider1list",this.slider1list);
       },
       get_slider2list(val){
          this.slider2list=val
-        console.log("this.slider2list",this.slider2list);
+        // console.log("this.slider2list",this.slider2list);
       },
       get_reklam1list(val){
          this.reklam1list=val
-        console.log("this.reklam1list",this.reklam1list);
+        // console.log("this.reklam1list",this.reklam1list);
       },
       get_etiket1list(val){
          this.etiket1list=val
-        console.log("this.etiket1list",this.etiket1list);
+        // console.log("this.etiket1list",this.etiket1list);
       },
       get_user(val){
         this.usermail=val
