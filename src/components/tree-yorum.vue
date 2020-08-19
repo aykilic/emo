@@ -100,7 +100,7 @@ import moment from 'moment'
         },
         watch: {
             yorum(val){
-                console.log("nodes",this.nodes);
+                // console.log("nodes",this.nodes);
                 
             },
             

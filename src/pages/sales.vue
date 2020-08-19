@@ -948,7 +948,7 @@ export default {
         // console.log("uid", Cookies.get("uid"), "guid", Cookies.get("guid")); // uid=null
 
         if (uid != "") {
-          console.log("uid boş değil");
+          // console.log("uid boş değil");
           if (this.get_ubasketlist.length > 0 && is_sepet) {
             this.$q.notify({
             type: "negative",
@@ -972,7 +972,7 @@ export default {
             //         dialog.hide();
             //       }, 2000);
           } else {
-            console.log("listeye ürün ekleme", "mutation");
+            // console.log("listeye ürün ekleme", "mutation");
             this.$apollo
               .mutate({
                 mutation: gql`
@@ -1024,7 +1024,7 @@ export default {
                 }
               })
               .then(data => {
-                console.log("sepete ürün eklendi");
+                // console.log("sepete ürün eklendi");
                 this.$store.dispatch("search_ubasketlist", uid);
                 if (sell) {
                   this.$router.push({ path: "/shopping" });
@@ -1032,7 +1032,7 @@ export default {
               });
           }
         } else {
-          console.log("guid boş değil");
+          // console.log("guid boş değil");
           if (this.get_basketlist.length > 0 && is_sepet) {
             this.$apollo
               .mutate({
@@ -1085,7 +1085,7 @@ export default {
                 }
               })
               .then(data => {
-                console.log("sepete ürün eklendi");
+                // console.log("sepete ürün eklendi");
                 this.$store.dispatch("search_basketlist", guid);
                 if (sell) {
                   this.$router.push({ path: "/shopping" });
@@ -1110,7 +1110,7 @@ export default {
             //         dialog.hide();
             //       }, 2000);
           } else {
-            console.log("listeye ürün ekleme", "mutation");
+            // console.log("listeye ürün ekleme", "mutation");
             this.$apollo
               .mutate({
                 mutation: gql`
@@ -1162,7 +1162,7 @@ export default {
                 }
               })
               .then(data => {
-                console.log("sepete ürün eklendi");
+                // console.log("sepete ürün eklendi");
                 this.$store.dispatch("search_basketlist", guid);
                 if (sell) {
                   this.$router.push({ path: "/shopping" });
@@ -1171,9 +1171,9 @@ export default {
           }
         }
       } else {
-        console.log(
-          "Ürün Seçimini Tamamlamadınız.. yinede devam etmek istermisiniz"
-        );
+        // console.log(
+        //   "Ürün Seçimini Tamamlamadınız.. yinede devam etmek istermisiniz"
+        // );
         if (sell) {
           this.$q.notify({
             type: "negative",
@@ -1271,7 +1271,7 @@ export default {
                    }
                    arr.push(item)
                })
-                console.log("arr",arr);
+                // console.log("arr",arr);
               //  this.nodes=arr
 
 

@@ -435,14 +435,14 @@ export default {
       // console.log("watch:get_basketlist",val);
     },
     get_ubasketlist(val){
-      console.log("main-val",val);
+      // console.log("main-val",val);
       if(val!=null){
       this.sepet_count=val.length
       }
       // console.log("watch:get_ubasketlist",val);
     },
     get_user(val){
-      console.log("get_user",val);
+      // console.log("get_user",val);
         this.user=val
       }
   },
