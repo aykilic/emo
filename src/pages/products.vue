@@ -233,7 +233,7 @@
                    
                    ;//childrenları  eşit seviyele
                   // console.log("result",result);
-                   console.log("result",result); 
+                  //  console.log("result",result); 
                   let resultt=result.map(item =>{
                      return {
                         _id: item._id,
@@ -279,7 +279,7 @@
                      this.ratingModel[i]=5
                      }
                    })
-                   console.log("ratingmodel", this.ratingModel);
+                  //  console.log("ratingmodel", this.ratingModel);
                },
                parseTree(selfQ, parentID){
       
@@ -316,7 +316,7 @@
                },
                select(a,b){
                   // stoklistid
-                  console.log("a",a,"b",b);
+                  // console.log("a",a,"b",b);
                   this.$store.dispatch('stoklistid',a)
                   this.$router.push({ name: 'sales', params: { stokid: a, stokad:b }})
                   
