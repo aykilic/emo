@@ -49,7 +49,6 @@ require('../../node_modules/dotenv').config();
     // }),
     
     path: '/admin',
-    name:'admin',
     meta: { authorize: ["superuser"] },
     component: () => import('layouts/admin/AdminLayout.vue'),
     

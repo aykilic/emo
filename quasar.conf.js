@@ -136,8 +136,8 @@ module.exports = function (ctx) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: 'Quasar App',
-        short_name: 'Quasar App',
+        name: 'Emose 1',
+        short_name: 'Emose 2',
         description: 'gecelik',
         display: 'standalone',
         orientation: 'portrait',
