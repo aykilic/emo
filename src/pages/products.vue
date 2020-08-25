@@ -68,8 +68,9 @@
                </q-card-section>
 
                <q-card-section class="q-pt-none q-pl-none q-pr-none text-center ">
+                   <!-- v-model="ratingModel[index]" -->
                      <q-rating
-                        v-model="ratingModel[index]"
+                        v-model="ratingmod"
                         size="1.1em"
                         :max="5"
                         style="color:#ff4081"
@@ -116,6 +117,7 @@
         data(){
             return{
                 ratingModel:[],
+                ratingmod:5,
                 treeem:[],
                 lists:[],
                 stokid:"",
