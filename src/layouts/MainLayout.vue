@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf" >
+  <q-layout view="lHh Lpr lFf" :key="layoutkey">
     <q-header  reveal :reveal-offset="20">
       <q-toolbar class="text-amber-1 bg-white text-grey-9 text-weight-bold justify-center " >
        
@@ -300,6 +300,7 @@
         </q-page-sticky>
         
     </q-page-container>
+    
     <div class="footer   ">
       <q-item-section class="q-pa-none">
     <div class="row  bg-pink-5 text-white q-pa-none" >
@@ -343,6 +344,7 @@ import aTabs from '../components/menu/atabs.vue'
 import load from '../pages/skeleton/deneme.vue'
 import axios from 'axios'
 import gql from 'graphql-tag'
+// import { Notify } from 'quasar'
 import { Cookies } from "quasar";
 export default {
   name: 'MainLayout',
@@ -385,6 +387,7 @@ export default {
       
        sepet_count:"",
        user:{},
+       layoutkey:0
 // getScrollPosition:""
       // selected: { default: false},
       //  isActive: false
@@ -444,6 +447,8 @@ export default {
     get_user(val){
       // console.log("get_user",val);
         this.user=val
+        // this.$store.dispatch('search_getuser',Cookies.get('uid'))
+        this.layoutkey++
       }
   },
   updated(){
@@ -480,8 +485,9 @@ export default {
   },
   
  async mounted(){
-   
+  //  console.log("mounted");
     await this.$store.dispatch('anafunction')
+    // await this.$store.dispatch('search_getuser')
     //  console.log("uid",this.get_guid);
                             // let guid =Cookies.get('guid');
                             //  console.log(Cookies.get('guid'));
@@ -594,6 +600,7 @@ export default {
       this.$router.push({ path: '/login' })
     },
     async logout(){
+      this.layoutkey++
       this.$router.push({ name: 'Home' });
         await this.$store.dispatch('logout',this.$route.path)
         // console.log("logout");

@@ -81,6 +81,11 @@ require('../../node_modules/dotenv').config();
       {path: 'deneme', name:'deneme', component: () => import('pages/skeleton/deneme.vue')},
       { path: '',name:'Home', component: () => import('pages/Index.vue') },
       { path: 'login', component: () => import('pages/login/login.vue') },
+      { path: 'forgotpassword', component: () => import('pages/login/forgotpassword.vue') },
+      { path: 'changepassword',
+        component: () => import('pages/login/newpassword.vue'),
+        props: route => ({ token: route.query.token })
+      },
 
       { path: ':parentname', name:'stoklist', component: () => import('pages/products.vue'), props:true},
       // { path: ':stoklist/:stokad', name:'sales', component: () => import('pages/sales.vue')},

@@ -19,6 +19,7 @@ var promisesAll = require('promises-all');
 const resolvers = require('./resolvers/index');
 
 const Models =require('./models/index');
+const { assertValidSDL } = require('graphql/validation/validate');
 const pubsub=new(PubSub);
 mongoose.connect(process.env.DB_HOST,{useNewUrlParser:true, useCreateIndex: true, useFindAndModify:false, useUnifiedTopology: true})
   .then(()=>console.log('connected'))
@@ -90,12 +91,14 @@ app.get("/hello", (req, res, next) => {
   let emailTemplate;
   let capitalizedFirstName = "John";
   let userEmail = "John@example.com";
-  
+
   ejs
-  .renderFile(path.join(__dirname, "./helpers/havale.ejs"),
+  .renderFile(path.join(__dirname, "./helpers/forgotpasswordmail.ejs"),
   {
-    username:"Ali Sakin", //capitalizedFirstName,
-    confirm_link: "http://www.8link.in/confirm=", //+ userEmail
+    username:"Ali ****", //capitalizedFirstName,
+    usermail:'asdad@assertValidSDL.com',
+    // confirm_link: "http://www.8link.in/confirm=", //+ userEmail
+    confirm_link: 'http://www.emosetekstil.com.tr/'+ 12333333, //+ userEmail
     sipno:"59243435"
   })
   .then(result => {

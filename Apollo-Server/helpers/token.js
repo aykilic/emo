@@ -5,4 +5,5 @@ const token ={
         return jwt.sign({usermail,role},process.env.JWT_SECRET);
     }
 };
-module.exports = token;
+
+module.exports =token;

@@ -2,6 +2,7 @@ const ObjectID = require("mongodb").ObjectID;
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const tokens = require('../../helpers/token')
+const forgottokens = require('../../helpers/tokenforgot')
 var jwt = require('jsonwebtoken');
 module.exports = {
   user: async (parent, args, context)=>{
@@ -50,67 +51,49 @@ module.exports = {
     // console.log("afd", afd);
    
     
-    // console.log(asd);
+    //  console.log(asd);
     let afd = await stokturu.find()
     // console.log("afd",afd);
     let arr1=[]
+    let deneme=[]
     let obj1
-    afd.forEach(item=>{
-      // arr1.push(item)
-      // console.log(arr1);
-       obj1={
-        parentid: item.parentid,
-        fiyat1: item.fiyat1,
-        stokkodu: item.stokkodu,
-        kdv: item.kdv,
-        isvariant: item.isvariant,
-        _id: item._id,
-        stokturad: item.stokturad,
-        vars: item.vars,
-        createdAt: item.createdAt,
-        __v: item.__v,
-        description: item.description,
-        indirim: item.indirim,
-      }
-      //  console.log(item);  
-      let yorumlar=[]
-      item.yorumlar.forEach(aitem=>{
-        
-        let a 
-        
+    afd.forEach((item,a)=>{
+      // afd[a]=item
+      
+      item.yorumlar.forEach((aitem,b)=>{
+        Object.assign(afd[a].yorumlar[b], {like:0,dislike:0})
         if(asd.length){
-          asd.forEach(sitem=>{
-              if(aitem._id.toString () === sitem._id.toString ()){
-                a = Object.assign(aitem.toObject(), {like:sitem.like,dislike:sitem.dislike})
-                  //  b=Object.assign(obj1,{yorumlar:a})
-                  yorumlar.push(a)
-                  // Object.assign(obj1,{yorumlar:arr2})
-                    //  console.log("obj1",obj1);
-                }else{
-                  // Object.assign(obj1,{yorumlar:[{a:1},{a:2}]})
-                }
-          })
+          asd.forEach((sitem,c)=>{
+            if(aitem._id.toString () === sitem._id.toString ()){
+               Object.assign(afd[a].yorumlar[b], {like:sitem.like,dislike:sitem.dislike})
+              
+            }else{
+              //  Object.assign(afd[a].yorumlar[b], {like:0,dislike:0})
             }
-          
-            
-              //  b=Object.assign(obj1,{yorumlar:aitem})
-               
-               Object.assign(obj1,{yorumlar:yorumlar})
-            
           })
-      // console.log(arr2);
-      arr1.push(obj1)
-      // arr1.push(arr2)
+        }else{ //asd
+
+        }
+
+      })
     })
+     return await afd
     
-        // console.log(arr1);
-    //  console.log(arr1);
-     return await arr1
   },
   StokturuQuery:async (parent, {id}, { Models }) => {
     const stokturu = Models.stokturu
     
     return await stokturu.find({_id:id})
+  },
+  fiyatListQuery:async (parent, {idlist}, { Models }) => {  
+    const stokturu = Models.stokturu
+    let id=[]
+    idlist.map(item=>{  id.push(item.id)}
+
+    )
+    // console.log(id);
+    // return await stokturu.find().where('_id').in(idlist.id).exec();
+    return await stokturu.find({_id:{$in: id}})
   },
   birimList: async (parent, args, {Models})=> {
     // return await User.find({}).sort({'createdAt': 'asc'})
@@ -358,6 +341,25 @@ module.exports = {
             return resolve({_id:"",username:"",lastname:"",usermail:"",res:'Şifre yanlış'})
           }
       })
+    }
+      })
+      )
+    })
+  },
+  forgotUserQuery:async (parent, {usermail, password}, {Models})=> {
+    const model = Models.User
+    // console.log("req",req);
+    //  let ibo= await model.find({usermail:usermail})
+    return new Promise((resolve,object) =>{
+       model.findOne({ 'usermail': usermail})
+      .then((user=>{
+        // console.log(user);
+        if(!user){
+          return resolve({_id:"",username:"",lastname:"",usermail:"",res:false})
+        }else{
+            var token = forgottokens.generate({usermail:usermail})
+            Object.assign(user, {res:true, token:token});
+            return resolve(user)  
     }
       })
       )

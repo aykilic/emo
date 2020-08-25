@@ -28,7 +28,9 @@ const  userSchema = new Schema({
     default: 'user'
   },
   token:{
-    type: String
+    type: String,
+    default:null
+    // required: true
   },
   createdAt: {
     type: Date,
@@ -36,9 +38,10 @@ const  userSchema = new Schema({
   }
 });
 userSchema.pre('save',function(next){
-  if (!this.isModified('password')){
-    return next()
-  }
+  // if (!this.isModified('password')){
+  //   console.log("modify");
+  //   return next()
+  // }
   kodla.hash (this.password,10)
     .then(hash=>{
 

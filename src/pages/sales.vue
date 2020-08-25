@@ -413,9 +413,7 @@ export default {
   },
 
   methods: {
-    forceRerender() {
-      this.componentKey += 1
-    },
+    
     eksi() {
       this.miktar--;
     },
@@ -1171,9 +1169,9 @@ export default {
           }
         }
       } else {
-        // console.log(
-        //   "Ürün Seçimini Tamamlamadınız.. yinede devam etmek istermisiniz"
-        // );
+        console.log(
+          "Ürün Seçimini Tamamlamadınız.. yinede devam etmek istermisiniz"
+        );
         if (sell) {
           this.$q.notify({
             type: "negative",
@@ -1210,6 +1208,8 @@ export default {
                         }
                         })
                         .then(async data => {
+                          await this.$store.dispatch('anafunction')
+                          this.yorum=""
                           //  await this.numaralar_guncelle()
                             // console.log("ok");
                             // await this.delete_basketsellproduct(satirList)

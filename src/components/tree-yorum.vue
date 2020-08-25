@@ -1,5 +1,5 @@
 <template>
-    <div class="row justify-center">
+    <div class="">
        
             <div class="row col-xs-12 col-md-12  "  v-for="(children ,i) in nodes" :key="i" >
                 <div v-if="i > 0" class="row col-12 q-mt-md q-mb-md"><q-separator /></div>
@@ -12,52 +12,32 @@
                       <q-item-label style="margin-top:0;  " class="text-grey-5 text-weight-medium "> {{moment(children.createdAt).fromNow()}} </q-item-label>
                       <q-item-label style="text-align: justify;margin-top:10px;" class="col-12">{{children.yorum}} </q-item-label>
                       <!-- <q-btn round color="primary" icon="mdi-thumb-up" /> -->
+                      
                       <div class="q-mt-md row">
                           <div class="row" v-if="children.votes.length && children.is_vote && get_uid">
                             <!-- <div class="row" v-if="children.votes.length "> -->
                                 
-                                <q-item-label v-if="depth==0" @click="cevapla()" class="q-mr-md cursor-pointer" style="opacity:0.6;">Cevapla</q-item-label>
+                                <q-item-label v-if="depth==0" @click="yorummodel=true,yorumid=children._id" class="q-mr-md cursor-pointer" style="opacity:0.6;">Cevapla</q-item-label>
                                 <q-icon  class="q-mr-md " :class="(children.vote == 1)  ? 'select-like-icons' :'like-icons'" @click="children.vote == -1 ? children.vote = 1 : children.vote == 1 ? children.vote = 0 : children.vote = 1  ,get_uid == undefined || get_uid == '' || get_uid == null ? logindialog() :like( children._id, children.vote, 1)"  style="font-size: 20px;" /><q-item-label>{{children.like}}</q-item-label> 
                                 <q-icon  class="q-mr-md q-ml-md " :class="(children.vote == -1)  ? 'select-dislike-icons' :'dislike-icons'"  @click="children.vote == 1 ? children.vote = -1 : children.vote== -1 ? children.vote = 0 : children.vote = -1 ,get_uid == undefined || get_uid == '' || get_uid == null  ? logindialog() : like( children._id, children.vote, 1)"  style="font-size: 20px;" /><q-item-label>{{children.dislike}}</q-item-label> 
+                                <div class=" q-ml-md cursor-pointer" @click="yorummodel=true,edit=true,yorumobj={userid:children.userid,yorumid:children._id,parentid:children.parentid,yorum:children.yorum},yorum=children.yorum" v-if="children.userid == get_uid || get_user.role == 'superuser' || get_user.role == 'admin'"> Düzenle </div>
+                                <!-- <div class="q-mr-md q-ml-md cursor-pointer" @click="yorumDelete(children.userid, children._id, children.parentid, depth)" v-if="get_user.role == 'superuser' || get_user.role == 'admin'"> Sil </div> -->
                             <!-- </div>  -->
-                          </div>    
+                                
+                          </div>   
+
                           <div class="row" v-else>
-                              <q-item-label v-if="depth==0" @click="cevapla()" class="q-mr-md cursor-pointer" style="opacity:0.6;">Cevapla</q-item-label>
+                              
+                              <q-item-label v-if="depth==0" @click="yorummodel=true" class="q-mr-md cursor-pointer" style="opacity:0.6;">Cevapla</q-item-label>
                                 <q-icon  class="q-mr-md like-icons"  @click="get_uid == undefined || get_uid == '' || get_uid == null  ? logindialog() : like( children._id, 1, 0)"  style="font-size: 20px;" /><q-item-label>{{children.like}}</q-item-label> 
                                 <q-icon  class="q-mr-md q-ml-md dislike-icons"   @click="get_uid == undefined || get_uid == '' || get_uid == null  ? logindialog() : like( children._id, -1, 0)"  style="font-size: 20px;" /><q-item-label>{{children.dislike}}</q-item-label> 
-                            
+                                <div class="q-mr-md q-ml-md cursor-pointer" @click="yorummodel=true,edit=true,yorumobj={userid:children.userid,yorumid:children._id,parentid:children.parentid,yorum:children.yorum},yorum=children.yorum" v-if="get_user.role == 'superuser' || get_user.role == 'admin'"> Düzenle </div>
+                                <!-- <div class="q-mr-md q-ml-md cursor-pointer" @click="yorumDelete(children.userid, children._id, children.parentid, depth)" v-if="get_user.role == 'superuser' || get_user.role == 'admin'"> Sil </div> -->
                           </div>
                       
-                       <!-- <div v-if="children.votes.length ">
-                          <div v-if="kontrol = 1"></div>
-                        <div v-for="(votes ,i) in children.votes" :key="i"  class=" row text-center text-weight-medium" >
-                            
-                            <div class="row" v-if="(votes.userid == get_uid) && (kontrol == 1)">
-                                1
-                          <q-icon   class="q-mr-md " :class="(votes.userid == get_uid) && (votes.vote === 1) ? 'select-like-icons' :'like-icons'" @click="votes.vote == -1 ? votes.vote = 1 : votes.vote== 1 ? votes.vote = 0 : votes.vote = 1 , like( children._id, votes.vote, 1)"  style="font-size: 20px;" /><q-item-label>12</q-item-label> 
-                          <q-icon  class="q-mr-md q-ml-md" :class="(votes.userid == get_uid) && (votes.vote === -1) ? 'select-dislike-icons': 'dislike-icons'" @click="votes.vote == 1 ? votes.vote = -1 : votes.vote== -1 ? votes.vote = 0 : votes.vote = -1 , like( children._id, votes.vote, 1)"  style="font-size: 20px;" /><q-item-label>12</q-item-label> 
-                          <div v-if="kontrol = 0"></div>
-                          </div>
-                          
-                          <div class="row" v-if="(votes.userid != get_uid) && (kontrol == 1) ">
-                              2
-                            <q-icon   class="q-mr-md " :class="'like-icons'" @click="votes.vote == -1 ? votes.vote = 1 : votes.vote== 1 ? votes.vote = 0 : votes.vote = 1 , like( children._id, votes.vote, 0)"  style="font-size: 20px;" /><q-item-label>12</q-item-label> 
-                            <q-icon   class="q-mr-md q-ml-md" :class="'dislike-icons'" @click="votes.vote == -1 ? votes.vote = 1 : votes.vote== 1 ? votes.vote = 0 : votes.vote = 1 , like( children._id, votes.vote, 0)"  style="font-size: 20px;" /><q-item-label>12</q-item-label> 
-                          <div v-if="kontrol = 0"></div>
-                          </div>
                            
-                        </div>
-                      </div>     -->
-                     <!-- <div v-else>
-                          <div v-if="(kontrol == 1)">
-                          <div   class="row text-center text-weight-medium ">
-                          <q-icon  class="q-mr-md " :class="'like-icons'" style="font-size: 20px;" @click=" like( children._id, 1, 0)"/> <q-item-label>12</q-item-label> 
-                          <q-icon  class="q-mr-md q-ml-md dislike-icons"  style="font-size: 20px;" @click=" like( children._id, -1, 0)"/> <q-item-label>12</q-item-label> 
-                          </div>
-                          </div>
-                      </div> -->
-                      <!-- <div v-if="a = false"></div> -->
                       </div>
+                      
                     </div>
                     
                   </div>
@@ -73,6 +53,30 @@
                   </tree-yorum>
             
         </div>
+        <q-dialog
+            v-model="yorummodel"
+
+          >
+            <q-card  style="width: 500px; max-width: 160vw;">
+              <q-card-section class="row justify-center">
+                <div class="text-h6 ">Yorum Girişi</div>
+                <q-space />
+                <q-btn icon="close" flat round dense v-close-popup />
+              </q-card-section>
+            <q-separator/>
+              <q-card-section class="row ">
+                <q-input outlined v-model="yorum" label="Yorum" type="textarea" class="col-12 q-mb-md"/>
+                
+              </q-card-section>
+                <q-separator/>
+              <q-card-section  class="text-right">
+
+                <q-btn v-if="edit" class="text-black"  color="" label="Gönder" @click="yorumEdit()" v-close-popup ></q-btn>
+                <q-btn v-else class="text-black"  color="" label="Gönder" @click="yorumcevapla()" v-close-popup ></q-btn>
+                <!-- <q-btn class="q-mr-md text-black"  color="white" label="Kapat"  v-close-popup ></q-btn> -->
+              </q-card-section>
+            </q-card>
+          </q-dialog>
     </div>
 </template>
 
@@ -94,6 +98,11 @@ import moment from 'moment'
                 likedata:false,
                 dislikedata:false,
                 voteClass:"",
+                yorummodel:false,
+                edit:false,
+                yorum:"",
+                yorumid:"",
+                yorumobj:{}
                 
                 
             }
@@ -108,7 +117,7 @@ import moment from 'moment'
         computed:{
             
             ...mapGetters([
-                
+                "get_user",
                 "get_uid",
                 ]),
     
@@ -124,22 +133,11 @@ import moment from 'moment'
         }
         },
         mounted () {
-            //    console.log("nodes",this.nodes);
+                // console.log("get_user",this.get_user);
         },
         methods: {
             like( yorumid, vote, set) {
-                //  console.log("set");
-                //  return
-                // console.log(set);
-                // return
-                // this.likedata= !this.likedata
-                // if(this.likedata){
-                //     vote ++
-                // }else{
-                //     vote --
-                // }
-                // console.log("likedata",vote);
-                //  return
+                
                 Loading.show()
                     this.$apollo
                         .mutate({
@@ -187,8 +185,76 @@ import moment from 'moment'
                     // console.log('I am triggered on both OK and Cancel')
                 })
             },
-            cevapla(){
-                console.log("cevapla");
+            yorumcevapla(){
+                // console.log("cevapla",id);
+                Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation createYorum($id: ID, $userid:ID, $parentid:ID, $yorum:String) {
+                            createYorum(id: $id, userid: $userid, parentid: $parentid, yorum: $yorum) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          id: this.stokid,
+                          userid: this.get_uid,
+                          parentid:this.yorumid,
+                          yorum:this.yorum
+                        }
+                        })
+                        .then(async data => {
+                            await this.$store.dispatch('anafunction')
+                          this.yorum=""
+                          //  await this.numaralar_guncelle()
+                            // console.log("ok");
+                            // await this.delete_basketsellproduct(satirList)
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
+            },
+            yorumEdit(userid, yorumid, parentid, yorum){
+
+
+                // console.log(this.yorumobj);
+                // return
+                Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation yorumEditMutation($stokid: ID, $yorumid:ID, $yorum:String) {
+                            yorumEditMutation(stokid:$stokid, yorumid: $yorumid, yorum: $yorum) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          stokid:this.stokid,
+                          yorumid: this.yorumobj.yorumid,
+                          yorum:this.yorum
+                        }
+                        })
+                        .then(async data => {
+                            await this.$store.dispatch('anafunction')
+                          this.yorum=""
+                          this.yorumobj={}
+                          //  await this.numaralar_guncelle()
+                            // console.log("ok");
+                            // await this.delete_basketsellproduct(satirList)
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
+            },
+            yorumDelete(userid, yorumid, parentid, depth){
+                console.log(userid, yorumid, parentid, depth);
+
             }
         },
     }

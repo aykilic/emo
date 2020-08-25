@@ -5,6 +5,7 @@ cloudinary.config({
   api_secret: process.env.CAPI_SECRET
 })
 const ObjectID = require("mongodb").ObjectID;
+const { forgotpasswordsendmail }=require('../../helpers/forgotpasswordmail.js')
 module.exports = {
   createStokturu: async (root,{ stokturad, parentid },{Models}) => {
     // const Stokturu = await Stokturu.findOne({ username });
@@ -261,8 +262,19 @@ module.exports = {
     
 
   // },
+  sendForgotPasswordMail:async (root,{ usermail, token },{Models}) => {
+    // console.log(usermail, tok  en );
+    const model = Models.User
+    await forgotpasswordsendmail({ usermail, token })
+    return await model.findOneAndUpdate({ usermail: usermail },
+      // {$push:{ variant: {name:variant} } },{new: true});
+      { $set: { token: token } },{new: true});
+    // {_id:id},
+    // { $push: { variantname: variantname  } },
+    // {new: true});
+  },
   //////////////////////////
-  updateStok: async (root,{ id, variant },{Models}) => {
+  updateStok: async (root,{ id, variant },{ Models }) => {
     // console.log(_id,stokturad);
     const stokturu = Models.stokturu
     return await stokturu.findByIdAndUpdate({_id:id},
@@ -294,6 +306,13 @@ module.exports = {
     // {_id:id},
     // { $push: { variantname: variantname  } },
     // {new: true});
+  },
+  yorumEditMutation: async (root, { stokid, yorumid, yorum}, { Models }) => {
+    const stokturu = Models.stokturu
+      //  console.log(stokid, yorumid, yorum);
+     return await stokturu.findOneAndUpdate({'_id':stokid, 'yorumlar._id':yorumid},
+     { $set: { 'yorumlar.$.yorum': yorum} });
+    // collection.update({_id:"123"}, {author:"Jessica", title:"Mongo facts"});
   },
   votes_mutation: async (root,{ stokid, userid, yorumid, vote, set },{Models}) => {
       // console.log(stokid,yorumid,userid,vote);
@@ -336,5 +355,6 @@ module.exports = {
     }
   },
   
+
   
 };

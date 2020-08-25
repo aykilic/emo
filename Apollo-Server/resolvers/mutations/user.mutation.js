@@ -110,7 +110,7 @@ module.exports = {
   user_detail_edit_mutation: async (parent,{userdetail},  { Models }) => {
     // console.log(Models);
     const model = Models.User_detail
-    console.log(userdetail);
+    // console.log(userdetail);
     return await model.findByIdAndUpdate({_id:userdetail.id},{
       
             baslik:userdetail.baslik,
@@ -126,6 +126,25 @@ module.exports = {
             ilce:userdetail.ilce,
             ilceid:userdetail.ilceid,
     },{new: true});
+  },
+  changePassword: async (parent,{usermail,password},  { Models }) => {
+    
+    const model = Models.User
+    // console.log(userdetail);
+    // return await model.findOneAndUpdate({usermail:usermail},{
+    //    $set: { 'password': password} 
+            
+    // },{new: true});
+    return await model.findOne({usermail:usermail}, function(err, doc) {
+      // console.log("hata1");
+      if (err)  return false;
+      // console.log("hata1");
+      // console.log(doc);
+      doc.password = password;
+      doc.save();
+    });
+
+  },
 //   return new Promise((resolve,object) =>{
 
 //      new model({  
@@ -150,7 +169,7 @@ module.exports = {
 //         else resolve(doc)
 //     })
 // })
-},
+
 deleteuserdetail_mutation: async (root, { id }, { Models }) => {
   // console.log(id);
   const model = Models.User_detail

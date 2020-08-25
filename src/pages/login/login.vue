@@ -25,6 +25,7 @@
             <div class="row justify-center ">
             <q-input class="col-md-10 col-12 q-mb-lg" ref="email" v-model="signin.email" label="Mail Adresi" :rules="[val => !!val || 'Hatalı Mail', isValidEmail]" outlined/>
             <q-input class="col-md-10 col-12 q-mb-lg" :rules="[val => !!val || 'Hatalı Password',val => val.length > 5 || 'Hatalı Password']" ref="password" type="password" v-model="signin.password" @keypress.enter.native="login()" label="Şifre" outlined/>
+            <q-item-label @click="forgotpassword" class="col-md-10 col-12 q-mb-lg cursor-pointer" style="color:blue;text-decoration: underline;"><a > Şifremi Unuttum </a></q-item-label>
             <q-btn class="col-md-4 col-6 q-mb-md"  size="18px" color="positive " label="Giriş Yap" @click="login()" rounded/>
             
             </div>
@@ -131,6 +132,9 @@ import { Cookies } from "quasar"
                 
         },
         methods: {
+          forgotpassword(){
+            this.$router.push({ path: 'forgotpassword' })
+          },
           // entir(){
           //   console.log("object");
           // },
@@ -415,7 +419,7 @@ import { Cookies } from "quasar"
                         }
                         
 
-                    this.$router.go(-1)
+                    this.$router.push({ path: '/' })
             }
         },
     }

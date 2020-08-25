@@ -107,6 +107,7 @@ type Query{
     users: [User!]!
     Query:[kategori]
     StokturuQuery(id:ID):[Stoktur]
+    fiyatListQuery(idlist:[idListInput]):[Stoktur]
     anakategoriQuery(parentid:ID):[Stoktur]
     birimList:[birim]
     imgurlQuery(id:ID!):[Stoktur]
@@ -116,7 +117,7 @@ type Query{
     Search_Userdetail_Query(uid:ID):[User_detail]
     all_Userdetail_Query:[User_detail]
     Search_checkmail(email:String):User
-    
+    forgotUserQuery(usermail:String):User
     
     # altimgurlQuery(id:String!):[Varyantalt]
 }
@@ -140,9 +141,14 @@ type Mutation {
   sendmail(username:String):User
   createYorum(id:ID, userid:ID, parentid:ID, yorum:String):yorumlar
   votes_mutation(stokid:ID, userid:ID, yorumid:ID, vote:Float, set:Float):votes
+  yorumEditMutation(stokid:ID, yorumid:ID, yorum:String):yorumlar
+  sendForgotPasswordMail(usermail:String, token:String):User
+  changePassword(usermail:String,password:String,token:String):User
 }
 
-
+input idListInput{
+  id:ID
+}
 input StokInput{
   name:String
   value:String

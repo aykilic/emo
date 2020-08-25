@@ -694,7 +694,8 @@ let myBody = document.getElementsByTagName('body')[0];
                 console.log(newValue);
                  this.fonk()
             },
-            selected(){
+            selected(val){
+                console.log("val",val);
                 this.hesaplama()
                 
             },
@@ -856,7 +857,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 }    
                 
                 vm.selected.forEach(item=>{
-
+                        
                     let obj={}
                     
                         obj.varyantid=item.varyantid
@@ -1412,17 +1413,57 @@ let myBody = document.getElementsByTagName('body')[0];
                     console.log("3");
                 }
             },
-            fonk(){
+            async fonk(){
 
                 // this.count=1
+                //StokturuQuery
+                //fiyatListQuery
+                
+
+                let idList=[]
                 if (Cookies.get("uid")) {
-                    console.log(this.get_ubasketlist);
+                    console.log(this.get_ubasketlist); //TODO: fiyat stoktan alınacak
                     this.lists=this.get_ubasketlist
                     this.user.uid=Cookies.get("uid")
                 }else{
                     this.lists=this.get_basketlist
                 }
-                // console.log(this.lists);
+                this.lists.forEach(item=>{
+                    let obbj={}
+                     obbj={id:item.stokid}
+                    idList.push(obbj)
+                })
+                 console.log("idList",this.lists);
+                // -*-*-*-*-*-*-*-*
+                await axios.post(
+                'http://'+ process.env.API +':4000/graphql', {
+                 query: `query fiyatListQuery($idlist:[idListInput]){
+                    fiyatListQuery(idlist:$idlist){
+                        _id
+                        fiyat1
+                        indirim
+                        
+                   }  
+                 }`,
+                   variables: {
+                    idlist: idList
+                    }
+            }).then( (response) => { 
+                let farr=[] 
+                // console.log("idler",response.data.data.fiyatListQuery);
+                farr=response.data.data.fiyatListQuery
+                // commit('set_luser', response.data.data.Search_luser);
+                this.lists.forEach((item,i)=>{
+                    farr.forEach((aitem,a)=>{
+                        if(a==i){
+                            this.lists[i].fiyat = (aitem.fiyat1) - (aitem.fiyat1*aitem.indirim/100)
+                        }
+                    })
+                })
+                
+            })
+            console.log("this.lists",this.lists);
+            //    -*-*-*-*-*-*-*-*-*-*-
             },
             // eksi () {
       
