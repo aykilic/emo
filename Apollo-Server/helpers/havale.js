@@ -6,10 +6,10 @@ const nodemailer = require('nodemailer');
 // const template = './havale.ejs';
 // let datam={};
 let transporter = nodemailer.createTransport({
-    // host: "smtp.ethereal.email",
-    // port: 587,
-    // secure: false, // true for 465, false for other ports
-    service: "gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+    // service: "gmail",
     auth: {
       user: process.env.EMAIL, // generated ethereal user
       pass: process.env.EMAIL_PASS, // generated ethereal password
