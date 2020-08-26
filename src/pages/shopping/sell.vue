@@ -1006,8 +1006,6 @@ let myBody = document.getElementsByTagName('body')[0];
                         })
 
 
-
-
                     // return
                     this.havale_div=true
                     this.odemedurumu="Beklemede"
