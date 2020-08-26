@@ -68,7 +68,7 @@ let transporter = nodemailer.createTransport({
 //     })
 // }
 const havalesendmail = async (datam)=>{
-  // console.log("__dirname",__dirname);
+   console.log("__dirname",__dirname);
 await ejs.renderFile(__dirname + "/havale.ejs", { sipno:datam.sipno,username:datam.username,usermail:datam.usermail,confirm_link: "http://www.8link.in" }, function (err, data) {
   if (err) {
       console.log(err);

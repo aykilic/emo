@@ -98,6 +98,8 @@ import {mapGetters } from 'vuex';
                 selectoptions:[],
                 hasvaryantsatirlists:[],
                 array:[],
+                treemselect:[],
+                treem:[],
                 columns: [
                     {name: 'adi', label: 'Ürün Adı', align: 'left', sortable: true,
                       field: row =>row.varyant_option1_name + row.varyant_option2_name
@@ -113,6 +115,11 @@ import {mapGetters } from 'vuex';
         },
             }
         },
+        watch: {
+            anakategorilists(val){
+                this.fonk(val)
+        }
+        },
         computed: {
             ...mapGetters([
                 'anakategorilists',
@@ -120,13 +127,31 @@ import {mapGetters } from 'vuex';
                 // 'getvaryantlist',
                 ]),
         },
+        mounted () {
+            // this.fonk(this.anakategorilists)
+        },
         methods: {
+            
+            async fonk(val){
+                // let vm =this
+                let dem = [];
+                await this.parseTree(val)
+                
+                await this.treemselected(dem)
+                  console.log(this.treemselect);
+                this.$store.dispatch("urunlist",this.treemselect)
+            // console.log(this.treemmenu);
+            
+            
+            // console.log(val);
+            },
+
             edit(){
                 
                 
                   
                let array=[]
-            //    console.log(this.hasvaryantsatirlists);
+                    //    console.log(this.hasvaryantsatirlists);
                  this.hasvaryantsatirlists.forEach(item=>{
                      let obj = {}
                     var sayi=Number
@@ -216,7 +241,53 @@ import {mapGetters } from 'vuex';
                 });
                 },
 
-        },
+        
+        parseTree(selfQ, parentID = null) {
+            // console.log("1");
+            let treem = [];
+
+            selfQ.forEach((value, index) => {
+                if (value.parentid === parentID) {
+                // console.log(value);
+                const children = this.parseTree(selfQ, value._id);
+
+                if (children.length > 0) {
+                    // value.children = children;
+
+                    Vue.set(value, "children", children);
+                }
+
+                treem.push(value);
+                }
+            });
+
+            this.treem = treem;
+
+            return this.treem;
+            },
+            treemselected(dem) {
+            // let treemm=[];
+            if (dem.length < 1) {
+                dem = this.treem;
+            }
+
+            // console.log(dem)
+            dem.forEach((value, index) => {
+                // console.log(value.children)
+                if (value.children.length > 0 ) {
+                // console.log(value.children)
+                this.treemselected(value.children);
+                } else {
+                // Vue.set(value, '', children);
+                this.treemselect.push(value);
+                // console.log(treemm)
+                }
+            });
+
+            return this.treemselect;
+            // return this.treemselect
+            },
+        }
     }
 </script>
 

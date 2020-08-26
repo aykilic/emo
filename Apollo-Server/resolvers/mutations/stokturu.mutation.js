@@ -42,6 +42,12 @@ module.exports = {
      return await stokturu.findByIdAndUpdate({_id:id},{stokkodu:stokkodu, stokturad:stokturad, parentid:parentid, fiyat1:fiyat1, indirim:indirim,kdv:kdv,description:description},{new: true});
     // collection.update({_id:"123"}, {author:"Jessica", title:"Mongo facts"});
   },
+  updateKategori: async (root, { id, stokturad, parentid}, { Models }) => {
+    const stokturu = Models.stokturu
+      // console.log(id,stokturad,parentid,fiyat1,fiyat2);
+     return await stokturu.findByIdAndUpdate({_id:id},{ stokturad:stokturad, parentid:parentid},{new: true});
+    // collection.update({_id:"123"}, {author:"Jessica", title:"Mongo facts"});
+  },
   updatestokimageurl: async (root, { id, imageurl, filename,path,publicid}, { Models }) => {
     const stokturu = Models.stokturu
     // var images = new images({

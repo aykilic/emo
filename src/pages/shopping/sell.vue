@@ -578,6 +578,31 @@
                         </q-card-section>
                         </q-card>
                     </q-dialog>
+                    <q-dialog
+                        v-model="popdialog"
+
+                    >
+                        <q-card  style="width: 500px; max-width: 80vw;">
+                        <q-card-section class="row justify-center">
+                            <div class="text-h6 ">Sipariş Tamamlandı</div>
+                            <q-space />
+                            <q-btn icon="close" flat round dense v-close-popup />
+                        </q-card-section>
+                        <q-separator/>
+                        <q-card-section class="q-gutter-md">
+                            <div class="row text-h4 justify-center " style="text-decoration:underline">"{{sipno}}" </div>
+                            <div class="row text-h5      justify-center" >Nolu siparişiniz oluşturuldu. </div>
+                            
+                            
+                        </q-card-section>
+                            <q-separator/>
+                        <q-card-section  class="text-center">
+
+                            <q-btn class="text-black"  color="" label="Tamam" @click="route()" v-close-popup ></q-btn>
+                            <!-- <q-btn class="q-mr-md text-black"  color="white" label="Kapat"  v-close-popup ></q-btn> -->
+                        </q-card-section>
+                        </q-card>
+                    </q-dialog>
                     
         </div>
         
@@ -603,8 +628,9 @@ let myBody = document.getElementsByTagName('body')[0];
                 user_detail_dialog:false,
                 havale_div:false,
                 // bankad:"",
-                // ------
+                // -----
                 user_validate:Boolean,
+                popdialog:false,
             //     uid,
             // baslik,
             // ad_soyad,
@@ -649,6 +675,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 selected:[],
                 odemedurumu:"",
                 kdvtutar:0,
+                sipno:"",
                 // ------
                 columns: [
                      { name: "resim",   label: "Resim", align: "left"  },
@@ -691,11 +718,11 @@ let myBody = document.getElementsByTagName('body')[0];
                  this.fonk()
             },
             get_ubasketlist(newValue, oldValue) {
-                console.log(newValue);
+                // console.log(newValue);
                  this.fonk()
             },
             selected(val){
-                console.log("val",val);
+                // console.log("val",val);
                 this.hesaplama()
                 
             },
@@ -743,6 +770,9 @@ let myBody = document.getElementsByTagName('body')[0];
         },
         
         methods: {
+            route(){
+                console.log("route");
+            },
             async adresdelete(){
                console.log(this.selectadresid); 
                Loading.show()
@@ -777,8 +807,8 @@ let myBody = document.getElementsByTagName('body')[0];
                         })
             },
             goster(){
-                console.log(this.user);
-                console.log(this.selected);
+                // console.log(this.user);
+                // console.log(this.selected);
             },
             async tamamla(){
                 // console.log("this.get_uid",this.get_uid);
@@ -801,7 +831,7 @@ let myBody = document.getElementsByTagName('body')[0];
                     }
                     })
                     .then(data => {
-                        console.log("data",data);
+                        // console.log("data",data);
                         if(data.data.data.son_numaralar == null){
                             this.numaralar.faturano=1
                             this.numaralar.irsaliyeno=1
@@ -818,6 +848,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 let siparisfis = ""
                 let sipno=Number(date.formatDate(Date.now(), 'X'))+225222222
                 sipno=sipno.toString()
+                this.sipno=sipno
                 if (this.get_uid == null || this.get_uid == undefined || this.get_uid == "") {
                       this.user._id=this.get_guid
                     //   console.log(this.user)
@@ -938,6 +969,7 @@ let myBody = document.getElementsByTagName('body')[0];
                            await this.numaralar_guncelle()
                             // console.log("ok");
                             await this.delete_basketsellproduct(satirList)
+                            // this.popdialog=true
                             Loading.hide()
                         }).catch(err => {
                             console.log(err);
@@ -947,6 +979,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 }else if(val==="Havale"){
                     // console.log(this.user,sipno);
                     
+                    // return
                     Loading.show()
                     this.$apollo
                         .mutate({
@@ -954,6 +987,7 @@ let myBody = document.getElementsByTagName('body')[0];
                             mutation havalesendmail_mutation($sipno: Float,$username:String, $usermail:String) {
                             havalesendmail_mutation(sipno: $sipno, username: $username, usermail: $usermail) {
                                 _id
+                                
                             }
                             }
                         `,
@@ -964,7 +998,7 @@ let myBody = document.getElementsByTagName('body')[0];
                         },
                     })
                         .then(async data => {
-
+                            //Sipariş detayları mailinize yollanmıştır.
                             Loading.hide()
                         }).catch(err => {
                             console.log(err);
@@ -1002,8 +1036,9 @@ let myBody = document.getElementsByTagName('body')[0];
                         .then(async data => {
                            await this.numaralar_guncelle()
                            await this.delete_basketsellproduct(satirList)
-                           this.havalesendmail()
+                        //    this.havalesendmail()
                             // console.log("ok");
+                            this.popdialog=true
                             Loading.hide()
                         }).catch(err => {
                             console.log(err);
@@ -1064,7 +1099,7 @@ let myBody = document.getElementsByTagName('body')[0];
                         .then(async data => {
                            await this.numaralar_guncelle()
                            await this.delete_basketsellproduct(satirList)
-                            // console.log("ok");
+                            this.popdialog=true
                             Loading.hide()
                         }).catch(err => {
                             console.log(err);
@@ -1166,7 +1201,7 @@ let myBody = document.getElementsByTagName('body')[0];
                     
                 });
 
-                console.log(this.user);
+                // console.log(this.user);
             },
            async guser_det_kaydet(){
                await this.$apollo
@@ -1202,7 +1237,7 @@ let myBody = document.getElementsByTagName('body')[0];
                                 }
                                 })
                                 .then(data => {
-                                 console.log("data",data.data.user_detail_mutation._id);
+                                //  console.log("data",data.data.user_detail_mutation._id);
                                  this.user._id=data.data.user_detail_mutation._id
                                 // this.$store.dispatch('search_userdetaillists',Cookies.get('guid'))
                                 // search_userdetaillists
@@ -1328,7 +1363,7 @@ let myBody = document.getElementsByTagName('body')[0];
                             }
                             })
                             .then(data => {
-                              console.log("user detail sonuc");
+                            //   console.log("user detail sonuc");
                               this.$store.dispatch('search_userdetaillists',Cookies.get('uid'))
                               this.user_detail_dialog=false
                               this.$q.notify({
@@ -1405,12 +1440,12 @@ let myBody = document.getElementsByTagName('body')[0];
             payment_radio(val){
                 
                 if(val==="Kredi Kartı Hemen"){
-                    console.log("1");
+                    // console.log("1");
                 }else if(val==="Havale"){
                     this.havale_div=true
-                    console.log("2");
+                    // console.log("2");
                 }else if(val==="Kapıda Nakit"){
-                    console.log("3");
+                    // console.log("3");
                 }
             },
             async fonk(){
@@ -1433,7 +1468,7 @@ let myBody = document.getElementsByTagName('body')[0];
                      obbj={id:item.stokid}
                     idList.push(obbj)
                 })
-                 console.log("idList",this.lists);
+                //  console.log("idList",this.lists);
                 // -*-*-*-*-*-*-*-*
                 await axios.post(
                 'http://'+ process.env.API +':4000/graphql', {
@@ -1462,7 +1497,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 })
                 
             })
-            console.log("this.lists",this.lists);
+            // console.log("this.lists",this.lists);
             //    -*-*-*-*-*-*-*-*-*-*-
             },
             // eksi () {
@@ -1512,7 +1547,7 @@ let myBody = document.getElementsByTagName('body')[0];
 
                tutar=tutar.toFixed(2).replace('.', ',')
                this.tutar=tutar.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-               console.log("selected",this.selected)
+            //    console.log("selected",this.selected)
 
             },
             delete_basketproduct(val){

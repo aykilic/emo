@@ -305,18 +305,8 @@
       <q-item-section class="q-pa-none">
     <div class="row  bg-pink-5 text-white q-pa-none" >
       <q-item-label>
-        Liste <br>
-        Liste <br>
-        Liste <br>
-        Liste <br>
-        Liste <br>
-        Liste <br>
-        Liste <br>
-        Liste <br>
-        Liste <br>
-        Liste <br>
-        Liste <br>
-        Liste <br>
+        <br>
+       
        
       </q-item-label>
     </div>

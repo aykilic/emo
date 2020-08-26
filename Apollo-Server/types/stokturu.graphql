@@ -129,6 +129,7 @@ type Mutation {
   createStokturu(stokturad: String!, parentid: String): Stoktur
   deleteStokturu(id:String!): Stoktur
   updateStokturu(id:String!,stokkodu:String,stokturad: String, parentid: String,fiyat1:Float, indirim:Float, kdv:Float,description:String): Stoktur
+  updateKategori(id:String!,stokturad: String, parentid: String): Stoktur
   updatestokimageurl(id:String!,imageurl: String,filename:String,publicid:String,path:String): Stoktur
   deleteimage(id:ID!,imageid:ID,path:String): Stoktur
   updateStok(id:String!,variant: StokInput): Stoktur

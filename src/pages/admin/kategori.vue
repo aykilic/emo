@@ -494,13 +494,13 @@ import {Loading} from 'quasar'
             
             }
           ]
-        }).then(data => {
+        }).then(async data => {
           console.log('Done');
           this.treedata()
            this.stokturad="";
           //  this.ustkategoriid=""
            this.ustkategoriad=""
-           
+           await this.$store.dispatch('anafunction');
           Loading.hide()
 
         });
@@ -515,8 +515,8 @@ import {Loading} from 'quasar'
         // console.log(this.editedItem.children._id);
         // console.log(this.selected);
           this.$apollo.mutate({
-              mutation: gql`mutation updateStoktur($id: String!, $stokturad: String!, $parentid: String){
-                updateStokturu(id: $id, stokturad: $stokturad, parentid: $parentid)
+              mutation: gql`mutation updateKategori($id: String!, $stokturad: String!, $parentid: String){
+                updateKategori(id: $id, stokturad: $stokturad, parentid: $parentid)
                 {
                 _id
                 }
@@ -672,7 +672,7 @@ import {Loading} from 'quasar'
 
       },
       deneme(a){
-        console.log("a",a);
+        // console.log("a",a);
       },
       dene(){
           // console.log(this.stokturad);

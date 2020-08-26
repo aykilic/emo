@@ -248,7 +248,7 @@
               <div class="q-mt-md q-mb-md row">
                 <div class="col-12 text-center text-h6 text-positive">Eklenecek Varyant Satırları</div>
               </div>
-              <div class="row" v-for="(satirlist,key) in satirlists" :key="key">
+              <div class="row" v-for="(satirlist,key) in satirlists" :key="key" id="seperat">
                 <q-item class="vertical-middle">
                   <q-item-section class="vertical-middle">
                     <q-item-label style="width:25px;" class="vertical-middle">{{key + 1}} -</q-item-label>
@@ -415,6 +415,8 @@
 import Vue from "vue";
 import axios from "axios";
 import gql from "graphql-tag";
+import { scroll } from 'quasar'
+const { getScrollTarget, setScrollPosition } = scroll;
 //   import varyantkategori from '../../components/varyantkategori.vue'
 // import QFirebaseUploaderBase from '../../components/QFirebaseUploaderBase.vue'
 import cloud from "../../components/cloudinary.vue";
@@ -678,6 +680,7 @@ export default {
             // color:'primary'
             position: "top-right"
           });
+          
          await this.selectstokid()
           //  this.group1=""
           //  this.varyantvalinput=""
@@ -796,8 +799,20 @@ export default {
       //  arrayim = _.sortBy(arrayim, "sira");
       this.varyantselected = arrayim;
      await this.listele(this.varyantselected);
-
-      
+      this.$q.notify({
+            type: "positive",
+            message: `Varyantlar Oluşturuldu`,
+            // color:'primary'
+            position: "top-right"
+          });
+      // const ele = document.getElementById('seperat') // You need to get your element here
+      //         const target = getScrollTarget(ele)
+      //           console.log(target);
+      //           const offset = ele.offsetTop - ele.scrollHeight
+      //            console.log("offset",offset);
+      //           const duration = 100
+      //           setScrollPosition(target, offset, duration)
+      window.scrollTo(0, 1000); // (x,y) scroll only number
     },
     //TODO:
     UpdateStok() {

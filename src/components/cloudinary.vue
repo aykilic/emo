@@ -69,7 +69,7 @@ name: "cloud",
                        this.uploadedSize=progressEvent.loaded
                 let updateProgress=(Math.round((progressEvent.loaded / progressEvent.total) * 100) / 100)
               //  this.$emit('uploadProgress', updateProgress)
-              console.log(updateProgress);
+              // console.log(updateProgress);
               if(updateProgress=1){
               
 
@@ -135,7 +135,7 @@ name: "cloud",
                                 },
                       
                     }).then(async data => {
-                      console.log('Done');
+                      // console.log('Done');
                       
                         this.$emit('refreshlist')
 

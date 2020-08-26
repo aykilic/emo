@@ -187,7 +187,9 @@
 
         <q-tab-panels v-model="uruntabs" animated >
           <q-tab-panel name="ozellik">
-            <div class="text-h6">Özellikler</div>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <!-- <div class="text-h6">Özellikler</div> -->
+            <div class="text-justify text-h6 		" v-if="urundetay.length">{{urundetay[0].description}}</div>
+            
           </q-tab-panel>
 
           <q-tab-panel name="yorum">
@@ -198,6 +200,7 @@
                     Yorumlar({{yorumlar.length}})  
               </q-item-label>
               <div><q-separator  /></div>
+              <div class=" text-h6 " v-if="yorumlar.length==0">İlk yorum yapan siz olun...</div>
               <!-- <div class="text-h6 text-center" v-if="get_guid">
                 Lütfen Giriş Yapınız...
               </div> -->
@@ -436,7 +439,7 @@ export default {
        
       // console.log("this.urundetay[0]",this.urundetay[0]);
       // console.log("yorumlar",this.yorumlar);
-      // console.log(this.urundetay[0].vars[0].images);
+      //  console.log(this.urundetay);
 
       //  ---------------------
       if (this.urundetay[0].fiyat1 != "" && this.urundetay[0].fiyat1 != null) {
@@ -1026,6 +1029,11 @@ export default {
                 this.$store.dispatch("search_ubasketlist", uid);
                 if (sell) {
                   this.$router.push({ path: "/shopping" });
+                }else{
+                  this.$q.notify({
+                    type: "positive",
+                    message: `Ürün Sepetinize Eklendi...`
+                  });
                 }
               });
           }
@@ -1087,6 +1095,11 @@ export default {
                 this.$store.dispatch("search_basketlist", guid);
                 if (sell) {
                   this.$router.push({ path: "/shopping" });
+                }else{
+                  this.$q.notify({
+                    type: "positive",
+                    message: `Ürün Sepetinize Eklendi...`
+                  });
                 }
               });
             // const dialog = this.$q.dialog({
@@ -1169,9 +1182,13 @@ export default {
           }
         }
       } else {
-        console.log(
-          "Ürün Seçimini Tamamlamadınız.. yinede devam etmek istermisiniz"
-        );
+        // console.log(
+        //   "Ürün Seçimini Tamamlamadınız.. yinede devam etmek istermisiniz"
+        // );
+        this.$q.notify({
+            type: "negative",
+            message: `Ürün Seçimini Tamamlamadınız...`
+          });
         if (sell) {
           this.$q.notify({
             type: "negative",

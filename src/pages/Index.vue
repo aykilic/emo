@@ -21,8 +21,8 @@
       <div  class="q-pt-md q-pb-xs col-12">
       <VueSlickCarousel v-if="get_slider1list.length > 0" style="cursor:pointer;"  v-bind="settings1">
         
-        <div v-for="(list ,index) in get_slider1list" :key="index"  class=" text-center" >
-          <img   :src="list.path + list.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+        <div v-for="(list1 ,index) in get_slider1list" :key="index"  class=" text-center" >
+          <img   :src="list1.path + list1.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list1.stokturad,list1.stokid)">
           </div>
         
       </VueSlickCarousel>
@@ -30,8 +30,8 @@
       <div class="text-center q-pt-md col-12">
       <VueSlickCarousel v-if="get_slider2list.length > 0" style=" cursor:pointer;" v-bind="settings2">
 
-        <div v-for="(list ,index) in get_slider2list" :key="index" class="slider2 " >
-          <img   :src="list.path + list.publicid+'.jpg'"  class="fit" style="" @click="select(list.stokturad,list.stokid)">
+        <div v-for="(list2 ,index) in get_slider2list" :key="index" class="slider2 " >
+          <img   :src="list2.path + list2.publicid+'.jpg'"  class="fit" style="" @click="select(list2.stokturad,list2.stokid)">
         </div>
       </VueSlickCarousel>
       </div>
@@ -44,40 +44,40 @@
         </div>
       </div> -->
       <div class="row cursor-pointer" v-if="reklam1list.length > 0">
-          <div v-for="(list ,index) in reklam1list" :key="index" class="col-6  q-pt-md " style="">
-            <img   :src="list.path + list.publicid+'.jpg'"  class="fit q-pa-xs" style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+          <div v-for="(list3 ,index) in reklam1list" :key="index" class="col-6  q-pt-md " style="">
+            <img   :src="list3.path + list3.publicid+'.jpg'"  class="fit q-pa-xs" style="object-fit:contain" @click="select(list3.stokturad,list3.stokid)">
           </div>
       </div>
       <div class="row cursor-pointer" v-if="etiket1list.length > 0">
         <div   class="row  " >
-          <div v-for="(list ,index) in etiket1list" :key="index" class="q-pt-md col" style="">
-            <img   :src="list.path + list.publicid+'.jpg'"  class="fit" style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+          <div v-for="(list4 ,index) in etiket1list" :key="index" class="q-pt-md col" style="">
+            <img   :src="list4.path + list4.publicid+'.jpg'"  class="fit" style="object-fit:contain" @click="select(list4.stokturad,list4.stokid)">
           </div>
         </div>
       </div>
       <div class="row  cursor-pointer " v-if="get_reklam2list.length > 0">
-          <div v-for="(list ,index) in get_reklam2list" :key="index" class="col-6  q-pt-md  " style="">
+          <div v-for="(list5 ,index) in get_reklam2list" :key="index" class="col-6  q-pt-md  " style="">
             
             <!-- <img  v-if="index % 2 != 0" :src="list.path + list.publicid+'.jpg'"  class="fit q-pl-md" style="object-fit:contain" @click="select(list.stokturad,list.stokid)"> -->
             
-              <img  :src="list.path + list.publicid+'.jpg'"  class="fit q-pa-xs" style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+              <img  :src="list5.path + list5.publicid+'.jpg'"  class="fit q-pa-xs" style="object-fit:contain" @click="select(list5.stokturad,list5.stokid)">
             
           </div>
           
       </div>
       <div class="row cursor-pointer q-pl-xs q-pr-xs" v-if="get_reklam3list.length > 0">
         <div   class="row q-gutter-xs " >
-          <div v-for="(list ,index) in get_reklam3list" :key="index" class="q-pt-md col " style="">
-            <img   :src="list.path + list.publicid+'.jpg'"  class="fit " style="object-fit:cover" @click="select(list.stokturad,list.stokid)">
+          <div v-for="(list6 ,index) in get_reklam3list" :key="index" class="q-pt-md col " style="">
+            <img   :src="list6.path + list6.publicid+'.jpg'"  class="fit " style="object-fit:cover" @click="select(list6.stokturad,list6.stokid)">
           </div>
         </div>
       </div>
       <!-- -*-*-*-*-*-*-*-*-*-*-*-*-*- -->
       <div class="row q-pt-md">
       <div class="row col-6  cursor-pointer q-pl-xs " v-if="get_reklam4list.length > 0">
-          <div v-for="(list ,index) in get_reklam4list" :key="index" class="row   " style="">
+          <div v-for="(list7 ,index) in get_reklam4list" :key="index" class="row   " style="">
             <div v-if="index==0" class="">
-              <img  :src="list.path + list.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+              <img  :src="list7.path + list7.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list7.stokturad,list7.stokid)">
               </div>
             <!-- <img  v-if="index % 2 != 0" :src="list.path + list.publicid+'.jpg'"  class="fit q-pl-md" style="object-fit:contain" @click="select(list.stokturad,list.stokid)"> -->
             
@@ -87,13 +87,13 @@
           
       </div>
       <div class="col cursor-pointer q-pl-xs q-pr-xs self-center" v-if="get_reklam4list.length > 0">
-          <div v-for="(list ,index) in get_reklam4list" :key="index" class="row col-6   " style="">
+          <div v-for="(list8 ,index) in get_reklam4list" :key="index" class="row col-6   " style="">
             <div v-if="index!==0 " class="">
             <div v-if="index % 2 != 0 " class="">
-              <img  :src="list.path + list.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+              <img  :src="list8.path + list8.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list8.stokturad,list8.stokid)">
             </div>
             <div v-if="index % 2 != 1 "  class="" >
-              <img  :src="list.path + list.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+              <img  :src="list8.path + list8.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list8.stokturad,list8.stokid)">
             </div>
             </div>
             <!-- <img  v-if="index % 2 != 0" :src="list.path + list.publicid+'.jpg'"  class="fit q-pl-md" style="object-fit:contain" @click="select(list.stokturad,list.stokid)"> -->
@@ -104,8 +104,8 @@
       <!-- *-*-*-*-*-*-*-*-*-*-*-*-*- -->
       <div class="row cursor-pointer q-pl-xs q-pr-xs q-mt-md q-mb-xl" v-if="get_stamplist.length > 0">
         <div   class="row q-gutter-xs " >
-          <div v-for="(list ,index) in get_stamplist" :key="index" class="q-pt-md col " style="">
-            <img   :src="list.path + list.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list.stokturad,list.stokid)">
+          <div v-for="(list9 ,index) in get_stamplist" :key="index" class="q-pt-md col " style="">
+            <img   :src="list9.path + list9.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list9.stokturad,list9.stokid)">
           </div>
         </div>
       </div>
