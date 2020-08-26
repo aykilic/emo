@@ -75,6 +75,7 @@ await ejs.renderFile(__dirname + "/havale.ejs", { sipno:datam.sipno,username:dat
       console.log(err);
   } else {
       var mainOptions = {
+        
           from: 'info@emosetekstil.com.tr',
           to: datam.usermail,
           subject: 'Sipariş',
