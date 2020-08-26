@@ -75,7 +75,7 @@ await ejs.renderFile(__dirname + "/havale.ejs", { sipno:datam.sipno,username:dat
       console.log(err);
   } else {
       var mainOptions = {
-          from: '<aykilicpanel@gmail.com>',
+          from: 'Emose Tekstil',
           to: datam.usermail,
           subject: 'Sipariş',
           html:  data
