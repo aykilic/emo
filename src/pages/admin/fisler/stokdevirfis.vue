@@ -134,11 +134,12 @@ import {mapGetters } from 'vuex';
             
             async fonk(val){
                 // let vm =this
+                this.treemselect=[]
                 let dem = [];
                 await this.parseTree(val)
                 
                 await this.treemselected(dem)
-                  console.log(this.treemselect);
+                //   console.log(this.treemselect);
                 this.$store.dispatch("urunlist",this.treemselect)
             // console.log(this.treemmenu);
             

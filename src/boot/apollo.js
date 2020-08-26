@@ -30,6 +30,7 @@ const wsLink = new WebSocketLink({
     reconnect: true,
   },
 })
+
 // const authMiddleware =   split((operation, forward) => {
 //   // add the authorization to the headers
 //   const token = Cookies.get('token')
@@ -88,15 +89,22 @@ export const apolloProvider = new VueApollo({
       graphQLErrors.map(({ message, locations, path }) =>
         console.log(
           `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+          //  `[GraphQL error]: Message: Ql Failed!`
+          
         )
       )
     }
     if (networkError) {
       console.log(`[Network error]: ${networkError}`)
+      //  console.log(`[Network error]: "Network Failed"`)
+      
     }
   }
+  // errorHandler (error) {
+  //   console.log('Global error handler')
+  //   console.error(error)
+  // },
 });
-
 export default ({ app, Vue }) => {
   Vue.use(VueApollo);
   app.apolloProvider = apolloProvider

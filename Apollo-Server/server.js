@@ -23,7 +23,9 @@ const { assertValidSDL } = require('graphql/validation/validate');
 const pubsub=new(PubSub);
 mongoose.connect(process.env.DB_HOST,{useNewUrlParser:true, useCreateIndex: true, useFindAndModify:false, useUnifiedTopology: true})
   .then(()=>console.log('connected'))
-  .catch(e => console.log(e));
+  .catch(e =>
+     console.log("Server Connection Failed!")
+     );
   
   //  new Date().toLocaleString('tr', {
   //   timeZone: 'Europe/Istanbul'
