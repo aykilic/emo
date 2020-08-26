@@ -83,9 +83,10 @@ await ejs.renderFile(__dirname + "/havale.ejs", { sipno:datam.sipno,username:dat
 
       transporter.sendMail(mainOptions, function (err, info) {
         if (err) {
-          res.json({
-            msg: 'fail'
-          })
+          // res.json({
+          //   msg: 'fail'
+          // })
+          console.log(error);
         } else {
           res.json({
             msg: 'success'
