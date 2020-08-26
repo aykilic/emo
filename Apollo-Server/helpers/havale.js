@@ -86,7 +86,7 @@ await ejs.renderFile(__dirname + "/havale.ejs", { sipno:datam.sipno,username:dat
           // res.json({
           //   msg: 'fail'
           // })
-          console.log(error);
+          console.log(err);
         } else {
           res.json({
             msg: 'success'
