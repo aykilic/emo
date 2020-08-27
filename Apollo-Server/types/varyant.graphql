@@ -95,6 +95,8 @@ type Query{
      varyantQuery:[varyantkategori]
      altvaryantQuery(varyant_id: ID!):[altvaryant]
      allvaryantQuery:[varyant]
+     varyantSkusQuery:[varyant_skus]
+    #  varyantQuery:[varyant]
      hasvaryantsatirQuery(id:ID):[varyant_skus] 
      childvaryantQuery:[varyant]
     

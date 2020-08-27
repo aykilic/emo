@@ -8,12 +8,15 @@ export default {
       anakategorizelist:[],
       activestoklistid:"",
       varyantlist:[],
-      urunlist:[]
+      urunlist:[],
+      varyantSkuslist:[]
     },
     actions: {
      async anafunction({dispatch,commit}) {
        dispatch("varyantlist")
        dispatch("anakategori")
+       dispatch("varyantSkus")
+
       },
 
       async anakategori({commit}) {
@@ -73,9 +76,29 @@ export default {
          })
        
         },
+
       stoklistid({commit}, type){
         commit('set_activestoklistid', type);
       //  console.log(type);
+      },
+      async varyantSkus({commit}){
+        await axios
+        .post('http://'+ process.env.API +':4000/graphql',{
+          query: `query varyantSkusQuery{
+                 varyantSkusQuery{
+                    _id
+                    
+                    miktar
+                      
+                    }
+                 }`,
+
+          variables: {}
+        })
+        .then(data => {
+            // console.log("varyantSkusQuery",data.data.data.varyantSkusQuery);
+           commit('set_varyantSkus',data.data.data.varyantSkusQuery);
+        });
       },
       async varyantlist({commit}){
         await axios.post(
@@ -106,6 +129,7 @@ export default {
             commit('set_varyantlist',data.data.data.childvaryantQuery);
           })
       },
+      
       urunlist({commit},type){
         // console.log("type",type);
         commit('set_urunlist', type);
@@ -173,7 +197,11 @@ export default {
       set_varyantlist(state, type){
         state.varyantlist = type
         //  console.log(state.activestoklistid);
-      }
+      },
+      set_varyantSkus(state, type){
+        state.varyantSkuslist = type
+        //  console.log(state.activestoklistid);
+      },
     },
     getters:{ 
   
@@ -191,6 +219,9 @@ export default {
       },
       geturunlists:(state,getters)=>{
         return state.urunlist
+      },
+      getvaryantskuslists:(state,getters)=>{
+        return state.varyantSkuslist
       },
       
   

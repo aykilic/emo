@@ -110,6 +110,12 @@ module.exports = {
     
     return await varyant.find()
   },
+  varyantSkusQuery: async (parent, args, { Models }) => {
+    const model = Models.varyant_skus
+    //  console.log(id,parentid);
+    
+    return await model.find()
+  },
   altvaryantQuery: async (parent, {varyant_id}, { Models }) => {
     // console.log(varyant_id);
     const varyant = Models.varyantValue
@@ -306,6 +312,14 @@ module.exports = {
   //  return await stokturu.find({_id:id})
     return await model.find({stokid:ObjectID(id)})
   },
+  // varyantQuery: async (parent, {id}, {Models})=> {
+  //   const model = Models.varyant_skus
+  //   // console.log({id});
+    
+  // //  return await stokturu.find({_id:id})
+  //   return await model.find()
+  // },
+  
   search_basketlist:async(parent, {guid}, {Models})=> {
     const model = Models.sepet
     //  console.log({guid});

@@ -194,80 +194,10 @@ module.exports = {
       }
 
     });
-    // const veri = await stokturu.findOne({ _id: ObjectID("5e28b4a2a1d9692b29a65b24") },
-    //   {
-    //     "vars": {
-    //       "$elemMatch": {
-    //         "$images": {
-    //           "$elemMatch": {
-    //             // 
-    //             "filename": "hirai-450x450.jpg"
-    //           }
-    //         }
-    //       }
-    //          }
-    //    })
 
-    // const veri = await stokturu.aggregate([
-    //   { $match: {_id:ObjectID("5e28b4a2a1d9692b29a65b24")} }  ,
-      
-    //   { $unwind: "$vars" },
-      
-    //   { $match: { "vars.images.filename": "5320_7d93.jpeg" } },
-      
-    // ])
-    
-  //   console.log("id="+id,"imageid="+imageid);
-    
-  //   await stokturu.findOneAndUpdate({ 
-  //     _id: id,
-  //     // make sure sub document have a unique field let take _id
-       
-  // }, 
-  // { 
-  //   $pull: {vars: {"images._id":imageid}},
-  // },
-  // {
-  //     upsert:false,
-  //     new:true
-  // }, function(err, product){
-  //    console.log(product);
-     
-  // })
-       
-    // console.log(veri);
 
   },
-  // deletealtvaryantimage: async (root, { id, imageid, path }, { Models }) => {
-  //    console.log("path:",path,"imageid:",imageid,"id:",id);
-  //   const varyantalt = Models.varyantalt
-  //  await cloudinary.uploader.destroy(path, (error,result) =>{
-  //      console.log(result, error)
-  //     if (result.result === 'ok') {
-        
-  //         // console.log("id="+id,"imageid="+imageid);
-    
-  //         varyantalt.findOneAndUpdate({ 
-  //     _id: id,
-  //     // make sure sub document have a unique field let take _id
-       
-  // }, 
-  // { 
-  //   $pull: {vars: {"images._id":imageid}},
-  // },
-  // {
-  //     upsert:false,
-  //     new:true
-  // }, function(err, product){
-  //   //  console.log(product);
-     
-  // })
-  //     }
-
-  //   });
-    
-
-  // },
+  
   sendForgotPasswordMail:async (root,{ usermail, token },{Models}) => {
     // console.log(usermail, tok  en );
     const model = Models.User

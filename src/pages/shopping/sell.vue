@@ -28,6 +28,7 @@
                         <div class="col-xs-12 col-md-8" style="border-style:solid;border-color:#cdcdcd;border-width: 1px;border-radius:5px;">
                             
                             <q-table
+                            
                             flat
                             :data="lists"
                             :columns="columns"
@@ -37,20 +38,37 @@
                             :pagination.sync="pagination"
                             hide-bottom
                             :dense="$q.screen.lt.md"
+                            
                             >
                             <template v-slot:body="props" >
                                 <!-- <q-tr :props="props"  class="cursor-pointer" @click.native="props.selected = !props.selected" @click="secim(props)"> -->
                                 <!-- <q-tr :props="props"  class="cursor-pointer"  > -->
-                                <q-tr :props="props"  class="cursor-pointer"  >
+                                <q-tr :props="props"  class="cursor-pointer "  >
                                     <q-td >
-                                        <q-checkbox color="grey-8"  dense v-model="props.selected"/>
+                                        <div v-if="load"></div>
+                                        <q-checkbox v-else-if=" props.row.miktar==0" color="grey-8"  dense v-model="props.selected" disable/>
+                                        <q-checkbox v-else color="grey-8"  dense v-model="props.selected"/>
                                     </q-td>
-                                    <q-td  style=""  key="resim" :props="props"  > 
-                                        <div class="scale-down "  ><q-img style="border-radius:10px;"  :src="props.row.path + props.row.publicid " /></div>
-                                    
+                                    <q-td class="" style=""  key="resim" :props="props"  > 
+
+                                        <div v-if="load"></div>
+                                        
+                                        <div class=" text-red  text-weight-bold text-center  " style="width:90px;white-space: normal;" v-else-if=" props.row.miktar==0">
+                                        <!-- <div class="text-red  " style="width:100px;height:100px;word-wrap: break-word;" >-->
+                                            Geçici Olarak Temin edilememektedir
+                                            
+                                        </div> 
+                                        <!-- <p class="text-center" style="width:100px;white-space: normal;">
+                                            Geçici Olarak Temin edilememektedir
+                                        </p> -->
+                                        <div v-else class="fit" style="" ><q-img class=" " style="border-radius:10px;"  :src="props.row.path + props.row.publicid " /></div>
+                                    <!-- class="scale-down fit" -->
                                     </q-td>
                                     <q-td class="text-weight-bold" key="stokad" :props="props"  > 
+                                        
+                                        <!-- <div v-else> -->
                                         {{props.row.stokad}} <br> {{props.row.varyantoption1}} <br> {{props.row.varyantoption2}}
+                                        <!-- </div> -->
                                     </q-td>
                                     <q-td class=""  key="miktar"  :props="props" v-if="props.selected==false ? props.row.count=1:props.row.count" > 
                                         <!-- TODO: -->
@@ -79,7 +97,7 @@
                                             </span>
                                             <q-btn
                                             v-model="props.row.count"
-                                            @click="hesaplama(props.row.count++)"
+                                            @click="hesaplama(props.row.miktar > props.row.count ? props.row.count++ : props.row.count)"
                                             color="white"
                                             size="xs"
                                             push
@@ -94,14 +112,18 @@
                 
                                     </q-td>
                                     <q-td  key="delete" :props="props"  > 
-                                        <q-btn size="md"  icon="delete" color="grey-7" @click="delete_basketproduct(props.row._id)" flat round></q-btn>
+                                        <!-- <div v-if="load"></div>
+                                        <q-btn v-else-if=" props.row.miktar==0"  size="md"  icon="delete" color="grey-7" @click="delete_basketproduct(props.row._id)" flat round disable></q-btn> -->
+                                        <q-btn   size="md"  icon="delete" color="grey-7" @click="delete_basketproduct(props.row._id),load=true" flat round></q-btn>
 
                                     
                                     </q-td>
                                     <!-- <q-td key="fiyat" :props="props"  >
                                     
                                     </q-td> -->
+                                    <!-- <q-item-label class="row col-12" v-if="props.row.miktar==0">sdsdfsdf</q-item-label> -->
                                 </q-tr>
+                                
                             </template>
                                 
                             </q-table>
@@ -413,8 +435,9 @@
                     </q-step>
 
                 </q-stepper>
-                    <!-- <q-item class=" col-12 justify-center"><q-item-label>{{ JSON.stringify(selected) }}</q-item-label> 
-                        </q-item> -->
+                    <!-- FIXME: -->
+                    <!-- <q-item class="row col-12 justify-center"><q-item-label>{{ JSON.stringify(selected) }}</q-item-label></q-item>  -->
+                    <!-- FIXME: -->
                     <q-dialog
                         v-model="user_detail_dialog"
                         
@@ -676,6 +699,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 odemedurumu:"",
                 kdvtutar:0,
                 sipno:"",
+                load:true,
                 // ------
                 columns: [
                      { name: "resim",   label: "Resim", align: "left"  },
@@ -746,6 +770,7 @@ let myBody = document.getElementsByTagName('body')[0];
         computed: {
             ...mapGetters([
                 'anakategorilists',
+                'getvaryantskuslists',
                 'get_guid',
                 'get_uid',
                 'get_basketlist',
@@ -755,10 +780,17 @@ let myBody = document.getElementsByTagName('body')[0];
       
             ]),
         },
-        mounted () {
+        async created () {
+            
+        },
+        async mounted () {
              this.lists=[]
             //  this.props.row=""
             // this.selected=[ ]
+            Loading.show()
+            await this.$store.dispatch('varyantSkus');
+            // console.log("ibo");
+            
             this.fonk()
            
            this.get_userdetaillists.forEach(item=>{ //adres selected hatası için
@@ -766,7 +798,7 @@ let myBody = document.getElementsByTagName('body')[0];
            })
             
                 this.ilList=ildata
-
+        Loading.hide()
         },
         
         methods: {
@@ -1446,26 +1478,26 @@ let myBody = document.getElementsByTagName('body')[0];
                 }
             },
             async fonk(){
-
+                let vm =this
                 // this.count=1
                 //StokturuQuery
                 //fiyatListQuery
-                
+                //FIXME:
 
                 let idList=[]
                 if (Cookies.get("uid")) {
-                    console.log(this.get_ubasketlist); //TODO: fiyat stoktan alınacak
+                    // console.log(this.get_ubasketlist); //TODO: fiyat stoktan alınacak
                     this.lists=this.get_ubasketlist
                     this.user.uid=Cookies.get("uid")
                 }else{
                     this.lists=this.get_basketlist
                 }
-                this.lists.forEach(item=>{
+                this.lists.forEach((item,i)=>{
                     let obbj={}
                      obbj={id:item.stokid}
                     idList.push(obbj)
                 })
-                //  console.log("idList",this.lists);
+                //   console.log("this.lists",this.lists);
                 // -*-*-*-*-*-*-*-*
                 await axios.post(
                 'http://'+ process.env.API +':4000/graphql', {
@@ -1474,6 +1506,7 @@ let myBody = document.getElementsByTagName('body')[0];
                         _id
                         fiyat1
                         indirim
+                        
                         
                    }  
                  }`,
@@ -1484,7 +1517,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 let farr=[] 
                 // console.log("idler",response.data.data.fiyatListQuery);
                 farr=response.data.data.fiyatListQuery
-                // commit('set_luser', response.data.data.Search_luser);
+                // console.log("farr",farr);
                 this.lists.forEach((item,i)=>{
                     farr.forEach((aitem,a)=>{
                         if(a==i){
@@ -1494,6 +1527,22 @@ let myBody = document.getElementsByTagName('body')[0];
                 })
                 
             })
+            
+            // console.log("this.getvaryantskuslists",this.getvaryantskuslists);
+            // stok kontrol data
+            this.lists.forEach((item,z)=>{
+                this.getvaryantskuslists.forEach((aitem,a)=>{ //varyantskus
+                    if(item.varyantid==aitem._id){
+                        this.lists[z].miktar=aitem.miktar
+                        this.load=false
+                        // this.asn++
+                    }
+                })
+            })
+            
+            // console.log("this.lists",this.lists);
+            
+            // miktar kontrol data
             // console.log("this.lists",this.lists);
             //    -*-*-*-*-*-*-*-*-*-*-
             },
@@ -1733,6 +1782,18 @@ tr td .scale-down img {
   border-width: 15px;
   border-left-color: #3c8dbc;
   border-top-color: #3c8dbc;
+}
+.q-table {
+    table-layout: fixed;
+    /* display: inline-block;
+    overflow-wrap: break-word;
+    word-wrap: break-word !important; */
+    /* line-break: auto; */
+    /* line-break: loose; */
+    /* line-break: normal; */
+    /* line-break: strict; */
+    /* line-break: anywhere; */
+    /* width:80px; */
 }
 /* #ff4081 */
 </style>

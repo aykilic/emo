@@ -188,7 +188,10 @@
         <q-tab-panels v-model="uruntabs" animated >
           <q-tab-panel name="ozellik">
             <!-- <div class="text-h6">Özellikler</div> -->
-            <div class="text-justify text-h6 		" v-if="urundetay.length">{{urundetay[0].description}}</div>
+            <div v-html="urundetay[0].description " class="text-justify text-h6 		" v-if="urundetay.length">
+              
+              
+              </div>
             
           </q-tab-panel>
 
@@ -234,6 +237,7 @@
       </div>
     </q-card>
   </q-page>
+  
 </template>
 
 <script>
@@ -249,6 +253,7 @@ import ProductZoomer from "../components/productzoom";
 import cloudinaryVue from "../components/cloudinary.vue";
 import load from "../pages/skeleton/deneme.vue";
 import { Cookies } from "quasar";
+
 import moment from 'moment'
   moment.locale('tr');
 

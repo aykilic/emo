@@ -33,7 +33,7 @@
         <q-tabs
           v-model="tab"
           dense
-          class="text-grey"
+          class="row text-grey"
           active-color="primary"
           indicator-color="primary"
           align="justify"
@@ -105,15 +105,23 @@
                 </div>
               </div>
               <div class="col-6 row q-gutter-y-md">
-                <div class="col-12 q-gutter-y-md">
-                  <q-input
+                <div class="col-12 q-gutter-y-md" >
+                  <!-- <q-input
                     outlined
                     type="textarea"
                     label="Açıklama"
                     class="col-6 hint"
                     hint="Açıklama Giriniz...!"
                     v-model="stok.description"
-                  />
+                  /> -->
+                  <!-- <editor v-model="stok.description" api-key="8tk4v9t6vgizhwtbwrx50ti9jbb9jw89xtizp3ofcg6dg4px"  :init="{
+                    height: 424,
+                    language : 'tr',
+                    plugins: '     autolink lists  bullet media    ',
+                    
+                  }" ></editor> -->
+
+                    <ckeditor  :config="editorConfig" v-model="stok.description"></ckeditor>
                 </div>
               </div>
             </div>
@@ -426,8 +434,14 @@ import altcloud from "../../components/altcloudinary.vue";
 import _ from "lodash";
 import * as is from "../../../node_modules/is_js";
 import { Loading } from "quasar";
+import  '../../statics/ckeditor4-vue';
+
+// import editor from '@tinymce/tinymce-vue'
+
+// import ClassicEditor from 'ckeditor4-vue'
 
 //   import * as is from 'is_js'
+
 export default {
   //  mixin:{
   //    methods:{
@@ -436,12 +450,13 @@ export default {
   //       }
   //  }
   //  },
-
+  
   props: ["value,label"],
   name: "stokekle",
   components: {
     cloud,
-    altcloud
+    altcloud,
+    'ckeditor':CKEditor.component
   },
 
   //     apollo: {
@@ -462,6 +477,7 @@ export default {
 
   data() {
     return {
+      
       loading: 0,
       etiketkey: 0,
 
@@ -508,6 +524,7 @@ export default {
       hasvaryantsatirlists: [],
       //TODO:VARYANT DATA
       options: [],
+      
       paginationaa: {
           // sortBy: 'ust',
           // descending: false,
@@ -551,6 +568,8 @@ export default {
         mask: "{8}000000",
         lazy: false
       },
+        // editor: ClassicEditor,
+     
       onAccept(e) {
         const maskRef = e.detail;
         console.log("accept", maskRef.stok.fiyat1);
@@ -558,6 +577,33 @@ export default {
       onComplete(e) {
         const maskRef = e.detail;
         console.log("complete", maskRef.unmaskedValue);
+      },
+      editorConfig: {
+                    // allowedContent: true,
+                    // uiColor: "#AADC6E",
+                    // editorUrl:'sdsfsdf',
+                    toolbar : 
+                        [
+                        // { name: 'document', items : [ 'Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates' ] },
+                        { name: 'document', items : [ 'Source','-','Save','NewPage','DocProps','Preview','-','Templates' ] },
+                        { name: 'links', items : [ 'Link','Unlink','Anchor' ] },
+                        { name: 'insert', items : [ 'Image','Table','HorizontalRule','Smiley','SpecialChar' ] },
+                        // { name: 'clipboard', items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
+                        { name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ] },
+                        // { name: 'forms', items : [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton','HiddenField' ] },
+                        '/',
+                        { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','-','RemoveFormat' ] },
+                        { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv',
+                            '-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-' ] },
+                        // { name: 'links', items : [ 'Link','Unlink','Anchor' ] },
+                        // { name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe' ] },
+                        
+                        '/',
+                        { name: 'styles', items : [ 'Styles','Format','Font','FontSize' ] },
+                         { name: 'colors', items : [ 'TextColor','BGColor' ] },
+                        { name: 'tools', items : [ 'Maximize', 'ShowBlocks','-' ] },
+                        { name: 'about' }
+                ]
       }
     };
   },
@@ -584,9 +630,8 @@ export default {
   },
 
   async mounted() {
-    // this.denemem = await this.$apollo.query({query: variantselectQuery})
-    // console.log(this.varyantlist.length);
-    // Loading.show()
+    console.log("mount");
+    
 
     const res = await axios.post('http://'+ process.env.API +':4000/graphql', {
       query: `{
@@ -626,6 +671,7 @@ export default {
     });
   },
   methods: {
+    
     ufhesap(){
      this.stok.hesaplama=Number(this.stok.fiyat1) - (Number(this.stok.fiyat1) * (Number(this.stok.indirim)/100))
      this.stok.hesaplama=this.formatPrice(this.stok.hesaplama)
@@ -946,12 +992,12 @@ export default {
       this.satirlists = [];
       this.satirlist = [];
       this.hasvaryantsatirlists = [];
-
+      Loading.show()
       await this.hasvaryantsatirliste();
       await this.varyantlists();
 
       await this.resimlistrefresh();
-      Loading.show()
+      
       await axios
         .post('http://'+ process.env.API +':4000/graphql',{
           query: `query StokturuQuery($id: ID! ){
