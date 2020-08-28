@@ -153,12 +153,16 @@ module.exports = {
     
   //   return await varyant.find({stokid:ObjectID(stokid)})
   // },
-  childvaryantQuery: async (parent, { stokid }, { Models }) => {
-    const varyant = Models.varyant
-    //  console.log(id,parentid);
-    
-    return await varyant.find({stokid:ObjectID(stokid)})  
-  },
+  // childvaryantQuery: async (parent, { stokid }, { Models }) => {
+  //   const varyant = Models.varyant
+     
+  //    return await varyant.find({stokid:ObjectID(stokid)})  
+  // },
+  // childvaryantQuery: async (parent, args, { Models }) => {
+  //   const varyant = Models.varyant
+     
+  //    return await varyant.find()  
+  // },
   // childvaryantQuery: async (parent, args, { Models }) => {
   //   const varyant = Models.varyant
   //   //  console.log(id,parentid);

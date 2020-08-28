@@ -7,13 +7,13 @@ export default {
       anakategorilist:[],
       anakategorizelist:[],
       activestoklistid:"",
-      varyantlist:[],
+      // varyantlist:[],
       urunlist:[],
       varyantSkuslist:[]
     },
     actions: {
      async anafunction({dispatch,commit}) {
-       dispatch("varyantlist")
+      //  dispatch("varyantlist")
        dispatch("anakategori")
        dispatch("varyantSkus")
 
@@ -100,35 +100,35 @@ export default {
            commit('set_varyantSkus',data.data.data.varyantSkusQuery);
         });
       },
-      async varyantlist({commit}){
-        await axios.post(
-          'http://'+ process.env.API +':4000/graphql', {
-              query:`query childvaryantQuery{
-                  childvaryantQuery{
-                  _id
-                  stokid
-                  parentid
-                  varyantname
-                  color
-                  kdv
-                  indirim
-                  description
-                  vars{
-                      images{
-                              publicid
-                              path
-                              filename
-                              imageurl
-                              id
-                      }
-                  }
-                  }
-                  }`,
+      // async varyantlist({commit}){
+      //   await axios.post(
+      //     'http://'+ process.env.API +':4000/graphql', {
+      //         query:`query childvaryantQuery{
+      //             childvaryantQuery{
+      //             _id
+      //             stokid
+      //             parentid
+      //             varyantname
+      //             color
+      //             kdv
+      //             indirim
+      //             description
+      //             vars{
+      //                 images{
+      //                         publicid
+      //                         path
+      //                         filename
+      //                         imageurl
+      //                         id
+      //                 }
+      //             }
+      //             }
+      //             }`,
               
-          }).then((data)=>{
-            commit('set_varyantlist',data.data.data.childvaryantQuery);
-          })
-      },
+      //     }).then((data)=>{
+      //       commit('set_varyantlist',data.data.data.childvaryantQuery);
+      //     })
+      // },
       
       urunlist({commit},type){
         // console.log("type",type);
@@ -194,10 +194,10 @@ export default {
         state.activestoklistid = type
         //  console.log(state.activestoklistid);
       },
-      set_varyantlist(state, type){
-        state.varyantlist = type
-        //  console.log(state.activestoklistid);
-      },
+      // set_varyantlist(state, type){
+      //   state.varyantlist = type
+      //   //  console.log(state.activestoklistid);
+      // },
       set_varyantSkus(state, type){
         state.varyantSkuslist = type
         //  console.log(state.activestoklistid);
@@ -214,9 +214,9 @@ export default {
       activestoklistids:(state,getters)=>{
         return state.activestoklistid
       },
-      getvaryantlist:(state,getters)=>{
-        return state.varyantlist
-      },
+      // getvaryantlist:(state,getters)=>{
+      //   return state.varyantlist
+      // },
       geturunlists:(state,getters)=>{
         return state.urunlist
       },

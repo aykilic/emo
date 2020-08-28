@@ -388,7 +388,7 @@ export default {
       "anakategorilists",
       "anakategorizelists",
       "activestoklistids",
-      "getvaryantlist",
+      // "getvaryantlist",
       "get_basketlist",
       "get_ubasketlist",
       "get_guid",

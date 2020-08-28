@@ -53,15 +53,16 @@
 
                                         <div v-if="load"></div>
                                         
-                                        <div class=" text-red  text-weight-bold text-center  " style="width:90px;white-space: normal;" v-else-if=" props.row.miktar==0">
-                                        <!-- <div class="text-red  " style="width:100px;height:100px;word-wrap: break-word;" >-->
-                                            Geçici Olarak Temin edilememektedir
-                                            
-                                        </div> 
+                                        
                                         <!-- <p class="text-center" style="width:100px;white-space: normal;">
                                             Geçici Olarak Temin edilememektedir
                                         </p> -->
-                                        <div v-else class="fit" style="" ><q-img class=" " style="border-radius:10px;"  :src="props.row.path + props.row.publicid " /></div>
+                                        <div v-else-if="props.row.miktar!=0" class="scale-down " style="margin-left: auto;margin-right: auto;" ><q-img class=" " style="border-radius:10px;"  :src="props.row.path + props.row.publicid " /></div>
+                                        <div class=" text-red  text-weight-bold scale-down " style="margin-left: auto;margin-right: auto;white-space: normal;" v-else-if=" props.row.miktar==0">
+                                        <!-- <div class="text-red  " style="width:100px;height:100px;word-wrap: break-word;" >-->
+                                           <span class="">Geçici Olarak Temin edilememektedir</span>
+                                            
+                                        </div> 
                                     <!-- class="scale-down fit" -->
                                     </q-td>
                                     <q-td class="text-weight-bold" key="stokad" :props="props"  > 
@@ -702,7 +703,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 load:true,
                 // ------
                 columns: [
-                     { name: "resim",   label: "Resim", align: "left"  },
+                     { name: "resim",   label: "Resim", align: "center"  },
                     {
                         name: 'stokad',
                         required: true,
@@ -1718,6 +1719,8 @@ tr td {
     height: 200px;
 }
 .scale-down{
+    display: flex;
+    align-items: center;
     width: 100px;
     min-height: 100px;
 }
@@ -1730,6 +1733,13 @@ tr td .scale-down img {
 .ozet{
     margin-left:10px;
 }
+.scale-down{
+    display: flex;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    
+}
 }
 @media only screen and (max-width: 530px ) {
     /* tr>td {
@@ -1738,8 +1748,8 @@ tr td .scale-down img {
 .scale-down{
     display: flex;
     align-items: center;
-    width: 30px;
-    height: 30px;
+    width: 65px;
+    height: 65px;
     
 }
 }
@@ -1783,8 +1793,8 @@ tr td .scale-down img {
   border-left-color: #3c8dbc;
   border-top-color: #3c8dbc;
 }
-.q-table {
-    table-layout: fixed;
+/* .q-table { */
+    /* table-layout: fixed; */
     /* display: inline-block;
     overflow-wrap: break-word;
     word-wrap: break-word !important; */
@@ -1794,6 +1804,6 @@ tr td .scale-down img {
     /* line-break: strict; */
     /* line-break: anywhere; */
     /* width:80px; */
-}
+/* } */
 /* #ff4081 */
 </style>

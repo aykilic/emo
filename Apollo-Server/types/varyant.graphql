@@ -98,7 +98,7 @@ type Query{
      varyantSkusQuery:[varyant_skus]
     #  varyantQuery:[varyant]
      hasvaryantsatirQuery(id:ID):[varyant_skus] 
-     childvaryantQuery:[varyant]
+    #  childvaryantQuery:[varyant]
     
     # varyantimgurlQuery(id: ID!):[varyant]
     # varyantsecimgQuery(stokid:ID!,varyantname:String):[varyant]

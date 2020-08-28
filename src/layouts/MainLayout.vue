@@ -14,11 +14,9 @@
           </div>
         <div class="col-md-4 col-sm-12 col-xs-12 two self-center justify-center">
 
-          <q-input rounded outlined dense v-model="search" class="main_search" placeholder="Kategori yada Ürün Ara" >
-              <template v-slot:append>
-          <q-icon name="search" />
-        </template>
-          </q-input>
+          <search/>
+
+          
 
         </div>
         <!-- ---------------------------------------------------------desktop başlık -->
@@ -102,11 +100,7 @@
             </div>
         <div class="q-pt-md q-pb-md col-xs-12  self-center justify-center">
 
-          <q-input rounded outlined dense v-model="search" class="main_search" placeholder="Kategori yada Ürün Ara" >
-              <template v-slot:append>
-          <q-icon name="search" />
-        </template>
-          </q-input>
+          <search/>
 
         </div>
         <!-- ---------------------------------------------------------desktop başlık -->
@@ -334,6 +328,7 @@ import aTabs from '../components/menu/atabs.vue'
 import load from '../pages/skeleton/deneme.vue'
 import axios from 'axios'
 import gql from 'graphql-tag'
+import search from '../components/search'
 // import { Notify } from 'quasar'
 import { Cookies } from "quasar";
 export default {
@@ -345,7 +340,8 @@ export default {
     menuTab,
     menuTabs,
     load,
-    mobilMenu
+    mobilMenu,
+    search
 
   },
 
