@@ -83,6 +83,7 @@ import mobilMenu from './mobilMenu.vue'
                   let self= this
               // console.log("b",b);
               let c=this.anakategorizelists
+              
               rota(this.anakategorizelists,b)
 
                function rota(c,b){

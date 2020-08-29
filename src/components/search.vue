@@ -16,10 +16,10 @@
             </template>
         </q-input> -->
         <q-select
-        
             v-model="search"
-            
+            clearable
             use-input
+            hide-selected
             fill-input
             input-debounce="0"
             label="Kategori yada Ürün Ara"
@@ -30,6 +30,9 @@
             option-label="stokturad"
             class="main_search"
             hide-dropdown-icon
+            behavior="menu"
+            @input="selectsearch()"
+            
 
 
             rounded outlined dense
@@ -42,7 +45,7 @@
                 </q-item>
                 </template>
             <template v-slot:append>
-                <q-icon name="search" />
+                <q-icon class="cursor-pointer" name="search" />
             </template>
         </q-select>
     </div>
@@ -79,53 +82,75 @@ import {mapGetters } from 'vuex'
             
             if(this.list != undefined){
                 //  this.searchTree(this.list,null)
-                //  console.log("list",this.list);
+                //  console.log("list",this.list); 
                 this.options=this.list
             }    
             
             
         },
          methods: {
-             
+             selectsearch(){
+                 console.log("this.search",this.search);
+                  if(this.search == null) return;
+                 let self= this
+                 
+                 let c=this.list
+                 let b=this.search._id
+                
+
+
+                 rota(c,b)  
+                function rota(c,b){
+                c.forEach(item=>{
+                  let parentname=item.stokturad
+                  if(item._id==b){
+                    if(item.children.length > 0){
+                      self.$router.push({ name: 'stoklist', params: { parentname: parentname, parentid : b }})
+                    }else{
+                      self.$store.dispatch('stoklistid',b)
+                      self.$router.push({ name: 'sales', params: { parentname:parentname, stokid: item._id, stokad:item.stokturad }})
+                    }
+                  }else{
+                    item.children.forEach(subitem=>{
+                        rota(subitem.children,b)
+                    })
+                  }
+                 })
+                }
+             },
              filterFnAutoselect (val, update, abort) {
-      // call abort() at any time if you can't retrieve data somehow
-            // console.log(this.options);
-            
-      // call abort() at any time if you can't retrieve data somehow
 
       setTimeout(() => {
-        //   if (val.length < 3) {
-        //         abort()
-        //         return
-        //     }
-        update(
-          () => {
-            if (val === '') {
-              this.options = this.list
+          if (val.length < 2) {
+                abort()
+                return
             }
-            else {
-              const needle = val.toLowerCase()
-              this.options = this.list.filter(v => v.stokturad.toLowerCase().indexOf(needle) > -1)
-            }
-          },
+                update(
+                () => {
+                    if (val === '') {
+                    this.options = this.list
+                    }
+                    else {
+                    const needle = val.toLowerCase()
+                    this.options = this.list.filter(v => v.stokturad.toLowerCase().indexOf(needle) > -1)
+                    }
+                },
 
-          // next function is available in Quasar v1.7.4+;
-          // "ref" is the Vue reference to the QSelect
-          ref => {
-            if (val !== '' && ref.options.length > 0) {
-              ref.setOptionIndex(-1) // reset optionIndex in case there is something selected
-              ref.moveOptionSelection(1, true) // focus the first selectable option and do not update the input-value
-            }
-          }
-        )
-      }, 300)
-     },
-
-
-            abortFilterFn () {
-            // console.log('delayed filter aborted')
+                // next function is available in Quasar v1.7.4+;
+                // "ref" is the Vue reference to the QSelect
+                ref => {
+                    if (val !== '' && ref.options.length > 0) {
+                    ref.setOptionIndex(-1) // reset optionIndex in case there is something selected
+                    ref.moveOptionSelection(1, true) // focus the first selectable option and do not update the input-value
+                    }
+                }
+                )
+            }, 300)
             },
-  
+            abortFilterFn () {
+                // console.log('delayed filter aborted')
+                }
+         },
            searchTree(selfQ, parentID){
       
                   let treemmenu = [];
@@ -151,7 +176,7 @@ import {mapGetters } from 'vuex'
 
 
                },
-        },
+        
     }
 </script>
 
