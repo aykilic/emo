@@ -58,7 +58,7 @@
                                             Geçici Olarak Temin edilememektedir
                                         </p> -->
                                         <div v-else-if="props.row.miktar!=0" class="scale-down " style="margin-left: auto;margin-right: auto;" ><q-img class=" " style="border-radius:10px;"  :src="props.row.path + props.row.publicid " /></div>
-                                        <div class=" text-red  text-weight-bold scale-down " style="margin-left: auto;margin-right: auto;white-space: normal;" v-else-if=" props.row.miktar==0">
+                                        <div class=" text-red  text-weight-bold scale-down justify-center" style="margin-left: auto;margin-right: auto;white-space: normal;" v-else-if=" props.row.miktar==0">
                                         <!-- <div class="text-red  " style="width:100px;height:100px;word-wrap: break-word;" >-->
                                            <span class="">Stokta Kalmadı</span>
                                             

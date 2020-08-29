@@ -334,5 +334,5 @@
       // box-shadow $shadow-15  
       box-shadow 5px 15px 9px rgba(0, 0, 0, 0.5) 
    .my-card
-      min-height:535px;
+      min-height:545px;
 </style>

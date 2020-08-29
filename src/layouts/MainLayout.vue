@@ -14,7 +14,8 @@
           </div>
         <div class="col-md-4 col-sm-12 col-xs-12 two self-center justify-center">
 
-          <search/>
+          <div v-if="anakategorilists.length==0"></div>
+          <search v-else :list="anakategorilists"/>
 
           
 
@@ -120,7 +121,7 @@
     <!-- <mobil-menu :drawer="drawer" :nodes="treemmenu"></mobil-menu> -->
     <q-drawer
         v-model="drawer"
-        :width="270"
+        :width="320"
       >
         <q-scroll-area  style="height: 100% ;  border-right: 1px solid #ddd;">
           <q-item class="bg-pink-5">
@@ -448,6 +449,7 @@ export default {
     // },
     ...mapGetters([
       'anakategorilists',
+      'anakategorizelists',
       'get_guid',
       'get_basketlist',
       'get_ubasketlist',
@@ -472,7 +474,7 @@ export default {
   
  async mounted(){
   //  console.log("mounted");
-    await this.$store.dispatch('anafunction')
+       this.$store.dispatch('anafunction')
     // await this.$store.dispatch('search_getuser')
     //  console.log("uid",this.get_guid);
                             // let guid =Cookies.get('guid');

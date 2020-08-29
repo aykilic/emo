@@ -14,8 +14,8 @@ export default {
     actions: {
      async anafunction({dispatch,commit}) {
       //  dispatch("varyantlist")
-       dispatch("anakategori")
-       dispatch("varyantSkus")
+      await dispatch("anakategori")
+      await dispatch("varyantSkus")
 
       },
 

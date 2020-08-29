@@ -52,7 +52,7 @@ export default {
         }
     },
     mounted() {
-this. mzOptions = {
+this.mzOptions = {
 textHoverZoomHint: "wdsdsds",
 textExpandHint:  "sdsdsd",
 textClickZoomHint: "sdsdsd"
