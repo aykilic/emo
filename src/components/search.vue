@@ -18,7 +18,7 @@
         <q-select
         
             v-model="search"
-            clearable
+            
             use-input
             fill-input
             input-debounce="0"
@@ -94,10 +94,10 @@ import {mapGetters } from 'vuex'
       // call abort() at any time if you can't retrieve data somehow
 
       setTimeout(() => {
-          if (val.length < 3) {
-                abort()
-                return
-            }
+        //   if (val.length < 3) {
+        //         abort()
+        //         return
+        //     }
         update(
           () => {
             if (val === '') {

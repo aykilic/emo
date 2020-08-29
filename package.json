@@ -12,7 +12,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.8.2",
+    "@quasar/extras": "^1.9.5",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link": "^1.2.13",
@@ -32,7 +32,7 @@
     "node-fetch": "^2.6.0",
     "print-js": "^1.0.63",
     "qs": "^6.9.1",
-    "quasar": "^1.12.8",
+    "quasar": "^1.13.1",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "subscriptions-transport-ws": "^0.9.17",

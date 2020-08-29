@@ -122,7 +122,7 @@
     <!-- <mobil-menu :drawer="drawer" :nodes="treemmenu"></mobil-menu> -->
     <q-drawer
         v-model="drawer"
-        :width="250"
+        :width="350"
       >
         <q-scroll-area  style="height: 100% ;  border-right: 1px solid #ddd;">
           <q-item class="bg-pink-5">
