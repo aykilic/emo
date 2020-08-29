@@ -30,6 +30,8 @@
             option-label="stokturad"
             class="main_search"
             hide-dropdown-icon
+
+
             rounded outlined dense
             >
             <template v-slot:no-option>
@@ -77,7 +79,7 @@ import {mapGetters } from 'vuex'
             
             if(this.list != undefined){
                 //  this.searchTree(this.list,null)
-                  console.log("list",this.list);
+                 console.log("list",this.list);
                 this.options=this.list
             }    
             
@@ -91,33 +93,33 @@ import {mapGetters } from 'vuex'
             
       // call abort() at any time if you can't retrieve data somehow
 
-      setTimeout(() => {
-          if (val.length < 2) {
-                 abort()
-                return
-            }
-        update(
-          () => {
-            if (val === '') {
-              this.options = this.list
-            }
-            else {
-              const needle = val.toLowerCase()
-              this.options = this.list.filter(v => v.stokturad.toLowerCase().indexOf(needle) > -1)
-            }
-          },
+    //   setTimeout(() => {
+    //     //   if (val.length < 2) {
+    //     //         abort()
+    //     //         return
+    //     //     }
+    //     update(
+    //       () => {
+    //         if (val === '') {
+    //           this.options = this.list
+    //         }
+    //         else {
+    //           const needle = val.toLowerCase()
+    //           this.options = this.list.filter(v => v.stokturad.toLowerCase().indexOf(needle) > -1)
+    //         }
+    //       },
 
-          // next function is available in Quasar v1.7.4+;
-          // "ref" is the Vue reference to the QSelect
-          ref => {
-            if (val !== '' && ref.options.length > 0) {
-              ref.setOptionIndex(-1) // reset optionIndex in case there is something selected
-              ref.moveOptionSelection(1, true) // focus the first selectable option and do not update the input-value
-            }
-          }
-        )
-      }, 300)
-    },
+    //       // next function is available in Quasar v1.7.4+;
+    //       // "ref" is the Vue reference to the QSelect
+    //       ref => {
+    //         if (val !== '' && ref.options.length > 0) {
+    //           ref.setOptionIndex(-1) // reset optionIndex in case there is something selected
+    //           ref.moveOptionSelection(1, true) // focus the first selectable option and do not update the input-value
+    //         }
+    //       }
+    //     )
+    //   }, 300)
+     },
 
 
             abortFilterFn () {

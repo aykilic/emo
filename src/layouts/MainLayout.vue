@@ -101,7 +101,8 @@
             </div>
         <div class="q-pt-md q-pb-md col-xs-12  self-center justify-center">
 
-          <search/>
+          <div v-if="anakategorilists.length==0"></div>
+          <search v-else :list="anakategorilists"/>
 
         </div>
         <!-- ---------------------------------------------------------desktop başlık -->
