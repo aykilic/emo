@@ -641,7 +641,14 @@ import ilcedata from '../../statics/ilce.json'
 import gql from "graphql-tag";
 import { mapState, mapGetters } from "vuex";
 import { Loading } from "quasar";
-import { date } from 'quasar'
+import { date } from 'quasar';
+import bcryptjs from 'bcryptjs'
+import CryptoJS from 'crypto-js';
+// import sha256 from 'crypto-js/sha256';
+import hmacSHA256 from 'crypto-js/hmac-sha256';
+import Base64 from 'crypto-js/enc-base64';
+// import jwt from 'vuejs-jwt'
+// Vue.use(jwt)
 let myBody = document.getElementsByTagName('body')[0];
     export default {
         data() {
@@ -937,6 +944,7 @@ let myBody = document.getElementsByTagName('body')[0];
                         satirList.push(obj)
                 })
                 }
+                satlistolustur()
                 // console.log("satirList",satirList);
                  
                if(this.val == ""){
@@ -950,6 +958,154 @@ let myBody = document.getElementsByTagName('body')[0];
                 let val =this.val
                 if(val==="Kredi Kartı Hemen"){
                      console.log("kredi kartı entegrasyonu");
+                    var paytrurunList=[]
+                    var email = this.user.email;
+                    var merchant_oid = sipno
+                    var merchant_id=process.env.merchant_id;
+                    var merchant_key=process.env.merchant_key;
+                    var merchant_salt=process.env.merchant_salt;
+                    var user_name = this.user.ad_soyad
+                    var user_address = this.user.adres
+                    var user_phone = this.user.cep
+                    var merchant_ok_url = "http://www.emosetekstil.com.tr/sell" //Siparişi onaylayacağız sayfa "Bildirim URL" sayfasıdır
+                    var merchant_fail_url = "" //Siparişi iptal edeceğiniz sayfa "Bildirim URL" sayfasıdır
+                    var ptutar=0
+                    satirList.forEach((item,i)=>{
+                        paytrurunList.push(item.stokad,item.tutar/item.count*100,item.count)
+                        
+                    })
+                    var payment_amount=tutar.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                    
+                    
+                    // var payment_amount=" "
+                    var user_basket =btoa(JSON.stringify(paytrurunList))
+                    // var user_basket =Buffer.from(paytrurunList).toString('base64');
+
+                    // console.log(user_basket1,user_basket);
+                    //  base64_encode(json_encode(array(
+                    //     array("Örnek ürün 1", "18.00", 1), // 1. ürün (Ürün Ad - Birim Fiyat - Adet )
+                    //     array("Örnek ürün 2", "33.25", 2), // 2. ürün (Ürün Ad - Birim Fiyat - Adet )
+                    //     array("Örnek ürün 3", "45.42", 1)  // 3. ürün (Ürün Ad - Birim Fiyat - Adet )
+                    // )));
+                    var user_ip=
+                    // fetch('https://api.ipify.org?format=json')
+                    // .then(x => x.json())
+                    // .then(({ ip }) => {
+                    //     return ip;
+                    // });
+                    await axios.get('http://extreme-ip-lookup.com/json/')
+                        .then(function (response) {
+                            
+                            // businessWebsite: ""
+                            // city: "Istanbul"
+                            // continent: "Asia"
+                            // country: "Turkey"
+                            // countryCode: "TR"
+                            // ipName: ""
+                            // ipType: "Residential"
+                            // isp: "Turkcell Internet"
+                            // lat: "41.01384"
+                            // lon: "28.94966"
+                            // org: "Turkcell Internet"
+                            // query: "176.90.135.57"
+                            // region: "Istanbul"
+                            // status: "success"
+                            // console.log(response.data.query);
+                            return response.data.query
+                        })
+                        .catch(function (error) {
+                            // handle error
+                            console.log(error);
+                            this.$q.notify({
+                                    type: 'negative',
+                                    message: `ip bilgisi alınamadı...!`
+                                })
+                            return
+                        })
+                        console.log("bura");
+                        var timeout_limit = "10"
+                        var debug_on = 1 // test 1
+                        var test_mode = 0;
+                        var no_installment	= 0; // Taksit yapılmasını istemiyorsanız, sadece tek çekim sunacaksanız 1 yapın
+                        var max_installment = 3
+                        var currency = "TL"
+                        var hash_str = merchant_id+user_ip+merchant_oid+email+payment_amount+user_basket+no_installment+max_installment+currency+test_mode;
+                        // $paytr_token=base64_encode(hash_hmac('sha256',$hash_str.$merchant_salt,$merchant_key,true));
+                        
+                        // jwt.sign(hash_str+merchant_salt, merchant_key, { algorithm: 'RS256' }, function(err, token) {
+                        //     var paytr_token=token
+                        // console.log(token);
+                        // });
+
+                        // var paytr_token =await Base64(hmacSHA256(hash_str+merchant_salt, merchant_key));
+                        // var paytr_token =await CryptoJS.AES.encrypt(JSON.stringify(hash_str), 'secret key 123').toString();;
+                        var paytr_token = Base64.stringify(hmacSHA256(hash_str+merchant_salt, merchant_key));
+
+                        var post_vals={}
+                        // post_vals.map(item=>({
+                            post_vals.merchant_id= merchant_id,
+                            post_vals.user_ip= user_ip,
+                            post_vals.merchant_oid=merchant_oid,
+                            post_vals.email=email,
+                            post_vals.payment_amount=payment_amount,
+                            post_vals.paytr_token=paytr_token,
+                            post_vals.user_basket=user_basket,
+                            post_vals.debug_on=debug_on,
+                            post_vals.no_installment=no_installment,
+                            post_vals.max_installment=max_installment,
+                            post_vals.user_name=user_name,
+                            post_vals.user_address=user_address,
+                            post_vals.user_phone=user_phone,
+                            post_vals.merchant_ok_url=merchant_ok_url,
+                            post_vals.merchant_fail_url=merchant_fail_url,
+                            post_vals.timeout_limit=timeout_limit,
+                            post_vals.currency=currency,
+                            post_vals.test_mode=test_mode
+                            console.log("buraa");
+                        // }))
+                        // console.log(JSON.stringify(post_vals));
+                        // return
+                        // await axios.post("https://www.paytr.com/odeme/api/get-token",JSON.stringify(post_vals), {
+                        // headers : {
+                        //     // "Access-Control-Allow-Origin": "http://localhost:8080",
+                        //     "Content-Type" : "application/x-www-form-urlencoded",
+                        //     // 'Access-Control-Allow-Credentials': 'true',
+                        //     // 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                        // },
+                        
+                        // })
+                        // .then(function(response){
+                        //     console.log(response);
+                        // }).catch(function(err){
+                        //     console.log(err);
+                        // })
+                        await axios({
+                            method: 'POST',
+                            url: 'https://www.paytr.com/odeme/api/get-token',
+                            data: JSON.stringify(post_vals),
+                             headers : {
+                                //  "Access-Control-Allow-Origin": '*',
+                                   "Content-Type" : "application/x-www-form-urlencoded",
+                                //  'Access-Control-Allow-Credentials': 'true',
+                                //  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                             },
+                             withCredentials: true,
+                            }) .then(response=>{
+                                 console.log(response);
+                             }).catch(err=>{
+                                 console.log(err);
+                             })
+                           console.log("buraaa"); 
+
+
+
+
+
+
+
+
+
+                     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
                     return
                     Loading.show()
                     this.$apollo
