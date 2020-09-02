@@ -1036,11 +1036,11 @@ let myBody = document.getElementsByTagName('body')[0];
                         //     var paytr_token=token
                         // console.log(token);
                         // });
-
+                        console.log("1");
                         // var paytr_token =await Base64(hmacSHA256(hash_str+merchant_salt, merchant_key));
                         // var paytr_token =await CryptoJS.AES.encrypt(JSON.stringify(hash_str), 'secret key 123').toString();;
                         var paytr_token = Base64.stringify(hmacSHA256(hash_str+merchant_salt, merchant_key));
-
+                        console.log("2");
                         var post_vals={}
                         // post_vals.map(item=>({
                             post_vals.merchant_id= merchant_id,
