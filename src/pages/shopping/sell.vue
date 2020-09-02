@@ -1010,7 +1010,7 @@ let myBody = document.getElementsByTagName('body')[0];
                             // query: "176.90.135.57"
                             // region: "Istanbul"
                             // status: "success"
-                            // console.log(response.data.query);
+                             console.log(response.data.query);
                             return response.data.query
                         })
                         .catch(function (error) {
