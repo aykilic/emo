@@ -1086,7 +1086,8 @@ let myBody = document.getElementsByTagName('body')[0];
                             url: 'https://www.paytr.com/odeme/api/get-token',
                             data: JSON.stringify(post_vals),
                              headers : {
-                                 "Access-Control-Allow-Origin": '*',
+                                //  "Access-Control-Allow-Origin": '*',
+                                
                                    "Content-Type" : "application/x-www-form-urlencoded",
                                 //  'Access-Control-Allow-Credentials': 'true',
                                 //  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
