@@ -999,7 +999,7 @@ let myBody = document.getElementsByTagName('body')[0];
                     
                     // var payment_amount=" "
                     console.log("paytrurunList",JSON.stringify(paytrurunList));
-                    console.log("paytrurunListJJJ",paytrurunList);
+                    // console.log("paytrurunListJJJ",paytrurunList);
                     var user_basket =btoa(JSON.stringify(paytrurunList))
                     
                     console.log("user_basket",user_basket);
