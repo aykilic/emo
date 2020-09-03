@@ -1037,6 +1037,8 @@ let myBody = document.getElementsByTagName('body')[0];
                         // console.log(token);
                         // });
                         console.log("1");
+                        
+                        console.log(merchant_key);
                         // var paytr_token =await Base64(hmacSHA256(hash_str+merchant_salt, merchant_key));
                         // var paytr_token =await CryptoJS.AES.encrypt(JSON.stringify(hash_str), 'secret key 123').toString();;
                         var paytr_token = Base64.stringify(hmacSHA256(hash_str+merchant_salt, merchant_key));
