@@ -960,35 +960,50 @@ let myBody = document.getElementsByTagName('body')[0];
                      console.log("kredi kartı entegrasyonu");
                     var paytrurunList=[]
                     var email = this.user.email;
-                    var merchant_oid = sipno
-                    var merchant_id=process.env.merchant_id;
+                    // var merchant_oid = sipno
+                    var merchant_oid = '1824375906'
+                    var merchant_id=Number(process.env.merchant_id);
                     var merchant_key=process.env.merchant_key;
                     var merchant_salt=process.env.merchant_salt;
                     var user_name = this.user.ad_soyad
                     var user_address = this.user.adres
                     var user_phone = this.user.cep
-                    var merchant_ok_url = "http://emosetekstil.com.tr/sell" //Siparişi onaylayacağız sayfa "Bildirim URL" sayfasıdır
-                    var merchant_fail_url = "" //Siparişi iptal edeceğiniz sayfa "Bildirim URL" sayfasıdır
+                    var merchant_ok_url = "http://www.emosetekstil.com.tr/sell" //Siparişi onaylayacağız sayfa "Bildirim URL" sayfasıdır
+                    var merchant_fail_url = "http://www.emosetekstil.com.tr/hata" //Siparişi iptal edeceğiniz sayfa "Bildirim URL" sayfasıdır
                     var ptutar=0
+                    // console.log(satirList);
+                    let obj=[]
                     satirList.forEach((item,i)=>{
-                        paytrurunList.push(item.stokad,item.tutar/item.count,item.count)
+                        // console.log("a",item.stokad);
+                        let sad=item.stokad
+                        let fiya=(item.tutar/item.count).toString()
+                        let cou=item.count
+                        obj.push(sad)
+                        obj.push(fiya)
+                        obj.push(cou)
+                        // Object.assign(obj,Object.values(item.stokad))
+                        //  obj = Object.keys(item).map((key) => item[key][0]);
+                        // obj.stokad=obj.item.stokad
+                        // obj.stokad=obj.item.stokad
+                        // obj.stokad=obj.item.stokad
+                        // obj.item[fiya]
+                        // obj.item[count]
+                        paytrurunList.push(obj)
                         
                     })
+                    //  console.log(paytrurunList);
+                    // return
                     tutar=tutar*100
                     var payment_amount=tutar.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
                     
                     
                     // var payment_amount=" "
+                    console.log("paytrurunList",JSON.stringify(paytrurunList));
+                    console.log("paytrurunListJJJ",paytrurunList);
                     var user_basket =btoa(JSON.stringify(paytrurunList))
-                    // var user_basket =paytrurunList
-                    // var user_basket =Buffer.from(paytrurunList).toString('base64');
-
-                    // console.log(user_basket1,user_basket);
-                    //  base64_encode(json_encode(array(
-                    //     array("Örnek ürün 1", "18.00", 1), // 1. ürün (Ürün Ad - Birim Fiyat - Adet )
-                    //     array("Örnek ürün 2", "33.25", 2), // 2. ürün (Ürün Ad - Birim Fiyat - Adet )
-                    //     array("Örnek ürün 3", "45.42", 1)  // 3. ürün (Ürün Ad - Birim Fiyat - Adet )
-                    // )));
+                    
+                    console.log("user_basket",user_basket);
+                    // return
                     var user_ip=
                     // fetch('https://api.ipify.org?format=json')
                     // .then(x => x.json())
@@ -1012,7 +1027,7 @@ let myBody = document.getElementsByTagName('body')[0];
                             // query: "176.90.135.57"
                             // region: "Istanbul"
                             // status: "success"
-                             console.log(response.data.query);
+                            //  console.log(response.data.query);
                             return response.data.query
                         })
                         .catch(function (error) {
@@ -1032,18 +1047,35 @@ let myBody = document.getElementsByTagName('body')[0];
                         var max_installment = 3
                         var currency = "TL"
                         var hash_str = merchant_id+user_ip+merchant_oid+email+payment_amount+user_basket+no_installment+max_installment+currency+test_mode;
+                        // console.log("hash_str",hash_str);
+                        // return
+
                         // $paytr_token=base64_encode(hash_hmac('sha256',$hash_str.$merchant_salt,$merchant_key,true));
                         
                         // jwt.sign(hash_str+merchant_salt, merchant_key, { algorithm: 'RS256' }, function(err, token) {
                         //     var paytr_token=token
-                        // console.log(token);
+                         console.log("merchant_id",merchant_id);
+                         console.log("user_ip",user_ip);
+                         console.log("merchant_oid",merchant_oid);
+                         console.log("email",email);
+                         console.log("payment_amount",payment_amount);
+                         console.log("user_basket",user_basket);
+                         console.log("no_installment",no_installment);
+                         console.log("max_installment",max_installment);
+                         console.log("currency",currency);
+                         console.log("test_mode",test_mode);
+                         console.log("hash_str",hash_str);
                         // });
                         console.log("1");
                         
                         console.log(merchant_key);
                         // var paytr_token =await Base64(hmacSHA256(hash_str+merchant_salt, merchant_key));
                         // var paytr_token =await CryptoJS.AES.encrypt(JSON.stringify(hash_str), 'secret key 123').toString();;
-                        var paytr_token = Base64.stringify(hmacSHA256(hash_str+merchant_salt, merchant_key));
+                        var paytr_token = Base64.stringify(hmacSHA256(hash_str+merchant_salt, merchant_key,true));
+                        
+
+                        console.log("paytr_token",paytr_token);
+                        // return
                         console.log("2");
                         var post_vals={}
                         // post_vals.map(item=>({
@@ -1067,42 +1099,23 @@ let myBody = document.getElementsByTagName('body')[0];
                             post_vals.test_mode=test_mode
                             console.log("buraa");
                         // }))
-                        // console.log(JSON.stringify(post_vals));
+                         console.log(JSON.stringify(post_vals));
                         // return
-                        // await axios.post("https://www.paytr.com/odeme/api/get-token",JSON.stringify(post_vals), {
-                        // headers : {
-                        //     // "Access-Control-Allow-Origin": "http://localhost:8080",
-                        //     "Content-Type" : "application/x-www-form-urlencoded",
-                        //     // 'Access-Control-Allow-Credentials': 'true',
-                        //     // 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-                        // },
-                        
-                        // })
-                        // .then(function(response){
+                        // this.$http.post('/somehttps://www.paytr.com/odeme/api/get-token',
+                        //  JSON.stringify(post_vals))
+                          
+                        //   .then(response => {
                         //     console.log(response);
-                        // }).catch(function(err){
-                        //     console.log(err);
-                        // })
-                        await axios({
-                            method: 'POST',
-                            url: 'https://www.paytr.com/odeme/api/get-token',
-                            data: JSON.stringify(post_vals),
-                             headers : {
-                            //     //  "Access-Control-Allow-Origin": '*',
-                                    // 'Access-Control-Max-Age': '3600',
-
-                                    
-                                    // 'X-Requested-With': 'XMLHttpRequest',
-                                    "Content-Type" : "application/x-www-form-urlencoded",
-                            //     //  'Access-Control-Allow-Credentials': 'true',
-                            //     //  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-                             },
-                             withCredentials: true,
-                            }) .then(response=>{
-                                 console.log(response);
-                             }).catch(err=>{
-                                 console.log(err);
-                             })
+                        // }, response => {
+                        //     // error callback
+                        // });
+                        await axios.post("https://www.paytr.com/odeme/api/get-token",JSON.stringify(post_vals))
+                        .then(function(response){
+                            console.log(response);
+                        }).catch(function(err){
+                            console.log(err);
+                        })
+                        
                            console.log("buraaa"); 
 
 
