@@ -967,18 +967,20 @@ let myBody = document.getElementsByTagName('body')[0];
                     var user_name = this.user.ad_soyad
                     var user_address = this.user.adres
                     var user_phone = this.user.cep
-                    var merchant_ok_url = "http://www.emosetekstil.com.tr/sell" //Siparişi onaylayacağız sayfa "Bildirim URL" sayfasıdır
+                    var merchant_ok_url = "http://emosetekstil.com.tr/sell" //Siparişi onaylayacağız sayfa "Bildirim URL" sayfasıdır
                     var merchant_fail_url = "" //Siparişi iptal edeceğiniz sayfa "Bildirim URL" sayfasıdır
                     var ptutar=0
                     satirList.forEach((item,i)=>{
-                        paytrurunList.push(item.stokad,item.tutar/item.count*100,item.count)
+                        paytrurunList.push(item.stokad,item.tutar/item.count,item.count)
                         
                     })
+                    tutar=tutar*100
                     var payment_amount=tutar.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
                     
                     
                     // var payment_amount=" "
                     var user_basket =btoa(JSON.stringify(paytrurunList))
+                    // var user_basket =paytrurunList
                     // var user_basket =Buffer.from(paytrurunList).toString('base64');
 
                     // console.log(user_basket1,user_basket);
@@ -1086,11 +1088,12 @@ let myBody = document.getElementsByTagName('body')[0];
                             url: 'https://www.paytr.com/odeme/api/get-token',
                             data: JSON.stringify(post_vals),
                              headers : {
-                                //  "Access-Control-Allow-Origin": '*',
-                                
-                                   "Content-Type" : "application/x-www-form-urlencoded",
-                                //  'Access-Control-Allow-Credentials': 'true',
-                                //  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+                            //     //  "Access-Control-Allow-Origin": '*',
+                                    // 'Access-Control-Max-Age': '3600',
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                    "Content-Type" : "application/x-www-form-urlencoded",
+                            //     //  'Access-Control-Allow-Credentials': 'true',
+                            //     //  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
                              },
                              withCredentials: true,
                             }) .then(response=>{
