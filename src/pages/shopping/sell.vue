@@ -1090,7 +1090,9 @@ let myBody = document.getElementsByTagName('body')[0];
                              headers : {
                             //     //  "Access-Control-Allow-Origin": '*',
                                     // 'Access-Control-Max-Age': '3600',
-                                    'X-Requested-With': 'XMLHttpRequest',
+
+                                    
+                                    // 'X-Requested-With': 'XMLHttpRequest',
                                     "Content-Type" : "application/x-www-form-urlencoded",
                             //     //  'Access-Control-Allow-Credentials': 'true',
                             //     //  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
