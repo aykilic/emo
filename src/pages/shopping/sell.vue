@@ -954,7 +954,6 @@ let myBody = document.getElementsByTagName('body')[0];
                     });
                     return
                } 
-
                 let val =this.val
                 if(val==="Kredi Kartı Hemen"){
                      console.log("kredi kartı entegrasyonu");
