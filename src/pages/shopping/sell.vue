@@ -996,9 +996,6 @@ let myBody = document.getElementsByTagName('body')[0];
                     tutar=tutar*100
                     var payment_amount=tutar.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
                     
-                    
-                    
-                    
                     // var payment_amount=" "
                     console.log("paytrurunList",JSON.stringify(paytrurunList));
                     // console.log("paytrurunListJJJ",paytrurunList);
