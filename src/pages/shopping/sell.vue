@@ -1001,7 +1001,6 @@ let myBody = document.getElementsByTagName('body')[0];
                     // console.log("paytrurunListJJJ",paytrurunList);
                     var user_basket =btoa(JSON.stringify(paytrurunList))
                     
-        
                     console.log("user_basket",user_basket);
                     // return
                     var user_ip=
