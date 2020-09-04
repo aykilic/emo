@@ -960,8 +960,8 @@ let myBody = document.getElementsByTagName('body')[0];
                      console.log("kredi kartı entegrasyonu");
                     var paytrurunList=[]
                     var email = this.user.email;
-                    // var merchant_oid = sipno
-                    var merchant_oid = '1824375906'
+                    var merchant_oid = sipno
+                    // var merchant_oid = '1824375906'
                     var merchant_id=Number(process.env.merchant_id);
                     var merchant_key=process.env.merchant_key;
                     var merchant_salt=process.env.merchant_salt;
