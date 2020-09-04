@@ -13,6 +13,7 @@
               <q-card-section class="row ">
                 <q-input class="col-12 q-pt-md" ref="email" v-model="email" label="Mail Adresinizi Giriniz" :rules="[val => !!val || 'Hatalı Mail', isValidEmail]" outlined/>
      
+     
               </q-card-section>
                 <q-separator/>
               <q-card-section  class="text-center">
