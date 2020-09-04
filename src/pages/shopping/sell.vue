@@ -635,6 +635,7 @@
 <script>
 import { Cookies } from "quasar";
 import Vue from "vue";
+import VueResource from "vue-resource"
 import axios from "axios";
 import ildata from '../../statics/il.json'
 import ilcedata from '../../statics/ilce.json'
@@ -647,6 +648,7 @@ import CryptoJS from 'crypto-js';
 // import sha256 from 'crypto-js/sha256';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
+Vue.use(VueResource);
 // import jwt from 'vuejs-jwt'
 // Vue.use(jwt)
 let myBody = document.getElementsByTagName('body')[0];
@@ -980,27 +982,25 @@ let myBody = document.getElementsByTagName('body')[0];
                         obj.push(sad)
                         obj.push(fiya)
                         obj.push(cou)
-                        // Object.assign(obj,Object.values(item.stokad))
-                        //  obj = Object.keys(item).map((key) => item[key][0]);
-                        // obj.stokad=obj.item.stokad
-                        // obj.stokad=obj.item.stokad
-                        // obj.stokad=obj.item.stokad
-                        // obj.item[fiya]
-                        // obj.item[count]
                         paytrurunList.push(obj)
                         
                     })
                     //  console.log(paytrurunList);
                     // return
+                    // console.log("tutar",tutar) 
                     tutar=tutar*100
-                    var payment_amount=tutar.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-                    
+                     
+                    //  console.log("tutar",tutar)    
+                    // var payment_amount=tutar.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                    var payment_amount=tutar
+
+                    // return
                     // var payment_amount=" "
-                    console.log("paytrurunList",JSON.stringify(paytrurunList));
+                    // console.log("paytrurunList",JSON.stringify(paytrurunList));
                     // console.log("paytrurunListJJJ",paytrurunList);
                     var user_basket =btoa(JSON.stringify(paytrurunList))
                     
-                    console.log("user_basket",user_basket);
+                    // console.log("user_basket",user_basket);
                     // return
                     var user_ip=
                     // fetch('https://api.ipify.org?format=json')
@@ -1040,9 +1040,9 @@ let myBody = document.getElementsByTagName('body')[0];
                         console.log("bura");
                         var timeout_limit = "10"
                         var debug_on = 1 // test 1
-                        var test_mode = 0;
-                        var no_installment	= 0; // Taksit yapılmasını istemiyorsanız, sadece tek çekim sunacaksanız 1 yapın
-                        var max_installment = 3
+                        var test_mode = 0
+                        var no_installment	= 0 // Taksit yapılmasını istemiyorsanız, sadece tek çekim sunacaksanız 1 yapın
+                        var max_installment = 0
                         var currency = "TL"
                         var hash_str = merchant_id+user_ip+merchant_oid+email+payment_amount+user_basket+no_installment+max_installment+currency+test_mode;
                         // console.log("hash_str",hash_str);
@@ -1095,9 +1095,12 @@ let myBody = document.getElementsByTagName('body')[0];
                             post_vals.timeout_limit=timeout_limit,
                             post_vals.currency=currency,
                             post_vals.test_mode=test_mode
-                            console.log("buraa");
+                            // console.log("buraa");
+                            let post_valsa=[]
+                            post_valsa.push(post_vals)
                         // }))
                          console.log(JSON.stringify(post_vals));
+                         let postUrl= "https://www.paytr.com/odeme/api/get-token"
                         // return
                         // this.$http.post('/somehttps://www.paytr.com/odeme/api/get-token',
                         //  JSON.stringify(post_vals))
@@ -1107,14 +1110,29 @@ let myBody = document.getElementsByTagName('body')[0];
                         // }, response => {
                         //     // error callback
                         // });
-                        await axios.post("https://www.paytr.com/odeme/api/get-token",JSON.stringify(post_vals))
+                        await axios.post("https://www.paytr.com/odeme/api/get-token",JSON.stringify(post_vals),
+                            {
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            }
+                            }
+                        )
                         .then(function(response){
                             console.log(response);
                         }).catch(function(err){
                             console.log(err);
                         })
-                        
-                           console.log("buraaa"); 
+                        // await this.$http.post(postUrl, JSON.stringify(post_valsa),
+                        // { headers: {
+                        //             "Content-Type": "application/x-www-form-urlencoded",
+                                    
+                        // }})
+                        // .then(async response => {
+                        //         console.log(response.body);
+                        //     }, response => {
+                        //     console.error(response.body);
+                        //     });
+                        //    console.log(data); 
 
 
 
