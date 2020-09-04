@@ -635,7 +635,7 @@
 <script>
 import { Cookies } from "quasar";
 import Vue from "vue";
-import VueResource from "vue-resource"
+// import VueResource from "vue-resource"
 import axios from "axios";
 import ildata from '../../statics/il.json'
 import ilcedata from '../../statics/ilce.json'
@@ -648,7 +648,7 @@ import CryptoJS from 'crypto-js';
 // import sha256 from 'crypto-js/sha256';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
-Vue.use(VueResource);
+// Vue.use(VueResource);
 // import jwt from 'vuejs-jwt'
 // Vue.use(jwt)
 let myBody = document.getElementsByTagName('body')[0];
