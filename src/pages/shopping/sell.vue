@@ -1087,41 +1087,72 @@ let myBody = document.getElementsByTagName('body')[0];
                             post_vals.debug_on=debug_on,
                             post_vals.no_installment=no_installment,
                             post_vals.max_installment=max_installment,
-                            post_vals.user_name=user_name,
+                            post_vals.user_name=user_name,  
                             post_vals.user_address=user_address,
                             post_vals.user_phone=user_phone,
-                            post_vals.merchant_ok_url=merchant_ok_url,
-                            post_vals.merchant_fail_url=merchant_fail_url,
+                            // post_vals.merchant_ok_url=merchant_ok_url,
+                            // post_vals.merchant_fail_url=merchant_fail_url,
                             post_vals.timeout_limit=timeout_limit,
                             post_vals.currency=currency,
                             post_vals.test_mode=test_mode
                             // console.log("buraa");
+                            // let post_valsa={'merchant_id':merchant_id,'merchant_id':merchant_id,}
                             let post_valsa=[]
-                            post_valsa.push(post_vals)
+                             post_valsa.push(post_vals)
                         // }))
-                         console.log(JSON.stringify(post_vals));
-                         let postUrl= "https://www.paytr.com/odeme/api/get-token"
-                        // return
-                        // this.$http.post('/somehttps://www.paytr.com/odeme/api/get-token',
-                        //  JSON.stringify(post_vals))
-                          
-                        //   .then(response => {
-                        //     console.log(response);
-                        // }, response => {
-                        //     // error callback
-                        // });
-                        await axios.post("https://www.paytr.com/odeme/api/get-token",JSON.stringify(post_vals),
-                            {
-                            headers: {
+                        //  console.log(JSON.stringify(post_valsa));
+                         let postUrl= 'https://www.paytr.com/odeme/api/get-token'
+                         await fetch(postUrl, {
+                            method: 'POST',
+                            body:JSON.stringify(post_vals),
+                            headers: { 
                                 'Content-Type': 'application/x-www-form-urlencoded',
-                            }
-                            }
-                        )
-                        .then(function(response){
-                            console.log(response);
-                        }).catch(function(err){
-                            console.log(err);
-                        })
+                            },
+                            mode: 'no-cors',
+                            }).then(async response=>{
+                                let fdr=await response.json();
+                                console.log("response",fdr)
+                            }).catch(err=>{
+                                console.log("err",err)
+                            })
+                        //  await this.$axios({
+                        //     method: 'post',
+                        //     mode:'no-cors',
+                        //     url:postUrl,
+                        //     data: JSON.stringify(post_vals),
+                        //     mode: 'no-cors',
+                        //     withCredentials: true,
+                        //     credentials: 'same-origin',
+                        //     headers:{
+                        //         headers: {
+                        //         'Content-Type': 'application/x-www-form-urlencoded',
+                        //     }
+                        //     }
+                        //     });
+                        // axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
+                        // // axios.defaults.headers.post['mode'] ='no-cors';
+                        // // axios.defaults.headers.post['credentials'] ='same-origin';
+                        // axios.defaults.withCredentials=true
+                        // axios.defaults.credentials='same-origin'
+                        // axios.defaults.mode='no-cors'
+                        // await axios.post("https://www.paytr.com/odeme/api/get-token",JSON.stringify(post_vals),
+                        //     {
+                        //     // withCredentials: true,
+                        //     // credentials: 'same-origin',
+                        //     // mode:'no-cors',
+                        //     // headers: {
+                        //         //  'Access-Control-Allow-Origin': '*',
+                        //         // 'Access-Control-Allow-Headers': '*',
+                        //         // 'Access-Control-Allow-Origin': '*',
+                        //         // 'Content-Type': 'application/x-www-form-urlencoded',
+                        //     // }
+                        //     }
+                        // )
+                        // .then(function(response){
+                        //     console.log(response);
+                        // }).catch(function(err){
+                        //     console.log(err);
+                        // })
                         // await this.$http.post(postUrl, JSON.stringify(post_valsa),
                         // { headers: {
                         //             "Content-Type": "application/x-www-form-urlencoded",

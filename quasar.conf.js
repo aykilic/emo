@@ -119,7 +119,17 @@ module.exports = function (ctx) {
     devServer: {
       https: false,
       port: 8080,
-      open: true // opens browser window automatically
+      open: true, // opens browser window automatically
+      // proxy: {
+      //   // proxy all requests starting with /api to jsonplaceholder
+      //   '/pos': {
+      //     target: 'https://www.paytr.com/odeme/api/get-token',
+      //     changeOrigin: true,
+      //     pathRewrite: {
+      //       '^/pos': 'https://www.paytr.com/odeme/api/get-token'
+      //     }
+      //   }
+      // }
     },
 
     // animations: 'all', // --- includes all animations
