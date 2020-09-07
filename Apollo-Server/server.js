@@ -111,7 +111,7 @@ app.post("/sell",async (req, res, next) => {
         console.log("2");
          let cevap=""
         // console.log(1);
-        let hash =Base64.stringify(hmacSHA256(sip.sipno+process.env.merchant_salt+'success'+sip.tutar,process.env.merchant_key,true));
+        let hash =Base64.stringify(hmacSHA256(sip.sipno+process.env.merchant_salt+'success'+sip.tutar*100,process.env.merchant_key,true));
           if(hash!=req.body.hash){
             console.log("3");
             res.send('PAYTR notification failed: bad hash');
