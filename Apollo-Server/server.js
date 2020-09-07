@@ -122,8 +122,6 @@ app.post("/sell",async (req, res, next) => {
             // veritabanından status durumunu değiştir.
             
             return
-            
-
 
           }
           else{ // ödemeye onay verilmedi
