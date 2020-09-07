@@ -121,7 +121,7 @@ app.post("/sell",async (req, res, next) => {
           if(req.body.status==="success"){ // ödemeye onay verildi
             console.log("4");
             // veritabanından status durumunu değiştir.
-            
+            res.send('OK');
             return
 
           }
