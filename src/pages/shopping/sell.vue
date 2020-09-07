@@ -627,6 +627,19 @@
                         </q-card-section>
                         </q-card>
                     </q-dialog>
+                    <q-dialog full-height v-model="posFrame" persistent>
+                        <q-card class="col row q-pt-none" style="width: 100%;height:auto">
+                            <q-card-section class="row col-12 q-pt-none q-pb-none justify-center" style="height:500px">
+
+                                <iframe class=" " :src="frameSrc" id="paytriframe" frameborder="0"  style="width: 100%;height:880px;"  ></iframe>
+                                <q-btn rounded flat class="col-10" label="Vazgeç" color="red" size="lg" v-close-popup />
+                            </q-card-section>
+                            <!-- <q-card-actions class="row col-12" align="center">
+                                
+                                
+                            </q-card-actions> -->
+                        </q-card>
+                    </q-dialog>
                     
         </div>
         
@@ -648,6 +661,7 @@ import CryptoJS from 'crypto-js';
 // import sha256 from 'crypto-js/sha256';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
+import queryString from 'query-string';
 // Vue.use(VueResource);
 // import jwt from 'vuejs-jwt'
 // Vue.use(jwt)
@@ -655,6 +669,9 @@ let myBody = document.getElementsByTagName('body')[0];
     export default {
         data() {
             return {
+                posFrame:false,
+                frametoken:"",
+                frameSrc:"",
                 adressildialog:false,
                 edit_adress:false,
                 val:"",
@@ -747,6 +764,9 @@ let myBody = document.getElementsByTagName('body')[0];
         }
         },
         watch: {
+            frametoken(val){
+                this.frameSrc='https://www.paytr.com/odeme/guvenli/'+val
+            },
             get_basketlist(newValue, oldValue) {
                 // console.log(newValue);
                  this.fonk()
@@ -1038,7 +1058,7 @@ let myBody = document.getElementsByTagName('body')[0];
                             return
                         })
                         console.log("bura");
-                        var timeout_limit = "10"
+                        var timeout_limit = 10
                         var debug_on = 1 // test 1
                         var test_mode = 0
                         var no_installment	= 0 // Taksit yapılmasını istemiyorsanız, sadece tek çekim sunacaksanız 1 yapın
@@ -1052,29 +1072,29 @@ let myBody = document.getElementsByTagName('body')[0];
                         
                         // jwt.sign(hash_str+merchant_salt, merchant_key, { algorithm: 'RS256' }, function(err, token) {
                         //     var paytr_token=token
-                         console.log("merchant_id",merchant_id);
-                         console.log("user_ip",user_ip);
-                         console.log("merchant_oid",merchant_oid);
-                         console.log("email",email);
-                         console.log("payment_amount",payment_amount);
-                         console.log("user_basket",user_basket);
-                         console.log("no_installment",no_installment);
-                         console.log("max_installment",max_installment);
-                         console.log("currency",currency);
-                         console.log("test_mode",test_mode);
-                         console.log("hash_str",hash_str);
+                        //  console.log("merchant_id",merchant_id);
+                        //  console.log("user_ip",user_ip);
+                        //  console.log("merchant_oid",merchant_oid);
+                        //  console.log("email",email);
+                        //  console.log("payment_amount",payment_amount);
+                        //  console.log("user_basket",user_basket);
+                        //  console.log("no_installment",no_installment);
+                        //  console.log("max_installment",max_installment);
+                        //  console.log("currency",currency);
+                        //  console.log("test_mode",test_mode);
+                        //  console.log("hash_str",hash_str);
                         // });
-                        console.log("1");
+                        // console.log("1");
                         
-                        console.log(merchant_key);
+                        // console.log(merchant_key);
                         // var paytr_token =await Base64(hmacSHA256(hash_str+merchant_salt, merchant_key));
                         // var paytr_token =await CryptoJS.AES.encrypt(JSON.stringify(hash_str), 'secret key 123').toString();;
                         var paytr_token = Base64.stringify(hmacSHA256(hash_str+merchant_salt, merchant_key,true));
                         
 
-                        console.log("paytr_token",paytr_token);
+                        // console.log("paytr_token",paytr_token);
                         // return
-                        console.log("2");
+                        // console.log("2");
                         var post_vals={}
                         // post_vals.map(item=>({
                             post_vals.merchant_id= merchant_id,
@@ -1090,80 +1110,48 @@ let myBody = document.getElementsByTagName('body')[0];
                             post_vals.user_name=user_name,  
                             post_vals.user_address=user_address,
                             post_vals.user_phone=user_phone,
-                            // post_vals.merchant_ok_url=merchant_ok_url,
-                            // post_vals.merchant_fail_url=merchant_fail_url,
+                            post_vals.merchant_ok_url=merchant_ok_url,
+                            post_vals.merchant_fail_url=merchant_fail_url,
                             post_vals.timeout_limit=timeout_limit,
                             post_vals.currency=currency,
                             post_vals.test_mode=test_mode
                             // console.log("buraa");
                             // let post_valsa={'merchant_id':merchant_id,'merchant_id':merchant_id,}
-                            let post_valsa=[]
-                             post_valsa.push(post_vals)
+                            // let post_valsa=[]
+                            //  post_valsa.push(post_vals)
                         // }))
-                        //  console.log(JSON.stringify(post_valsa));
+                          console.log(queryString.stringify(post_vals));
                          let postUrl= 'https://www.paytr.com/odeme/api/get-token'
-                         await fetch(postUrl, {
-                            method: 'POST',
-                            body:JSON.stringify(post_vals),
-                            headers: { 
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            mode: 'no-cors',
-                            }).then(async response=>{
-                                let fdr=await response.json();
-                                console.log("response",fdr)
-                            }).catch(err=>{
-                                console.log("err",err)
-                            })
-                        //  await this.$axios({
-                        //     method: 'post',
-                        //     mode:'no-cors',
-                        //     url:postUrl,
-                        //     data: JSON.stringify(post_vals),
-                        //     mode: 'no-cors',
-                        //     withCredentials: true,
-                        //     credentials: 'same-origin',
-                        //     headers:{
-                        //         headers: {
-                        //         'Content-Type': 'application/x-www-form-urlencoded',
-                        //     }
-                        //     }
-                        //     });
-                        // axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
-                        // // axios.defaults.headers.post['mode'] ='no-cors';
-                        // // axios.defaults.headers.post['credentials'] ='same-origin';
-                        // axios.defaults.withCredentials=true
-                        // axios.defaults.credentials='same-origin'
-                        // axios.defaults.mode='no-cors'
-                        // await axios.post("https://www.paytr.com/odeme/api/get-token",JSON.stringify(post_vals),
-                        //     {
-                        //     // withCredentials: true,
-                        //     // credentials: 'same-origin',
-                        //     // mode:'no-cors',
-                        //     // headers: {
-                        //         //  'Access-Control-Allow-Origin': '*',
-                        //         // 'Access-Control-Allow-Headers': '*',
-                        //         // 'Access-Control-Allow-Origin': '*',
-                        //         // 'Content-Type': 'application/x-www-form-urlencoded',
-                        //     // }
-                        //     }
-                        // )
-                        // .then(function(response){
-                        //     console.log(response);
-                        // }).catch(function(err){
-                        //     console.log(err);
-                        // })
-                        // await this.$http.post(postUrl, JSON.stringify(post_valsa),
-                        // { headers: {
-                        //             "Content-Type": "application/x-www-form-urlencoded",
-                                    
-                        // }})
-                        // .then(async response => {
-                        //         console.log(response.body);
-                        //     }, response => {
-                        //     console.error(response.body);
-                        //     });
-                        //    console.log(data); 
+                         
+                        await axios.post(
+                            'http://'+ process.env.API +':4000/graphql', {
+                            query: `query posQuery($pos:posInput){
+                                posQuery(pos:$pos){
+                                    res
+                                    token
+                                }  
+                            }`,
+                            variables: {
+                                pos: post_vals
+                                }
+                        }).then( (response) => { 
+                            console.log(response.data.data.posQuery.res)
+                            if(response.data.data.posQuery.res==='success'){
+                                console.log(response.data.data.posQuery.token) 
+                                this.frametoken=response.data.data.posQuery.token
+
+                                // $hash = base64_encode( hash_hmac('sha256', $post['merchant_oid'].$merchant_salt.$post['status'].$post['total_amount'], $merchant_key, true) );
+                                // var hasha=Base64.stringify(hmacSHA256(merchant_oid+merchant_salt+response.data.data.posQuery.res+payment_amount, merchant_key,true));
+                                // console.log("karılaştırma",hasha);
+                                // console.log("karılaştırma",this.frametoken);
+
+                                this.posFrame=true
+                                // console.log('basarılı')
+                                
+                            }
+                            
+                        })
+                        
 
 
 

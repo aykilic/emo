@@ -8,6 +8,10 @@ const {createWriteStream} = require('fs')
 const mongoose = require("mongoose");
 const path = require("path");
 const ejs = require("ejs");
+const bodyParser = require('body-parser')
+const hmacSHA256 = require ('crypto-js/hmac-sha256');
+const Base64 = require ('crypto-js/enc-base64');
+
 // const socketio = require('socket.io')
 // const {sendmail}=require('./helpers/emailservice.js')
 var jwt = require('jsonwebtoken');
@@ -68,6 +72,9 @@ const server = new ApolloServer({
 // }
  });
 const app = express();
+app.use(express.json());
+ app.use(bodyParser.urlencoded({extended:true}));
+ app.use(bodyParser.json());
 // app.use(async(req, res, next)=>{
 //   // console.log("req.headers",req.headers);
 // const token=req.headers['authorization'];
@@ -89,6 +96,56 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, './helpers')))
 // express.static(path.join(__dirname, './'));
+app.post("/sell",async (req, res, next) => {
+  let sippp=""
+  if (req.body.status==='success') {
+    
+      const model = Models.siparis
+        console.log("1");
+      
+    //  return await stokturu.find({_id:id})
+      const sip= await model.findOne({sipno:req.body.sipno})
+      
+      if (sip) {
+        console.log("2");
+         let cevap=""
+        // console.log(1);
+        let hash =Base64.stringify(hmacSHA256(sip.sipno+process.env.merchant_salt+'success'+sip.tutar,process.env.merchant_key,true));
+          if(hash!=req.body.hash){
+            console.log("3");
+            res.send('PAYTR notification failed: bad hash');
+            return
+          }
+          if(req.body.status==="success"){ // ödemeye onay verildi
+            console.log("4");
+            // veritabanından status durumunu değiştir.
+            
+            return
+            
+
+
+          }
+          else{ // ödemeye onay verilmedi
+            console.log("5");
+            res.send('OK');
+            return
+          }
+      }else{
+        //böyle bir sipariş yok
+        // $hash = base64_encode( hash_hmac('sha256', $post['merchant_oid'].$merchant_salt.$post['status'].$post['total_amount'], $merchant_key, true) );
+        // Base64.stringify(hmacSHA256(hash_str+merchant_salt, merchant_key,true));
+        console.log("6");
+        res.send('OK');
+        return
+        
+        //  sippp="hata"
+        // sippp=sip
+      }
+  }
+
+// console.log(req.body.datam)
+
+}),
 app.get("/hello", (req, res, next) => {
   let emailTemplate;
   let capitalizedFirstName = "John";

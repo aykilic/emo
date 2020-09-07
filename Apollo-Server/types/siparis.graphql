@@ -54,6 +54,28 @@ type numaralar{
     faturano:Float
     irsaliyeno:Float
 }
+type pos{
+    merchant_id:Float
+    user_ip:String
+    merchant_oid:String
+    email:String
+    payment_amount:Float
+    paytr_token:String
+    user_basket:String
+    debug_on:Float
+    no_installment:Float
+    max_installment:Float
+    user_name:String
+    user_address:String
+    user_phone:String
+    merchant_ok_url:String
+    merchant_fail_url:String
+    timeout_limit:Float
+    currency:String
+    test_mode:Float
+    res:String
+    token:String
+}
 
   type Mutation {
 #      createsepet_mutation(uid:String,guid:String, stokid:ID, stokad:String, varyantid:ID, varyantoption1:String, varyantoption2:String, fiyat:Float, path:String, publicid:String, count:Int):sepet
@@ -79,11 +101,33 @@ type numaralar{
      search_siparisfilterlist(startdate:DateTime,enddate:DateTime,odemeyontemmodel:String,odemedurummodel:String,teslimatdurummodel:String,fatdurummodel:String):[siparis]
      son_numaralar:numaralar
      search_getviewsiparis:[siparis]
+     posQuery(pos:posInput):pos
 #     search_ubasketlist(uid:String):[sepet]
  }
  type Subscription{
      newsiparis:siparis
      
+ }
+ input posInput{
+    merchant_id:Float
+    user_ip:String
+    merchant_oid:String
+    email:String
+    payment_amount:Float
+    paytr_token:String
+    user_basket:String
+    debug_on:Float
+    no_installment:Float
+    max_installment:Float
+    user_name:String
+    user_address:String
+    user_phone:String
+    merchant_ok_url:String
+    merchant_fail_url:String
+    timeout_limit:Float
+    currency:String
+    test_mode:Float
+    
  }
  input viewSiparisListsInput{
      listid:ID

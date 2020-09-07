@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt');
 const tokens = require('../../helpers/token')
 const forgottokens = require('../../helpers/tokenforgot')
 var jwt = require('jsonwebtoken');
+const fetch = require('node-fetch');
+const axios = require('axios');
+const querystring = require('querystring');
 module.exports = {
   user: async (parent, args, context)=>{
     return await context.Models.User.findById(args._id);
@@ -93,6 +96,8 @@ module.exports = {
     )
     // console.log(id);
     // return await stokturu.find().where('_id').in(idlist.id).exec();
+    // console.log(await stokturu.find({_id:{$in: id}}));
+     
     return await stokturu.find({_id:{$in: id}})
   },
   birimList: async (parent, args, {Models})=> {
@@ -584,6 +589,38 @@ module.exports = {
     
   //  return await stokturu.find({_id:id})
     return await model.findOne({'usermail':email})
+  },
+  posQuery:async(parent, {pos}, {Models})=> {
+    
+    
+    return await axios( {
+        method: 'POST',
+        url: 'https://www.paytr.com/odeme/api/get-token',
+        // data: JSON.stringify(obj),
+        data:querystring.stringify(pos),
+        //  headers: { 
+        //    'Content-Type': 'application/x-www-form-urlencoded' 
+        //   },
+
+    })
+    // .then(res => res.json())
+    .then(async function(response){
+      //  console.log(((response)));
+      let data=Object.assign(pos,{res:response.data.status}) //[{res:response.data.status}]
+       data=Object.assign(data,{token:response.data.token}) //[{res:response.data.status}]
+      // let data=response.data.status
+      // console.log([data]);
+      return data
+    })
+    .catch(json => {
+       let data={res:'hata'}
+       return data
+    
+    });
+    // console.log(val);
+    // return val
+    
+    
   },
 };
 
