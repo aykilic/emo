@@ -105,7 +105,7 @@ app.post("/sell",async (req, res, next) => {
         console.log("1");
       
     //  return await stokturu.find({_id:id})
-      const sip= await model.findOne({sipno:req.body.sipno})
+      const sip= await model.findOne({sipno:req.body.merchant_oid})
       
       if (sip) {
         console.log("2");
