@@ -120,6 +120,7 @@ app.post("/sell",async (req, res, next) => {
           }
           if(req.body.status==="success"){ // ödemeye onay verildi
             console.log("4");
+             await model.findOneAndUpdate({sipno :req.body.merchant_oid}, {"$set":   { "status": true}  })
             // veritabanından status durumunu değiştir.
             res.send('OK');
             return
