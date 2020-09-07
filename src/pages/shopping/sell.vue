@@ -979,190 +979,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 let val =this.val
                 if(val==="Kredi Kartı Hemen"){
                      console.log("kredi kartı entegrasyonu");
-                    var paytrurunList=[]
-                    var email = this.user.email;
-                    var merchant_oid = sipno
-                    // var merchant_oid = '1824375906'
-                    var merchant_id=Number(process.env.merchant_id);
-                    var merchant_key=process.env.merchant_key;
-                    var merchant_salt=process.env.merchant_salt;
-                    var user_name = this.user.ad_soyad
-                    var user_address = this.user.adres
-                    var user_phone = this.user.cep
-                    var merchant_ok_url = "http://www.emosetekstil.com.tr/sell" //Siparişi onaylayacağız sayfa "Bildirim URL" sayfasıdır
-                    var merchant_fail_url = "http://www.emosetekstil.com.tr/hata" //Siparişi iptal edeceğiniz sayfa "Bildirim URL" sayfasıdır
-                    var ptutar=0
-                    // console.log(satirList);
-                    let obj=[]
-                    satirList.forEach((item,i)=>{
-                        // console.log("a",item.stokad);
-                        let sad=item.stokad
-                        let fiya=(item.tutar/item.count).toString()
-                        let cou=item.count
-                        obj.push(sad)
-                        obj.push(fiya)
-                        obj.push(cou)
-                        paytrurunList.push(obj)
-                        
-                    })
-                    //  console.log(paytrurunList);
-                    // return
-                    // console.log("tutar",tutar) 
-                    tutar=tutar*100
-                     
-                    //  console.log("tutar",tutar)    
-                    // var payment_amount=tutar.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-                    var payment_amount=tutar
-
-                    // return
-                    // var payment_amount=" "
-                    // console.log("paytrurunList",JSON.stringify(paytrurunList));
-                    // console.log("paytrurunListJJJ",paytrurunList);
-                    var user_basket =btoa(JSON.stringify(paytrurunList))
                     
-                    // console.log("user_basket",user_basket);
-                    // return
-                    var user_ip=
-                    // fetch('https://api.ipify.org?format=json')
-                    // .then(x => x.json())
-                    // .then(({ ip }) => {
-                    //     return ip;
-                    // });
-                    await axios.get('http://extreme-ip-lookup.com/json/')
-                        .then(function (response) {
-                            
-                            // businessWebsite: ""
-                            // city: "Istanbul"
-                            // continent: "Asia"
-                            // country: "Turkey"
-                            // countryCode: "TR"
-                            // ipName: ""
-                            // ipType: "Residential"
-                            // isp: "Turkcell Internet"
-                            // lat: "41.01384"
-                            // lon: "28.94966"
-                            // org: "Turkcell Internet"
-                            // query: "176.90.135.57"
-                            // region: "Istanbul"
-                            // status: "success"
-                            //  console.log(response.data.query);
-                            return response.data.query
-                        })
-                        .catch(function (error) {
-                            // handle error
-                            console.log(error);
-                            this.$q.notify({
-                                    type: 'negative',
-                                    message: `ip bilgisi alınamadı...!`
-                                })
-                            return
-                        })
-                        console.log("bura");
-                        var timeout_limit = 10
-                        var debug_on = 1 // test 1
-                        var test_mode = 0
-                        var no_installment	= 0 // Taksit yapılmasını istemiyorsanız, sadece tek çekim sunacaksanız 1 yapın
-                        var max_installment = 0
-                        var currency = "TL"
-                        var hash_str = merchant_id+user_ip+merchant_oid+email+payment_amount+user_basket+no_installment+max_installment+currency+test_mode;
-                        // console.log("hash_str",hash_str);
-                        // return
-
-                        // $paytr_token=base64_encode(hash_hmac('sha256',$hash_str.$merchant_salt,$merchant_key,true));
-                        
-                        // jwt.sign(hash_str+merchant_salt, merchant_key, { algorithm: 'RS256' }, function(err, token) {
-                        //     var paytr_token=token
-                        //  console.log("merchant_id",merchant_id);
-                        //  console.log("user_ip",user_ip);
-                        //  console.log("merchant_oid",merchant_oid);
-                        //  console.log("email",email);
-                        //  console.log("payment_amount",payment_amount);
-                        //  console.log("user_basket",user_basket);
-                        //  console.log("no_installment",no_installment);
-                        //  console.log("max_installment",max_installment);
-                        //  console.log("currency",currency);
-                        //  console.log("test_mode",test_mode);
-                        //  console.log("hash_str",hash_str);
-                        // });
-                        // console.log("1");
-                        
-                        // console.log(merchant_key);
-                        // var paytr_token =await Base64(hmacSHA256(hash_str+merchant_salt, merchant_key));
-                        // var paytr_token =await CryptoJS.AES.encrypt(JSON.stringify(hash_str), 'secret key 123').toString();;
-                        var paytr_token = Base64.stringify(hmacSHA256(hash_str+merchant_salt, merchant_key,true));
-                        
-
-                        // console.log("paytr_token",paytr_token);
-                        // return
-                        // console.log("2");
-                        var post_vals={}
-                        // post_vals.map(item=>({
-                            post_vals.merchant_id= merchant_id,
-                            post_vals.user_ip= user_ip,
-                            post_vals.merchant_oid=merchant_oid,
-                            post_vals.email=email,
-                            post_vals.payment_amount=payment_amount,
-                            post_vals.paytr_token=paytr_token,
-                            post_vals.user_basket=user_basket,
-                            post_vals.debug_on=debug_on,
-                            post_vals.no_installment=no_installment,
-                            post_vals.max_installment=max_installment,
-                            post_vals.user_name=user_name,  
-                            post_vals.user_address=user_address,
-                            post_vals.user_phone=user_phone,
-                            post_vals.merchant_ok_url=merchant_ok_url,
-                            post_vals.merchant_fail_url=merchant_fail_url,
-                            post_vals.timeout_limit=timeout_limit,
-                            post_vals.currency=currency,
-                            post_vals.test_mode=test_mode
-                            // console.log("buraa");
-                            // let post_valsa={'merchant_id':merchant_id,'merchant_id':merchant_id,}
-                            // let post_valsa=[]
-                            //  post_valsa.push(post_vals)
-                        // }))
-                          console.log(queryString.stringify(post_vals));
-                         let postUrl= 'https://www.paytr.com/odeme/api/get-token'
-                         
-                        await axios.post(
-                            'http://'+ process.env.API +':4000/graphql', {
-                            query: `query posQuery($pos:posInput){
-                                posQuery(pos:$pos){
-                                    res
-                                    token
-                                }  
-                            }`,
-                            variables: {
-                                pos: post_vals
-                                }
-                        }).then( (response) => { 
-                            console.log(response.data.data.posQuery.res)
-                            if(response.data.data.posQuery.res==='success'){
-                                console.log(response.data.data.posQuery.token) 
-                                this.frametoken=response.data.data.posQuery.token
-
-                                // $hash = base64_encode( hash_hmac('sha256', $post['merchant_oid'].$merchant_salt.$post['status'].$post['total_amount'], $merchant_key, true) );
-                                // var hasha=Base64.stringify(hmacSHA256(merchant_oid+merchant_salt+response.data.data.posQuery.res+payment_amount, merchant_key,true));
-                                // console.log("karılaştırma",hasha);
-                                // console.log("karılaştırma",this.frametoken);
-
-                                this.posFrame=true
-                                // console.log('basarılı')
-                                
-                            }
-                            
-                        })
-                        
-
-
-
-
-
-
-
-
-
-                     //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-                    return
                     Loading.show()
                     this.$apollo
                         .mutate({
@@ -1214,6 +1031,147 @@ let myBody = document.getElementsByTagName('body')[0];
                            await this.numaralar_guncelle()
                             // console.log("ok");
                             await this.delete_basketsellproduct(satirList)
+
+                                var paytrurunList=[]
+                                                var email = this.user.email;
+                                                var merchant_oid = sipno
+                                                // var merchant_oid = '1824375906'
+                                                var merchant_id=Number(process.env.merchant_id);
+                                                var merchant_key=process.env.merchant_key;
+                                                var merchant_salt=process.env.merchant_salt;
+                                                var user_name = this.user.ad_soyad
+                                                var user_address = this.user.adres
+                                                var user_phone = this.user.cep
+                                                var merchant_ok_url = "http://www.emosetekstil.com.tr/sell" //Siparişi onaylayacağız sayfa "Bildirim URL" sayfasıdır
+                                                var merchant_fail_url = "http://www.emosetekstil.com.tr/hata" //Siparişi iptal edeceğiniz sayfa "Bildirim URL" sayfasıdır
+                                                var ptutar=0
+                                                // console.log(satirList);
+                                                let obj=[]
+                                                satirList.forEach((item,i)=>{
+                                                    // console.log("a",item.stokad);
+                                                    let sad=item.stokad
+                                                    let fiya=(item.tutar/item.count).toString()
+                                                    let cou=item.count
+                                                    obj.push(sad)
+                                                    obj.push(fiya)
+                                                    obj.push(cou)
+                                                    paytrurunList.push(obj)
+                                                    
+                                                })
+                                                tutar=tutar*100
+                                                
+                                                var payment_amount=tutar
+
+                                                var user_basket =btoa(JSON.stringify(paytrurunList))
+                                                
+                                                var user_ip=
+                                                
+                                                await axios.get('http://extreme-ip-lookup.com/json/')
+                                                    .then(function (response) {
+                                                        
+                                                        // businessWebsite: ""
+                                                        // city: "Istanbul"
+                                                        // continent: "Asia"
+                                                        // country: "Turkey"
+                                                        // countryCode: "TR"
+                                                        // ipName: ""
+                                                        // ipType: "Residential"
+                                                        // isp: "Turkcell Internet"
+                                                        // lat: "41.01384"
+                                                        // lon: "28.94966"
+                                                        // org: "Turkcell Internet"
+                                                        // query: "176.90.135.57"
+                                                        // region: "Istanbul"
+                                                        // status: "success"
+                                                        //  console.log(response.data.query);
+                                                        return response.data.query
+                                                    })
+                                                    .catch(function (error) {
+                                                        // handle error
+                                                        console.log(error);
+                                                        this.$q.notify({
+                                                                type: 'negative',
+                                                                message: `ip bilgisi alınamadı...!`
+                                                            })
+                                                        return
+                                                    })
+                                                    console.log("bura");
+                                                    var timeout_limit = 10
+                                                    var debug_on = 1 // test 1
+                                                    var test_mode = 0
+                                                    var no_installment	= 0 // Taksit yapılmasını istemiyorsanız, sadece tek çekim sunacaksanız 1 yapın
+                                                    var max_installment = 0
+                                                    var currency = "TL"
+                                                    var hash_str = merchant_id+user_ip+merchant_oid+email+payment_amount+user_basket+no_installment+max_installment+currency+test_mode;
+                                                    
+
+                                                    var paytr_token = Base64.stringify(hmacSHA256(hash_str+merchant_salt, merchant_key,true));
+                                                    
+
+                                                    
+                                                    var post_vals={}
+                                                    // post_vals.map(item=>({
+                                                        post_vals.merchant_id= merchant_id,
+                                                        post_vals.user_ip= user_ip,
+                                                        post_vals.merchant_oid=merchant_oid,
+                                                        post_vals.email=email,
+                                                        post_vals.payment_amount=payment_amount,
+                                                        post_vals.paytr_token=paytr_token,
+                                                        post_vals.user_basket=user_basket,
+                                                        post_vals.debug_on=debug_on,
+                                                        post_vals.no_installment=no_installment,
+                                                        post_vals.max_installment=max_installment,
+                                                        post_vals.user_name=user_name,  
+                                                        post_vals.user_address=user_address,
+                                                        post_vals.user_phone=user_phone,
+                                                        post_vals.merchant_ok_url=merchant_ok_url,
+                                                        post_vals.merchant_fail_url=merchant_fail_url,
+                                                        post_vals.timeout_limit=timeout_limit,
+                                                        post_vals.currency=currency,
+                                                        post_vals.test_mode=test_mode
+                                                        
+                                                    console.log(queryString.stringify(post_vals));
+                                                    let postUrl= 'https://www.paytr.com/odeme/api/get-token'
+                                                    
+                                                    await axios.post(
+                                                        'http://'+ process.env.API +':4000/graphql', {
+                                                        query: `query posQuery($pos:posInput){
+                                                            posQuery(pos:$pos){
+                                                                res
+                                                                token
+                                                            }  
+                                                        }`,
+                                                        variables: {
+                                                            pos: post_vals
+                                                            }
+                                                    }).then( (response) => { 
+                                                        console.log(response.data.data.posQuery.res)
+                                                        if(response.data.data.posQuery.res==='success'){
+                                                            console.log(response.data.data.posQuery.token) 
+                                                            this.frametoken=response.data.data.posQuery.token
+
+                                                            
+
+                                                            this.posFrame=true
+                                                            // console.log('basarılı')
+                                                            
+                                                        }
+                                                        
+                                                    })
+                                                    
+
+
+
+
+
+
+
+
+
+                                                //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+                                                // return
+
+
                             // this.popdialog=true
                             Loading.hide()
                         }).catch(err => {
