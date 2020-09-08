@@ -632,7 +632,7 @@
                             <q-card-section class="row col-12 q-pt-none q-pb-none justify-center" style="height:500px">
 
                                 <iframe class=" " :src="frameSrc" id="paytriframe" frameborder="0"  style="width: 100%;height:880px;"  ></iframe>
-                                <q-btn rounded flat class="col-10" label="Vazgeç" color="red" size="lg" v-close-popup />
+                                <q-btn rounded flat class="col-10" label="Vazgeç" color="red" size="lg" @click="paytrkapat()" v-close-popup />
                             </q-card-section>
                             <!-- <q-card-actions class="row col-12" align="center">
                                 
@@ -919,6 +919,8 @@ let myBody = document.getElementsByTagName('body')[0];
                 }else{
                     //  userid=this.get_uid
                 }
+                this.$store.commit('mutation_sipno',this.sipno)
+                this.$store.commit('mutation_userid',this.user._id)
                 // return
 
                let aratoplam =this.formatNumber(this.aratoplam)
@@ -969,7 +971,6 @@ let myBody = document.getElementsByTagName('body')[0];
                 }
                 satlistolustur()
                 // console.log("satirList",satirList);
-                 
                if(this.val == ""){
                    this.$q.notify({
                         type: "negative",
@@ -980,66 +981,68 @@ let myBody = document.getElementsByTagName('body')[0];
                 let val =this.val
                 if(val==="Kredi Kartı Hemen"){
                      console.log("kredi kartı entegrasyonu");
+                    //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+                    // mail yolla
+                    // Loading.show()
+                    // this.$apollo
+                    //     .mutate({
+                    //     mutation: gql`
+                    //         mutation kartsendmail_mutation($sipno: Float,$username:String, $usermail:String) {
+                    //         kartsendmail_mutation(sipno: $sipno, username: $username, usermail: $usermail) {
+                    //             _id
+                    //         }
+                    //         }
+                    //     `,
+                    //     variables: {
+                    //         sipno:Number(sipno),
+                    //         username:this.user.ad_soyad,
+                    //         usermail:this.user.email,
+                    //     },
+                    // })
+                    //     .then(async data => {
+                    //         Loading.hide()
+                    //     }).catch(err => {
+                    //         console.log(err);
+                    //         Loading.hide()
+                    //     })
                     
-                    Loading.show()
-                    this.$apollo
-                        .mutate({
-                        mutation: gql`
-                            mutation kartsendmail_mutation($sipno: Float,$username:String, $usermail:String) {
-                            kartsendmail_mutation(sipno: $sipno, username: $username, usermail: $usermail) {
-                                _id
-                            }
-                            }
-                        `,
-                        variables: {
-                            sipno:Number(sipno),
-                            username:this.user.ad_soyad,
-                            usermail:this.user.email,
-                        },
-                    })
-                        .then(async data => {
-
-                            Loading.hide()
-                        }).catch(err => {
-                            console.log(err);
-                            Loading.hide()
-                        })
-
                     // return
                     this.odemedurumu="Ödendi"
                     if(Cookies.get("uid")== null || Cookies.get("uid") == undefined || Cookies.get("uid") == ""){
                     this.guser_det_kaydet() // guser detay kayıt
                     }
                     satlistolustur()
+                    this.$store.commit('mutation_satirList',satirList)
+                    this.$store.commit('mutation_siparisfis',siparisfis)
                     
-                    Loading.show()
-                    this.$apollo
-                        .mutate({
-                        mutation: gql`
-                            mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
-                            createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
-                                _id
-                            }
-                            }
-                        `,
-                        // loadingKey: 'loading',
-                        variables: {
-                          satirList: satirList,
-                          siparisfis: siparisfis
-                        }
-                        })
-                        .then(async data => {
-                           await this.numaralar_guncelle()
+                    // Loading.show()
+                    // this.$apollo
+                    //     .mutate({
+                    //     mutation: gql`
+                    //         mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
+                    //         createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
+                    //             _id
+                    //         }
+                    //         }
+                    //     `,
+                    //     // loadingKey: 'loading',
+                    //     variables: {
+                    //       satirList: satirList,
+                    //       siparisfis: siparisfis
+                    //     }
+                    //     })
+                    //     .then(async data => {
+                           await this.numaralar_guncelle() //herhangibir yere taşı
                             // console.log("ok");
-                            await this.delete_basketsellproduct(satirList)
+                            // await this.delete_basketsellproduct(satirList) // odeme basarili sayfası
 
                                 var paytrurunList=[]
-                                                var email = this.user.email;
+                                                var email = this.user.email
                                                 var merchant_oid = sipno
                                                 // var merchant_oid = '1824375906'
-                                                var merchant_id=Number(process.env.merchant_id);
-                                                var merchant_key=process.env.merchant_key;
-                                                var merchant_salt=process.env.merchant_salt;
+                                                var merchant_id=Number(process.env.merchant_id)
+                                                var merchant_key=process.env.merchant_key
+                                                var merchant_salt=process.env.merchant_salt
                                                 var user_name = this.user.ad_soyad
                                                 var user_address = this.user.adres
                                                 var user_phone = this.user.cep
@@ -1096,7 +1099,7 @@ let myBody = document.getElementsByTagName('body')[0];
                                                             })
                                                         return
                                                     })
-                                                    console.log("bura");
+                                                    console.log("bura")
                                                     var timeout_limit = 10
                                                     var debug_on = 1 // test 1
                                                     var test_mode = 0
@@ -1131,8 +1134,8 @@ let myBody = document.getElementsByTagName('body')[0];
                                                         post_vals.currency=currency,
                                                         post_vals.test_mode=test_mode
                                                         
-                                                    console.log(queryString.stringify(post_vals));
-                                                    let postUrl= 'https://www.paytr.com/odeme/api/get-token'
+                                                    // console.log(queryString.stringify(post_vals));
+                                                    // let postUrl= 'https://www.paytr.com/odeme/api/get-token'
                                                     
                                                     await axios.post(
                                                         'http://'+ process.env.API +':4000/graphql', {
@@ -1161,24 +1164,15 @@ let myBody = document.getElementsByTagName('body')[0];
                                                     })
                                                     
 
-
-
-
-
-
-
-
-
                                                 //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
                                                 // return
 
-
                             // this.popdialog=true
-                            Loading.hide()
-                        }).catch(err => {
-                            console.log(err);
-                            Loading.hide()
-                        })
+                        //     Loading.hide()
+                        // }).catch(err => {
+                        //     console.log(err);
+                        //     Loading.hide()
+                        // })
 
                 }else if(val==="Havale"){
                     // console.log(this.user,sipno);
@@ -1309,9 +1303,7 @@ let myBody = document.getElementsByTagName('body')[0];
                     // console.log(val);
                 }
                 // console.log(this.user);
-                // console.log(this.selected);
-                // console.log(this.lists);
-                // miktar güncelle
+                
                 this.$apollo
                         .mutate({
                         mutation: gql`
@@ -1879,6 +1871,9 @@ let myBody = document.getElementsByTagName('body')[0];
             //     el.classList.remove(className);
             //     }
             // },
+            async paytrkapat(){
+               await this.$store.dispatch('credit_card',false);
+            }
         },
         
     }

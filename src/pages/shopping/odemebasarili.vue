@@ -41,23 +41,115 @@
 </template>
 
 <script>
+import axios from "axios";
+import gql from "graphql-tag";
+import { mapGetters } from "vuex";
+import { Loading } from "quasar";
     export default {
         data() {
             return {
                 
             }
         },
+        ...mapGetters([
+                'get_guid',
+                'get_uid',
+                'get_basketlist',
+                'get_ubasketlist',
+                'get_userdetaillists',
+                'get_user',
+                //-*-*-*-*--*-*---**-
+                'get_satirList',
+                'get_sipno',
+                'get_userid',
+                'get_siparisfis',
+                
+      
+            ]),
         mounted () {
             // this.$store.dispatch('credit_card',false);
-            this.start()
+            // this.start()
         },
         methods: {
             start() {
-                setTimeout(() => {
-                    this.$store.dispatch('credit_card',false);
-                    this.$router.push({ path: '/' })
-                },5000);
-            }
+                // setTimeout(() => {
+                //     this.$store.dispatch('credit_card',false);
+                //     this.$router.push({ path: '/' })
+                // },5000);
+                Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
+                            createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          satirList: this.get_satirList,
+                          siparisfis: this.get_siparisfis
+                        }
+                        })
+                        .then(async data => {
+                            await this.delete_basketsellproduct()
+
+                        })
+
+
+
+
+
+                Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation kartsendmail_mutation($sipno: Float,$username:String, $usermail:String) {
+                            kartsendmail_mutation(sipno: $sipno, username: $username, usermail: $usermail) {
+                                _id
+                            }
+                            }
+                        `,
+                        variables: {
+                            sipno:Number(sipno),
+                            username:this.user.ad_soyad,
+                            usermail:this.user.email,
+                        },
+                    })
+                        .then(async data => {
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
+
+
+            },
+            async delete_basketsellproduct(){
+                Loading.show()
+               await this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation delete_basketsellproduct($satirList: [satirListInput]) {
+                            delete_basketsellproduct(satirList: $satirList) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          satirList: this.get_satirList
+                        }
+                        })
+                        .then(async data => {
+
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
+            },
         },
     }
 </script>
