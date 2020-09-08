@@ -72,6 +72,7 @@ require('../../node_modules/dotenv').config();
     children: [
       {path: '',  component: () => import('pages/shopping/sellmiddleware.vue')},
       {path: '/sell',  component: () => import('pages/shopping/sell.vue')},
+      {path: '/odemebasarili',  component: () => import('pages/shopping/odemebasarili.vue')},
       {path: '/hata',  component: () => import('pages/shopping/hata.vue')},
     ]
   },

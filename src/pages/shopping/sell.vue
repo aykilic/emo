@@ -627,7 +627,7 @@
                         </q-card-section>
                         </q-card>
                     </q-dialog>
-                    <q-dialog full-height v-model="posFrame" persistent>
+                    <q-dialog full-height v-model="get_creditcard_status" persistent>
                         <q-card class="col row q-pt-none" style="width: 100%;height:auto">
                             <q-card-section class="row col-12 q-pt-none q-pb-none justify-center" style="height:500px">
 
@@ -807,6 +807,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 'get_ubasketlist',
                 'get_userdetaillists',
                 'get_user',
+                'get_creditcard_status'
       
             ]),
         },
@@ -1042,7 +1043,7 @@ let myBody = document.getElementsByTagName('body')[0];
                                                 var user_name = this.user.ad_soyad
                                                 var user_address = this.user.adres
                                                 var user_phone = this.user.cep
-                                                var merchant_ok_url = "http://www.emosetekstil.com.tr/sell" //Siparişi onaylayacağız sayfa "Bildirim URL" sayfasıdır
+                                                var merchant_ok_url = "http://www.emosetekstil.com.tr/odemebasarili" //Siparişi onaylayacağız sayfa "Bildirim URL" sayfasıdır
                                                 var merchant_fail_url = "http://www.emosetekstil.com.tr/hata" //Siparişi iptal edeceğiniz sayfa "Bildirim URL" sayfasıdır
                                                 var ptutar=0
                                                 // console.log(satirList);
@@ -1151,8 +1152,8 @@ let myBody = document.getElementsByTagName('body')[0];
                                                             this.frametoken=response.data.data.posQuery.token
 
                                                             
-
-                                                            this.posFrame=true
+                                                            this.$store.dispatch('credit_card',true);
+                                                            // this.posFrame=true
                                                             // console.log('basarılı')
                                                             
                                                         }

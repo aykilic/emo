@@ -13,12 +13,16 @@ export default {
       basketid:"",
       basketlist:[],
       ubasketlist:[],
-      userdetaillists:[]
+      userdetaillists:[],
+      creditcard:false,
     },
     actions: {
         // add_getuser({commit,dispatch},type){
         //     dispatch('search_getuser', Cookies.get('uid'));
         // },
+        credit_card({commit} ,type   ){
+            commit('credit_card_status', type);
+        },
          add_basketid({commit} ,type   )
          {
             commit('basketid', type);   
@@ -187,6 +191,9 @@ export default {
     },
     },
     mutations:{
+        credit_card_status(state, type){
+            state.creditcard = type
+        },
         set_luser(state, type){
             state.user = type
         },
@@ -230,6 +237,9 @@ export default {
           },
     },
     getters:{ 
+        get_creditcard_status: (state, getters) => {
+            return state.creditcard
+          },
         get_guid: (state, getters) => {
             return state.guid
           },
