@@ -68,41 +68,41 @@ import { Loading } from "quasar";
             ]),
         mounted () {
             // this.$store.dispatch('credit_card',false);
-            // this.start()
+             this.start()
         },
         methods: {
-            start() {
+            async start() {
                 // setTimeout(() => {
                 //     this.$store.dispatch('credit_card',false);
                 //     this.$router.push({ path: '/' })
                 // },5000);
-                Loading.show()
-                    this.$apollo
-                        .mutate({
-                        mutation: gql`
-                            mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
-                            createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
-                                _id
-                            }
-                            }
-                        `,
-                        // loadingKey: 'loading',
-                        variables: {
-                          satirList: this.get_satirList,
-                          siparisfis: this.get_siparisfis
-                        }
-                        })
-                        .then(async data => {
+                 Loading.show()
+                    // this.$apollo
+                    //     .mutate({
+                    //     mutation: gql`
+                    //         mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
+                    //         createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
+                    //             _id
+                    //         }
+                    //         }
+                    //     `,
+                    //     // loadingKey: 'loading',
+                    //     variables: {
+                    //       satirList: this.get_satirList,
+                    //       siparisfis: this.get_siparisfis
+                    //     }
+                    //     })
+                    //     .then(async data => {
                             await this.delete_basketsellproduct()
 
-                        })
+                        // })
 
 
 
 
 
-                Loading.show()
-                    this.$apollo
+                
+                    await this.$apollo
                         .mutate({
                         mutation: gql`
                             mutation kartsendmail_mutation($sipno: Float,$username:String, $usermail:String) {
@@ -112,12 +112,13 @@ import { Loading } from "quasar";
                             }
                         `,
                         variables: {
-                            sipno:Number(sipno),
-                            username:this.user.ad_soyad,
-                            usermail:this.user.email,
+                            sipno:Number(localStorage.getItem('sipno')),
+                            username:localStorage.getItem('userad'),
+                            usermail:localStorage.getItem('useremail')
                         },
                     })
                         .then(async data => {
+                            this.$router.push({ path: '/' })
                             Loading.hide()
                         }).catch(err => {
                             console.log(err);
@@ -139,7 +140,7 @@ import { Loading } from "quasar";
                         `,
                         // loadingKey: 'loading',
                         variables: {
-                          satirList: this.get_satirList
+                          satirList: localStorage.getItem('satirList')
                         }
                         })
                         .then(async data => {

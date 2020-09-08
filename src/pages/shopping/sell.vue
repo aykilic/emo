@@ -919,6 +919,10 @@ let myBody = document.getElementsByTagName('body')[0];
                 }else{
                     //  userid=this.get_uid
                 }
+                localStorage.setItem('sipno',this.sipno);
+                localStorage.setItem('userid',this.user._id);
+                localStorage.setItem('userad',this.user.ad_soyad);
+                localStorage.setItem('useremail',this.user.email);
                 this.$store.commit('mutation_sipno',this.sipno)
                 this.$store.commit('mutation_userid',this.user._id)
                 // return
@@ -1012,26 +1016,27 @@ let myBody = document.getElementsByTagName('body')[0];
                     this.guser_det_kaydet() // guser detay kayıt
                     }
                     satlistolustur()
+                    localStorage.setItem('satirList',satirList);
                     this.$store.commit('mutation_satirList',satirList)
                     this.$store.commit('mutation_siparisfis',siparisfis)
                     
-                    // Loading.show()
-                    // this.$apollo
-                    //     .mutate({
-                    //     mutation: gql`
-                    //         mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
-                    //         createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
-                    //             _id
-                    //         }
-                    //         }
-                    //     `,
-                    //     // loadingKey: 'loading',
-                    //     variables: {
-                    //       satirList: satirList,
-                    //       siparisfis: siparisfis
-                    //     }
-                    //     })
-                    //     .then(async data => {
+                    Loading.show()
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
+                            createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          satirList: satirList,
+                          siparisfis: siparisfis
+                        }
+                        })
+                        .then(async data => {
                            await this.numaralar_guncelle() //herhangibir yere taşı
                             // console.log("ok");
                             // await this.delete_basketsellproduct(satirList) // odeme basarili sayfası
@@ -1168,11 +1173,11 @@ let myBody = document.getElementsByTagName('body')[0];
                                                 // return
 
                             // this.popdialog=true
-                        //     Loading.hide()
-                        // }).catch(err => {
-                        //     console.log(err);
-                        //     Loading.hide()
-                        // })
+                            Loading.hide()
+                        }).catch(err => {
+                            console.log(err);
+                            Loading.hide()
+                        })
 
                 }else if(val==="Havale"){
                     // console.log(this.user,sipno);
