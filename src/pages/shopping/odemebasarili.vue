@@ -68,7 +68,7 @@ import { Loading } from "quasar";
             ]),
         mounted () {
             // this.$store.dispatch('credit_card',false);
-            console.log(localstorage.getItem('satirList'))
+            // console.log(localstorage.getItem('satirList'))
              this.start()
         },
         methods: {
