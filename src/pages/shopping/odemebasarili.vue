@@ -145,7 +145,12 @@ import { Loading } from "quasar";
                         }
                         })
                         .then(async data => {
-
+                            localStorage.removeItem('sipno')
+                            localStorage.removeItem('userid')
+                            localStorage.removeItem('userad')
+                            localStorage.removeItem('useremail')
+                            localStorage.removeItem('satirList')
+                            this.$router.push({ path: '/' })
                             Loading.hide()
                         }).catch(err => {
                             console.log(err);
