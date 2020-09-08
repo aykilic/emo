@@ -1044,7 +1044,7 @@ let myBody = document.getElementsByTagName('body')[0];
                                                 var user_address = this.user.adres
                                                 var user_phone = this.user.cep
                                                 var merchant_ok_url = "http://www.emosetekstil.com.tr/odemebasarili" //Siparişi onaylayacağız sayfa "Bildirim URL" sayfasıdır
-                                                var merchant_fail_url = "http://www.emosetekstil.com.tr/hata" //Siparişi iptal edeceğiniz sayfa "Bildirim URL" sayfasıdır
+                                                var merchant_fail_url = "http://www.emosetekstil.com.tr/odemehata" //Siparişi iptal edeceğiniz sayfa "Bildirim URL" sayfasıdır
                                                 var ptutar=0
                                                 // console.log(satirList);
                                                 let obj=[]

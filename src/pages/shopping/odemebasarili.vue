@@ -55,6 +55,7 @@
             start() {
                 setTimeout(() => {
                     this.$store.dispatch('credit_card',false);
+                    this.$router.push({ path: '/' })
                 },5000);
             }
         },
