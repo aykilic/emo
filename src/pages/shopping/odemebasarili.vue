@@ -125,7 +125,11 @@ import { Loading } from "quasar";
                             localStorage.removeItem('userad')
                             localStorage.removeItem('useremail')
                             localStorage.removeItem('satirList')
-                            this.$router.push({ path: '/' })
+                             setTimeout(() => {
+                                this.$router.push({ path: '/' })
+                             },5000);
+                            
+
                             Loading.hide()
                         }).catch(err => {
                             console.log(err);

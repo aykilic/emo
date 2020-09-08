@@ -1019,7 +1019,7 @@ let myBody = document.getElementsByTagName('body')[0];
 //                     var datas = ["1", "2", "3"]
 // l                   localStorage["datas"] = JSON.stringify(datas);
                     localStorage.setItem('satirList',JSON.stringify(satirList));
-                    console.log("localstorage",localStorage.getItem('satirList'))
+                    // console.log("localstorage",localStorage.getItem('satirList'))
                     // return
                     this.$store.commit('mutation_satirList',satirList)
                     this.$store.commit('mutation_siparisfis',siparisfis)
