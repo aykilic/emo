@@ -68,6 +68,7 @@ import { Loading } from "quasar";
             ]),
         mounted () {
             // this.$store.dispatch('credit_card',false);
+            console.log(localstorage.getItem('satirList'))
              this.start()
         },
         methods: {
@@ -118,7 +119,7 @@ import { Loading } from "quasar";
                         },
                     })
                         .then(async data => {
-                            this.$router.push({ path: '/' })
+                            // this.$router.push({ path: '/' })
                             Loading.hide()
                         }).catch(err => {
                             console.log(err);

@@ -1014,9 +1014,13 @@ let myBody = document.getElementsByTagName('body')[0];
                     this.odemedurumu="Ödendi"
                     if(Cookies.get("uid")== null || Cookies.get("uid") == undefined || Cookies.get("uid") == ""){
                     this.guser_det_kaydet() // guser detay kayıt
-                    }
-                    satlistolustur()
-                    localStorage.setItem('satirList',satirList);
+                    }   
+                    // satlistolustur()
+//                     var datas = ["1", "2", "3"]
+// l                   localStorage["datas"] = JSON.stringify(datas);
+                    localStorage.setItem('satirList',JSON.stringify(satirList));
+                    console.log("localstorage",localStorage.getItem('satirList'))
+                    return
                     this.$store.commit('mutation_satirList',satirList)
                     this.$store.commit('mutation_siparisfis',siparisfis)
                     
