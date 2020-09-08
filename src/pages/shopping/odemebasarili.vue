@@ -141,7 +141,7 @@ import { Loading } from "quasar";
                         `,
                         // loadingKey: 'loading',
                         variables: {
-                          satirList: localStorage.getItem('satirList')
+                          satirList: JSON.parse(localStorage.getItem('satirList'))
                         }
                         })
                         .then(async data => {
