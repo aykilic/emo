@@ -105,7 +105,7 @@
       <div class="row cursor-pointer q-pl-xs q-pr-xs q-mt-md q-mb-xl" v-if="get_stamplist.length > 0">
         <div   class="row q-gutter-xs " >
           <div v-for="(list9 ,index) in get_stamplist" :key="index" class="q-pt-md col " style="">
-            <img   :src="list9.path + list9.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list9.stokturad,list9.stokid)">
+            <!-- <img   :src="list9.path + list9.publicid+'.jpg'"  class="fit " style="object-fit:contain" @click="select(list9.stokturad,list9.stokid)"> -->
           </div>
         </div>
       </div>

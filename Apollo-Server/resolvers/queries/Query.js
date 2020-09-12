@@ -415,6 +415,13 @@ module.exports = {
   //  return await stokturu.find({_id:id})
     return await model.find()
   },
+  cozumQuery:async(parent, args, {Models})=> {
+    const model = Models.cozumMerkezi
+    //  console.log({guid});
+  
+  //  return await stokturu.find({_id:id})
+    return await model.find()
+  },
   Search_Userdetail_Query:async(parent, {uid}, {Models})=> {
     const model = Models.User_detail
     //  console.log({guid});

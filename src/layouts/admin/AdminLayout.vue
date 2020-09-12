@@ -213,6 +213,14 @@
                         <q-item-label >Ana Sayfa Ayarları</q-item-label>
                       </q-item-section>
                     </q-item>
+                      <q-item  to="/cozummerkezi" exact>
+                      <q-item-section avatar>
+                        <q-icon name="mdi-shield-check" />
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label >Çözüm Merkezi</q-item-label>
+                      </q-item-section>
+                    </q-item>
         <q-item  to="/admin" exact>
           <q-item-section avatar>
             <q-icon name="input" />

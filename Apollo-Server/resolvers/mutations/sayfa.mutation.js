@@ -481,5 +481,27 @@ module.exports = {
    {new: true})
   // return await varyant.findByIdAndDelete(id);
 },
+  cozumCreateOrUpdate:async (root, {id, gg, mss, ii, kvkk, ssk }, { Models }) => {
+  //  console.log(id);
+  const model = Models.cozumMerkezi
+    
+    if (id == null) {
+
+      return await new Promise((resolve,object) =>{
+        new model({
+            gg,
+            mss,
+            ii,
+            kvkk,
+            ssk,
+          }).save((err,doc) =>{
+          if(err) reject(err)
+          else resolve(doc)
+      })
+    })
+    }else{
+      return await model.findOneAndUpdate({_id :id}, {"$set":   { "gg": gg, "mss": mss, "ii":ii, "kvkk":kvkk, "ssk":ssk}  },{upsert:true})
+    }
+},
 }
   

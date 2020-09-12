@@ -20,8 +20,18 @@ type homePage{
   reklam4:[homeimages]
   stamp:[homeimages]
 }
+type cozumMerkezi{
+  _id:ID
+  gg:String
+  mss:String
+  ii:String
+  kvkk:String
+  ssk:String
+  
+}
 type Query{
   sliderlist:[homePage]
+  cozumQuery:[cozumMerkezi]
 }
 type Mutation{
   anasayfaslider1Upload(imageurl: String, filename:String, publicid:String, path:String, stokid:ID, stokturad:String):homePage
@@ -48,4 +58,5 @@ type Mutation{
   deletehomePageimageReklam3(id: ID, imageid: ID, path: String):homePage
   deletehomePageimageReklam4(id: ID, imageid: ID, path: String):homePage
   deletehomePageimageStamp(id: ID, imageid: ID, path: String):homePage
+  cozumCreateOrUpdate(id:String, gg:String, mss:String, ii:String, kvkk:String, ssk:String):cozumMerkezi
 }

@@ -63,6 +63,7 @@ require('../../node_modules/dotenv').config();
       { path: '/faturalist', component: () => import('pages/admin/faturalist.vue') },
       { path: '/customerlist', component: () => import('pages/admin/customerlist.vue') },
       { path: '/anasayfaayar', component: () => import('pages/admin/anasayfaayar.vue') },
+      { path: '/cozummerkezi', component: () => import('pages/admin/cozummerkezi.vue') },
     ],
   },
   
@@ -74,6 +75,7 @@ require('../../node_modules/dotenv').config();
       {path: '/sell',  component: () => import('pages/shopping/sell.vue')},
       {path: '/odemebasarili',  component: () => import('pages/shopping/odemebasarili.vue')},
       {path: '/hata',  component: () => import('pages/shopping/hata.vue')},
+      {path: '/destekmerkezi', name:'destekmerkezi', component: () => import('pages/destekMerkezi.vue')},
     ]
   },
   {
@@ -81,6 +83,7 @@ require('../../node_modules/dotenv').config();
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {path: 'deneme', name:'deneme', component: () => import('pages/skeleton/deneme.vue')},
+      
       { path: '',name:'Home', component: () => import('pages/Index.vue') },
       { path: 'login', component: () => import('pages/login/login.vue') },
       { path: 'forgotpassword', component: () => import('pages/login/forgotpassword.vue') },
