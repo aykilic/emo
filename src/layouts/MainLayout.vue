@@ -330,8 +330,8 @@
         <!-- <div class="row bg-pink-5 text-white q-pa-none"> -->
           
             <div class="q-pt-xl col-xs-12 col-md-4 col-lg-4  text-center q-col-gutter-md">
-              <div class="text-weight-bold">emosetekstil.com</div>
-              <div class="link cursor-pointer">Hakkımızda</div>
+              <div class="text-weight-bold">www.emosetekstil.com</div>
+              <!-- <div class="link cursor-pointer">Hakkımızda</div> -->
               <!-- <ul class="row justify-center">
                 <li class="justify-center"> -->
                   
@@ -385,7 +385,7 @@
               
               <div class="q-mt-xs q-col-gutter-md">
                 
-                  <a href="" style="text-decoration:none;"><q-icon class="cursor-pointer link" name="mdi-facebook" size="xl"  style="color:#385898" /></a>
+                  <a href="" style="text-decoration:none;"><q-icon class="cursor-pointer icon-link" name="mdi-facebook" size="xl"  style="color:#385898" /></a>
                   <!-- <q-icon class="cursor-pointer" name="mdi-facebook" size="md"  style="color:#385898" href="http://www.emosetekstil.com.tr"></q-icon> -->
                 
                   
@@ -459,7 +459,7 @@
       <q-item class=" q-pb-md text-center text-weight-bold">
         <q-item-section>
           <!-- <q-item-lable> -->
-            Copyright © 2020 Çelik Konfeksiyon San. ve Tic. LTD. ŞTİ.
+            Copyright © 2020 Çelik Konfeksiyon San. ve Tic. Ltd. Şti.
           <!-- </q-item-lable> -->
             
         </q-item-section>
@@ -1135,6 +1135,10 @@ a.menu_link:hover + div {
   // color: #1d1d1d;
   text-decoration: none;
 }
+.icon-link {
+  // color: #1d1d1d;
+  text-decoration: none;
+}
 // .link:link {
 //   // color: #1d1d1d;
 //   text-decoration: none;
@@ -1148,6 +1152,10 @@ a.menu_link:hover + div {
 .link:hover {
   // color: #1d1d1d;
   text-decoration: underline;
+}
+.icon-link:hover {
+  // color: #1d1d1d;
+  // text-decoration: underline;
 }
 
 // .link:active {
