@@ -498,7 +498,8 @@ module.exports = {
   // filtreleme
   search_siparisfilterlist:async(parent, {startdate, enddate, odemeyontemmodel, odemedurummodel,teslimatdurummodel,fatdurummodel}, {Models})=> {
     const model = Models.siparis
-      // console.log("startdate",new Date(startdate),"enddate",new Date(enddate) );
+      //  console.log("startdate",new Date(startdate),"enddate",new Date(enddate) );
+      //  enddate ="2020-09-14T23:59:59.000Z"
   //  return await model.aggregate([
    return await model.aggregate([
     // {$set: {userid: {$toObjectId: "$userid"} }},
@@ -519,10 +520,13 @@ module.exports = {
       //  {$match:{$and:[
       //   { "createdAt": {$gte: new Date(startdate), $lte: new Date(enddate)}}]}},
     {$match: {
+      
+
         createdAt: {
           $gte: new Date(startdate),
           $lte: new Date(enddate)
         }
+
       }
     },
     {$match:

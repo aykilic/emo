@@ -74,7 +74,7 @@ require('../../node_modules/dotenv').config();
       {path: '',  component: () => import('pages/shopping/sellmiddleware.vue')},
       {path: '/sell',  component: () => import('pages/shopping/sell.vue')},
       {path: '/odemebasarili',  component: () => import('pages/shopping/odemebasarili.vue')},
-      {path: '/hata',  component: () => import('pages/shopping/hata.vue')},
+      {path: '/odemehatali',  component: () => import('pages/shopping/odemehatali.vue')},
       {path: '/destekmerkezi', name:'destekmerkezi', component: () => import('pages/destekMerkezi.vue')},
     ]
   },

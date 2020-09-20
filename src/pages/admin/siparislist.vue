@@ -24,7 +24,7 @@
                 <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                           <q-popup-proxy transition-show="scale" transition-hide="scale">
-                            <q-date v-model="startdate" mask="DD-MM-YYYY" today-btn v-close-popup/>
+                            <q-date v-model="startdate" mask="DD-MM-YYYY" today-btn />
                           </q-popup-proxy>
                     </q-icon>
 
@@ -36,7 +36,7 @@
                 <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                           <q-popup-proxy transition-show="scale" transition-hide="scale">
-                            <q-date v-model="enddate" mask="DD-MM-YYYY" today-btn v-close-popup/>
+                            <q-date v-model="enddate" mask="DD-MM-YYYY" today-btn />
                           </q-popup-proxy>
                     </q-icon>
 
@@ -75,11 +75,12 @@
          <q-btn class="" @click="siplistfilter()"  color="primary" label="Sorgula"  v-close-popup ></q-btn></div>
         </q-card>
         <q-card class="row q-mt-md col-11 ">
-            <div class="col-md-12 row  col-sm-12  col-xs-12 justify-center" >
-            
+            <div  class="col-md-12 row  col-sm-12  col-xs-12 justify-center" >
+            <!-- <div>{{siparislists}}</div> -->
             
             <!-- <q-separator inset/>     -->
             <q-table
+            
             flat
             :data="siparislists"
             :columns="columns"
@@ -124,15 +125,17 @@
               <q-checkbox v-model="props.selected" color="grey-8"  />
             </q-td>
                 <q-td key="tarih" :props="props"  >
-                  <!-- {{moment(props.row.createdAt).format('DD-MM-YYYY')}} -->
-                  {{date(props.row.createdAt)}}
+                    <!-- {{moment()}} -->
+                  {{moment(props.row.createdAt).format('DD-MM-YYYY HH:MM')}}
+                  <!-- {{date(props.row.createdAt)}} -->
                 </q-td>
                 <q-td key="sipno" :props="props"  class="sipno cursor-pointer"   @click.native="editsiparisdialogm(props.row),siparisdialog=true,sipno=props.row.sipno">
                     {{props.row.sipno}}
                  
                 </q-td>
                 <q-td key="cep" :props="props"  >
-                    {{props.row.user[0].ad_soyad}}<br>{{ props.row.user[0].cep | VMask('(###) ###-####') }}
+                    {{props.row.user[0].ad_soyad}}
+                    <br>{{ props.row.user[0].cep | VMask('(###) ###-####') }}
                     <!-- {{maske(props.row.user[0].ad_soyad)}} -->
                 
                 </q-td>
@@ -449,12 +452,13 @@ import gql from "graphql-tag";
 import {mapGetters } from 'vuex';
 import { date } from 'quasar'
 import moment from 'moment'
+// import 'moment/locale/tr'
 import { Loading } from "quasar";
 import printJS from 'print-js'
-// import moment from 'moment'
+//  import moment from 'moment'
     import VueMask from 'v-mask'
     Vue.use(VueMask);
-// moment.locale('tr');
+moment.locale('tr');
 
     export default {
         
@@ -463,6 +467,7 @@ import printJS from 'print-js'
             //  let startdate = new Date();
             //  startdate = moment("2020-01-01 15:04:24.207").format( 'DD-MM-YYYY')
             return {
+                moment:moment,
                 // startdate: moment(now).format( 'DD-MM-YYYY'),
                 startdate:date.formatDate('2020-07-01 00:00:00', 'DD-MM-YYYY'),
                 enddate:date.formatDate(Date.now(), 'DD-MM-YYYY'),
@@ -528,6 +533,7 @@ import printJS from 'print-js'
         },
         watch: {
             siparislists(val){
+                
                 this.tabletutar=0
                 val.forEach(item=>{
                     this.tabletutar += item.tutar

@@ -6,16 +6,15 @@ const nodemailer = require('nodemailer');
 // const template = './havale.ejs';
 // let datam={};
 let transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
-      requireTLS: true,
-    // service: "Gmail",
-    auth: {
-      user: process.env.EMAIL, // generated ethereal user
-      pass: process.env.EMAIL_PASS, // generated ethereal password
-    },
-  });
+  // host: "smtp.ethereal.email",
+  // port: 587,
+  // secure: false, // true for 465, false for other ports
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL, // generated ethereal user
+    pass: process.env.EMAIL_PASS, // generated ethereal password
+  },
+});
   //  const html =  ejs.renderFile("Apollo-Server/helpers/havale.ejs", {
   //   test: 'Test'
   // },{async: true});
@@ -85,10 +84,9 @@ await ejs.renderFile(__dirname + "/havale.ejs", { sipno:datam.sipno,username:dat
 
       transporter.sendMail(mainOptions, function (err, info) {
         if (err) {
-          // res.json({
-          //   msg: 'fail'
-          // })
-          console.log(err);
+          res.json({
+            msg: 'fail'
+          })
         } else {
           res.json({
             msg: 'success'

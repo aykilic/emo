@@ -209,7 +209,7 @@
         <!-- </transition> -->
       </div>
       <!-- ------------------------------------------------------------------------------------------- -->
-      <q-page-sticky expand position="top" style="z-index:1">
+      <q-page-sticky expand position="top" style="z-index:1" class="">
         <!-- <div> -->
         <!-- TODO:desktop tabs -->
         <!-- <q-header class="mobil-tab" elevated>      -->
@@ -224,11 +224,16 @@
           v-model="main_tab"
           indicator-color="transparent"
           dense
+          align="center"
           reveal
-          class="col-12 bg-pink-12 text-white desktop-tab"
+          class=" col-12 bg-pink-12 text-white desktop-tab"
           style="margin-top:-1px;"
+          
         >
+        <div class="row  ">
+        <!-- <div class="row justify-between col-8">  panel full tabs--> 
           <q-tab
+          class=""
             name="a"
             @click="menu = !menu"
             @mouseover="menuOver = true"
@@ -249,6 +254,7 @@
             @mouseout="menuOver2 = false"
             label="EN ÇOK SATAN ÜRÜNLER"
           />
+          </div>
         </q-tabs>
         <!-- <div class="container">
                     <svg viewBox="0 0 500 420" preserveAspectRatio="xMinYMin meet">
@@ -313,11 +319,11 @@
           </q-tab-panel>
 
           <q-tab-panel name="b">
-            <div class="text-h6">Günlük Kullanım</div>Ad molestiae non facere animi nobis, similique nemo velit reiciendis corporis impedit nam in.
+            <div class="text-h6">Günlük Kullanım</div>Yapım Aşamasında
           </q-tab-panel>
 
           <q-tab-panel name="c">
-            <div class="text-h6">En çok Satan ürünler</div>Nostrum necessitatibus expedita dolores? Voluptatem repudiandae magni ea.
+            <div class="text-h6">En çok Satan ürünler</div>Yapım Aşamasında
           </q-tab-panel>
         </q-tab-panels>
       </q-page-sticky>

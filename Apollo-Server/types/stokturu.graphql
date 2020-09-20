@@ -65,7 +65,7 @@ type User_detail{
   _id:ID
   uid:ID
   baslik:String
-  ad_soyad:  String
+  ad_soyad:String
   email:String
   cep:String
   tc_v_no:String

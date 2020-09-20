@@ -610,7 +610,7 @@
                         <q-card-section class="row justify-center">
                             <div class="text-h6 ">Sipariş Tamamlandı</div>
                             <q-space />
-                            <q-btn icon="close" flat round dense v-close-popup />
+                            <q-btn icon="close" flat round dense @click="route()" v-close-popup />
                         </q-card-section>
                         <q-separator/>
                         <q-card-section class="q-gutter-md">
@@ -834,7 +834,8 @@ let myBody = document.getElementsByTagName('body')[0];
         
         methods: {
             route(){
-                console.log("route");
+                this.$router.push({ path: '/' })
+                // console.log("route");
             },
             async adresdelete(){
                console.log(this.selectadresid); 
@@ -912,8 +913,9 @@ let myBody = document.getElementsByTagName('body')[0];
                 let sipno=Number(date.formatDate(Date.now(), 'X'))+225222222
                 sipno=sipno.toString()
                 this.sipno=sipno
+                console.log("bakım",this.get_uid);
                 if (this.get_uid == null || this.get_uid == undefined || this.get_uid == "") {
-                      this.user._id=this.get_guid
+                    //   this.user._id=this.get_guid
                     //   console.log(this.user)
                       
                 }else{
@@ -985,32 +987,7 @@ let myBody = document.getElementsByTagName('body')[0];
                 let val =this.val
                 if(val==="Kredi Kartı Hemen"){
                      console.log("kredi kartı entegrasyonu");
-                    //*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-                    // mail yolla
-                    // Loading.show()
-                    // this.$apollo
-                    //     .mutate({
-                    //     mutation: gql`
-                    //         mutation kartsendmail_mutation($sipno: Float,$username:String, $usermail:String) {
-                    //         kartsendmail_mutation(sipno: $sipno, username: $username, usermail: $usermail) {
-                    //             _id
-                    //         }
-                    //         }
-                    //     `,
-                    //     variables: {
-                    //         sipno:Number(sipno),
-                    //         username:this.user.ad_soyad,
-                    //         usermail:this.user.email,
-                    //     },
-                    // })
-                    //     .then(async data => {
-                    //         Loading.hide()
-                    //     }).catch(err => {
-                    //         console.log(err);
-                    //         Loading.hide()
-                    //     })
                     
-                    // return
                     this.odemedurumu="Ödendi"
                     if(Cookies.get("uid")== null || Cookies.get("uid") == undefined || Cookies.get("uid") == ""){
                     this.guser_det_kaydet() // guser detay kayıt
@@ -1040,6 +1017,7 @@ let myBody = document.getElementsByTagName('body')[0];
                           siparisfis: siparisfis
                         }
                         })
+                        // paytr
                         .then(async data => {
                            await this.numaralar_guncelle() //herhangibir yere taşı
                             // console.log("ok");
@@ -1056,7 +1034,7 @@ let myBody = document.getElementsByTagName('body')[0];
                                                 var user_address = this.user.adres
                                                 var user_phone = this.user.cep
                                                 var merchant_ok_url = "http://www.emosetekstil.com.tr/odemebasarili" //Siparişi onaylayacağız sayfa "Bildirim URL" sayfasıdır
-                                                var merchant_fail_url = "http://www.emosetekstil.com.tr/odemehata" //Siparişi iptal edeceğiniz sayfa "Bildirim URL" sayfasıdır
+                                                var merchant_fail_url = "http://www.emosetekstil.com.tr/odemehatali" //Siparişi iptal edeceğiniz sayfa "Bildirim URL" sayfasıdır
                                                 var ptutar=0
                                                 // console.log(satirList);
                                                 let obj=[]
@@ -1187,6 +1165,8 @@ let myBody = document.getElementsByTagName('body')[0];
                     // console.log(this.user,sipno);
                     
                     // return
+                    
+                    // console.log("***",Number(sipno),this.user.ad_soyad,this.user.email);
                     Loading.show()
                     this.$apollo
                         .mutate({
@@ -1206,22 +1186,23 @@ let myBody = document.getElementsByTagName('body')[0];
                     })
                         .then(async data => {
                             //Sipariş detayları mailinize yollanmıştır.
-                            Loading.hide()
+                            // Loading.hide()
                         }).catch(err => {
                             console.log(err);
                             Loading.hide()
                         })
-
+                    
                     // return
-                    this.havale_div=true
+                    // this.havale_div=true
                     this.odemedurumu="Beklemede"
                     if(Cookies.get("uid")== null || Cookies.get("uid") == undefined || Cookies.get("uid") == ""){
-                    this.guser_det_kaydet() // guser detay kayıt
+                    await this.guser_det_kaydet() // guser detay kayıt
                     }
                     satlistolustur()
                     
                     
-                    Loading.show()
+                    console.log("***",satirList,siparisfis);
+                    // Loading.show()
                     this.$apollo
                         .mutate({
                         mutation: gql`
@@ -1243,11 +1224,14 @@ let myBody = document.getElementsByTagName('body')[0];
                         //    this.havalesendmail()
                             // console.log("ok");
                             this.popdialog=true
-                            Loading.hide()
+                            // Loading.hide()
                         }).catch(err => {
                             console.log(err);
                             Loading.hide()
                         })
+                        
+                        console.log("3");
+                        Loading.hide()
                 }else if(val==="Kapıda Nakit"){
 
                     // yorum dialog
@@ -1284,7 +1268,7 @@ let myBody = document.getElementsByTagName('body')[0];
                     satlistolustur()
                     
                     
-                    
+                    console.log("***",satirList,siparisfis);
                     this.$apollo
                         .mutate({
                         mutation: gql`
