@@ -514,7 +514,7 @@
                       <q-separator />
                       <q-card-section>
                         <q-item style="height:60px" tag="label" v-ripple>
-                          <q-item-section style="min-width:10px" avatar>
+                          <q-item-section  avatar>
                             <q-radio
                               v-model="val"
                               val="Havale"
@@ -544,7 +544,7 @@
                       <q-separator />
                       <q-card-section>
                         <q-item style="height:60px" tag="label" v-ripple>
-                          <q-item-section style="min-width:10px" avatar>
+                          <q-item-section  avatar>
                             <q-radio
                               v-model="val"
                               val="Kapıda Nakit"
@@ -570,7 +570,7 @@
               <q-card flat>
                 <q-card-section>
                   <div class="row">
-                    <q-item class style="margin-top:-10px;">
+                    <q-item class >
                       <q-item-label
                         class="col-12 text-h6 text-left text-weight-medium"
                         style="margin-top:3px;"

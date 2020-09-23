@@ -1030,7 +1030,7 @@ export default {
   }
 
   svg {
-    display: none;
+    // display: none;
   }
 
   .hed {
