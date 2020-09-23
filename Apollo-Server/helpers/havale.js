@@ -6,44 +6,44 @@ const nodemailer = require('nodemailer');
 // const template = './havale.ejs';
 // let datam={};
 let transporter = nodemailer.createTransport({
-  // host: "smtp.ethereal.email",
+  // host: "smtp.ethereal.email",Î
   // port: 587,
   // secure: false, // true for 465, false for other ports
-  service: "gmail",
+  service: "Yandex",
   auth: {
     user: process.env.EMAIL, // generated ethereal user
     pass: process.env.EMAIL_PASS, // generated ethereal password
   },
 });
-  //  const html =  ejs.renderFile("Apollo-Server/helpers/havale.ejs", {
-  //   test: 'Test'
-  // },{async: true});
-  
+//  const html =  ejs.renderFile("Apollo-Server/helpers/havale.ejs", {
+//   test: 'Test'
+// },{async: true});
 
 
-  // const sendmail = ejs.renderFile(template, (err, html) => {
-  //   if (err) console.log(err); // Handle error
 
-  //   // console.log(`HTML: ${html}`);
+// const sendmail = ejs.renderFile(template, (err, html) => {
+//   if (err) console.log(err); // Handle error
 
-  //   let mailOpts = {
-  //     from: '"Fred Foo 👻" <aykilicibrahim@gmail.com>', // sender address
-  //     to: "aykilicibrahim@gmail.com", // list of receivers
-  //     subject: "Hello ✔", // Subject line
-  //     html: html
-  //   };
+//   // console.log(`HTML: ${html}`);
+
+//   let mailOpts = {
+//     from: '"Fred Foo 👻" <aykilicibrahim@gmail.com>', // sender address
+//     to: "aykilicibrahim@gmail.com", // list of receivers
+//     subject: "Hello ✔", // Subject line
+//     html: html
+//   };
 
 
-  //  transporter.sendMail(mailOpts, (err, info) => {
-  //    if (err) console.log(err); //Handle Error
+//  transporter.sendMail(mailOpts, (err, info) => {
+//    if (err) console.log(err); //Handle Error
 
-  //     console.log(info);
-  //  });
-  // });
+//     console.log(info);
+//  });
+// });
 
 //   const havalesendmail = async (datam)=>{
 //     // console.log("data",data);
-   
+
 //      transporter.sendMail({
 //         // from: '"Fred Foo 👻" <aykilicpanel@gmail.com>', // sender address
 //         from: '<aykilicpanel@gmail.com>', // sender address
@@ -54,9 +54,9 @@ let transporter = nodemailer.createTransport({
 //           try {
 //             console.log("output",datam);
 //                await ejs.renderFile(path.join(__dirname, "/havale.ejs"),{sipno:datam.sipno,username:datam.username,confirm_link: "http://www.8link.in"}
-              
+
 //               );
-              
+
 //           } catch (error) {
 //               console.log("Error occured: ", error);
 //           }
@@ -67,34 +67,36 @@ let transporter = nodemailer.createTransport({
 //         console.log(err);
 //     })
 // }
-const havalesendmail = async (datam)=>{
-   console.log("__dirname",__dirname);
-await ejs.renderFile(__dirname + "/havale.ejs", { sipno:datam.sipno,username:datam.username,usermail:datam.usermail,confirm_link: "http://www.8link.in" }, function (err, data) {
-  if (err) {
+const havalesendmail = async (datam) => {
+  console.log("__dirname", __dirname);
+  await ejs.renderFile(__dirname + "/havale.ejs", { sipno: datam.sipno, username: datam.username, usermail: datam.usermail, confirm_link: "http://www.8link.in" }, function (err, data) {
+    if (err) {
       console.log(err);
-  } else {
+    } else {
       var mainOptions = {
-        
-          from: 'info@emosetekstil.com.tr',
-          to: datam.usermail,
-          subject: 'Sipariş',
-          html:  data
+
+        from: process.env.EMAIL,
+        to: datam.usermail,
+        subject: 'Sipariş',
+        html: data
       };
       //console.log("html data ======================>", mainOptions.html);
 
       transporter.sendMail(mainOptions, function (err, info) {
         if (err) {
-          res.json({
-            msg: 'fail'
-          })
-        } else {
-          res.json({
-            msg: 'success'
-          })
+
+          if (err) {
+            console.log(err);
+            // err.Json({
+            //   msg: 'fail'
+            // })
+          } else {
+            console.log(info);
+          }
         }
-    });
+      });
     }
-});
+  });
 }
 
 //   let info = await transporter.sendMail({

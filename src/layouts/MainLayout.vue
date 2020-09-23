@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf" :key="layoutkey">
     <q-header reveal :reveal-offset="20">
-      <q-toolbar class="text-amber-1 bg-white text-grey-9 text-weight-bold justify-center">
+      <q-toolbar class="q-pb-lg text-amber-1 bg-white text-grey-9 text-weight-bold justify-center">
         <div class="row q-pt-lg col-md-8 col-sm-10 col-xs-12 grid desktop-had">
           <div class="col-md-4 col-sm-6 one">
             <router-link to="/">
@@ -71,7 +71,7 @@
         <!-- ----------------------------------------------------------- -->
 
         <div class="row q-pt-lg col-12 mobil-had">
-          <div class="row col-12">
+          <div class="row col-12 ">
             <div class="col-4">
               <q-btn flat @click="drawer = !drawer" round dense icon="menu" size="md" />
             </div>
@@ -142,14 +142,14 @@
 
         <!-- ----------------------------------------------------------- -->
       </q-toolbar>
-      <div class="container">
-        <svg viewBox="0 5 500 40" preserveAspectRatio="xMinYMin meet">
+      <!-- <div class="container"> -->
+        <!-- <svg viewBox="0 5 500 40" preserveAspectRatio="xMinYMin meet">
           <path
             d="M-0,15 C190,70 220,-25 500,35  L500,00 L0,0 Z"
             style="stroke: none; fill:white;"
           />
-        </svg>
-      </div>
+        </svg> -->
+      <!-- </div> -->
       <!-- TODO: -->
     </q-header>
     <!-- <mobil-menu :drawer="drawer" :nodes="treemmenu"></mobil-menu> -->
@@ -223,37 +223,48 @@
         <q-tabs
           v-model="main_tab"
           indicator-color="transparent"
-          dense
+          
           align="center"
           reveal
           class=" col-12 bg-pink-12 text-white desktop-tab"
           style="margin-top:-1px;"
           
         >
-        <div class="row  ">
+        <div class="row">
         <!-- <div class="row justify-between col-8">  panel full tabs--> 
           <q-tab
-          class=""
+          class="q-mr-md text-weight-medium"
+          style="font-size:15px"
             name="a"
             @click="menu = !menu"
             @mouseover="menuOver = true"
             @mouseout="menuOver = false"
-            label="LOHUSA & HAMİLE ÜRÜNLERİ"
-          />
+            
+            label=""
+          >LOHUSA & HAMİLE ÜRÜNLERİ
+          </q-tab>
           <q-tab
+          class="q-mr-md text-weight-medium"
+          style="font-size:15px"
             name="b"
             @click="menu = !menu"
             @mouseover="menuOver1 = true"
             @mouseout="menuOver1 = false"
-            label="GÜNLÜK KULLANIM"
-          />
+            label=""
+          >
+            GÜNLÜK KULLANIM
+          </q-tab>
           <q-tab
+          class="text-weight-medium"
             name="c"
+            style="font-size:15px"
             @click="menu = !menu"
             @mouseover="menuOver2 = true"
             @mouseout="menuOver2 = false"
-            label="EN ÇOK SATAN ÜRÜNLER"
-          />
+            label=""
+          >
+          EN ÇOK SATAN ÜRÜNLER
+          </q-tab>
           </div>
         </q-tabs>
         <!-- <div class="container">
@@ -306,7 +317,7 @@
                   <q-intersection once transition="fade" class>
                     <div class="row items-start q-col-gutter-x-md">
                       <q-card flat class="my-card col-6">
-                        <q-img src="../statics/emose_h200.jpg" style=" height: 400px;"></q-img>
+                        <q-img src="../statics/emose2_h200.jpg" style=" height: 400px;"></q-img>
                       </q-card>
                       <q-card flat class="my-card col-6">
                         <q-img flat src="../statics/emose1_h200.jpg" style=" height: 400px;"></q-img>
@@ -391,12 +402,23 @@
               
               <div class="q-mt-xs q-col-gutter-md">
                 
-                  <a href="" style="text-decoration:none;"><q-icon class="cursor-pointer icon-link" name="mdi-facebook" size="xl"  style="color:#385898" /></a>
+                  <a href="" style="text-decoration:none;">
+                    <q-icon class="cursor-pointer icon-link" name="mdi-facebook" size="xl"  style="color:#385898" />
+                    
+                    </a>
                   <!-- <q-icon class="cursor-pointer" name="mdi-facebook" size="md"  style="color:#385898" href="http://www.emosetekstil.com.tr"></q-icon> -->
                 
                   
                 <!-- <q-icon name="mdi-twitter" size="md" style="color:#1DA1F2;"/> -->
-                <a class="cursor-pointer link" onclick="window.open('https://www.instagram.com/emosepijama/', '_blank')" style="text-decoration:none;"><q-icon name="mdi-instagram" size="xl" style="color:#E1306C;"/></a>
+                <a class="cursor-pointer link" onclick="window.open('https://www.instagram.com/emosepijama/', '_blank')" style="text-decoration:none;">
+                <!-- <q-icon name="mdi-instagram" size="xl" style="color:#E1306C;"/> -->
+                <q-img
+          
+                      src="statics/instagram.png"
+                      
+                      style=" max-width: 40px;"
+                  />
+                </a>
                 
               </div>
               <div class="text-h5">
@@ -406,12 +428,12 @@
                 
                 <q-item-label class="text-h6">
                   <q-icon name="mdi-phone-outline" size="md"/> 
-                  0532 344 44 44
+                  0532 637 64 75
                   
                 </q-item-label>
                 <q-item-label class="text-h6">
                   <q-icon name="mdi-email-outline" size="md"/> 
-                  emosetekstil@gmail.com
+                  info@emosetekstil.com.tr
                   
                 </q-item-label>
                 
@@ -998,7 +1020,7 @@ export default {
   }
 }
 
-@media only screen and (max-width: 601px) {
+@media only screen and (max-width: 655px) {
   .desktop-tab {
     display: none;
   }
@@ -1020,7 +1042,7 @@ export default {
   }
 }
 
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: 656px) {
   .anamargin {
     margin-top: 40px;
   }
@@ -1033,14 +1055,15 @@ export default {
     display: none;
   }
 
-  .container {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    padding-bottom: 8%;
-    vertical-align: middle;
-    overflow: hidden;
-  }
+  // .container {
+    // padding-top:100px;
+    // display: inline-block;
+    // position: relative;
+    // width: 100%;
+    // padding-bottom: 8%;
+    // vertical-align: middle;
+    // overflow: hidden;
+  // }
 
   svg {
     display: inline-block;

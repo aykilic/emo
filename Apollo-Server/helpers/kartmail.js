@@ -9,7 +9,7 @@ let transporter = nodemailer.createTransport({
     // host: "smtp.ethereal.email",
     // port: 587,
     // secure: false, // true for 465, false for other ports
-    service: "gmail",
+    service: "Yandex",
     auth: {
       user: process.env.EMAIL, // generated ethereal user
       pass: process.env.EMAIL_PASS, // generated ethereal password
@@ -74,7 +74,7 @@ await ejs.renderFile(__dirname + "/kartmail.ejs", { sipno:datam.sipno,username:d
       console.log(err);
   } else {
       var mainOptions = {
-          from: '<aykilicpanel@gmail.com>',
+          from: process.env.EMAIL,
           to: datam.usermail,
           subject: 'Sipariş',
           html:  data
@@ -83,13 +83,14 @@ await ejs.renderFile(__dirname + "/kartmail.ejs", { sipno:datam.sipno,username:d
 
       transporter.sendMail(mainOptions, function (err, info) {
         if (err) {
-          res.json({
-            msg: 'fail'
-          })
-        } else {
-          res.json({
-            msg: 'success'
-          })
+          if (err) {
+            console.log(err);
+            // err.Json({
+            //   msg: 'fail'
+            // })
+          } else {
+            console.log(info);
+          }
         }
     });
     }
