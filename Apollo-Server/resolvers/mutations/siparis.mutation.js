@@ -83,6 +83,7 @@ module.exports = {
     },
     siparisodemedurumupdate:async (root, parent, { Models }) => {
       const model = Models.siparis
+      console.log(parent.odemedurumlist);
       return await Promise.all(
         parent.odemedurumlist.map((item)=>{ 
             // console.log(item)
