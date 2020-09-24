@@ -98,9 +98,11 @@ import { Loading } from "quasar";
                             
 
                     //     })
-                    let siparisfis=[]
-                    siparisfis.push(localStorage.getItem('siparisfis'))
-                    this.$apollo
+
+
+                    let siparisfis=[] 
+                    siparisfis.push(localStorage.getItem('siparisfis')) 
+                    this.$apollo 
                         .mutate({
                         mutation: gql`
                             mutation siparisodemedurumupdate($odemedurumlist: [odemedurumlistInput],$odemedurum:String) {
@@ -111,8 +113,8 @@ import { Loading } from "quasar";
                         `,
                         // loadingKey: 'loading',
                         variables: {
-                          odemedurumlist: siparisfis ,
-                          odemedurum: "Ödendi"
+                          odemedurumlist: siparisfis,
+                          odemedurum: "Ödendi" 
                         }
                         })
                         .then(async data => {
