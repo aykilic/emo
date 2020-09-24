@@ -1,3 +1,16 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
 <template>
   <div class="row col-12 q-pt-xl q-pb-xl justify-center">
     <!-- <q-card  style="width: 500px; max-width: 80vw;">
