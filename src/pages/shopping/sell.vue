@@ -1236,7 +1236,7 @@ export default {
          satlistolustur()
         //                     var datas = ["1", "2", "3"]
         // l                   localStorage["datas"] = JSON.stringify(datas);
-        siparisllist=[]
+        let siparisllist=[]
         siparisllist.push(siparisfis)
         localStorage.setItem("satirList", JSON.stringify(satirList));
         localStorage.setItem("siparisfis", JSON.stringify(siparisllist));
