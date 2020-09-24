@@ -146,6 +146,7 @@ export default {
               })
               .then(async (data) => {
                 // this.$router.push({ path: '/' })
+                
                 localStorage.removeItem("sipno");
                 localStorage.removeItem("userid");
                 localStorage.removeItem("userad");
