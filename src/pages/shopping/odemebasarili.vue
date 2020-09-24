@@ -1,6 +1,6 @@
 <template>
-    <div class="row col-12 q-pt-xl q-pb-xl justify-center">
-        <!-- <q-card  style="width: 500px; max-width: 80vw;">
+  <div class="row col-12 q-pt-xl q-pb-xl justify-center">
+    <!-- <q-card  style="width: 500px; max-width: 80vw;">
             <q-card-section class="row justify-center">
                 <div class="text-h6 ">Sipariş Tamamlandı</div>
                 <q-space />
@@ -16,29 +16,28 @@
                 <q-separator/>
             <q-card-section  class="text-center">
             </q-card-section>
-        </q-card> -->
-        
-        <div class="col-12 q-pt-md text-center">
-            <!-- <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+    </q-card>-->
+
+    <div class="col-12 q-pt-md text-center">
+      <!-- <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
             <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"/>
             <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3"/>
             <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2"/>
-        </svg> -->
-            <!-- <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+      </svg>-->
+      <!-- <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
             <circle class="path circle" fill="none" stroke="#27AE60" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"/>
             <polyline class="path check" fill="none" stroke="#27AE60" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
-        </svg> -->
-        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-        </svg>
-        </div>
-        
-        <div class="q-pt-xl text-h5 text-weight-medium">Ödemeniz başarıyla gerçekleştirilmiştir. En kısa sürede siparişiniz kargoya verilecektir.
-        </div>
-        
-                    
+      </svg>-->
+      <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+      </svg>
     </div>
+
+    <div
+      class="q-pt-xl text-h5 text-weight-medium"
+    >Ödemeniz başarıyla gerçekleştirilmiştir. En kısa sürede siparişiniz kargoya verilecektir.</div>
+  </div>
 </template>
 
 <script>
@@ -46,150 +45,154 @@ import axios from "axios";
 import gql from "graphql-tag";
 import { mapGetters } from "vuex";
 import { Loading } from "quasar";
-    export default {
-        data() {
-            return {
-                
+export default {
+  data() {
+    return {};
+  },
+  ...mapGetters([
+    "get_guid",
+    "get_uid",
+    "get_basketlist",
+    "get_ubasketlist",
+    "get_userdetaillists",
+    "get_user",
+    //-*-*-*-*--*-*---**-
+    "get_satirList",
+    "get_sipno",
+    "get_userid",
+    "get_siparisfis",
+  ]),
+  mounted() {
+    // this.$store.dispatch('credit_card',false);
+    // console.log(localstorage.getItem('satirList'))
+    this.start();
+  },
+  methods: {
+    async start() {
+      // setTimeout(() => {
+      //     this.$store.dispatch('credit_card',false);
+      //     this.$router.push({ path: '/' })
+      // },5000);
+
+      // this.$apollo
+      //     .mutate({
+      //     mutation: gql`
+      //         mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
+      //         createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
+      //             _id
+      //         }
+      //         }
+      //     `,
+      //     // loadingKey: 'loading',
+      //     variables: {
+      //       satirList: localStorage.getItem('satirList'),
+      //       siparisfis: localStorage.getItem('siparisfis'),
+      //     }
+      //     })
+      //     .then(async data => {
+
+      //     })
+
+      let siparisfis = [];
+      siparisfis.push(localStorage.getItem("siparisfis"));
+      this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation siparisodemedurumupdate(
+              $odemedurumlist: [odemedurumlistInput]
+              $odemedurum: String
+            ) {
+              siparisodemedurumupdate(
+                odemedurumlist: $odemedurumlist
+                odemedurum: $odemedurum
+              ) {
+                _id
+              }
             }
-        },
-        ...mapGetters([
-                'get_guid',
-                'get_uid',
-                'get_basketlist',
-                'get_ubasketlist',
-                'get_userdetaillists',
-                'get_user',
-                //-*-*-*-*--*-*---**-
-                'get_satirList',
-                'get_sipno',
-                'get_userid',
-                'get_siparisfis',
-                
-      
-            ]),
-        mounted () {
-            // this.$store.dispatch('credit_card',false);
-            // console.log(localstorage.getItem('satirList'))
-             this.start()
-        },
-        methods: {
-            async start() {
-                // setTimeout(() => {
-                //     this.$store.dispatch('credit_card',false);
-                //     this.$router.push({ path: '/' })
-                // },5000);
-                 
-                    // this.$apollo
-                    //     .mutate({
-                    //     mutation: gql`
-                    //         mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
-                    //         createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
-                    //             _id
-                    //         }
-                    //         }
-                    //     `,
-                    //     // loadingKey: 'loading',
-                    //     variables: {
-                    //       satirList: localStorage.getItem('satirList'),
-                    //       siparisfis: localStorage.getItem('siparisfis'),
-                    //     }
-                    //     })
-                    //     .then(async data => {
-                            
+          `,
+          // loadingKey: 'loading',
+          variables: {
+            odemedurumlist: siparisfis,
+            odemedurum: "Ödendi",
+          },
+        })
+        .then(async (data) => {
+          if (Number(localStorage.getItem("sipno"))) {
+            Loading.show();
+            await this.delete_basketsellproduct();
 
-                    //     })
+            await this.$apollo
+              .mutate({
+                mutation: gql`
+                  mutation kartsendmail_mutation(
+                    $sipno: Float
+                    $username: String
+                    $usermail: String
+                  ) {
+                    kartsendmail_mutation(
+                      sipno: $sipno
+                      username: $username
+                      usermail: $usermail
+                    ) {
+                      _id
+                    }
+                  }
+                `,
+                variables: {
+                  sipno: Number(localStorage.getItem("sipno")),
+                  username: localStorage.getItem("userad"),
+                  usermail: localStorage.getItem("useremail"),
+                },
+              })
+              .then(async (data) => {
+                // this.$router.push({ path: '/' })
+                localStorage.removeItem("sipno");
+                localStorage.removeItem("userid");
+                localStorage.removeItem("userad");
+                localStorage.removeItem("useremail");
+                localStorage.removeItem("satirList");
+                localStorage.removeItem("siparisfis");
+                setTimeout(() => {
+                  this.$router.push({ path: "/" });
+                }, 5000);
 
+                Loading.hide();
+              })
+              .catch((err) => {
+                console.log(err);
+                Loading.hide();
+              });
+          }
+        });
 
-                    let siparisfis=[] 
-                    siparisfis.push(localStorage.getItem('siparisfis')) 
-                    this.$apollo 
-                        .mutate({
-                        mutation: gql`
-                            mutation siparisodemedurumupdate($odemedurumlist: [odemedurumlistInput],$odemedurum:String) {
-                            siparisodemedurumupdate(odemedurumlist: $odemedurumlist, odemedurum: $odemedurum) {
-                                _id
-                            }
-                            }
-                        `,
-                        // loadingKey: 'loading',
-                        variables: {
-                          odemedurumlist: siparisfis,
-                          odemedurum: "Ödendi" 
-                        }
-                        })
-                        .then(async data => {
-                            if (Number(localStorage.getItem('sipno'))) {
-                    Loading.show()
-                    await this.delete_basketsellproduct()
-                
-                    await this.$apollo
-                        .mutate({
-                        mutation: gql`
-                            mutation kartsendmail_mutation($sipno: Float,$username:String, $usermail:String) {
-                            kartsendmail_mutation(sipno: $sipno, username: $username, usermail: $usermail) {
-                                _id
-                            }
-                            }
-                        `,
-                        variables: {
-                            sipno:Number(localStorage.getItem('sipno')),
-                            username:localStorage.getItem('userad'),
-                            usermail:localStorage.getItem('useremail')
-                        },
-                    })
-                        .then(async data => {
-                            // this.$router.push({ path: '/' })
-                            localStorage.removeItem('sipno')
-                            localStorage.removeItem('userid')
-                            localStorage.removeItem('userad')
-                            localStorage.removeItem('useremail')
-                            localStorage.removeItem('satirList')
-                            localStorage.removeItem('siparisfis')
-                             setTimeout(() => {
-                                this.$router.push({ path: '/' })
-                             },5000);
-                            
-
-                            Loading.hide()
-                        }).catch(err => {
-                            console.log(err);
-                            Loading.hide()
-                        })
+      //  console.log(Number(localStorage.getItem('sipno')))
+    },
+    async delete_basketsellproduct() {
+      Loading.show();
+      await this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation delete_basketsellproduct($satirList: [satirListInput]) {
+              delete_basketsellproduct(satirList: $satirList) {
+                _id
+              }
             }
-
-                        })
-
-                //  console.log(Number(localStorage.getItem('sipno')))
-
-                
-
-            },
-            async delete_basketsellproduct(){
-                Loading.show()
-               await this.$apollo
-                        .mutate({
-                        mutation: gql`
-                            mutation delete_basketsellproduct($satirList: [satirListInput]) {
-                            delete_basketsellproduct(satirList: $satirList) {
-                                _id
-                            }
-                            }
-                        `,
-                        // loadingKey: 'loading',
-                        variables: {
-                          satirList: JSON.parse(localStorage.getItem('satirList'))
-                        }
-                        })
-                        .then(async data => {
-                            
-                            Loading.hide()
-                        }).catch(err => {
-                            console.log(err);
-                            Loading.hide()
-                        })
-            },
-        },
-    }
+          `,
+          // loadingKey: 'loading',
+          variables: {
+            satirList: JSON.parse(localStorage.getItem("satirList")),
+          },
+        })
+        .then(async (data) => {
+          Loading.hide();
+        })
+        .catch((err) => {
+          console.log(err);
+          Loading.hide();
+        });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -272,7 +275,8 @@ import { Loading } from "quasar";
   stroke-miterlimit: 10;
   margin: 10% auto;
   box-shadow: inset 0px 0px 0px #fff;
-  animation: fill .4s ease-in-out .1s forwards, scale .3s ease-in-out .9s both;
+  animation: fill 0.4s ease-in-out 0.1s forwards,
+    scale 0.3s ease-in-out 0.9s both;
 }
 
 .checkmark__check {
@@ -290,7 +294,8 @@ import { Loading } from "quasar";
   }
 }
 @keyframes scale {
-  0%, 100% {
+  0%,
+  100% {
     transform: none;
   }
   50% {
