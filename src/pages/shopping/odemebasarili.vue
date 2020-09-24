@@ -146,7 +146,7 @@ export default {
               })
               .then(async (data) => {
                 // this.$router.push({ path: '/' })
-                
+                console.log("odeme basarılı");
                 localStorage.removeItem("sipno");
                 localStorage.removeItem("userid");
                 localStorage.removeItem("userad");
