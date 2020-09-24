@@ -1225,7 +1225,7 @@ export default {
       if (val === "Kredi Kartı Hemen") {
         console.log("kredi kartı entegrasyonu");
 
-        this.odemedurumu = "Ödendi";
+        this.odemedurumu = "Beklemede";
         if (
           Cookies.get("uid") == null ||
           Cookies.get("uid") == undefined ||
@@ -1233,14 +1233,15 @@ export default {
         ) {
           this.guser_det_kaydet(); // guser detay kayıt
         }
-        // satlistolustur()
+         satlistolustur()
         //                     var datas = ["1", "2", "3"]
         // l                   localStorage["datas"] = JSON.stringify(datas);
         localStorage.setItem("satirList", JSON.stringify(satirList));
+        localStorage.setItem("siparisfis", JSON.stringify(siparisfis));
         // console.log("localstorage",localStorage.getItem('satirList'))
         // return
-        this.$store.commit("mutation_satirList", satirList);
-        this.$store.commit("mutation_siparisfis", siparisfis);
+        // this.$store.commit("mutation_satirList", satirList);
+        // this.$store.commit("mutation_siparisfis", siparisfis);
 
         Loading.show();
         this.$apollo
@@ -1264,7 +1265,7 @@ export default {
               siparisfis: siparisfis,
             },
           })
-          // paytr
+        //   paytr  
           .then(async (data) => {
             await this.numaralar_guncelle(); //herhangibir yere taşı
             // console.log("ok");
@@ -1445,7 +1446,7 @@ export default {
           })
           .then(async (data) => {
             //Sipariş detayları mailinize yollanmıştır.
-            // Loading.hide()
+             Loading.hide()
           })
           .catch((err) => {
             console.log(err);

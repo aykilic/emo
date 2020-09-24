@@ -85,6 +85,7 @@ type pos{
     createSiparisFis_mutation(satirList:[satirListInput],siparisfis:siparisfisinput):siparis
     siparistutarupdate(id:ID, aratoplam:Float,kdv:Float,tutar:Float):siparis
     siparissatirdelete(sipid:ID,satirid:ID):siparis
+    
     sipariskargodurumupdate(kargodurumlist:[kargodurumlistInput],kargodurum:String):siparis
     siparisodemedurumupdate(odemedurumlist:[odemedurumlistInput],odemedurum:String):siparis
     numara_guncelle(irsaliyeno:Float,faturano:Float):numaralar

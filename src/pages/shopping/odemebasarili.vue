@@ -90,20 +90,33 @@ import { Loading } from "quasar";
                     //     `,
                     //     // loadingKey: 'loading',
                     //     variables: {
-                    //       satirList: this.get_satirList,
-                    //       siparisfis: this.get_siparisfis
+                    //       satirList: localStorage.getItem('satirList'),
+                    //       siparisfis: localStorage.getItem('siparisfis'),
                     //     }
                     //     })
                     //     .then(async data => {
                             
 
-                        // })
-
-
-
-                //  console.log(Number(localStorage.getItem('sipno')))
-
-                if (Number(localStorage.getItem('sipno'))) {
+                    //     })
+                    let siparisfis=[]
+                    siparisfis.push(localStorage.getItem('siparisfis'))
+                    this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation siparisodemedurumupdate($odemedurumlist: [odemedurumlistInput],$odemedurum:String) {
+                            siparisodemedurumupdate(odemedurumlist: $odemedurumlist, odemedurum: $odemedurum) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          odemedurumlist: siparisfis ,
+                          odemedurum: "Ödendi"
+                        }
+                        })
+                        .then(async data => {
+                            if (Number(localStorage.getItem('sipno'))) {
                     Loading.show()
                     await this.delete_basketsellproduct()
                 
@@ -129,6 +142,7 @@ import { Loading } from "quasar";
                             localStorage.removeItem('userad')
                             localStorage.removeItem('useremail')
                             localStorage.removeItem('satirList')
+                            localStorage.removeItem('siparisfis')
                              setTimeout(() => {
                                 this.$router.push({ path: '/' })
                              },5000);
@@ -140,6 +154,12 @@ import { Loading } from "quasar";
                             Loading.hide()
                         })
             }
+
+                        })
+
+                //  console.log(Number(localStorage.getItem('sipno')))
+
+                
 
             },
             async delete_basketsellproduct(){
