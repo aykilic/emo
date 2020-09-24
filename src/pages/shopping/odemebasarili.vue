@@ -78,7 +78,7 @@ export default {
   mounted() {
     // this.$store.dispatch('credit_card',false);
     // console.log(localstorage.getItem('satirList'))
-    console.log("odeme basarılım");
+    // console.log("odeme basarılım");
     this.start();
   },
   methods: {
@@ -110,23 +110,25 @@ export default {
           if (Number(localStorage.getItem("sipno"))) {
             Loading.show();
             this.$apollo
-              // .mutate({
-              //   mutation: gql`
-              //     mutation varyantstoklistmiktaredit($liste: [satiridcountinput]) {
-              //       varyantstoklistmiktaredit(liste: $liste) {
-              //         _id
-              //       }
-              //     }
-              //   `,
-              //   // loadingKey: 'loading',
-              //   variables: {
-              //     liste: JSON.parse(localStorage.getItem("satirList")).map((item) => ({
-              //       id: item.varyantid,
-              //       count: item.count * -1,
-              //     })),
-              //   },
-              // })
-              // .then((data) => {});
+              .mutate({
+                mutation: gql`
+                  mutation varyantstoklistmiktaredit($liste: [satiridcountinput]) {
+                    varyantstoklistmiktaredit(liste: $liste) {
+                      _id
+                    }
+                  }
+                `,
+                // loadingKey: 'loading',
+                variables: {
+                  liste: JSON.parse(localStorage.getItem("satirList")).map((item) => ({
+                    id: item.varyantid,
+                    count: item.count * -1,
+                  })),
+                },
+              })
+              .then((data) => {
+                console.log("miktar düş");
+              });
             await this.delete_basketsellproduct();
 
             await this.$apollo
