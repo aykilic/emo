@@ -145,13 +145,12 @@ export default {
                 },
               })
               .then(async (data) => {
-                // this.$router.push({ path: '/' })
                 console.log("odeme basarılı");
-                localStorage.removeItem("sipno");
-                localStorage.removeItem("userid");
-                localStorage.removeItem("userad");
-                localStorage.removeItem("useremail");
-                localStorage.removeItem("satirList");
+                // localStorage.removeItem("sipno");
+                // localStorage.removeItem("userid");
+                // localStorage.removeItem("userad");
+                // localStorage.removeItem("useremail");
+                // localStorage.removeItem("satirList");
                 localStorage.removeItem("siparisfis");
                 setTimeout(() => {
                   this.$router.push({ path: "/" });
