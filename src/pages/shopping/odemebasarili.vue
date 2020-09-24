@@ -122,7 +122,7 @@ export default {
                 variables: {
                   liste: JSON.parse(localStorage.getItem("satirList")).map((item) => ({
                     id: item.varyantid,
-                    count: item.count //* -1,
+                    count: item.count * -1,
                   })),
                 },
               })

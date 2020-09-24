@@ -1212,7 +1212,7 @@ export default {
           satirList.push(obj);
         });
       }
-      satlistolustur();
+      // satlistolustur();
       // console.log("satirList",satirList);
       if (this.val == "") {
         this.$q.notify({
@@ -2140,6 +2140,12 @@ export default {
     //     }
     // },
     async paytrkapat() {
+      localStorage.removeItem("sipno");
+      localStorage.removeItem("userid");
+      localStorage.removeItem("userad");
+      localStorage.removeItem("useremail");
+      localStorage.removeItem("satirList");
+      localStorage.removeItem("siparisfis");
       await this.$store.dispatch("credit_card", false);
     },
   },
