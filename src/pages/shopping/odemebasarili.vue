@@ -78,6 +78,7 @@ export default {
   mounted() {
     // this.$store.dispatch('credit_card',false);
     // console.log(localstorage.getItem('satirList'))
+    console.log("odeme basarılım");
     this.start();
   },
   methods: {
