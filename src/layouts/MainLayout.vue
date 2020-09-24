@@ -1029,9 +1029,7 @@ export default {
     display: none;
   }
 
-  svg {
-
-    
+  svg.dalga {
     // display: none;
   }
 
