@@ -1030,6 +1030,8 @@ export default {
   }
 
   svg {
+
+    
     // display: none;
   }
 
