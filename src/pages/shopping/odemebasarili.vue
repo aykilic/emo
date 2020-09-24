@@ -109,6 +109,24 @@ export default {
         .then(async (data) => {
           if (Number(localStorage.getItem("sipno"))) {
             Loading.show();
+            this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation varyantstoklistmiktaredit($liste: [satiridcountinput]) {
+              varyantstoklistmiktaredit(liste: $liste) {
+                _id
+              }
+            }
+          `,
+          // loadingKey: 'loading',
+          variables: {
+            liste: JSON.parse(localStorage.getItem("satirList")).map((item) => ({
+              id: item.varyantid,
+              count: item.count * -1,
+            })),
+          },
+        })
+        .then((data) => {});
             await this.delete_basketsellproduct();
 
             await this.$apollo

@@ -1469,7 +1469,7 @@ export default {
           await this.guser_det_kaydet(); // guser detay kayıt
         }
         satlistolustur();
-
+        miktarguncelle();
         console.log("***", satirList, siparisfis);
         // Loading.show()
         this.$apollo
@@ -1553,7 +1553,7 @@ export default {
         }
 
         satlistolustur();
-
+        miktarguncelle()
         console.log("***", satirList, siparisfis);
         this.$apollo
           .mutate({
@@ -1589,8 +1589,9 @@ export default {
         // console.log(val);
       }
       // console.log(this.user);
-
-      this.$apollo
+      // miktar guncelle
+      function miktarguncelle(){
+        this.$apollo
         .mutate({
           mutation: gql`
             mutation varyantstoklistmiktaredit($liste: [satiridcountinput]) {
@@ -1608,6 +1609,8 @@ export default {
           },
         })
         .then((data) => {});
+      }
+      
     },
     // satılan urunu sepetten cıkar
     async delete_basketsellproduct(satirList) {
