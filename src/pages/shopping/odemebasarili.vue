@@ -69,30 +69,7 @@ export default {
   },
   methods: {
     async start() {
-      // setTimeout(() => {
-      //     this.$store.dispatch('credit_card',false);
-      //     this.$router.push({ path: '/' })
-      // },5000);
-
-      // this.$apollo
-      //     .mutate({
-      //     mutation: gql`
-      //         mutation createSiparisFis_mutation($satirList: [satirListInput],$siparisfis:siparisfisinput) {
-      //         createSiparisFis_mutation(satirList: $satirList, siparisfis: $siparisfis) {
-      //             _id
-      //         }
-      //         }
-      //     `,
-      //     // loadingKey: 'loading',
-      //     variables: {
-      //       satirList: localStorage.getItem('satirList'),
-      //       siparisfis: localStorage.getItem('siparisfis'),
-      //     }
-      //     })
-      //     .then(async data => {
-
-      //     })
-
+      
       let siparisfis = [];
       siparisfis.push(localStorage.getItem("siparisfis"));
       this.$apollo
@@ -166,6 +143,7 @@ export default {
         });
 
       //  console.log(Number(localStorage.getItem('sipno')))
+
     },
     async delete_basketsellproduct() {
       Loading.show();
