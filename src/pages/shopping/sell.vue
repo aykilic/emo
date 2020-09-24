@@ -1236,8 +1236,10 @@ export default {
          satlistolustur()
         //                     var datas = ["1", "2", "3"]
         // l                   localStorage["datas"] = JSON.stringify(datas);
+        siparisllist=[]
+        siparisllist.push(siparisfis)
         localStorage.setItem("satirList", JSON.stringify(satirList));
-        localStorage.setItem("siparisfis", JSON.stringify(siparisfis));
+        localStorage.setItem("siparisfis", JSON.stringify(siparisllist));
         // console.log("localstorage",localStorage.getItem('satirList'))
         // return
         // this.$store.commit("mutation_satirList", satirList);

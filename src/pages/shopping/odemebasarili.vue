@@ -83,8 +83,7 @@ export default {
   methods: {
     async start() {
       
-      let siparisfis = [];
-      siparisfis.push(localStorage.getItem("siparisfis"));
+      
       this.$apollo
         .mutate({
           mutation: gql`
@@ -102,7 +101,7 @@ export default {
           `,
           // loadingKey: 'loading',
           variables: {
-            odemedurumlist: siparisfis,
+            odemedurumlist: localStorage.getItem("siparisfis"),
             odemedurum: "Ödendi",
           },
         })
