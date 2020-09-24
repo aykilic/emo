@@ -102,7 +102,7 @@ export default {
           `,
           // loadingKey: 'loading',
           variables: {
-            odemedurumlist: localStorage.getItem("siparisfis"),
+            odemedurumlist: JSON.parse(localStorage.getItem("siparisfis")),
             odemedurum: "Ödendi",
           },
         })
