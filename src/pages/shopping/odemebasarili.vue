@@ -136,11 +136,7 @@ export default {
               })
               .then(async (data) => {
                 console.log("odeme basarılı");
-                // localStorage.removeItem("sipno");
-                // localStorage.removeItem("userid");
-                // localStorage.removeItem("userad");
-                // localStorage.removeItem("useremail");
-                // localStorage.removeItem("satirList");
+                
                 localStorage.removeItem("siparisfis");
                 setTimeout(() => {
                   this.$router.push({ path: "/" });
@@ -192,7 +188,11 @@ export default {
 //   display: block;
 //   margin: 40px auto 0;
 // }
-
+// localStorage.removeItem("sipno");
+                // localStorage.removeItem("userid");
+                // localStorage.removeItem("userad");
+                // localStorage.removeItem("useremail");
+                // localStorage.removeItem("satirList");
 // .path {
 //   stroke-dasharray: 1000;
 //   stroke-dashoffset: 0;
