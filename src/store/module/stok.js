@@ -23,7 +23,7 @@ export default {
         
         await axios.post(
       
-          'http://'+ process.env.API +':4000/graphql', {
+           process.env.API +':4000/graphql', {
              
             query: `{
               Query{
@@ -83,7 +83,7 @@ export default {
       },
       async varyantSkus({commit}){
         await axios
-        .post('http://'+ process.env.API +':4000/graphql',{
+        .post( process.env.API +':4000/graphql',{
           query: `query varyantSkusQuery{
                  varyantSkusQuery{
                     _id

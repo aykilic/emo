@@ -147,7 +147,7 @@ export default {
         },
         async cquery(){
             await axios
-                    .post('http://'+ process.env.API +':4000/graphql',{
+                    .post( process.env.API +':4000/graphql',{
                     query: `query cozumQuery{
                             cozumQuery{
                                _id

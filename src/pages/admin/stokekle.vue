@@ -633,7 +633,7 @@ export default {
     console.log("mount");
     
 
-    const res = await axios.post('http://'+ process.env.API +':4000/graphql', {
+    const res = await axios.post(  process.env.API +':4000/graphql', {
       query: `{
                     Query {
                               stokturad
@@ -644,7 +644,7 @@ export default {
       loadingKey: "loading"
     });
 
-    const birim = await axios.post('http://'+ process.env.API +':4000/graphql',{
+    const birim = await axios.post(  process.env.API +':4000/graphql',{
       query: `{
                     birimList {
                               _id
@@ -953,7 +953,7 @@ export default {
     },
     async hasvaryantsatirliste() {
       await axios
-        .post('http://'+ process.env.API +':4000/graphql',{
+        .post(  process.env.API +':4000/graphql',{
           query: `query hasvaryantsatirQuery($id: ID! ){
                  hasvaryantsatirQuery(id: $id){
                       _id
@@ -999,7 +999,7 @@ export default {
       await this.resimlistrefresh();
       
       await axios
-        .post('http://'+ process.env.API +':4000/graphql',{
+        .post(  process.env.API +':4000/graphql',{
           query: `query StokturuQuery($id: ID! ){
                  StokturuQuery(id: $id){
                       _id
@@ -1079,7 +1079,7 @@ export default {
 
     //TODO: sON tab
     async resimlistrefresh() {
-      const resimlist = await axios.post('http://'+ process.env.API +':4000/graphql',{
+      const resimlist = await axios.post(  process.env.API +':4000/graphql',{
         query: `query imgurlQuery($id: ID! ){
                  imgurlQuery(id: $id){
                       vars
@@ -1167,7 +1167,7 @@ export default {
     async varyantlists() {
       Loading.show()
       await axios
-        .post('http://'+ process.env.API +':4000/graphql',{
+        .post(  process.env.API +':4000/graphql',{
           query: `query allvaryantQuery{
                  allvaryantQuery{
                       _id

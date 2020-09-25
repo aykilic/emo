@@ -436,7 +436,7 @@ export default {
       },
       async fatlist(){
                 await axios
-                    .post('http://'+ process.env.API +':4000/graphql',{
+                    .post(  process.env.API +':4000/graphql',{
                     query: `query search_faturalist{
                             search_faturalist{
                                 _id

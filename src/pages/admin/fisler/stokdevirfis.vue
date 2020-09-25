@@ -208,7 +208,7 @@ import {mapGetters } from 'vuex';
            async selectstokid() {
                 // console.log(this.edittreemselect);
                 await axios
-                    .post('http://'+ process.env.API +':4000/graphql',{
+                    .post( process.env.API +':4000/graphql',{
                     query: `query hasvaryantsatirQuery($id: ID! ){
                             hasvaryantsatirQuery(id: $id){
                                 _id

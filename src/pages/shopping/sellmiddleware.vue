@@ -171,7 +171,7 @@ export default {
                 return;
               }
          await axios
-                .post('http://'+ process.env.API +':4000/graphql', {
+                .post(  process.env.API +':4000/graphql', {
                   query: `query loginuser_Query($usermail: String,$password:String ){
                          loginuser_Query(usermail: $usermail,password: $password){
                              _id
@@ -216,7 +216,7 @@ export default {
                     // console.log("evet");
                  //----------------
                  let checkmail= await axios.post(
-                'http://'+ process.env.API +':4000/graphql', {
+                  process.env.API +':4000/graphql', {
                  query: `query Search_checkmail($email:String){
                     Search_checkmail(email:$email){
                         _id
