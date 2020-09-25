@@ -102,6 +102,7 @@
                 <div class="col-10 q-gutter-x-md q-mt-md">
                     <q-btn @click="selected.length < 1 ? $q.notify({type: 'negative',message: `Listeden Seçim Yapmalısınız...`}) : teslimatdialog=true"  color="primary" text-color="white" label="Teslimat Durumunu Değiştir" />
                     <q-btn @click="selected.length < 1 ? $q.notify({type: 'negative',message: `Listeden Seçim Yapmalısınız...`}) : odemedialog=true" color="primary" text-color="white" label="Ödeme Durumunu Değiştir" />
+                    <q-btn @click="selected.length < 1 ? $q.notify({type: 'negative',message: `Listeden Seçim Yapmalısınız...`}) : iptal()" color="red" text-color="white" label="iptal" />
                 
                 
                 </div>
@@ -145,18 +146,18 @@
                  
                 </q-td>
                 <q-td key="odemedurumu" :props="props"  >
-                    <q-badge :color="props.row.odemedurumu === 'Ödendi' ? 'green' : 'deep-orange' ">
+                    <q-badge :color="props.row.odemedurumu === 'Ödendi' ? 'green' : props.row.odemedurumu ==='İptal' ? 'black' : 'deep-orange' ">
                     {{props.row.odemedurumu}}
                     </q-badge>
                 </q-td>
                 <q-td key="teslimat" :props="props"  >
-                    <q-badge :color="props.row.teslimat === 'Beklemede' ? 'deep-orange' : props.row.teslimat ==='iptal' ? 'deep-orange' : 'green'">
+                    <q-badge :color="props.row.teslimat === 'Beklemede' ? 'deep-orange' : props.row.teslimat ==='İptal' ? 'black' : 'green'">
                         <!-- ['Beklemede' ? 'iptal' ? {deep-orange} : {deep-orange} : {green}] -->
                     {{props.row.teslimat}}
                     </q-badge>
                 </q-td>
                 <q-td key="faturadurumu" :props="props"  >
-                    <q-badge :color="props.row.fatdurum === 'Beklemede' ? 'deep-orange' : 'green'">
+                    <q-badge :color="props.row.fatdurum === 'Beklemede' ? 'deep-orange' : props.row.fatdurum ==='İptal' ? 'black' : 'green'">
                     {{props.row.fatdurum}}
                     </q-badge>
                 </q-td>
@@ -994,6 +995,93 @@ moment.locale('tr');
       },
       datekisa(val){
               return  date.formatDate(val, 'DD-MM-YYYY')
+            },
+            iptal(){
+                Loading.show()
+                console.log("iptal");
+                console.log("this.selected",this.selected);
+                let satirList=[]
+                let satirLList=[]
+                // satirList=this.selected
+                this.selected.forEach(item=>{
+                    satirLList.push(item)
+                    item.satirs.forEach(aitem=>{
+                        satirList.push(aitem)
+                        
+                        
+                    })
+                })
+                // console.log(satirList);
+                this.$apollo
+                    .mutate({
+                    mutation: gql`
+                        mutation varyantstoklistmiktaredit($liste: [satiridcountinput]) {
+                        varyantstoklistmiktaredit(liste: $liste) {
+                            _id
+                        }
+                        }
+                    `,
+                    // loadingKey: 'loading',
+                    variables: {
+                        liste: satirList.map((item) => ({
+                        id: item.varyantid,
+                        count: item.count ,
+                        })),
+                    },
+                    })
+                    .then((data) => {
+
+                    });
+                // let select=[]
+                // this.selected.forEach(item=>{
+                //     let obj={}
+                //     obj={
+                //         sipno:item.sipno
+                //     }
+                //     select.push(obj)
+                // })
+                
+                this.$apollo
+                        .mutate({
+                        mutation: gql`
+                            mutation siparisdurumiptal($odemedurumlist: [odemedurumlistInput],$odemedurum:String) {
+                            siparisdurumiptal(odemedurumlist: $odemedurumlist, odemedurum: $odemedurum) {
+                                _id
+                            }
+                            }
+                        `,
+                        // loadingKey: 'loading',
+                        variables: {
+                          odemedurumlist: satirLList.map((item) => ({
+                            sipno:item.sipno
+                            })),
+                          odemedurum: "İptal"
+                        }
+                        })
+                        .then(async data => {
+                            await this.siplist()
+                            this.$q.notify({
+                                                type: "Positive",
+                                                message: `Ödeme Durumları Güncellendi...`,
+                                                position: "top-right",
+                                                color: "green",
+                                                icon: "check",
+                                            });
+                                            this.selected=[],
+                                            this.odemedurum=""
+                                            Loading.hide()
+                        }).catch(err => {
+                                console.log(err);
+                                 Loading.hide()
+                            
+
+                                // Loading.hide()
+                                })
+            Loading.hide()
+
+
+
+
             },
       yazdir(){
           printJS({

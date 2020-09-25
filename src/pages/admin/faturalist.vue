@@ -94,19 +94,19 @@
                  
                 </q-td>
                 <q-td key="odemedurumu" :props="props"  >
-                    <q-badge :color="props.row.odemedurumu === 'Ödendi' ? 'green' : 'deep-orange' ">
+                    <q-badge :color="props.row.odemedurumu === 'Ödendi' ? 'green' : props.row.odemedurumu ==='İptal' ? 'black' : 'deep-orange' ">
                     {{props.row.odemedurumu}}
                     </q-badge>
                 </q-td>
                 <q-td key="teslimat" :props="props"  >
-                    <q-badge :color="props.row.teslimat === 'Beklemede' ? 'deep-orange' : props.row.teslimat ==='iptal' ? 'deep-orange' : 'green'">
+                    <q-badge :color="props.row.teslimat === 'Beklemede' ? 'deep-orange' : props.row.teslimat ==='İptal' ? 'deep-orange' : 'green'">
                         <!-- ['Beklemede' ? 'iptal' ? {deep-orange} : {deep-orange} : {green}] -->
                     {{props.row.teslimat}}
                     </q-badge>
                 </q-td>
                 
                 <q-td key="faturadurumu" :props="props"  >
-                    <q-badge :color="props.row.fatdurum === 'Beklemede' ? 'deep-orange' : 'green'">
+                    <q-badge :color="props.row.fatdurum === 'Beklemede' ? 'deep-orange' : props.row.fatdurum ==='İptal' ? 'deep-orange' : 'green'">
                     {{props.row.fatdurum}}
                     </q-badge>
                 </q-td>

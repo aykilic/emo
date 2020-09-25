@@ -98,6 +98,23 @@ module.exports = {
           
       });
     },
+    siparisdurumiptal:async (root, parent, { Models }) => {
+      const model = Models.siparis
+      // console.log(parent.odemedurumlist);
+
+
+      return await Promise.all(
+        parent.odemedurumlist.map((item)=>{ 
+            // console.log(item)
+           return model.updateMany({"sipno": item.sipno }, {"$set":   { "odemedurumu": parent.odemedurum, "fatdurum":parent.odemedurum, "teslimat":parent.odemedurum}  },{multi:true}); 
+  
+      })).then(function(results){
+        // console.log(results);
+          let data={'res':'ok'};
+           return  data
+          
+      });
+    },
     deleteviewSiparislist:async (root, parent, { Models }) => {
       // console.log(parent);
       const model = Models.siparis

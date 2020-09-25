@@ -1591,7 +1591,7 @@ export default {
       // console.log(this.user);
       // miktar guncelle
       function miktarguncelle(){
-        this.$apollo
+        vm.$apollo
         .mutate({
           mutation: gql`
             mutation varyantstoklistmiktaredit($liste: [satiridcountinput]) {

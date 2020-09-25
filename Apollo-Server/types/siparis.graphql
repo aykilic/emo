@@ -88,6 +88,7 @@ type pos{
     
     sipariskargodurumupdate(kargodurumlist:[kargodurumlistInput],kargodurum:String):siparis
     siparisodemedurumupdate(odemedurumlist:[odemedurumlistInput],odemedurum:String):siparis
+    siparisdurumiptal(odemedurumlist:[odemedurumlistInput],odemedurum:String):siparis
     numara_guncelle(irsaliyeno:Float,faturano:Float):numaralar
     siparis_numara_guncelle(id:ID, irsaliyeno:Float,faturano:Float,fatdurum:String):siparis
     deleteviewSiparislist(listid:[viewSiparisListsInput]):siparis
