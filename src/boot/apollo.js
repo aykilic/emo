@@ -22,7 +22,7 @@ const httpLink = new HttpLink({
   uri: 'https://'+ process.env.API +':4000/graphql',
 })
 const wsLink = new WebSocketLink({
-  uri: 'ws://'+ process.env.API +':4000/graphql',
+  uri: 'wss://'+ process.env.API +':4000/graphql',
   options: {
     // connectionParams: {
     //   ibo: 1,
