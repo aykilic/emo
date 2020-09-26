@@ -104,7 +104,7 @@ module.exports = function (ctx) {
     }
     : { // and on build (production):
 
-      API: JSON.stringify('http://127.0.0.1'),
+      API: JSON.stringify('https://127.0.0.1'),
       
       WAPI:JSON.stringify('wss://localhost'),
       // JWT_SECRET:JSON.stringify('emose2-app3-jwt4')
