@@ -104,8 +104,7 @@ module.exports = function (ctx) {
     }
     : { // and on build (production):
 
-      // API: JSON.stringify('http://localhost'),
-      API: JSON.stringify('localhost'),
+      API: JSON.stringify('http://localhost'),
       
       // WAPI:JSON.stringify('ws://localhost'),
       WAPI:JSON.stringify('ws://localhost'),
