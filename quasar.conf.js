@@ -94,8 +94,8 @@ module.exports = function (ctx) {
       gzip: false,
       analyze: false,
       publicPath:ctx.dev
-      // ? '' :  'https://www.emosetekstil.com.tr/',
-      ? '' :  'http://www.emosetekstil.com.tr/',
+      ? '' :  'https://www.emosetekstil.com.tr/',
+      // ? '' :  'http://www.emosetekstil.com.tr/',
       env: ctx.dev
     ? { // so on dev we'll have
       API: JSON.stringify('http://localhost'),
