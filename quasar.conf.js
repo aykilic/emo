@@ -94,7 +94,7 @@ module.exports = function (ctx) {
       gzip: false,
       analyze: false,
       publicPath:ctx.dev
-      ? '' :  'https://www.emosetekstil.com.tr/',
+      ? '' :  'https://emosetekstil.com.tr/',
       // ? '' :  'http://www.emosetekstil.com.tr/',
       env: ctx.dev
     ? { // so on dev we'll have
@@ -104,10 +104,10 @@ module.exports = function (ctx) {
     }
     : { // and on build (production):
 
-      API: JSON.stringify('https://10.128.0.2'),
+      API: JSON.stringify('http://localhost'),
       
       // WAPI:JSON.stringify('ws://localhost'),
-      WAPI:JSON.stringify('wss://10.128.0.2'),
+      WAPI:JSON.stringify('ws://localhost'),
       // JWT_SECRET:JSON.stringify('emose2-app3-jwt4')
     },
       // Options below are automatically set depending on the env, set them if you want to override
