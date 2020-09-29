@@ -17,7 +17,6 @@ module.exports = function (ctx) {
       'axios',
       // 'jwt'
       // 'socket'
-      
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
