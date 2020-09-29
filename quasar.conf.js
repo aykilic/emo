@@ -106,7 +106,7 @@ module.exports = function (ctx) {
 
 
       
-      API: JSON.stringify('https://www.emosetekstil.com.tr'),
+      API: JSON.stringify('https://34.71.100.141'),
       
       // WAPI:JSON.stringify('ws://localhost'),
       
