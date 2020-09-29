@@ -849,7 +849,7 @@ moment.locale('tr');
             // }
             async siplistfilter(){
                 await axios
-                    .post(  process.env.API +':4000/graphql',{
+                    .post(  process.env.API,{
                     query: `query search_siparisfilterlist($startdate:DateTime,$enddate:DateTime,$odemeyontemmodel:String,$odemedurummodel:String,$teslimatdurummodel:String,$fatdurummodel:String){
                             search_siparisfilterlist(startdate:$startdate,enddate:$enddate,odemeyontemmodel:$odemeyontemmodel,odemedurummodel:$odemedurummodel,teslimatdurummodel:$teslimatdurummodel,fatdurummodel:$fatdurummodel){
                                 _id
@@ -906,7 +906,7 @@ moment.locale('tr');
             },
             async siplist(){
                 await axios
-                    .post(  process.env.API +':4000/graphql',{
+                    .post(  process.env.API,{
                     query: `query search_siparislist{
                             search_siparislist{
                                 _id

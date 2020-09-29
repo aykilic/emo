@@ -98,19 +98,19 @@ module.exports = function (ctx) {
       // ? '' :  'http://www.emosetekstil.com.tr/',
       env: ctx.dev
     ? { // so on dev we'll have
-      API: JSON.stringify('http://localhost'),
-      WAPI:JSON.stringify('ws://localhost'),
+      API: JSON.stringify('http://localhost:4000/graphql'),
+      WAPI:JSON.stringify('ws://localhost:4000/graphql'),
       // JWT_SECRET:JSON.stringify('emose2-app3-jwt4')
     }
     : { // and on build (production):
 
 
       
-      API: JSON.stringify('https://34.71.100.141'),
+      API: JSON.stringify('https://34.71.100.141:443/graphql'),
       
       // WAPI:JSON.stringify('ws://localhost'),
       
-      WAPI:JSON.stringify('wss://34.71.100.141'),
+      WAPI:JSON.stringify('wss://34.71.100.141:443/graphql'),
       // JWT_SECRET:JSON.stringify('emose2-app3-jwt4')
     },
       // Options below are automatically set depending on the env, set them if you want to override

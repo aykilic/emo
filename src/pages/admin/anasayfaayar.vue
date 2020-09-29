@@ -1467,7 +1467,7 @@ import anaslidercloud from "../../components/anaslidercloud.vue";
         },
         methods: {
            async slider1listrefresh(){
-                await axios.post( process.env.API +':4000/graphql', {
+                await axios.post( process.env.API , {
                 query: `query sliderlist{
                  sliderlist{
                       slider1

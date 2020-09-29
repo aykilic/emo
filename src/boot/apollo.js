@@ -1,13 +1,11 @@
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
-// import {HttpsLink} from 'apollo-link/lib/'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 // import { createUploadLink } from 'apollo-upload-client'
 import apolloUploadClient from "apollo-upload-client"
 import { split } from 'apollo-link'
 import { setContext } from 'apollo-link-context'
 import { WebSocketLink } from 'apollo-link-ws'
-// import { WebSsocketLink } from 'apollo-link-ws/lib/inde'
 import { getMainDefinition } from 'apollo-utilities'
 import VueApollo from 'vue-apollo'
 import { Cookies } from "quasar"
@@ -21,10 +19,10 @@ import fetch from 'node-fetch'
 // });
 const httpLink = new HttpLink({
   // You should use an absolute URL here
-  uri:  process.env.API +':443/graphql',
+  uri:  process.env.API ,
 })
 const wsLink = new WebSocketLink({
-  uri:  process.env.WAPI +':443/graphql',
+  uri:  process.env.WAPI ,
   options: {
     // connectionParams: {
     //   ibo: 1,

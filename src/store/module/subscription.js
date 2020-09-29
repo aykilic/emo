@@ -11,7 +11,7 @@ export default {
             //  console.log("type1",type);
             await axios.post(
       
-                 process.env.API +':4000/graphql', {
+                 process.env.API, {
                   
                  query: `query search_getviewsiparis{
                     search_getviewsiparis{

@@ -154,7 +154,7 @@ import { Cookies } from "quasar"
               }
               // console.log("onay");
                         await axios
-                .post(  process.env.API +':4000/graphql', {
+                .post(  process.env.API, {
                   query: `query loginuser_Query($usermail: String,$password:String ){
                          loginuser_Query(usermail: $usermail,password: $password){
                               _id
@@ -206,7 +206,7 @@ import { Cookies } from "quasar"
                     // console.log("evet");
                  //----------------
                let checkmail= await axios.post(
-                  process.env.API +':4000/graphql', {
+                  process.env.API, {
                  query: `query Search_checkmail($email:String){
                     Search_checkmail(email:$email){
                         _id

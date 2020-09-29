@@ -113,7 +113,7 @@ Vue.use(VueMask);
         methods: {
             async customerlistmethod(){
                 await axios
-                    .post(  process.env.API +':4000/graphql',{
+                    .post(  process.env.API,{
                         query: `query all_Userdetail_Query{
                                 all_Userdetail_Query{
                                     _id

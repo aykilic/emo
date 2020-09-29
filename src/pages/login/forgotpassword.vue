@@ -52,7 +52,7 @@ import { Notify } from 'quasar'
                     //  console.log("hata");
                  }else{
                     await axios.post(
-                              process.env.API +':4000/graphql', {
+                              process.env.API, {
                             query: `query forgotUserQuery($usermail:String){
                                 forgotUserQuery(usermail:$usermail){
                                     token

@@ -23,7 +23,7 @@ export default {
         
         await axios.post(
       
-           process.env.API +':4000/graphql', {
+           process.env.API, {
              
             query: `{
               Query{
@@ -83,7 +83,7 @@ export default {
       },
       async varyantSkus({commit}){
         await axios
-        .post( process.env.API +':4000/graphql',{
+        .post( process.env.API,{
           query: `query varyantSkusQuery{
                  varyantSkusQuery{
                     _id
@@ -102,7 +102,7 @@ export default {
       },
       // async varyantlist({commit}){
       //   await axios.post(
-      //     'http://'+ process.env.API +':4000/graphql', {
+      //     'http://'+ process.env.API, {
       //         query:`query childvaryantQuery{
       //             childvaryantQuery{
       //             _id
@@ -136,7 +136,7 @@ export default {
       },
     },
     //   async urunlist({commit}){
-    //      await axios.post('http://'+ process.env.API +':4000/graphql', {
+    //      await axios.post('http://'+ process.env.API, {
     //   query: `{
     //                 Query {
     //                           stokturad

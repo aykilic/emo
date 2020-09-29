@@ -65,7 +65,7 @@ export default {
             //  console.log("type1",type);
             await axios.post(
       
-                 process.env.API +':4000/graphql', {
+                 process.env.API, {
                   
                  query: `query search_basketlist($guid:String){
                     search_basketlist(guid:$guid){
@@ -97,7 +97,7 @@ export default {
             // console.log("type1",type);
             await axios.post(
       
-                 process.env.API +':4000/graphql', {
+                 process.env.API, {
                   
                  query: `query search_ubasketlist($uid:String){
                     search_ubasketlist(uid:$uid){
@@ -128,7 +128,7 @@ export default {
         async search_getuser({commit,state}, type){
             // console.log("user",type);
             await axios.post(
-                 process.env.API +':4000/graphql', {
+                 process.env.API, {
                  query: `query Search_luser($uid:ID){
                     Search_luser(uid:$uid){
                         _id
@@ -150,7 +150,7 @@ export default {
             // console.log("type1",type);
             await axios.post(
       
-                 process.env.API +':4000/graphql', {
+                 process.env.API, {
                   
                  query: `query Search_Userdetail_Query($uid:ID){
                     Search_Userdetail_Query(uid:$uid){

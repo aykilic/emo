@@ -16,7 +16,7 @@ export default {
     },
     actions:{
         async search_slider1listrefresh({commit,state}, type){
-            await axios.post( process.env.API +':4000/graphql', {
+            await axios.post( process.env.API, {
             query: `query sliderlist{
              sliderlist{
                   slider1
