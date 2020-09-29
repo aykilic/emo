@@ -9,7 +9,7 @@
 /src/boot/apollo.js
 /Apollo-Server/node_modules
 # /Apollo-Server/package.json
-Apollo-Server/*.env
+/Apollo-Server/.env
 /dist
 #.gitignore
 # Cordova related directories and files
