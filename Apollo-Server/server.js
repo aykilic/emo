@@ -46,7 +46,7 @@ const configurations = {
   production: { ssl: true, port: 443, hostname: '34.71.100.141' },
   development: { ssl: false, port: 4000, hostname: 'localhost' }
 }
-console.log(process.env.NODE_ENV);
+// console.log(process.env.NODE_ENV);
 const environment = process.env.NODE_ENV || 'production'
 const config = configurations[environment]
 
@@ -116,7 +116,7 @@ app.use(express.static(path.join(__dirname, './helpers')))
 // express.static(path.join(__dirname, './'));
 app.post("/sell",async (req, res, next) => {
   let sippp=""
-  console.log("req.body",req.body);
+  // console.log("req.body",req.body);
   if (req.body.status==='success') {
     
       const model = Models.siparis
@@ -227,9 +227,7 @@ apollo.installSubscriptionHandlers(server);
   // console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
   // console.log(`🚀 Subscriptions ready at ws://localhost:4000${server.subscriptionsPath}`)
 // })
-server.listen({ port: config.port }, () =>
-  console.log(
-    '🚀 Server ready at',
-    `http${config.ssl ? 's' : ''}://${config.hostname}:${config.port}${apollo.graphqlPath}`
-  )
+server.listen({ port: config.port }, () =>{
+  console.log(`🚀 Server ready at http${config.ssl ? 's' : ''}://${config.hostname}:${config.port}${apollo.graphqlPath}`),
+  console.log(`🚀 Server Subscriptions at ws${config.ssl ? 's' : ''}://${config.hostname}:${config.port}${apollo.subscriptionsPath}`)}
 )
