@@ -1,5 +1,7 @@
 const express = require('express');
 const http =require('http')
+const https =require('https')
+// import https from 'https'
 require('dotenv').config();
 const { ApolloServer, gql, PubSub } = require('apollo-server-express');
 const { importSchema } = require('graphql-import');
@@ -7,6 +9,7 @@ const { importSchema } = require('graphql-import');
 const {createWriteStream} = require('fs')
 const mongoose = require("mongoose");
 const path = require("path");
+const fs =require ('fs');
 const ejs = require("ejs");
 const bodyParser = require('body-parser')
 const hmacSHA256 = require ('crypto-js/hmac-sha256');
@@ -37,11 +40,28 @@ mongoose.connect(process.env.DB_HOST,{useNewUrlParser:true, useCreateIndex: true
   //  console.log(Date());
 
 const basicDefs = importSchema('./schema.graphql')
-const server = new ApolloServer({
+
+const configurations = {
+  // Note: You may need sudo to run on port 443
+  production: { ssl: true, port: 443, hostname: '34.71.100.141' },
+  development: { ssl: false, port: 4000, hostname: 'localhost' }
+}
+console.log(process.env.NODE_ENV);
+const environment = process.env.NODE_ENV || 'production'
+const config = configurations[environment]
+
+
+
+const apollo = new ApolloServer({
    typeDefs: [basicDefs],
   resolvers: [
     resolvers,
   ],
+
+
+
+
+
   // context: {
   //   Models,
   //   pubsub
@@ -173,7 +193,8 @@ app.get("/hello", (req, res, next) => {
     });
   
   });
-server.applyMiddleware({
+
+  apollo.applyMiddleware({
   
   app,
   cors: {
@@ -181,14 +202,36 @@ server.applyMiddleware({
     origin: true
   },
 });
-const httpServer = http.createServer(app);
-server.installSubscriptionHandlers(httpServer);
+let server
+if (config.ssl) {
+  // Assumes certificates are in a .ssl folder off of the package root. Make sure 
+  // these files are secured.
+  server = https.createServer(
+    {
+      // key: fs.readFileSync(`./ssl/${environment}/server.key`),
+      // cert: fs.readFileSync(`./ssl/${environment}/server.crt`)
+      // key: fs.readFileSync(`/cert/key.pem`),
+      // cert: fs.readFileSync(`/cert/cert.pem`),
+    },
+    app
+  )
+} else {
+  server = http.createServer(app)
+}
+// const httpServer = http.createServer(app);
+apollo.installSubscriptionHandlers(server);
 // httpServer.listen({ port: 4000 }, () =>
 //   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`),
 //   console.log(`🚀 Subscriptions ready at ws://localhost:4000${server.subscriptionsPath}`)
 // );
 //  console.log(Date());
-httpServer.listen({ port: 4000 }, () => {
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
-  console.log(`🚀 Subscriptions ready at ws://localhost:4000${server.subscriptionsPath}`)
-})
+// httpServer.listen({ port: 4000 }, () => {
+  // console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+  // console.log(`🚀 Subscriptions ready at ws://localhost:4000${server.subscriptionsPath}`)
+// })
+server.listen({ port: config.port }, () =>
+  console.log(
+    '🚀 Server ready at',
+    `http${config.ssl ? 's' : ''}://${config.hostname}:${config.port}${apollo.graphqlPath}`
+  )
+)
