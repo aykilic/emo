@@ -111,6 +111,7 @@ app.use(express.json());
 // }
 // next()
 // });
+// console.log(environment);
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, './helpers')))
 // express.static(path.join(__dirname, './'));
@@ -206,10 +207,10 @@ if (config.ssl) {
   // these files are secured.
   server = https.createServer(
     {
-      // key: fs.readFileSync(`./ssl/${environment}/server.key`),
-      // cert: fs.readFileSync(`./ssl/${environment}/server.crt`)
-      key: fs.readFileSync(`/cert/key.key`),
-      cert: fs.readFileSync(`/cert/cert.crt`),
+      key: fs.readFileSync(`./ssl/${environment}/key.key`),
+      cert: fs.readFileSync(`./ssl/${environment}/server.crt`)
+      // key: fs.readFileSync(`/cert/key.key`),
+      // cert: fs.readFileSync(`/cert/cert.crt`),
     },
     app
   )
