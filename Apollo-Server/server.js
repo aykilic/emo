@@ -43,8 +43,8 @@ const basicDefs = importSchema('./schema.graphql')
 
 const configurations = {
   // Note: You may need sudo to run on port 443
-  // production: { ssl: true, port: 443, hostname: '34.71.100.141' },
-  production: { ssl: false, port: 4000, hostname: 'localhost' },
+  production: { ssl: true, port: 443, hostname: '34.71.100.141' },
+  // production: { ssl: false, port: 4000, hostname: 'localhost' },
   development: { ssl: false, port: 4000, hostname: 'localhost' }
 }
 // console.log(process.env.NODE_ENV);
