@@ -6,7 +6,7 @@
 # Quasar core related directories
 #.gitignore
 #quasar.conf.js
-/src/boot/apollo.js
+#/src/boot/apollo.js
 /Apollo-Server/node_modules
 # /Apollo-Server/package.json
 /Apollo-Server/.env
