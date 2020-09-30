@@ -111,7 +111,7 @@ module.exports = function (ctx) {
       // WAPI:JSON.stringify('ws://localhost'),
       
       // WAPI:JSON.stringify('wss://34.71.100.141:443/graphql'),
-      WAPI:JSON.stringify('wss://www.emosetekstil.com.tr:3443/graphql'),
+      WAPI:JSON.stringify('wss://www.emosetekstil.com.tr:4000/graphql'),
       // JWT_SECRET:JSON.stringify('emose2-app3-jwt4')
     },
       // Options below are automatically set depending on the env, set them if you want to override
