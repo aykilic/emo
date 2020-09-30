@@ -43,7 +43,7 @@ const basicDefs = importSchema('./schema.graphql')
 
 const configurations = {
   // Note: You may need sudo to run on port 443
-  production: { ssl: true, port: 3443, hostname: '34.71.100.141' },
+  production: { ssl: true, port: 3443, hostname: 'www.emosetekstil.com.tr' },
   // production: { ssl: false, port: 4000, hostname: 'localhost' },
   development: { ssl: false, port: 4000, hostname: 'localhost' }
 }
@@ -210,10 +210,10 @@ if (config.ssl) {
   // these files are secured.
   server = https.createServer(
     {
-      // key: fs.readFileSync(path.join(__dirname,`./ssl/${environment}/www.emosetekstil.com.tr.key`)),
-      // cert: fs.readFileSync(path.join(__dirname,`./ssl/${environment}/www.emosetekstil.com.tr.crt`))
-      key: fs.readFileSync(`/etc/letsencrypt/live/mail.emosetekstil.com.tr/privkey.pem`),
-      cert: fs.readFileSync(`/etc/letsencrypt/live/mail.emosetekstil.com.tr/fullchain.pem`)
+      key: fs.readFileSync(path.join(__dirname,`./ssl/${environment}/www.emosetekstil.com.tr.key`)),
+      cert: fs.readFileSync(path.join(__dirname,`./ssl/${environment}/www.emosetekstil.com.tr.crt`))
+      // key: fs.readFileSync(`/etc/letsencrypt/live/mail.emosetekstil.com.tr/privkey.pem`),
+      // cert: fs.readFileSync(`/etc/letsencrypt/live/mail.emosetekstil.com.tr/fullchain.pem`)
       // key: fs.readFileSync(`/cert/key.key`),
       // cert: fs.readFileSync(`/cert/cert.crt`),
     },
