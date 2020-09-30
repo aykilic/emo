@@ -137,7 +137,7 @@
                           <!-- :label="`${props.row.sira}`" -->
                           
                         <q-img
-                          :src="props.row.imageurl"
+                          :src="props.row.path + props.row.publicid"
                           spinner-color="primary"
                           spinner-size="82px"
                           style="display: inline-block;text-align:center;"
@@ -270,7 +270,7 @@
                           <!-- :label="`${props.row.sira}`" -->
                           
                         <q-img
-                          :src="props.row.imageurl"
+                          :src="props.row.path + props.row.publicid"
                           spinner-color="primary"
                           spinner-size="82px"
                           style="display: inline-block;text-align:center;"
@@ -406,7 +406,7 @@
                           <!-- :label="`${props.row.sira}`" -->
                           
                         <q-img
-                          :src="props.row.imageurl"
+                          :src="props.row.path + props.row.publicid"
                           spinner-color="primary"
                           spinner-size="82px"
                           style="display: inline-block;text-align:center;"
@@ -537,7 +537,7 @@
                           <!-- :label="`${props.row.sira}`" -->
                           
                         <q-img
-                          :src="props.row.imageurl"
+                          :src="props.row.path + props.row.publicid"
                           spinner-color="primary"
                           spinner-size="82px"
                           style="display: inline-block;text-align:center;"
@@ -668,7 +668,7 @@
                           <!-- :label="`${props.row.sira}`" -->
                           
                         <q-img
-                          :src="props.row.imageurl"
+                          :src="props.row.path + props.row.publicid"
                           spinner-color="primary"
                           spinner-size="82px"
                           style="display: inline-block;text-align:center;"
@@ -799,7 +799,7 @@
                           <!-- :label="`${props.row.sira}`" -->
                           
                         <q-img
-                          :src="props.row.imageurl"
+                          :src="props.row.path + props.row.publicid"
                           spinner-color="primary"
                           spinner-size="82px"
                           style="display: inline-block;text-align:center;"
@@ -930,7 +930,7 @@
                           <!-- :label="`${props.row.sira}`" -->
                           
                         <q-img
-                          :src="props.row.imageurl"
+                          :src="props.row.path + props.row.publicid"
                           spinner-color="primary"
                           spinner-size="82px"
                           style="display: inline-block;text-align:center;"
@@ -1061,7 +1061,7 @@
                           <!-- :label="`${props.row.sira}`" -->
                           
                         <q-img
-                          :src="props.row.imageurl"
+                          :src="props.row.path + props.row.publicid"
                           spinner-color="primary"
                           spinner-size="82px"
                           style="display: inline-block;text-align:center;"
@@ -1448,6 +1448,7 @@ import anaslidercloud from "../../components/anaslidercloud.vue";
         },
         async mounted () {
           await this.$store.dispatch('anakategori')
+          console.log(process.env.NODE_ENV);
           // const res = await axios.post('http://'+ process.env.API +':4000/graphql', {
           //   query: `{
           //                 Query {

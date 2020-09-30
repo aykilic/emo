@@ -402,7 +402,7 @@
                       <q-separator></q-separator>
                       <q-card-section>
                         <q-img
-                          :src="props.row.images.imageurl"
+                          :src="props.row.images.path + props.row.images.publicid"
                           spinner-color="primary"
                           spinner-size="82px"
                         ></q-img>
