@@ -1114,7 +1114,7 @@ export default {
       // this.numaralar_guncelle()
       // return
       await axios
-        .post("http://" + process.env.API + ":4000/graphql", {
+        .post( process.env.API , {
           query: `query son_numaralar{
                             son_numaralar{
                                
@@ -1386,7 +1386,7 @@ export default {
             // let postUrl= 'https://www.paytr.com/odeme/api/get-token'
 
             await axios
-              .post("http://" + process.env.API + ":4000/graphql", {
+              .post(process.env.API, {
                 query: `query posQuery($pos:posInput){
                                                             posQuery(pos:$pos){
                                                                 res
@@ -1944,7 +1944,7 @@ export default {
       //   console.log("this.lists",this.lists);
       // -*-*-*-*-*-*-*-*
       await axios
-        .post("http://" + process.env.API + ":4000/graphql", {
+        .post(process.env.API, {
           query: `query fiyatListQuery($idlist:[idListInput]){
                     fiyatListQuery(idlist:$idlist){
                         _id
