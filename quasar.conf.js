@@ -106,7 +106,7 @@ module.exports = function (ctx) {
 
       
       // API: JSON.stringify('https://34.71.100.141:443/graphql'),
-      API: JSON.stringify('http://34.71.100.141/graphql'),
+      API: JSON.stringify('https://34.71.100.141/graphql'),
       
       // WAPI:JSON.stringify('ws://localhost'),
       
