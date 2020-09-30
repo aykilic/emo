@@ -19,10 +19,10 @@ import fetch from 'node-fetch'
 // });
 const httpLink = new HttpLink({
   // You should use an absolute URL here
-  uri:  process.env.API +':4000/graphql',
+  uri:  process.env.API ,
 })
 const wsLink = new WebSocketLink({
-  uri:  process.env.WAPI +':4000/graphql',
+  uri:  process.env.WAPI ,
   options: {
     // connectionParams: {
     //   ibo: 1,
