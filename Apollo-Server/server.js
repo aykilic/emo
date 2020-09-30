@@ -54,6 +54,8 @@ const config = configurations[environment]
 
 
 const apollo = new ApolloServer({
+  introspection: true,
+  playground: true,
    typeDefs: [basicDefs],
   resolvers: [
     resolvers,
