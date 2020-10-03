@@ -120,11 +120,11 @@ app.use(express.static(path.join(__dirname, './helpers')))
 // express.static(path.join(__dirname, './'));
 app.post("/sell",async (req, res, next) => {
   let sippp=""
-  // console.log("req.body",req.body);
+   console.log("sell hazırlık",req.body);
   if (req.body.status==='success') {
     
       const model = Models.siparis
-        console.log("1");
+        console.log("success");
       
     //  return await stokturu.find({_id:id})
       const sip= await model.findOne({sipno:req.body.merchant_oid})

@@ -20,7 +20,7 @@ export default {
     });
 
     axios.interceptors.response.use((response) => {
-      Loading.hide()
+      Loading.show()
       return response;
     }, (error) => {
       Loading.hide()
