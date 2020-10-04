@@ -1310,7 +1310,7 @@ export default {
             var user_basket = btoa(JSON.stringify(paytrurunList));
 
             var user_ip = await axios
-              .get("http://extreme-ip-lookup.com/json/")
+              .get("https://extreme-ip-lookup.com/json/")
               .then(function (response) {
                 // businessWebsite: ""
                 // city: "Istanbul"
