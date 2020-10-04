@@ -116,7 +116,7 @@ app.use(express.json());
 // });
 // console.log(environment);
 app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname, './helpers'))
+app.use(express.static(path.join(__dirname, './helpers')))
 // express.static(path.join(__dirname, './'));
 app.post("/sell",async (req, res, next) => {
   let sippp=""
