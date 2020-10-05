@@ -118,7 +118,7 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, './helpers')))
 // express.static(path.join(__dirname, './'));
-app.post("/sell",async (req, res, next) => {
+app.get("/sell",async (req, res, next) => {
   let sippp=""
    console.log("sell hazırlık",req.body);
   if (req.body.status==='success') {
