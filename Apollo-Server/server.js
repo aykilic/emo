@@ -166,6 +166,7 @@ app.get("/sell",async (req, res, next) => {
       }
   }else{
     console.log("test req")
+    res.send('OK');
     return
   }
   
