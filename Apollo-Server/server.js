@@ -164,8 +164,11 @@ app.get("/sell",async (req, res, next) => {
         //  sippp="hata"
         // sippp=sip
       }
+  }else{
+    console.log("test req")
+    return
   }
-  return
+  
 // console.log(req.body.datam)
 
 }),
