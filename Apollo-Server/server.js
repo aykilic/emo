@@ -165,7 +165,7 @@ app.get("/sell",async (req, res, next) => {
         // sippp=sip
       }
   }
-
+  return
 // console.log(req.body.datam)
 
 }),
