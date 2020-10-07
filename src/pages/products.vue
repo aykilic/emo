@@ -6,16 +6,17 @@
            <!-- <div>{{JSON.stringify(list)}}</div> -->
          <q-intersection
                   once
-                  transition="fade"
+                  transition="scale"
                   >
                   
             <q-card @click="select(list._id,list.stokturad)" style="" class="my-card product-card box-shadow shadow-transition cursor-pointer">
                <!-- <q-img src="../statics/emose_h200.jpg" /> -->
                
-               <q-img 
+               <v-lazy-image 
                 :srcset="list.vars.images.path + list.vars.images.publicid+'.jpg'"
                 :src="list.vars.images.path + list.vars.images.publicid+'.webp'" 
-                alt="Not Found" 
+                :src-placeholder="require('../statics/demo.gif')"
+                
                 
                 />
                 
@@ -111,9 +112,16 @@
     // import {store} from '../store/index'
     import {mapState,mapGetters} from 'vuex'
     import {Loading} from 'quasar'
+   //  import { VLazyImagePlugin } from 'v-lazy-image';
+   //  Vue.use(VLazyImagePlugin);
+   import VLazyImage from "v-lazy-image";
+
     const heavyList = []
     export default {
          props:['parentname','parentid'],
+         components:{
+            VLazyImage
+         },
         data(){
             return{
                 ratingModel:[],
@@ -328,7 +336,13 @@
 </script>
 
 <style lang="stylus" scoped>
-
+.v-lazy-image {
+  filter: blur(10px);
+  transition: filter 0.7s;
+}
+.v-lazy-image-loaded {
+  filter: blur(0);
+}
   
    .product-card:hover
       // box-shadow $shadow-15  
