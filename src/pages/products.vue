@@ -336,14 +336,20 @@
 </script>
 
 <style lang="stylus" scoped>
-.v-lazy-image {
-  filter: blur(10px);
-  transition: filter 0.7s;
+// .v-lazy-image {
+//   filter: blur(10px);
+//   transition: filter 0.7s;
+// }
+// .v-lazy-image-loaded {
+//   filter: blur(0);
+// }
+  .v-lazy-image {
+  opacity: 0;
+  transition: opacity 2s;
 }
 .v-lazy-image-loaded {
-  filter: blur(0);
+  opacity: 1;
 }
-  
    .product-card:hover
       // box-shadow $shadow-15  
       box-shadow 5px 15px 9px rgba(0, 0, 0, 0.5) 
