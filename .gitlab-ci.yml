@@ -1,0 +1,31 @@
+image: node:latest
+
+# Pick zero or more services to be used on all builds.
+# Only needed when using a docker container to run your tests in.
+# Check out: http://docs.gitlab.com/ce/ci/docker/using_docker_images.html#what-is-a-service
+#services:
+ # - mysql:latest
+  #- redis:latest
+  #- postgres:latest
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+    - node_modules/
+before_script:
+ - apt-get update -qq && apt-get install -y -qq sshpass
+deploy:
+  only:
+    - master
+  script:
+    - rm ./package-lock.json
+    - npm install
+    - npm run build
+    - rm -rf .git
+    - rm -rf /node_modules
+    - cd /builds/aykilic/gecelik/dist/
+    - ls
+    - sshpass -V
+    - export SSHPASS=$PASSWD
+    - sshpass -e scp -o stricthostkeychecking=no -r spa root@34.71.100.141:/var/www/projeler/gecelik/dist

@@ -8,7 +8,7 @@
   "author": "ibo <aykilicibrahim@gmail.com>",
   "private": true,
   "scripts": {
-    "build": "quasar build && cp .htaccess dist/spa",
+    "build": "quasar build ",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
