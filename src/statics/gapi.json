@@ -1,0 +1,12 @@
+{
+    "type": "service_account",
+    "project_id": "just-armor-279515",
+    "private_key_id": "7c7ac9c99aff0840630162aefd2aa15b37fa33c3",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCWLOADkK4Qc6/Q\nVMipVp0CPVROEE/U+hRMphykHpe6XhElx4iXaItRfBosb3YJOC4JTcJcfPmHzQ1/\nP4PywyZbhG+JmfKfiJ0UFrU03SuZ1UE+8FSJcOQQkWnNzG1zpL1wJMY9qe/huelP\nyvkmkaRXPIaHRFN0IUTWcam9KJhkkOCgljfbquCp+36WerDJdjtrPWWVbKGfJquI\nUx1LC5sgiORzEgggergJMUYw4VNgGYIkqQqMFFK9+FZzwmR2psvcKiaZP6VSPo5t\nE96rNEC3ZvSoBkpXuy4uS0UhvmmOsLrwsQ4+RYP78T0MUTmf3bsUXBZk17qPeNTG\n8mUFrR2dAgMBAAECggEAAVkfyF2+d56s6mAzI59dGM23ebKYdN9V2qZMcDC8yKCF\njjhErU9JSORQpoDNp3bd+u68GvEdmwQn5dzfxgh4dK6IrcyNqrRNl1uTft5UFjUd\njn9r0twKQBfTbP8z0FZJ7mggxiGbagRYPYN4nx8EQarlGPEaarAjGmW6J1zmQ/4s\nG3F18Ji2ANhVYHphS47NjEaCH3X7AkEDesIk56Z5M/N9wOTNd4tKxeVTWeXBxoj8\nkwo4kpq2mEpVRmU2+cEaYGhJyDDc4PxMhYxGFwxI8EtGZSy4BquZRBKV2P3alHfi\nghF5ChJp7r65WBbfd/LTJmvFy6AfdXjB8jMGAdQmIQKBgQDGXAgCUrVphNsmmDFS\nybGxJ7i5Z+k5bf4+2JhGure+6iA2/tAbiXesgZU2D3lktGi8rKJ3UW4VgQVtlSjt\noSyrd/6z/7r/7j+AB8m6XN7lTUUqyVqLfibT7plWiES42OBFvaMh7OiImN9f64qM\nH0DGnNvuQI4ciqieBDdzMM7GBQKBgQDB0GtglnRoG9eUs/xNouXalUw5Bwg049cr\n86DghB/ak83mlBHnN63EYIzfAlHiEednnWQBiZK3geAZJEv+wI6FQ4k1Luviz0Aa\nynkl6A9z0eOzVm0lFKFKAIVwTnkmx5jqtEuqFiI84Ikx6gApckVzj+bAssE9mM66\nCvmDX5s0uQKBgF5t64Ynl6NPEwERjNGLoSLj9QWWmSm02kdS11M8ikLBtGpZ7fpd\n+/HMkpr0zOaLGB1R1doVkuF71XiwfJZ7lwdeDYvlH0G9Ss+JZZhpo9bnbRkMWCV1\n/cgAm1DdeFHDNSkeOS3qWVzF4fkI6aEBM9YZUH3gj4a438Kx4S/eOWF9AoGAY6Kc\ngNP31clyYyy/6L10gpE71RlLW71BUYP2UVU69ugC8qVuKrpR52FnKgIMTDa+CmM8\nFRo/RX1L0kD5nGYrHlEgySls9HVs1BkAfL82qmjdMMWeaHCZlex8rMZ6u7fiYc38\nE907DqazgOh12ti24Xi5vJhohRz4MWYQ7TuKE2kCgYApgJ29zH0cBhIeZkhNgVxf\nqqmypr1Iy6MEjN3HE7J89DeJ82aTPZYkGB8FBeSwmTn3lNw/s1xAPFEj2Ipe1S5N\nS+E83JnopaZGz69q5RHnYeWUXDivZbaf4EKIJrUTzbS2oI90WQA68bED55XfXeqZ\n84IXJnRqaNENWhZi2VyRTA==\n-----END PRIVATE KEY-----\n",
+    "client_email": "emose-756@just-armor-279515.iam.gserviceaccount.com",
+    "client_id": "105392516901395811468",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/emose-756%40just-armor-279515.iam.gserviceaccount.com"
+  }  
