@@ -1,18 +1,18 @@
 <template>
   <div class="q-pa-xl q-gutter-y-md ">
-    <!-- <script
+    <script
       type="application/javascript"
       src="https://apis.google.com/js/client:platform.js"
       async defer
-    ></script> -->
+    ></script>
     <!-- {{date.formatDate(Date.now(), 'DD-MM-YYYY')}} -->
     <!-- {{ moment(Date.now()).format("DD-MM-YYYY") }} -->
     <!-- <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js" async defer></script>
     <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" async defer></script> -->
-    
+    <!-- <textarea cols="80" rows="20" id="query-output" hidden  ></textarea> -->
     <div class="q-pa-md" id="embed-api-auth-container" hidden></div>
     <div class="row justify-center">
-      <q-btn class="row q-pa-xs" @click="queryReportss" >Google</q-btn>
+      <q-btn class="row q-pa-xs g-signin2" @click="queryReportss" > </q-btn>
     </div>
     <div class="row q-gutter-x-md">
     <q-card class="col-6 justify-center">
@@ -25,7 +25,7 @@
     </q-card>
     <q-card class="col">
       <q-card-section><div class="row text-center">
-          <div class="text-h5 col">Ziyaret Eden Şehir</div>
+          <div class="text-h5 col">Ziyaret Eden Şehirler</div>
           
         </div>
         </q-card-section>
@@ -80,14 +80,14 @@ export default {
 
   methods: {
     async queryReportss(){
-      gapi.client.request({
+      await gapi.client.request({
       path: '/v4/reports:batchGet',
       root: 'https://analyticsreporting.googleapis.com/',
       method: 'POST',
       body: {
         reportRequests: [
           {
-            viewId: this.VIEW_ID,
+            viewId: "230918950",
             dateRanges: [
               {
                 startDate: '7daysAgo',
@@ -103,9 +103,17 @@ export default {
         ]
       }
     }).then(a=>{
-          console.log(a);
+      // this.displayResultss(a)
+          // console.log("a",a);
         }, console.error.bind(console));
     },
+
+
+    // displayResultss(response) {
+    //   // console.log("response",response);
+    //   var formattedJson = JSON.stringify(response.result, null, 2);
+    //   document.getElementById("query-output").value = formattedJson;
+    // },
     async getapi() {
       await this.queryReports();
     },
