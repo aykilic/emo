@@ -9,7 +9,11 @@
     <!-- {{ moment(Date.now()).format("DD-MM-YYYY") }} -->
     <!-- <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js" async defer></script>
     <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" async defer></script> -->
+    
     <div class="q-pa-md" id="embed-api-auth-container" hidden></div>
+    <div class="row justify-center">
+      <q-btn class="row q-pa-xs" @click="queryReportss" >Google</q-btn>
+    </div>
     <div class="row q-gutter-x-md">
     <q-card class="col-6 justify-center">
       <q-card-section class="col-12"><div class=" text-center">
@@ -75,6 +79,33 @@ export default {
   },
 
   methods: {
+    async queryReportss(){
+      gapi.client.request({
+      path: '/v4/reports:batchGet',
+      root: 'https://analyticsreporting.googleapis.com/',
+      method: 'POST',
+      body: {
+        reportRequests: [
+          {
+            viewId: this.VIEW_ID,
+            dateRanges: [
+              {
+                startDate: '7daysAgo',
+                endDate: 'today'
+              }
+            ],
+            metrics: [
+              {
+                expression: 'ga:sessions'
+              }
+            ]
+          }
+        ]
+      }
+    }).then(a=>{
+          console.log(a);
+        }, console.error.bind(console));
+    },
     async getapi() {
       await this.queryReports();
     },
