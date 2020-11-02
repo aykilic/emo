@@ -20,7 +20,7 @@ deploy:
     - npm install
     - npm run build
     - rm -rf .git
-    - rm -rf /node_modules
+    # - rm -rf /node_modules
     - cd /builds/aykilic/gecelik/dist/
     - ls
     - sshpass -V

@@ -13,6 +13,8 @@ VueRouter.prototype.push = function push(location) {
 };
 Vue.use(VueRouter)
 
+
+
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
