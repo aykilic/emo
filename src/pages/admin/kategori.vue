@@ -362,7 +362,7 @@ export default {
     async treedata () {
       Loading.show()
        await axios.post(
-        "http://" + process.env.API + ":4000/graphql",
+        process.env.API,
         {
           query: `{
                     Query{

@@ -5,12 +5,14 @@
       src="https://apis.google.com/js/client:platform.js"
       async defer
     ></script>
+    
     <!-- {{date.formatDate(Date.now(), 'DD-MM-YYYY')}} -->
     <!-- {{ moment(Date.now()).format("DD-MM-YYYY") }} -->
     <!-- <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js" async defer></script>
     <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" async defer></script> -->
     <!-- <textarea cols="80" rows="20" id="query-output" hidden  ></textarea> -->
     <div class="q-pa-md" id="embed-api-auth-container" hidden></div>
+    
     <div class="row justify-center">
       <q-btn class="row q-pa-xs g-signin2" @click="queryReportss" > </q-btn>
     </div>
@@ -129,24 +131,7 @@ export default {
           clientid:
             "292336428402-bjonvu2cdpenmphs6v492o9vtib1gj0n.apps.googleusercontent.com",
         });
-
-        //       var viewSelector1 = new gapi.analytics.ViewSelector({
-        //   container: 'view-selector-1-container'
-        // });
-
-        /**
-         * Create a ViewSelector for the second view to be rendered inside of an
-         * element with the id "view-selector-2-container".
-         */
-
-        // Render both view selectors to the page.
-        // viewSelector1.execute();
-        // viewSelector2.execute();
-
-        /**
-         * Create the first DataChart for top countries over the past 30 days.
-         * It will be rendered inside an element with the id "chart-1-container".
-         */
+   
         var dataChart1 = new gapi.analytics.googleCharts.DataChart({
           query: {
             ids: "ga:230918950",
