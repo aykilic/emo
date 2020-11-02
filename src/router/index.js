@@ -66,6 +66,7 @@ export default function (/* { store, ssrContext } */) {
     if(authorize){
           jwt.verify(token, process.env.JWT_SECRET ,async function(err, token)  {
         if(err){
+          console.log("not admin");
          next('/')
         return
        }else{
