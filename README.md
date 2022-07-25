@@ -1,22 +1,18 @@
-# Quasar App (gecelik)
+# Alış Veriş Sitesi ve Yönetim Paneli
 
-gecelik
+Varyantlı ürün satılabilen alış veriş sitesi.
+İşlemler web socket hizmeti ile yönetim tarafına anlık olarak bildirilir.
 
-## Install the dependencies
-```bash
-npm install
-```
+## Kullanılan Teknolojiler
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
-```
-
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
+  ### Backend
+    * nodejs
+    * expresjs
+    * apollo server
+    * graphql
+    * sequelize
+    * mysql
+  ### Frontend
+    * vuejs
+    * vuex(State management)
+    * quasar framework
