@@ -11,7 +11,7 @@ Varyantlı ürün satılabilen alış veriş sitesi.
     * apollo server
     * graphql
     * sequelize
-    * mysql
+    * mongodb
   ### Frontend
     * vuejs
     * vuex(State management)
